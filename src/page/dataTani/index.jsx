@@ -1,6 +1,7 @@
 const DataTani = ()=>{
+    
     return(
-        <h1>halaman data tani</h1>
+    <h1>Coba-coba</h1>
     )
 }
 
