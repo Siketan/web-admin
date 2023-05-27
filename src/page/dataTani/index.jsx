@@ -1,6 +1,12 @@
+// import Navbar from '../../components/navbar'
+// import Footer from '../../components/footer'
 const DataTani = ()=>{
     return(
-        <h1>halaman data tani</h1>
+       <div>
+        {/* <Navbar /> */}
+        <p>Halo</p>
+        {/* <Footer /> */}
+       </div>
     )
 }
 
