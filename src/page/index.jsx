@@ -1,5 +1,7 @@
 import DataTani from "./dataTani"
 import TambahDataTani from "./dataTani/tambahData"
+import DataTanaman from "./dataTanaman"
+import TambahDataTanaman from "./dataTanaman/tambahData"
 import InfoTani from "./infoTani"
 import TambahInfoTani from "./infoTani/tambahData"
 import PenyuluhanTani from "./penyuluhanTani"
@@ -35,4 +37,4 @@ const coba = ()=>{
 
 export default coba;
 
-export {DataTani, TambahDataTani, InfoTani, TambahInfoTani, PenyuluhanTani, TambahPenyuluhanTani, TokoTani, TambahTokoTani, UserTani, TambahUserTani, LayananPesanan, InfoKegiatan}
+export {DataTani, TambahDataTani, InfoTani, DataTanaman, TambahDataTanaman, TambahInfoTani, PenyuluhanTani, TambahPenyuluhanTani, TokoTani, TambahTokoTani, UserTani, TambahUserTani, LayananPesanan, InfoKegiatan}

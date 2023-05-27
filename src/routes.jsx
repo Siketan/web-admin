@@ -2,15 +2,20 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Coba from "./page"
-import { DataTani, TambahDataTani, InfoTani, TambahInfoTani, PenyuluhanTani, TambahPenyuluhanTani, TokoTani, TambahTokoTani, UserTani, TambahUserTani, LayananPesanan, InfoKegiatan } from "./page"
+import { DataTani, TambahDataTani, DataTanaman, TambahDataTanaman, InfoTani, TambahInfoTani, PenyuluhanTani, TambahPenyuluhanTani, TokoTani, TambahTokoTani, UserTani, TambahUserTani, LayananPesanan, InfoKegiatan } from "./page"
+import Navbar from "./components/navbar"
+import Footer from "./components/footer"
 const Path = () => {
   return (
     <div >
+      <Navbar />
       <Router>
         <Routes>
           <Route path="/" element={<Coba />} />
           <Route path="/data-tani" element={<DataTani />} />
           <Route path="/data-tani/tambah" element={<TambahDataTani />} />
+          <Route path="/data-tanaman" element={<DataTanaman />} />
+          <Route path="/data-tanaman/tambah" element={<TambahDataTanaman />} />
           <Route path="/info-tani" element={<InfoTani />} />
           <Route path="/info-tani/tambah" element={<TambahInfoTani />} />
           <Route path="/penyuluhan-tani" element={<PenyuluhanTani />} />
@@ -23,6 +28,7 @@ const Path = () => {
           <Route path="/info-kegiatan" element={<InfoKegiatan />} />
         </Routes>
       </Router>
+      <Footer />
     </div>
   );
 }
