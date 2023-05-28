@@ -1,40 +1,20 @@
 import DataTani from "./dataTani"
 import TambahDataTani from "./dataTani/tambahData"
-import DataTanaman from "./dataTanaman"
-import TambahDataTanaman from "./dataTanaman/tambahData"
+import LaporanPenyuluh from "./dataTani/dataPertanian/laporanPenyuluhan"
+import LaporanPetani from "./dataTani/dataPertanian/laporanPetani"
 import InfoTani from "./infoTani"
 import TambahInfoTani from "./infoTani/tambahData"
-import PenyuluhanTani from "./penyuluhanTani"
+import EventTani from "./infoTani/eventTani"
+import TambahEventTani from "./infoTani/eventTani/tambahEventTani"
+import LiveChat from "./liveChat"
+import RatingPetugas from "./liveChat/ratingPetugas"
 import TambahPenyuluhanTani from "./penyuluhanTani/tambahData"
-import TokoTani from "./tokoTani"
-import TambahTokoTani from "./tokoTani/tambahData"
-import UserTani from "./userTani"
-import TambahUserTani from "./userTani/tambahData"
-import InfoKegiatan from "./pengaturan/InfoKegiatan"
-import LayananPesanan from "./pengaturan/layananPesanan"
-const coba = ()=>{
-    return(
-        <div className="m-20 flex justify-center">
-            <div>
-                <h1> ini url yg ada  = "/" </h1>
-                <h1> ini url yg ada  = "/data-tani" </h1>
-                <h1> ini url yg ada  = "/data-tani/tambah" </h1>
-                <h1> ini url yg ada  = "/info-tani" </h1>
-                <h1> ini url yg ada  = "/info-tani/tambah" </h1>
-                <h1> ini url yg ada  = "/penyuluhan-tani" </h1>
-                <h1> ini url yg ada  = "/penyuluhan-tani/tambah" </h1>
-                <h1> ini url yg ada  = "/toko-tani" </h1>
-                <h1> ini url yg ada  = "/toko-tani/tambah" </h1>
-                <h1> ini url yg ada  = "/user-tani" </h1>
-                <h1> ini url yg ada  = "/user-tani/tambah" </h1>
-                <h1> ini url yg ada  = "/layanan-pesanan" </h1>
-                <h1> ini url yg ada  = "/info-kegiatan" </h1>
-            </div>
-        </div>
-    )
-}
+import DataRiwayatChat from "./penyuluhanTani/detailPenyuluh/dataRiwayatChat"
+import JurnalKegiatan from "./penyuluhanTani/detailPenyuluh/jurnalKegiatan"
+import PresensiKehadiran from "./penyuluhanTani/detailPenyuluh/dataRiwayatChat"
+import TambahPenjual from "./tokoTani/tambahDataPenjual"
+import ProdukPenyuluh from "./tokoTani/produk/penyuluh"
+import ProdukPetani from "./tokoTani/produk/petani"
 
 
-export default coba;
-
-export {DataTani, TambahDataTani, InfoTani, DataTanaman, TambahDataTanaman, TambahInfoTani, PenyuluhanTani, TambahPenyuluhanTani, TokoTani, TambahTokoTani, UserTani, TambahUserTani, LayananPesanan, InfoKegiatan}
+export {DataTani, TambahDataTani, LaporanPenyuluh, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, PresensiKehadiran, TambahPenjual, ProdukPenyuluh, ProdukPetani}

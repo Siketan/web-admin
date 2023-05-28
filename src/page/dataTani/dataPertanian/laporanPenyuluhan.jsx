@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Map from "../../../components/map"
 const DataTanaman = () => {
     const [filters, setFilters] = useState({
         kecamatan: "",
@@ -217,6 +218,7 @@ const DataTanaman = () => {
             </tbody>
             </table>
         </div>
+        <Map/>
         </div>
     );
 };
