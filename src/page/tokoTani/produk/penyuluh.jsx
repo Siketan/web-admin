@@ -171,7 +171,7 @@ function ProdukPenyuluh() {
                                 value={filters.namaProduk}
                                 onChange={(e) => handleFilterChange(e, "namaProduk")}
                                 className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                placeholder="Filter Jenis Tanaman"
+                                placeholder="Filter Produk"
                                 />
                                 <FontAwesomeIcon
                                 icon={faFilter}
@@ -186,7 +186,7 @@ function ProdukPenyuluh() {
                                 value={filters.stok}
                                 onChange={(e) => handleFilterChange(e, "stok")}
                                 className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                placeholder="Filter Musim Tanam"
+                                placeholder="Filter Stok"
                                 />
                                 <FontAwesomeIcon
                                 icon={faFilter}
@@ -201,7 +201,7 @@ function ProdukPenyuluh() {
                                 value={filters.satuan}
                                 onChange={(e) => handleFilterChange(e, "satuan")}
                                 className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                placeholder="Filter Luas Lahan"
+                                placeholder="Filter Satuan"
                                 />
                                 <FontAwesomeIcon
                                 icon={faFilter}
@@ -216,7 +216,7 @@ function ProdukPenyuluh() {
                                 value={filters.harga}
                                 onChange={(e) => handleFilterChange(e, "harga")}
                                 className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                placeholder="Filter Tanggal Tanam"
+                                placeholder="Filter Harga"
                                 />
                                 <FontAwesomeIcon
                                 icon={faFilter}
@@ -231,7 +231,7 @@ function ProdukPenyuluh() {
                                 value={filters.deskripsi}
                                 onChange={(e) => handleFilterChange(e, "deskripsi")}
                                 className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                placeholder="Filter Prakiraan Tanggal Panen"
+                                placeholder="Filter Deskripsi"
                                 />
                                 <FontAwesomeIcon
                                 icon={faFilter}
@@ -246,7 +246,7 @@ function ProdukPenyuluh() {
                                 value={filters.fotoProduk}
                                 onChange={(e) => handleFilterChange(e, "fotoProduk")}
                                 className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                placeholder="Filter Kondisi Tanam"
+                                placeholder="Filter Foto Produk"
                                 />
                                 <FontAwesomeIcon
                                 icon={faFilter}
@@ -261,22 +261,7 @@ function ProdukPenyuluh() {
                                 value={filters.statusProduk}
                                 onChange={(e) => handleFilterChange(e, "statusProduk")}
                                 className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                placeholder="Filter Prakiraan Hasil Panen"
-                                />
-                                <FontAwesomeIcon
-                                icon={faFilter}
-                                className="text-gray-500 ml-2"
-                                />
-                            </div>
-                        </td>
-                        <td className="px-4 py-2 border">
-                            <div className="flex items-center">
-                                <input
-                                type="text"
-                                value={filters.realisasiHasilPanen}
-                                onChange={(e) => handleFilterChange(e, "realisasiHasilPanen")}
-                                className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                placeholder="Filter Realisasi Hasil Panen"
+                                placeholder="Filter Status Produk"
                                 />
                                 <FontAwesomeIcon
                                 icon={faFilter}
