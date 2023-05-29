@@ -12,23 +12,28 @@ const Path = () => {
       <Router>
         <Routes>
           <Route path="/" element={<DataTani />} />
+          {/* Data Tani */}
           <Route path="/data-tani/tambah" element={<TambahDataTani />} />
-          <Route path="/laporan-penyuluh" element={<LaporanPenyuluh />} />
+          <Route path="/data-tani/laporan-tanam" element={<LaporanPetani />} />
+          <Route path="/data-tani/laporan-penyuluh" element={<LaporanPenyuluh />} />
           {/* <Route path="/data-tanaman" element={<DataTanaman />} /> */}
-          <Route path="/laporan-tanam" element={<LaporanPetani />} />
+          {/* Info Tani */}
           <Route path="/info-tani" element={<InfoTani />} />
           <Route path="/info-tani/tambah" element={<TambahInfoTani />} />
-          <Route path="/event-tani" element={<EventTani />} />
-          <Route path="/event-tani/tambah" element={<TambahEventTani />} />
-          <Route path="/penyuluhan-tani/tambah" element={<TambahPenyuluhanTani />} />
+          <Route path="/into-tani/event-tani/tambah" element={<TambahEventTani />} />
+          <Route path="/info-tani/event-tani" element={<EventTani />} />
+          {/* Toko Tani */}
+          <Route path="/toko-tani/tambah-penjual" element={<TambahPenjual />} />
+          <Route path="/toko-tani/produk-petani" element={<ProdukPetani />} />
+          <Route path="/toko-tani/produk-penyuluh" element={<ProdukPenyuluh />} />
+          {/* Data Penyuluh */}
+          <Route path="/data-penyuluh/tambah" element={<TambahPenyuluhanTani />} />
+          <Route path="/data-penyuluh/presensi-kehadiran" element={<PresensiKehadiran />} />
+          <Route path="/data-penyuluh/jurnal-kegiatan" element={<JurnalKegiatan />} />
+          <Route path="/data-penyuluh/riwayat-chat" element={<DataRiwayatChat />} />
+          {/* LiveChat */}
           <Route path="/live-chat" element={<LiveChat />} />
-          <Route path="/rating-petugas" element={<RatingPetugas />} />
-          <Route path="/riwayat-chat" element={<DataRiwayatChat />} />
-          <Route path="/jurnal-kegiatan" element={<JurnalKegiatan />} />
-          <Route path="/presensi-kehadiran" element={<PresensiKehadiran />} />
-          <Route path="/tambah-penjual" element={<TambahPenjual />} />
-          <Route path="/produk-penyuluh" element={<ProdukPenyuluh />} />
-          <Route path="/produk-petani" element={<ProdukPetani />} />
+          <Route path="/live-chat/rating-petugas" element={<RatingPetugas />} />
         </Routes>
       </Router>
       <Footer />
