@@ -13,7 +13,7 @@ const Navbar = ()=>{
     
     return(
         <nav className="w-full shadow fixed top-0 left-0 right-0">
-            <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-10">
+            <div className="justify-between mx-auto lg:max-w-7xl md:items-center md:flex">
                 <div>
                     <div className="flex items-center justify-between py-3 md:py-5 md:block">
                         <a href="/">
@@ -109,7 +109,7 @@ const Navbar = ()=>{
                                 <a href="/toko-tani/tambah-penjual">Tambah Daftar Penjual</a>
                                 </li>
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
-                                <a href="/toko-tani/produk-tani">Produk Tani</a>
+                                <a href="/toko-tani/produk-petani">Produk Tani</a>
                                 </li>
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
                                 <a href="/toko-tani/produk-penyuluh">Produk Penyuluh</a>
