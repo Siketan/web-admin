@@ -7,7 +7,7 @@ import Navbar from "./components/navbar"
 import Footer from "./components/footer"
 const Path = () => {
   return (
-    <div >
+    <div>
       <Navbar />
       <div className="my-20">
       <Router>

@@ -12,7 +12,7 @@ const Navbar = ()=>{
     };
     
     return(
-        <nav className="w-full shadow fixed top-0 left-0 right-0">
+        <nav className="w-full shadow fixed top-0 left-0 right-0 z-[2000]" >
             <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-10">
                 <div>
                     <div className="flex items-center justify-between py-3 md:py-5 md:block">
@@ -91,7 +91,7 @@ const Navbar = ()=>{
                                 <a href="/info-tani/tambah">Tambah Data Tani</a>
                                 </li>
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
-                                <a href="/info-tani/event-tani/tambah">Tambah Event Tani</a>
+                                <a href="/event-tani/tambah">Tambah Event Tani</a>
                                 </li>
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
                                 <a href="/info-tani/event-tani">Lihat Semua Event</a>
