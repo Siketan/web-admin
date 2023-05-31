@@ -30,7 +30,7 @@ const Navbar = ()=>{
 
     
     return(
-        <nav className={`w-full shadow fixed top-0 left-0 right-0 ${isScrolled ? 'bg-white' : ''}`}>
+        <nav className={`w-full shadow fixed top-0 left-0 right-0 z-[999] ${isScrolled ? 'bg-white' : ''}`}>
             <div className="justify-between bg-white mx-auto lg:max-w-7xl md:items-center md:flex">
                 <div className="bg-white">
                     <div className="flex items-center justify-between py-3 md:py-5 md:block">

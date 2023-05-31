@@ -1,11 +1,8 @@
-// import Navbar from '../../components/navbar'
-// import Footer from '../../components/footer'
+import EditorText from "@/components/textAreaEditor"
 const DataTani = ()=>{
     return(
        <div>
-        {/* <Navbar /> */}
-        <p>Halo</p>
-        {/* <Footer /> */}
+            <EditorText/>
        </div>
     )
 }
