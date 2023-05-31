@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Map from "../../../components/map"
+// import Map from "../../../components/map"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 const LaporanPenyuluh = () => {
@@ -89,10 +89,10 @@ const LaporanPenyuluh = () => {
     });
 
     return (
-        <div>
-            <div className="overflow-x-auto">
-                <table className="min-w-full">
-                    <thead>
+        <div className="flex justify-center pt-5">
+            <div className="w-full max-w-screen-xl overflow-x-auto overflow-y-auto">
+                <table className="w-full">
+                    <thead className="bg-slate-100">
                         <tr>
                         <th className="px-4 py-2 truncate border">Kecamatan</th>
                         <th className="px-4 py-2 truncate border">Desa</th>
@@ -309,9 +309,6 @@ const LaporanPenyuluh = () => {
                         ))}
                     </tbody>
                 </table>
-            </div>
-            <div>
-                <Map/>
             </div>
         </div>
     );
