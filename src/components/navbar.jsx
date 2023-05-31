@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faUser } from '@fortawesome/free-solid-svg-icons';
 // import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
@@ -10,11 +10,29 @@ const Navbar = ()=>{
     const toggleDropdown = (dropdown) => {
         setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
     };
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+    const handleScroll = () => {
+        if (window.scrollY > 0) {
+        setIsScrolled(true);
+        } else {
+        setIsScrolled(false);
+        }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+        window.removeEventListener('scroll', handleScroll);
+    };
+    }, []);
+
     
     return(
-        <nav className="w-full shadow fixed top-0 left-0 right-0">
-            <div className="justify-between mx-auto lg:max-w-7xl md:items-center md:flex">
-                <div>
+        <nav className={`w-full shadow fixed top-0 left-0 right-0 ${isScrolled ? 'bg-white' : ''}`}>
+            <div className="justify-between bg-white mx-auto lg:max-w-7xl md:items-center md:flex">
+                <div className="bg-white">
                     <div className="flex items-center justify-between py-3 md:py-5 md:block">
                         <a href="/">
                             <h2 className="text-2xl font-bold">SIKETAN</h2>

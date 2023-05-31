@@ -87,7 +87,7 @@ function ProdukPenyuluh() {
         <div className="flex justify-center pt-5">
             <div className="w-full max-w-screen-xl overflow-x-auto overflow-y-auto">
                 <table className="w-full">
-                    <thead>
+                    <thead className="bg-slate-100">
                         <tr>
                         <th className="px-4 py-2 truncate border">Kecamatan</th>
                         <th className="px-4 py-2 truncate border">Desa</th>

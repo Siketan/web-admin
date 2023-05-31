@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faCancel } from '@fortawesome/free-solid-svg-icons';
 import InputImage from "@/components/inputImage"
+
 const TambahDataTani = ()=>{
     return(
         <div className="px-10 md:px-40 py-10">
@@ -145,7 +146,7 @@ const TambahDataTani = ()=>{
                 <div className="grid md:grid-cols-2 mt-2 md:gap-6">
                     <div className="relative z-0 w-full mb-6 group">
                         <label htmlFor="underline_select" className="text-sm text-gray-500 dark:text-gray-400 pt-5 md:pt-0">
-                            <strong>Musim Tanam Ke:  </strong>
+                            <strong>Tanggal Tanam:  </strong>
                         </label>
                         <select
                             id="underline_select"
