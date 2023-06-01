@@ -6,7 +6,7 @@ import TextInput from "@/components/uiComponents/inputComponents/textInput"
 function TambahEventTani() {
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center pt-16">
       <InputImage/>
       <MainCard width="50%" transparent className="mt-10">
         <TextInput id="namaKegiatan" name="namaKegiatan" label="Nama Kegiatan" contoh="Penyuluhan Tanaman"/>
