@@ -22,7 +22,7 @@ function EventTani() {
                 </MainCard>
             </MainCard>
         </MainCard>
-        <MainCard width="2%" noPadding gap="0" transparent>
+        <MainCard width="3%" noPadding gap="0" transparent>
             <InputCrud icon={<IconEye/>}>Liat</InputCrud>
             <InputCrud icon={<IconEdit/>}>Edit</InputCrud>
             <InputCrud icon={<IconTrash/>}>Delete</InputCrud>
