@@ -1,7 +1,7 @@
 import MainCard from "@/components/MainCard"
 import { useState } from "react";
 import InputCrud from "@/components/page/infoTani/iconCrud"
-import { IconEdit, IconEye, IconTrash, IconPlus   } from '@tabler/icons-react';
+import { IconEdit, IconEye, IconTrash, IconPlus } from '@tabler/icons-react';
 import { Image,} from '@mantine/core';
 const InfoTani = ()=>{
     const [checekd, setChecekd] = useState([false, false, false])
