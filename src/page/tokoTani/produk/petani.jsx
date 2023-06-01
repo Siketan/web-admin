@@ -84,7 +84,7 @@ function ProdukPetani() {
     });
     return (
         <div className="flex justify-center pt-5">
-            <div className="w-full max-w-screen-xl overflow-x-auto overflow-y-auto">
+            <div className="w-full max-w-screen-xl overflow-x-auto overflow-y-auto pt-10">
                 <table className="w-full">
                     <thead className="bg-slate-100">
                         <tr>
