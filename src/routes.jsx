@@ -2,7 +2,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import Coba from "./page"
-import {DataTani, TambahDataTani, LaporanPenyuluh, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, PresensiKehadiran, TambahPenjual, ProdukPenyuluh, ProdukPetani} from "./page"
+import {DataTani, TambahDataTani, LaporanPenyuluh, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, PresensiKehadiran, TambahPenjual, ProdukPenyuluh, ProdukPetani, NotFoundPage} from "./page"
 import Navbar from "./components/navbar"
 import Footer from "./components/footer"
 const Path = () => {
@@ -35,6 +35,7 @@ const Path = () => {
           {/* LiveChat */}
           <Route path="/live-chat" element={<LiveChat />} />
           <Route path="/live-chat/rating-petugas" element={<RatingPetugas />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
       </div>
