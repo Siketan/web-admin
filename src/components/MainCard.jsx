@@ -11,7 +11,9 @@ export default function MainCard({
   width,
   style,
   thinShadow,
-  forceRow
+  forceRow,
+  className,
+  radius
 }) {
   const isMobile = useMediaQuery("(max-width: 768px)");
   return (
@@ -19,7 +21,7 @@ export default function MainCard({
       style={{
         gap,
         display: "flex",
-        borderRadius: 10,
+        borderRadius: radius || 10,
         boxSizing: "border-box",
         padding: noPadding ? 0 : isMobile ? 10 : 20,
         width: fullWidth || isMobile ? "100%" : width,
@@ -34,6 +36,7 @@ export default function MainCard({
           : "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
         ...style,
       }}
+      className={className}
     >
       {children}
     </div>

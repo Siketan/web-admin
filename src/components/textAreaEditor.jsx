@@ -1,14 +1,12 @@
 import { RichTextEditor, Link } from '@mantine/tiptap';
 import { useEffect, useState } from 'react';
 import { useEditor } from '@tiptap/react';
-import { Button } from '@mantine/core';
 import Highlight from '@tiptap/extension-highlight';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
-import MainCard from './MainCard';
 
 const EditorText = ({setValue}) => {
   const [content, setContent] = useState('')
@@ -24,12 +22,12 @@ const EditorText = ({setValue}) => {
     ],
     content,
   });
-  const hanldeSave = ()=>{
-    console.log(editor.getHTML())
-  }
+  // const hanldeSave = ()=>{
+  //   console.log(editor.getHTML())
+  // }
   return (
-    <MainCard transparent noPadding center>
-    <RichTextEditor editor={editor} sx={{width:"50%"}} >
+    <>
+    <RichTextEditor editor={editor} >
       <RichTextEditor.Toolbar sticky stickyOffset={60}>
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Bold />
@@ -71,8 +69,7 @@ const EditorText = ({setValue}) => {
 
       <RichTextEditor.Content />
     </RichTextEditor>
-    <Button onClick={hanldeSave} variant='outline'>save</Button>
-    </MainCard>
+    </>
   );
 }
 
