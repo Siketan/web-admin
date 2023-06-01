@@ -19,17 +19,17 @@ import Airplane404 from "../assets/notFound.svg"
 
 const NotFoundPage = () => {
   return (
-<div className="container img-banner">
-  <div className="flex justify-center mt-5 mb-5">
-    <div className="col-md-4">
-      <img src={Airplane404} alt="airplane404" />
-    </div>
-    <div className="col-md-4 text-center mt-5">
-      <h1 className="text-4xl font-bold text-blue-600">404</h1>
-      <h3 className="text-2xl text-gray-800">Page Not Found!</h3>
+  <div className="container img-banner pt-20 md:pt-24">
+    <div className="grid md:grid-cols-2 justify-center mt-5 mb-5 px-5 md:px-0">
+      <div className="col-md-4 flex justify-end">
+        <img src={Airplane404} width={200} alt="airplane404" />
+      </div>
+      <div className="col-md-8 text-center pt-5 md:pt-24 me-auto">
+        <h1 className="text-4xl font-bold text-blue-600">404</h1>
+        <h3 className="text-2xl text-gray-800">Page Not Found!</h3>
+      </div>
     </div>
   </div>
-</div>
 
   );
 };

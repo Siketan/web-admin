@@ -5,7 +5,7 @@ import { IconEdit, IconEye, IconTrash, IconPlus   } from '@tabler/icons-react';
 import { Image,} from '@mantine/core';
 function EventTani() {
     return(
-    <div>
+    <div className="pt-16">
         {[...Array(3)]?.map((_, i)=>(
       <MainCard row transparent center gap="0" key={i}>
         <MainCard width="60%" radius="0" gap="0" style={{border:"solid 1px black"}}>
@@ -22,7 +22,7 @@ function EventTani() {
                 </MainCard>
             </MainCard>
         </MainCard>
-        <MainCard width="2%" noPadding gap="0" transparent>
+        <MainCard width="3%" noPadding gap="0" transparent>
             <InputCrud icon={<IconEye/>}>Liat</InputCrud>
             <InputCrud icon={<IconEdit/>}>Edit</InputCrud>
             <InputCrud icon={<IconTrash/>}>Delete</InputCrud>

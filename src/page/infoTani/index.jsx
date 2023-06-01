@@ -24,7 +24,7 @@ const InfoTani = ()=>{
         }
     }
     return(
-    <div>
+    <div className="pt-16">
         <div className="flex justify-center gap-3">
             <div className="flex justify-center">
                 <div className="self-center h-[20px] w-[20px] border border-black me-1 flex justify-center">

@@ -5,14 +5,14 @@ import TextInput from "@/components/uiComponents/inputComponents/textInput"
 import { IconPlus, IconX, IconDeviceFloppy} from '@tabler/icons-react';
 const TambahInfoTani = ()=>{
     return(
-        <MainCard transparent row center>
+        <MainCard transparent row center style={{paddingTop:"50px"}}>
             <MainCard width="80%" >
                 <h1 className="text-center">Tambahkan Data Tani</h1>
                 <MainCard transparent gap="0">
                     <MainCard transparent noPadding  width="40%">
                         <TextInput id="judul" name="judul" label="Judul" />
                     </MainCard >
-                    <MainCard transparent noPadding row gap="20rem">
+                    <MainCard transparent noPadding row gap="15rem">
                         <MainCard transparent noPadding gap="0">
                             <span>26 Oktober 2023</span>
                             <span>Dibuat Oleh: @suheri_26</span>
