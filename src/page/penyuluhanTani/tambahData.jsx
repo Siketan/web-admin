@@ -6,7 +6,7 @@ import InputImage from "@/components/inputImage"
 const TambahPenyuluhanTani = ()=>{
     return(
         <div className="px-10 md:px-40 py-10">
-            <div className="shadow-md rounded-xl px-5 py-5">
+            <div className="shadow-xl rounded-xl px-5 py-5">
                 <form>
                     <div className="flex items-center justify-center">
                     <InputImage/>

@@ -83,8 +83,8 @@ function ProdukPetani() {
         });
     });
     return (
-        <div className="flex justify-center pt-5">
-            <div className="w-full max-w-screen-xl overflow-x-auto overflow-y-auto pt-10">
+        <div className="flex justify-center pt-12">
+            <div className="w-full max-w-screen-xl shadow-xl rounded-lg overflow-x-auto overflow-y-auto pt-20">
                 <table className="w-full">
                     <thead className="bg-slate-100">
                         <tr>

@@ -1,11 +1,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { faCancel } from '@fortawesome/free-solid-svg-icons';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 const TambahTokoTani = ()=>{
     return(
         <div className="px-10 md:px-40 py-10">
-            <div className="shadow-md rounded-xl px-5 py-5">
+            <div className="shadow-xl rounded-xl px-5 py-5">
                 <form>
+                        <div className="w-max lg:w-full py-5 flex justify-end">
+                            <button type="submit" className="text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto">
+                                <FontAwesomeIcon icon={faSearch} className="mr-2" />
+                                Cek NIK
+                            </button>
+                        </div>
                         <div className="grid md:grid-cols-2 md:gap-6">
                             <div className="relative z-0 w-full mb-6 group">
                                 <input type="text" name="nik" id="nik" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
@@ -121,7 +128,7 @@ const TambahTokoTani = ()=>{
                             type="submit"
                             className="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-orange-800"
                         >
-                            <FontAwesomeIcon icon={faCancel} className="mr-2" />
+                            <FontAwesomeIcon icon={faClose} className="mr-2" />
                             Batalkan
                         </button>
                     </div>
