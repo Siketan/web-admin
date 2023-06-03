@@ -5,7 +5,7 @@ import TextInput from "@/components/uiComponents/inputComponents/textInput"
 import { IconPlus, IconX, IconDeviceFloppy} from '@tabler/icons-react';
 const TambahInfoTani = ()=>{
     return(
-        <MainCard transparent row center >
+        <MainCard transparent row center style={{paddingTop:"50px"}}>
             <MainCard width="80%" >
                 <h1 className="text-center">Tambahkan Data Tani</h1>
                 <MainCard transparent gap="0">

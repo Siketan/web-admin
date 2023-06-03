@@ -1,11 +1,26 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { faCancel } from '@fortawesome/free-solid-svg-icons';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 function LaporanPetani() {
     return (
         <div className="px-10 md:px-40 py-10">
-            <div className="shadow-md rounded-xl px-5 py-5">
+            <div className="shadow-xl rounded-xl px-5 py-5">
                 <form>
+                        <div className="flex space-x-4 justify-end w-full lg:w-full py-5">
+                            <button type="submit" className="text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto pr-5 hidden md:block">
+                                <FontAwesomeIcon icon={faSearch} className="mr-2" />
+                                Cek NIK
+                            </button>
+                            <button type="submit" className="text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto pr-5 md:hidden">
+                                <FontAwesomeIcon icon={faSearch} className="mr-2" /> <br />
+                                Cek NIK
+                            </button>
+                            <button type="submit" className="text-white bg-orange-500 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto">
+                                <FontAwesomeIcon icon={faPlus} className="mr-2" />
+                                Daftarkan
+                            </button>
+                        </div>
                         <div className="relative z-0 w-full mb-6 group">
                             <input type="text" name="nik" id="nik" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                             <label htmlFor="nik" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>Cek NIK</strong> (Contoh: 3514002000000001)</label>
@@ -123,8 +138,8 @@ function LaporanPetani() {
                             type="submit"
                             className="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-orange-800"
                         >
-                            <FontAwesomeIcon icon={faCancel} className="mr-2" />
-                            Cancel
+                            <FontAwesomeIcon icon={faClose} className="mr-2" />
+                            Batalkan
                         </button>
                     </div>
                 </form>

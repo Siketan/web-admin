@@ -68,9 +68,10 @@ function PresensiKehadiran() {
         });
     });
     return (
-        <div className="flex justify-center pt-5">
-            <div className="w-full max-w-screen-xl overflow-x-auto overflow-y-auto pt-10">
-                <table className="w-full">
+        <div className="flex justify-center pt-12">
+            <div className="w-full max-w-screen-xl shadow-xl rounded-lg overflow-x-auto overflow-y-auto">
+                <div className="pt-20">
+                    <table className="w-full">
                     <thead className="bg-slate-100">
                         <tr>
                         <th className="px-4 py-2 truncate border">NIP Penyuluh</th>
@@ -202,7 +203,8 @@ function PresensiKehadiran() {
                         </tr>
                         ))}
                     </tbody>
-                </table>
+                    </table>
+                </div>
             </div>
         </div>
     )
