@@ -38,8 +38,8 @@ const TambahInfoTani = ()=>{
                 </MainCard>
                 <EditorText/>
                 <MainCard transparent row style={{justifyContent:"end"}}>
-                    <Button leftIcon={<IconDeviceFloppy size="1rem" />} variant='outline'>save</Button>
-                    <Button leftIcon={<IconX size="1rem" />} variant='outline'>save</Button>
+                    <Button leftIcon={<IconDeviceFloppy size="1rem" />} variant='outline'>Simpan</Button>
+                    <Button leftIcon={<IconX size="1rem" />} variant='outline'>Batalkan</Button>
                 </MainCard>
             </MainCard>
         </MainCard>

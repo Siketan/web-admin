@@ -52,7 +52,7 @@ const InfoTani = ()=>{
                 <Image width={200} height={120} src={null} alt="With default placeholder" withPlaceholder />
                 <MainCard transparent noPadding>
                     <MainCard row transparent noPadding>
-                        <p><span className="font-medium">Dibuat Oleh : </span>Fian</p>
+                        <p><span className="font-medium">Dibuat Oleh : </span>Jaka</p>
                         <p><span className="font-medium">Tanggal : </span>yg Tidak Di Tentukan</p>
                         <p><span className="font-medium">Status : </span>Duda Herang</p>
                         <p><span className="font-medium">Kategori : </span>DiTinggal Pergi</p>
@@ -61,10 +61,10 @@ const InfoTani = ()=>{
                 </MainCard>
             </MainCard>
         </MainCard>
-        <MainCard width="2%" noPadding gap="0" transparent>
+        <MainCard width="3%" noPadding gap="0" transparent>
             <InputCrud icon={<IconEye/>}>Liat</InputCrud>
             <InputCrud icon={<IconEdit/>}>Edit</InputCrud>
-            <InputCrud icon={<IconTrash/>}>Delete</InputCrud>
+            <InputCrud icon={<IconTrash/>}>Hapus</InputCrud>
         </MainCard>
       </MainCard>       
         ))}
