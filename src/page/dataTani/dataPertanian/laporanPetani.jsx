@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSave } from '@fortawesome/free-solid-svg-icons';
 function LaporanPetani() {
     return (
         <div className="px-10 md:px-40 py-10">
@@ -131,7 +132,7 @@ function LaporanPetani() {
                             type="submit"
                             className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-orange-800"
                         >
-                            <FontAwesomeIcon icon={faPlus} className="mr-2" />
+                            <FontAwesomeIcon icon={faSave} className="mr-2" />
                             Simpan
                         </button>
                         <button

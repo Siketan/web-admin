@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 function JurnalKegiatan() {
     const [filters, setFilters] = useState({
@@ -78,7 +79,13 @@ function JurnalKegiatan() {
     return (
         <div className="flex justify-center pt-12">
             <div className="w-full max-w-screen-xl shadow-xl rounded-lg overflow-x-auto overflow-y-auto">
-                <div className="pt-20">
+            <div className="w-max lg:w-full pt-10 px-10">
+                    <button type="submit" className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto">
+                        <FontAwesomeIcon icon={faPlus} className="mr-2" />
+                        Tambah Jurnal
+                    </button>
+                </div>
+                <div className="pt-10">
                     <table className="w-full">
                         <thead className="bg-slate-100">
                             <tr>

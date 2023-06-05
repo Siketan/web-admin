@@ -14,7 +14,7 @@ function EventTani() {
                 <Image width={200} height={120} src={null} alt="With default placeholder" withPlaceholder />
                 <MainCard transparent noPadding>
                     <MainCard row transparent noPadding>
-                        <p><span className="font-medium">Dibuat Oleh : </span>Fian</p>
+                        <p><span className="font-medium">Dibuat Oleh : </span>Jaka</p>
                         <p>26/10/2023</p>
                         <p><span className="font-medium">Status : </span>Lewat/Sudah/AkanTerlakasana</p>
                     </MainCard>
@@ -23,9 +23,9 @@ function EventTani() {
             </MainCard>
         </MainCard>
         <MainCard width="3%" noPadding gap="0" transparent>
-            <InputCrud icon={<IconEye/>}>Liat</InputCrud>
+            <InputCrud icon={<IconEye/>}>Lihat</InputCrud>
             <InputCrud icon={<IconEdit/>}>Edit</InputCrud>
-            <InputCrud icon={<IconTrash/>}>Delete</InputCrud>
+            <InputCrud icon={<IconTrash/>}>Hapus</InputCrud>
         </MainCard>
       </MainCard>       
         ))}

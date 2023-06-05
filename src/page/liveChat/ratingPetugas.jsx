@@ -83,7 +83,7 @@ function RatingPetugas (){
         });
     });
     return(
-        <div className="flex justify-center">
+        <div className="flex justify-center pt-12">
             <div className="w-full max-w-screen-xl shadow-xl rounded-lg overflow-x-auto overflow-y-auto">
                 <div className="pt-20">
                     <table className="w-full">
