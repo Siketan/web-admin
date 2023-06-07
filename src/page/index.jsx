@@ -1,4 +1,3 @@
-import DataTani from "./dataTani"
 import TambahDataTani from "./dataTani/tambahData"
 import LaporanPenyuluh from "./dataTani/dataPertanian/laporanPenyuluhan"
 import LaporanPetani from "./dataTani/dataPertanian/laporanPetani"
@@ -36,4 +35,4 @@ const NotFoundPage = () => {
   );
 };
 
-export {DataTani, TambahDataTani, LaporanPenyuluh, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, PresensiKehadiran, TambahPenjual, ProdukPenyuluh, ProdukPetani, Login, Register, NotFoundPage}
+export {TambahDataTani, LaporanPenyuluh, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, PresensiKehadiran, TambahPenjual, ProdukPenyuluh, ProdukPetani, Login, Register, NotFoundPage}
