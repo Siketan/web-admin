@@ -3,6 +3,7 @@ import { useState } from "react";
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSave } from '@fortawesome/free-solid-svg-icons';
 import InputImage from "@/components/inputImage"
 import MainCard from "@/components/MainCard"
 const TambahDataTani = ()=>{
@@ -185,7 +186,7 @@ const TambahDataTani = ()=>{
                         type="submit"
                         className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-orange-800"
                         >
-                        <FontAwesomeIcon icon={faPlus} className="mr-2" />
+                        <FontAwesomeIcon icon={faSave} className="mr-2" />
                         Simpan
                     </button>
                     <button
