@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faUser } from '@fortawesome/free-solid-svg-icons';
-// import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = ()=>{
     const [navbar, setNavbar] = useState(false);
@@ -170,6 +169,10 @@ const Navbar = ()=>{
                                 </li>
                             </ul>
                             )}
+                        </li>
+                        <li className="text-black">
+                                <FontAwesomeIcon icon={faRightToBracket} className="mr-2" />
+                                <a href="/login">Login</a>
                         </li>
                         {/* <li>
                             <div className="text-black">
