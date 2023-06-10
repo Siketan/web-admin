@@ -33,7 +33,10 @@ const RegisterPage = () => {
       setErrors(validationErrors);
     } else {
       // Kirim data pendaftaran ke server atau lakukan tindakan lainnya
-      console.log('Data pendaftaran:', { name, email, password });
+      const data = {
+        nama, email, password, no_wa
+      }
+      Register(data);
     }
   };
 
@@ -113,7 +116,7 @@ const RegisterPage = () => {
             type="submit"
             className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md w-full"
             >
-            Register
+            Masuk
         </button>
         <p className="text-gray-700 text-sm mt-4">
             Sudah punya akun?{' '}

@@ -27,7 +27,10 @@ const handleSubmit = (e) => {
     if (Object.keys(validationErrors).length > 0) {
     setErrors(validationErrors);
     } else {
-    console.log('Data login:', { email, password });
+        const data = {
+            email, password
+        }
+        Login(data)
     }
 };
 
