@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import {Register} from "@/infrastruture"
 const RegisterPage = () => {
-  const [nik, setNik] = useState('');
-  const [name, setName] = useState('');
+  const [no_wa, StNoWa] = useState('');
+  const [nama, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -13,10 +13,10 @@ const RegisterPage = () => {
 
     // Validasi form
     const validationErrors = {};
-    if (!nik) {
+    if (!no_wa) {
       validationErrors.nik = 'NIK harus diisi';
     }
-    if (!name) {
+    if (!nama) {
       validationErrors.name = 'Nama harus diisi';
     }
     if (!email) {
@@ -45,15 +45,15 @@ const RegisterPage = () => {
       >
         <h2 className="text-3xl text-center font-bold mb-6">Pendaftaran Akun</h2>
         <div className="mb-4">
-          <label htmlFor="nik" className="block text-gray-700 font-medium mb-1">
-            NIK
+          <label htmlFor="NoWa" className="block text-gray-700 font-medium mb-1">
+            No Wa
           </label>
           <input
             type="text"
-            id="nik"
-            className={`border rounded-md px-3 py-2 w-full ${errors.nik ? 'border-red-500' : 'border-gray-300'}`}
-            value={nik}
-            onChange={(e) => setNik(e.target.value)}
+            id="NoWa"
+            className={`border rounded-md px-3 py-2 w-full ${errors.NoWa ? 'border-red-500' : 'border-gray-300'}`}
+            value={no_wa}
+            onChange={(e) => StNoWa(e.target.value)}
           />
           {errors.nik && <p className="text-red-500 text-sm mt-1">{errors.nik}</p>}
         </div>
@@ -64,8 +64,8 @@ const RegisterPage = () => {
           <input
             type="text"
             id="name"
-            className={`border rounded-md px-3 py-2 w-full ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
-            value={name}
+            className={`border rounded-md px-3 py-2 w-full ${errors.nama ? 'border-red-500' : 'border-gray-300'}`}
+            value={nama}
             onChange={(e) => setName(e.target.value)}
           />
           {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
