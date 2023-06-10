@@ -3,6 +3,7 @@ import InputImage from "@/components/inputImage"
 import MainCard from "@/components/MainCard"
 import TimeInput from "@/components/uiComponents/inputComponents/timeInput" 
 import TextInput from "@/components/uiComponents/inputComponents/textInput" 
+import {AddEventTani} from "@/infrastruture"
 function TambahEventTani() {
 
   return (

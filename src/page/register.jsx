@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import {Register} from "@/infrastruture"
 const RegisterPage = () => {
   const [nik, setNik] = useState('');
   const [name, setName] = useState('');

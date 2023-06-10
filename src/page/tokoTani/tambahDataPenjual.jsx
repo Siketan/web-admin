@@ -3,6 +3,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
+import {AddPenjual} from "@/infrastruture"
 const TambahTokoTani = ()=>{
     return(
         <div className="px-10 md:px-40 py-10">

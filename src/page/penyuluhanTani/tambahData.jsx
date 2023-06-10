@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCancel } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import InputImage from "@/components/inputImage"
-
+import {AddPenyuluh} from "@/infrastruture"
 const TambahPenyuluhanTani = ()=>{
     return(
         <div className="px-10 md:px-40 py-10">
