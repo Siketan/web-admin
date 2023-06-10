@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {Login} from "@/infrastruture"
+// import {Login} from "@/infrastruture"
 const LoginPage = () => {
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
@@ -40,7 +40,7 @@ return (
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded px-8 pt-8 pb-8 w-full sm:max-w-md"
     >
-        <h2 className="text-3xl text-center font-bold mb-6">Selamat Datang di Website Siketan</h2>
+        <h2 className="text-3xl text-center font-bold mb-6">Selamat Datang di Website SIKETAN</h2>
         <p className="text-lg text-center mb-6">Silahkan login terlebih dahulu</p>
         <div className="mb-4">
         <label htmlFor="email" className="block text-gray-700 font-medium mb-1">
