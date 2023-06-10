@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://papierflieger-api.herokuapp.com/api",
+  baseURL: "https://siketan-api.up.railway.app",
   headers: {
     Accept: "application/json",
     Authorization: `${localStorage.getItem("token") || ""}`,
