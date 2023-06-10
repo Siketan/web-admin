@@ -1,25 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const RegisterPage = () => {
+  const [nik, setNik] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
 
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, []);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Validasi form
     const validationErrors = {};
+    if (!nik) {
+      validationErrors.nik = 'NIK harus diisi';
+    }
     if (!name) {
       validationErrors.name = 'Nama harus diisi';
     }
@@ -48,6 +44,19 @@ const RegisterPage = () => {
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 w-full sm:max-w-md"
       >
         <h2 className="text-3xl text-center font-bold mb-6">Pendaftaran Akun</h2>
+        <div className="mb-4">
+          <label htmlFor="nik" className="block text-gray-700 font-medium mb-1">
+            NIK
+          </label>
+          <input
+            type="text"
+            id="nik"
+            className={`border rounded-md px-3 py-2 w-full ${errors.nik ? 'border-red-500' : 'border-gray-300'}`}
+            value={nik}
+            onChange={(e) => setNik(e.target.value)}
+          />
+          {errors.nik && <p className="text-red-500 text-sm mt-1">{errors.nik}</p>}
+        </div>
         <div className="mb-4">
           <label htmlFor="name" className="block text-gray-700 font-medium mb-1">
             Nama
@@ -100,15 +109,18 @@ const RegisterPage = () => {
           />
           {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
         </div>
-        <div className="flex items-center justify-between">
-          <button
+        <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Daftar
-          </button>
-          <p className="text-gray-600 text-sm">Sudah punya akun? <a href="/login" className="text-blue-500">Masuk</a></p>
-        </div>
+            className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md w-full"
+            >
+            Masuk
+        </button>
+        <p className="text-gray-700 text-sm mt-4">
+            Sudah punya akun?{' '}
+            <a href="/login" className="text-blue-500 hover:text-blue-600 font-medium">
+                Masuk di sini
+            </a>
+        </p>
       </form>
     </div>
   );

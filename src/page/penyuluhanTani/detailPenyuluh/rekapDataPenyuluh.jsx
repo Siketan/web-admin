@@ -2,11 +2,11 @@ import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { faDownload} from '@fortawesome/free-solid-svg-icons';
-const LaporanPenyuluh = () => {
+const RekapDataPenyuluh = () => {
     const [filters, setFilters] = useState({
         kecamatan: "",
         desa: "",
-        namaPetani: "",
+        namaPenyuluh: "",
         komoditas: "",
         jenisTanaman: "",
         musimTanam: "",
@@ -32,7 +32,7 @@ const LaporanPenyuluh = () => {
         desa: "Desa 1",
         nik: "350816350816",
         password: "halo12345678",
-        namaPetani: "John Doe",
+        namaPenyuluh: "John Doe",
         komoditas: "Padi",
         jenisTanaman: "Tumbuhan",
         musimTanam: "Musim 1",
@@ -49,7 +49,7 @@ const LaporanPenyuluh = () => {
         desa: "Wonorejo",
         nik: "350816350817",
         password: "halo12345679",
-        namaPetani: "John Doe",
+        namaPenyuluh: "John Doe",
         komoditas: "Padi",
         jenisTanaman: "Tumbuhan",
         musimTanam: "Musim 1",
@@ -64,7 +64,7 @@ const LaporanPenyuluh = () => {
         id: 3,
         kecamatan: "testing",
         desa: "Klakah",
-        namaPetani: "John Doe",
+        namaPenyuluh: "John Doe",
         nik: "350816350818",
         password: "halo12345610",
         komoditas: "Padi",
@@ -111,7 +111,7 @@ const LaporanPenyuluh = () => {
                             <th className="px-4 py-2 truncate border">Desa</th>
                             <th className="px-4 py-2 truncate border">NIK</th>
                             <th className="px-4 py-2 truncate border">Password</th>
-                            <th className="px-4 py-2 truncate border">Nama Petani</th>
+                            <th className="px-4 py-2 truncate border">Nama Penyuluh</th>
                             <th className="px-4 py-2 truncate border">Komoditas</th>
                             <th className="px-4 py-2 truncate border">Jenis Tanaman</th>
                             <th className="px-4 py-2 truncate border">Musim Tanam</th>
@@ -189,10 +189,10 @@ const LaporanPenyuluh = () => {
                                 <div className="flex items-center">
                                     <input
                                     type="text"
-                                    value={filters.namaPetani}
-                                    onChange={(e) => handleFilterChange(e, "namaPetani")}
+                                    value={filters.namaPenyuluh}
+                                    onChange={(e) => handleFilterChange(e, "namaPenyuluh")}
                                     className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                    placeholder="Filter Nama Petani"
+                                    placeholder="Filter Nama Penyuluh"
                                     />
                                     <FontAwesomeIcon
                                     icon={faFilter}
@@ -342,7 +342,7 @@ const LaporanPenyuluh = () => {
                                 <td className="px-4 py-2 border">{item.desa}</td>
                                 <td className="px-4 py-2 border">{item.nik}</td>
                                 <td className="px-4 py-2 border">{item.password}</td>
-                                <td className="px-4 py-2 border">{item.namaPetani}</td>
+                                <td className="px-4 py-2 border">{item.namaPenyuluh}</td>
                                 <td className="px-4 py-2 border">{item.komoditas}</td>
                                 <td className="px-4 py-2 border">{item.jenisTanaman}</td>
                                 <td className="px-4 py-2 border">{item.musimTanam}</td>
@@ -362,4 +362,4 @@ const LaporanPenyuluh = () => {
     );
 };
 
-export default LaporanPenyuluh
+export default RekapDataPenyuluh

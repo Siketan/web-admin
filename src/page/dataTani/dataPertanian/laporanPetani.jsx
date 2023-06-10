@@ -94,15 +94,15 @@ function LaporanPetani() {
                             </div>
                         </div>
                         <div className="grid md:grid-cols-2 mt-2 md:gap-6">
-                            <div className="relative z-0 w-full mb-6 group">
-                                <label htmlFor="underline_select" className="text-sm dark:text-gray-400 pt-5 md:pt-0">
+                             <div className="relative z-0 w-full mb-6 group">
+                                <label htmlFor="underline_select" className="text-sm text-gray-500 dark:text-gray-400 pt-5 md:pt-0">
                                     <strong>Pilih komoditas: </strong>
                                 </label>
                                 <select
                                     id="underline_select"
                                     className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                                 >
-                                    <option value="US">Sewa</option>
+                                    <option value="US">Pilih Komoditas</option>
                                     <option value="CA">Milik Sendiri</option>
                                 </select>
                             </div>
