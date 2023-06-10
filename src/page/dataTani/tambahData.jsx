@@ -6,6 +6,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import InputImage from "@/components/inputImage"
 import MainCard from "@/components/MainCard"
+import {DaftarTaniAdd} from "@/infrastruture"
 const TambahDataTani = ()=>{
     const [countData, setCountData] = useState(1)
     const handleClikAdd = ()=>{

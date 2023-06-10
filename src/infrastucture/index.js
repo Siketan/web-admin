@@ -73,8 +73,8 @@ export const GetInfoTani = async()=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
-
-export const AddEvebtTani = async(data)=>{
+    
+export const AddEventTani = async(data)=>{
     try {
       const response = await Api.post("/event-tani/add", data);
       SweatAlert(String(response.data.message), 'success');
@@ -82,7 +82,7 @@ export const AddEvebtTani = async(data)=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
-export const GetEvebtTani = async()=>{
+export const GetEventTani = async()=>{
     try {
       const response = await Api.get("/event-tani");
       return response
@@ -150,7 +150,7 @@ export const GetPreseiKehadiran = async()=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
-export const JurnalKegiatan = async()=>{
+export const GatJurnalKegiatan = async()=>{
     try {
       const response = await Api.get("/jurnal-kegiatan");
       return response
@@ -158,7 +158,7 @@ export const JurnalKegiatan = async()=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
-export const RiwayatChat = async()=>{
+export const GetRiwayatChat = async()=>{
     try {
       const response = await Api.get("/riwayat-chat");
       return response

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { faDownload} from '@fortawesome/free-solid-svg-icons';
+import {GetLaporanTani} from "@/infrastruture"
 const LaporanPenyuluh = () => {
     const [filters, setFilters] = useState({
         kecamatan: "",

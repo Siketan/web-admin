@@ -3,6 +3,7 @@ import { useState } from "react";
 import InputCrud from "@/components/page/infoTani/IconCrud"
 import { IconEdit, IconEye, IconTrash, IconPlus } from '@tabler/icons-react';
 import { Image,} from '@mantine/core';
+import {GetInfoTani} from "@/infrastruture"
 const InfoTani = ()=>{
     const [checekd, setChecekd] = useState([false, false, false])
     const handleCheckd = (e)=>{

@@ -3,6 +3,7 @@ import { Radio, Group, Button } from '@mantine/core';
 import MainCard from "@/components/MainCard"
 import TextInput from "@/components/uiComponents/inputComponents/textInput" 
 import { IconPlus, IconX, IconDeviceFloppy} from '@tabler/icons-react';
+import {AddInfoTani} from "@/infrastruture"
 const TambahInfoTani = ()=>{
     return(
         <MainCard transparent row center style={{paddingTop:"50px"}}>
