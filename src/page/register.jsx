@@ -113,7 +113,7 @@ const RegisterPage = () => {
             type="submit"
             className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md w-full"
             >
-            Masuk
+            Register
         </button>
         <p className="text-gray-700 text-sm mt-4">
             Sudah punya akun?{' '}
