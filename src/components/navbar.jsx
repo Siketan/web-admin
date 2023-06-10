@@ -173,10 +173,14 @@ const Navbar = ()=>{
                             </ul>
                             )}
                         </li>
-                        <FontAwesomeIcon
+                            
+                        <li className="text-white0 px-5 py-2 rounded-md box-shadow">
+                            <a href="/notification"><FontAwesomeIcon
                                 icon={faBell}
-                                className="text-gray-500 hover:text-black ml-2 cursor-pointer"
+                                className="text-gray-500 hover:text-black cursor-pointer"
                                 />
+                            </a>
+                        </li>
                         <li className="text-white bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-md box-shadow">
                                 <a href="/login">Login</a>
                         </li>

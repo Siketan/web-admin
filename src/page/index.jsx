@@ -17,6 +17,7 @@ import ProdukPenyuluh from "./tokoTani/produk/penyuluh"
 import ProdukPetani from "./tokoTani/produk/petani"
 import Login from "./login"
 import Register from "./register"
+import Notification from "./notification"
 import Airplane404 from "../assets/notFound.svg"
 
 const NotFoundPage = () => {
@@ -36,4 +37,4 @@ const NotFoundPage = () => {
   );
 };
 
-export {TambahDataTani, RekapDataPetani, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, PresensiKehadiran, TambahPenjual, ProdukPenyuluh, ProdukPetani, Login, Register, NotFoundPage, RekapDataPenyuluh}
+export {TambahDataTani, RekapDataPetani, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, PresensiKehadiran, TambahPenjual, ProdukPenyuluh, ProdukPetani, Login, Register, NotFoundPage, Notification, RekapDataPenyuluh}

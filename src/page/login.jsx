@@ -69,7 +69,7 @@ return (
             type="submit"
             className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md w-full"
             >
-            Masuk
+            Login
         </button>
         <p className="text-gray-700 text-sm mt-4">
             Belum punya akun?{' '}

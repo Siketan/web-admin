@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
-import { faDownload} from '@fortawesome/free-solid-svg-icons';
+import { faFilter, faEdit, faTrash, faDownload } from '@fortawesome/free-solid-svg-icons';
 const RekapDataPenyuluh = () => {
     const [filters, setFilters] = useState({
         kecamatan: "",
@@ -107,20 +106,21 @@ const RekapDataPenyuluh = () => {
                     <table className="w-full">
                         <thead className="bg-slate-100">
                             <tr>
-                            <th className="px-4 py-2 truncate border">Kecamatan</th>
-                            <th className="px-4 py-2 truncate border">Desa</th>
-                            <th className="px-4 py-2 truncate border">NIK</th>
-                            <th className="px-4 py-2 truncate border">Password</th>
-                            <th className="px-4 py-2 truncate border">Nama Penyuluh</th>
-                            <th className="px-4 py-2 truncate border">Komoditas</th>
-                            <th className="px-4 py-2 truncate border">Jenis Tanaman</th>
-                            <th className="px-4 py-2 truncate border">Musim Tanam</th>
-                            <th className="px-4 py-2 truncate border">Luas Lahan</th>
-                            <th className="px-4 py-2 truncate border">Tanggal Tanam</th>
-                            <th className="px-4 py-2 truncate border">Prakiraan Tanggal Panen</th>
-                            <th className="px-4 py-2 truncate border">Kondisi Tanam</th>
-                            <th className="px-4 py-2 truncate border">Prakiraan Hasil Panen</th>
-                            <th className="px-4 py-2 truncate border">Realisasi Hasil Panen</th>
+                                <th className="px-4 py-2 truncate border">Kecamatan</th>
+                                <th className="px-4 py-2 truncate border">Desa</th>
+                                <th className="px-4 py-2 truncate border">NIK</th>
+                                <th className="px-4 py-2 truncate border">Password</th>
+                                <th className="px-4 py-2 truncate border">Nama Penyuluh</th>
+                                <th className="px-4 py-2 truncate border">Komoditas</th>
+                                <th className="px-4 py-2 truncate border">Jenis Tanaman</th>
+                                <th className="px-4 py-2 truncate border">Musim Tanam</th>
+                                <th className="px-4 py-2 truncate border">Luas Lahan</th>
+                                <th className="px-4 py-2 truncate border">Tanggal Tanam</th>
+                                <th className="px-4 py-2 truncate border">Prakiraan Tanggal Panen</th>
+                                <th className="px-4 py-2 truncate border">Kondisi Tanam</th>
+                                <th className="px-4 py-2 truncate border">Prakiraan Hasil Panen</th>
+                                <th className="px-4 py-2 truncate border">Realisasi Hasil Panen</th>
+                                <th className="px-4 py-2 truncate border">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -337,22 +337,32 @@ const RekapDataPenyuluh = () => {
                             </td>
                             </tr>
                             {filteredData.map((item) => (
-                            <tr key={item.id}>
-                                <td className="px-4 py-2 border">{item.kecamatan}</td>
-                                <td className="px-4 py-2 border">{item.desa}</td>
-                                <td className="px-4 py-2 border">{item.nik}</td>
-                                <td className="px-4 py-2 border">{item.password}</td>
-                                <td className="px-4 py-2 border">{item.namaPenyuluh}</td>
-                                <td className="px-4 py-2 border">{item.komoditas}</td>
-                                <td className="px-4 py-2 border">{item.jenisTanaman}</td>
-                                <td className="px-4 py-2 border">{item.musimTanam}</td>
-                                <td className="px-4 py-2 border">{item.luasLahan}</td>
-                                <td className="px-4 py-2 border">{item.tanggalTanam}</td>
-                                <td className="px-4 py-2 border">{item.prakiraanTanggalPanen}</td>
-                                <td className="px-4 py-2 border">{item.kondisiTanam}</td>
-                                <td className="px-4 py-2 border">{item.prakiraanHasilPanen}</td>
-                                <td className="px-4 py-2 border">{item.realisasiHasilPanen}</td>
-                            </tr>
+                                <tr key={item.id}>
+                                    <td className="px-4 py-2 border">{item.kecamatan}</td>
+                                    <td className="px-4 py-2 border">{item.desa}</td>
+                                    <td className="px-4 py-2 border">{item.nik}</td>
+                                    <td className="px-4 py-2 border">{item.password}</td>
+                                    <td className="px-4 py-2 border">{item.namaPenyuluh}</td>
+                                    <td className="px-4 py-2 border">{item.komoditas}</td>
+                                    <td className="px-4 py-2 border">{item.jenisTanaman}</td>
+                                    <td className="px-4 py-2 border">{item.musimTanam}</td>
+                                    <td className="px-4 py-2 border">{item.luasLahan}</td>
+                                    <td className="px-4 py-2 border">{item.tanggalTanam}</td>
+                                    <td className="px-4 py-2 border">{item.prakiraanTanggalPanen}</td>
+                                    <td className="px-4 py-2 border">{item.kondisiTanam}</td>
+                                    <td className="px-4 py-2 border">{item.prakiraanHasilPanen}</td>
+                                    <td className="px-4 py-2 border">{item.realisasiHasilPanen}</td>
+                                    <td className="px-4 py-2 border">
+                                        <FontAwesomeIcon
+                                            icon={faEdit}
+                                            className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
+                                        />
+                                        <FontAwesomeIcon
+                                            icon={faTrash}
+                                            className="cursor-pointer text-red-500 hover:text-red-600"
+                                        />
+                                    </td>
+                                </tr>
                             ))}
                         </tbody>
                 </table>

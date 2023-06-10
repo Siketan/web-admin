@@ -2,7 +2,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import Coba from "./page"
-import {TambahDataTani, RekapDataPetani, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, PresensiKehadiran, TambahPenjual, ProdukPenyuluh, ProdukPetani, Login, Register, NotFoundPage, RekapDataPenyuluh} from "./page"
+import {TambahDataTani, RekapDataPetani, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, PresensiKehadiran, TambahPenjual, ProdukPenyuluh, ProdukPetani, Login, Register, NotFoundPage, Notification, RekapDataPenyuluh} from "./page"
 import Navbar from "./components/navbar"
 import Footer from "./components/footer"
 const Path = () => {
@@ -15,6 +15,7 @@ const Path = () => {
           <Route path="/" element={<EventTani />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/notification" element={<Notification />} />
           {/* Data Tani */}
           <Route path="/data-tani/tambah" element={<TambahDataTani />} />
           <Route path="/data-tani/laporan-tanam" element={<LaporanPetani />} />
