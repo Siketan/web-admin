@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = ()=>{
     const [navbar, setNavbar] = useState(false);
@@ -84,13 +84,13 @@ const Navbar = ()=>{
                             {activeDropdown === "data-tani" && (
                             <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
-                                <a href="/data-tani/tambah">Tambah Daftar Tani</a>
+                                    <a href="/data-tani/tambah">Tambah Daftar Tani</a>
                                 </li>
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
-                                <a href="/data-tani/laporan-tanam">Tambah Laporan Tanam</a>
+                                    <a href="/data-tani/laporan-tanam">Tambah Laporan Tanam</a>
                                 </li>
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
-                                <a href="/data-tani/laporan-penyuluh">Laporan Penyuluh</a>
+                                    <a href="/data-tani/rekap-petani">Rekap Data Petani</a>
                                 </li>
                             </ul>
                             )}
@@ -102,16 +102,16 @@ const Navbar = ()=>{
                             {activeDropdown === "info-tani" && (
                             <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
-                                <a href="/info-tani">Info Tani</a>
+                                    <a href="/info-tani">Info Tani</a>
                                 </li>
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
-                                <a href="/info-tani/tambah">Tambah Data Tani</a>
+                                    <a href="/info-tani/tambah">Tambah Data Tani</a>
                                 </li>
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
-                                <a href="/event-tani/tambah">Tambah Event Tani</a>
+                                    <a href="/event-tani/tambah">Tambah Event Tani</a>
                                 </li>
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
-                                <a href="/info-tani/event-tani">Lihat Semua Event</a>
+                                    <a href="/info-tani/event-tani">Lihat Semua Event</a>
                                 </li>
                             </ul>
                             )}
@@ -123,13 +123,13 @@ const Navbar = ()=>{
                             {activeDropdown === "toko-tani" && (
                             <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
-                                <a href="/toko-tani/tambah-penjual">Tambah Daftar Penjual</a>
+                                    <a href="/toko-tani/tambah-penjual">Tambah Daftar Penjual</a>
                                 </li>
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
-                                <a href="/toko-tani/produk-petani">Produk Tani</a>
+                                    <a href="/toko-tani/produk-petani">Produk Tani</a>
                                 </li>
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
-                                <a href="/toko-tani/produk-penyuluh">Produk Penyuluh</a>
+                                    <a href="/toko-tani/produk-penyuluh">Produk Penyuluh</a>
                                 </li>
                             </ul>
                             )}
@@ -141,16 +141,19 @@ const Navbar = ()=>{
                             {activeDropdown === "data-penyuluh" && (
                             <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
-                                <a href="/data-penyuluh/tambah">Tambah Data Penyuluh</a>
+                                    <a href="/data-penyuluh/tambah">Tambah Data Penyuluh</a>
                                 </li>
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
-                                <a href="/data-penyuluh/presensi-kehadiran">Presensi Kehadiran</a>
+                                    <a href="/data-penyuluh/presensi-kehadiran">Presensi Kehadiran</a>
                                 </li>
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
-                                <a href="/data-penyuluh/jurnal-kegiatan">Jurnal Kegiatan</a>
+                                    <a href="/data-penyuluh/jurnal-kegiatan">Jurnal Kegiatan</a>
                                 </li>
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
-                                <a href="/data-penyuluh/riwayat-chat">Data Riwayat Chat</a>
+                                    <a href="/data-penyuluh/riwayat-chat">Data Riwayat Chat</a>
+                                </li>
+                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                    <a href="/data-penyuluh/rekap-penyuluh">Rekap Data Petani</a>
                                 </li>
                             </ul>
                             )}
@@ -170,8 +173,15 @@ const Navbar = ()=>{
                             </ul>
                             )}
                         </li>
-                        <li className="text-black">
-                                <FontAwesomeIcon icon={faRightToBracket} className="mr-2" />
+                            
+                        <li className="text-white0 px-5 py-2 rounded-md box-shadow">
+                            <a href="/notification"><FontAwesomeIcon
+                                icon={faBell}
+                                className="text-gray-500 hover:text-black cursor-pointer"
+                                />
+                            </a>
+                        </li>
+                        <li className="text-white bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-md box-shadow">
                                 <a href="/login">Login</a>
                         </li>
                         {/* <li>

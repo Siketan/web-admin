@@ -2,7 +2,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import Coba from "./page"
-import {TambahDataTani, LaporanPenyuluh, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, PresensiKehadiran, TambahPenjual, ProdukPenyuluh, ProdukPetani, Login, Register, NotFoundPage} from "./page"
+import {TambahDataTani, RekapDataPetani, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, PresensiKehadiran, TambahPenjual, ProdukPenyuluh, ProdukPetani, Login, Register, NotFoundPage, Notification, RekapDataPenyuluh} from "./page"
 import Navbar from "./components/navbar"
 import Footer from "./components/footer"
 const Path = () => {
@@ -15,10 +15,11 @@ const Path = () => {
           <Route path="/" element={<EventTani />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/notification" element={<Notification />} />
           {/* Data Tani */}
           <Route path="/data-tani/tambah" element={<TambahDataTani />} />
           <Route path="/data-tani/laporan-tanam" element={<LaporanPetani />} />
-          <Route path="/data-tani/laporan-penyuluh" element={<LaporanPenyuluh />} />
+          <Route path="/data-tani/rekap-petani" element={<RekapDataPetani />} />
           {/* <Route path="/data-tanaman" element={<DataTanaman />} /> */}
           {/* Info Tani */}
           <Route path="/info-tani" element={<InfoTani />} />
@@ -34,6 +35,7 @@ const Path = () => {
           <Route path="/data-penyuluh/presensi-kehadiran" element={<PresensiKehadiran />} />
           <Route path="/data-penyuluh/jurnal-kegiatan" element={<JurnalKegiatan />} />
           <Route path="/data-penyuluh/riwayat-chat" element={<DataRiwayatChat />} />
+          <Route path="/data-penyuluh/rekap-penyuluh" element={<RekapDataPenyuluh />} />
           {/* LiveChat */}
           <Route path="/live-chat" element={<LiveChat />} />
           <Route path="/live-chat/rating-petugas" element={<RatingPetugas />} />

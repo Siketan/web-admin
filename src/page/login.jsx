@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-
-const Login = () => {
+import {Login} from "@/infrastruture"
+const LoginPage = () => {
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const [errors, setErrors] = useState({});
@@ -66,20 +66,20 @@ return (
         {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
         </div>
         <button
-        type="submit"
-        className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md w-full"
-        >
-        Login
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md w-full"
+            >
+            Login
         </button>
         <p className="text-gray-700 text-sm mt-4">
-        Belum punya akun?{' '}
-        <a href="/register" className="text-blue-500 hover:text-blue-600 font-medium">
-            Daftar di sini
-        </a>
+            Belum punya akun?{' '}
+            <a href="/register" className="text-blue-500 hover:text-blue-600 font-medium">
+                Daftar di sini
+            </a>
         </p>
     </form>
     </div>
 );
 };
 
-export default Login;
+export default LoginPage;

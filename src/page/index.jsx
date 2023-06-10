@@ -1,5 +1,5 @@
 import TambahDataTani from "./dataTani/tambahData"
-import LaporanPenyuluh from "./dataTani/dataPertanian/laporanPenyuluhan"
+import RekapDataPetani from "./dataTani/dataPertanian/laporanPenyuluhan"
 import LaporanPetani from "./dataTani/dataPertanian/laporanPetani"
 import InfoTani from "./infoTani"
 import TambahInfoTani from "./infoTani/tambahData"
@@ -11,11 +11,13 @@ import TambahPenyuluhanTani from "./penyuluhanTani/tambahData"
 import DataRiwayatChat from "./penyuluhanTani/detailPenyuluh/dataRiwayatChat"
 import JurnalKegiatan from "./penyuluhanTani/detailPenyuluh/jurnalKegiatan"
 import PresensiKehadiran from "./penyuluhanTani/detailPenyuluh/presensiKehadiran"
+import RekapDataPenyuluh from "./penyuluhanTani/detailPenyuluh/rekapDataPenyuluh"
 import TambahPenjual from "./tokoTani/tambahDataPenjual"
 import ProdukPenyuluh from "./tokoTani/produk/penyuluh"
 import ProdukPetani from "./tokoTani/produk/petani"
 import Login from "./login"
 import Register from "./register"
+import Notification from "./notification"
 import Airplane404 from "../assets/notFound.svg"
 
 const NotFoundPage = () => {
@@ -35,4 +37,4 @@ const NotFoundPage = () => {
   );
 };
 
-export {TambahDataTani, LaporanPenyuluh, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, PresensiKehadiran, TambahPenjual, ProdukPenyuluh, ProdukPetani, Login, Register, NotFoundPage}
+export {TambahDataTani, RekapDataPetani, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, PresensiKehadiran, TambahPenjual, ProdukPenyuluh, ProdukPetani, Login, Register, NotFoundPage, Notification, RekapDataPenyuluh}
