@@ -3,7 +3,7 @@ import { Radio, Group, Button } from '@mantine/core';
 import MainCard from "@/components/MainCard"
 import TextInput from "@/components/uiComponents/inputComponents/textInput" 
 import { IconPlus, IconX, IconDeviceFloppy} from '@tabler/icons-react';
-import {AddInfoTani} from "@/infrastruture"
+// import {AddInfoTani} from "@/infrastruture"
 const TambahInfoTani = ()=>{
     return(
         <MainCard transparent row center style={{paddingTop:"50px"}}>
@@ -15,7 +15,7 @@ const TambahInfoTani = ()=>{
                     </MainCard >
                     <MainCard transparent noPadding row gap="15rem">
                         <MainCard transparent noPadding gap="0">
-                            <span>26 Oktober 2023</span>
+                            <span id="tanggal" name="tanggal">26 Oktober 2023</span>
                             <span>Dibuat Oleh: @suheri_26</span>
                         </MainCard>
                         <MainCard transparent noPadding gap="0">
@@ -27,6 +27,7 @@ const TambahInfoTani = ()=>{
                         <MainCard transparent noPadding gap="0">
                                 <Radio.Group
                                     withAsterisk
+                                    id="kategori" name="kategori"
                                     >
                                     <Group mt="xs">
                                         <Radio value="berita" label="Berita" />
@@ -38,7 +39,7 @@ const TambahInfoTani = ()=>{
                     </MainCard>
                 </MainCard>
                 <EditorText/>
-                <MainCard transparent row style={{justifyContent:"end"}}>
+                <MainCard transparent id="isi" name="isi" row style={{justifyContent:"end"}}>
                     <Button leftIcon={<IconDeviceFloppy size="1rem" />} variant='outline'>Simpan</Button>
                     <Button leftIcon={<IconX size="1rem" />} variant='outline'>Batalkan</Button>
                 </MainCard>

@@ -2,23 +2,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCancel } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import InputImage from "@/components/inputImage"
-import {AddPenyuluh} from "@/infrastruture"
+// import {AddPenyuluh} from "@/infrastruture"
 const TambahPenyuluhanTani = ()=>{
     return(
         <div className="px-10 md:px-40 py-10">
             <div className="shadow-xl rounded-xl px-5 py-5">
                 <form>
                     <div className="flex items-center justify-center">
-                    <InputImage/>
+                        <InputImage id="foto" name="foto" />
                     </div>
                     <div className="grid md:grid-cols-2 md:gap-6">
                         <div className="relative z-0 w-full mb-6 group">
-                            <input type="text" name="nip" id="nip" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                            <label htmlFor="nip" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>NIP Pegawai</strong> (Contoh: 3514002000000001)</label>
+                            <input type="text" name="NIP" id="NIP" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                            <label htmlFor="NIP" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>NIP Pegawai</strong> (Contoh: 3514002000000001)</label>
                         </div>
                         <div className="relative z-0 w-full mb-6 group">
-                            <input type="tel" name="nomerhp" id="nomerhp" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                            <label htmlFor="nomerhp" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>No. HP/WA</strong> (Contoh:  0812 3456 7890)</label>
+                            <input type="text" name="NoWa" id="NoWa" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                            <label htmlFor="NoWa" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>No. HP/WA</strong> (Contoh:  0812 3456 7890)</label>
                         </div>
                     </div>
                     <div className="grid md:grid-cols-2 md:gap-6">
@@ -51,7 +51,9 @@ const TambahPenyuluhanTani = ()=>{
                                 <strong>Nama Kecamatan: </strong>
                             </label>
                             <select
-                                id="underline_select"
+                                id="kecamatan"
+                                value="kecamatan"
+                                name="kecamatan"
                                 className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                             >
                                 <option value="karanganyar">Karanganyar</option>
@@ -63,7 +65,9 @@ const TambahPenyuluhanTani = ()=>{
                                 <strong>Desa Wilayah Binaan:  </strong>
                             </label>
                             <select
-                                id="underline_select"
+                                id="desaBinaan"
+                                value="desaBinaan"
+                                name="desaBinaan"
                                 className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                             >
                                 <option value="1">Nama Desa Binaan 1</option>
@@ -72,8 +76,8 @@ const TambahPenyuluhanTani = ()=>{
                         </div>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
-                        <input type="text" name="namaProduk" id="namaProduk" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label htmlFor="namaProduk" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>Nama Produk</strong> (Contoh: SiKetan Hijau)</label>
+                        <input type="text" name="namaProduct" id="namaProduct" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <label htmlFor="namaProduct" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>Nama Produk</strong> (Contoh: SiKetan Hijau)</label>
                     </div>
                     <div className="flex space-x-4 justify-end">
                         <button
