@@ -4,7 +4,7 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-// import {AddLaporanTani} from "@/infrastruture"
+import {AddLaporanTani} from "@/infrastruture"
 function LaporanPetani() {
     const [NIK, setNIK] = useState("");
     const [komoditas, setKomoditas] = useState("");
@@ -15,10 +15,21 @@ function LaporanPetani() {
     const [deskripsi, setDeskripsi] = useState("");
     const [fotoTanaman, setFotoTanaman] = useState("");
 
+    const handleSubmit = (e)=>{
+        e.preventDefault()
+        const data = {
+            NIK, komoditas, tanggalLaporan, komdisiTanaman:kondisiTanaman, jenisTanaman, kategori, deskripsi, fotoTanaman
+        }
+        const formData = new FormData();
+        for (const key in data) {
+        formData.append(key, data[key]);
+        }
+        AddLaporanTani(formData)
+    }
     return (
         <div className="px-10 md:px-40 py-10">
             <div className="shadow-xl rounded-xl px-5 py-5">
-                <form>
+                <form onSubmit={(e)=>handleSubmit(e)}>
                         <div className="flex space-x-4 justify-end w-full lg:w-full py-5">
                             <button type="submit" value={NIK}  onChange={(e) => setNIK(e.target.value)} className="text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto pr-5 hidden md:block">
                                 <FontAwesomeIcon icon={faSearch} className="mr-2" />
@@ -70,27 +81,64 @@ function LaporanPetani() {
                             </div>
                         </div>
                         <div className="grid md:grid-cols-2 md:gap-6">
-                            <div className="relative z-0 w-full mb-6 group">
-                                <label htmlFor="underline_select" className="text-sm ">
-                                    <strong>Kategori:</strong>
-                                </label>
-                                <div className="flex items-center pt-2">
-                                    <input id="default-radio-1" type="radio"  value={kategori}  onChange={(e) => setKategori(e.target.value)} name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                                    <label htmlFor="default-radio-1" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tanaman Pangan</label>
-                                </div>
-                                <div className="flex items-center py-2">
-                                    <input checked id="default-radio-2" type="radio"  value={kategori}  onChange={(e) => setKategori(e.target.value)} name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                                    <label htmlFor="default-radio-2" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tanaman Perkebunan</label>
-                                </div>
-                                <div className="flex items-center">
-                                    <input id="default-radio-1" type="radio"  value={kategori}  onChange={(e) => setKategori(e.target.value)} name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                                    <label htmlFor="default-radio-1" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tanaman  Holtikultura</label>
-                                </div>
-                                <div className="flex items-center py-2">
-                                    <input checked id="default-radio-2" type="radio"  value={kategori}  onChange={(e) => setKategori(e.target.value)} name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                                    <label htmlFor="default-radio-2" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Lainnya</label>
-                                </div>
-                            </div>
+<div className="relative z-0 w-full mb-6 group">
+    <label htmlFor="kategori" className="text-sm text-gray-500">
+        <strong>Kategori:</strong>
+    </label>
+    <div className="flex items-center pt-2">
+        <input
+            id="tanaman-pangan"
+            value="tanaman-pangan"
+            onChange={(e) => setKategori(e.target.value)}
+            type="radio"
+            name="kategori"
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label htmlFor="tanaman-pangan" className="ml-2 text-sm font-medium text-gray-900">
+            Tanaman Pangan
+        </label>
+    </div>
+    <div className="flex items-center py-2">
+        <input
+            id="tanaman-perkebunan"
+            value="tanaman-perkebunan"
+            onChange={(e) => setKategori(e.target.value)}
+            type="radio"
+            name="kategori"
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-900 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label htmlFor="tanaman-perkebunan" className="ml-2 text-sm font-medium text-gray-900">
+            Tanaman Perkebunan
+        </label>
+    </div>
+    <div className="flex items-center">
+        <input
+            id="tanaman-holtikultura"
+            value="tanaman-holtikultura"
+            onChange={(e) => setKategori(e.target.value)}
+            type="radio"
+            name="kategori"
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-900 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label htmlFor="tanaman-holtikultura" className="ml-2 text-sm font-medium text-gray-900">
+            Tanaman Holtikultura
+        </label>
+    </div>
+    <div className="flex items-center py-2">
+        <input
+            id="lainnya"
+            value="lainnya"
+            onChange={(e) => setKategori(e.target.value)}
+            type="radio"
+            name="kategori"
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-900 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label htmlFor="lainnya" className="ml-2 text-sm font-medium text-gray-900">
+            Lainnya
+        </label>
+    </div>
+</div>
+
                             <div className="relative z-0 w-full mb-6 group">
                                 <label htmlFor="underline_select" className="text-sm">
                                     <strong>Pilih Jenis Tanaman</strong>

@@ -2,17 +2,19 @@ import { useState,useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import {ProductsPenyuluh} from "@/infrastruture"
+import { Image } from '@mantine/core';
 function ProdukPenyuluh() {
     const [datas, setDatas] = useState([])
     useEffect(() => {
-
+        ProductsPenyuluh().then((data)=>setDatas(data.productPenyuluh))
     }, [])
+    console.log(datas)
     const [filters, setFilters] = useState({
         kecamatan: "",
         desa: "",
         nipPenyuluh: "",
         namaPenyuluh: "",
-        namaProduk: "",
+        namaProducts: "",
         stok: "",
         satuan: "",
         harga: "",
@@ -28,62 +30,28 @@ function ProdukPenyuluh() {
         }));
     };
 
-    const data = [
-        {
-        id: 1,
-        kecamatan: "Kecamatan A",
-        desa: "Desa 1",
-        namaPenyuluh: "John Doe",
-        nipPenyuluh: "Padi",
-        namaProduk: "Tumbuhan",
-        stok: "Musim 1",
-        satuan: 1000,
-        harga: "2023-05-01",
-        deskripsi: "2023-08-01",
-        fotoProduk: "Baik",
-        statusProduk: 500
-        },
-        {
-        id: 2,
-        kecamatan: "AdasaA",
-        desa: "Wonorejo",
-        namaPenyuluh: "John Doe",
-        nipPenyuluh: "Padi",
-        namaProduk: "Tumbuhan",
-        stok: "Musim 1",
-        satuan: 1000,
-        harga: "2023-05-01",
-        deskripsi: "2023-08-01",
-        fotoProduk: "Baik",
-        statusProduk: 500
-        },
-        {
-        id: 3,
-        kecamatan: "testing",
-        desa: "Klakah",
-        namaPenyuluh: "John Doe",
-        nipPenyuluh: "Padi",
-        namaProduk: "Tumbuhan",
-        stok: "Musim 1",
-        satuan: 1000,
-        harga: "2023-05-01",
-        deskripsi: "2023-08-01",
-        fotoProduk: "Baik",
-        statusProduk: 500
-        }
-    ];
 
-    const filteredData = data.filter((item) => {
+    const filteredData = datas.filter((item) => {
         return Object.keys(filters).every((key) => {
-        if (filters[key] !== "") {
-            if (typeof item[key] === "number") {
-            return item[key] === Number(filters[key]);
-            } else {
-            return item[key]
-                .toLowerCase()
-                .includes(filters[key].toLowerCase());
+            if (filters[key] !== "") {
+                if ("dataPerson" in item) {
+                    if (typeof item.dataPerson[key] === "number") {
+                        return item.dataPerson[key] === Number(filters[key]);
+                    } else {
+                        return item.dataPerson[key]
+                        .toLowerCase()
+                        .includes(filters[key].toLowerCase());
+                    }
+                }else{
+                    if (typeof item[key] === "number") {
+                        return item[key] === Number(filters[key]);
+                    } else {
+                        return item[key]
+                        .toLowerCase()
+                        .includes(filters[key].toLowerCase());
+                    }
+                }
             }
-        }
         return true;
         });
     });
@@ -173,8 +141,8 @@ function ProdukPenyuluh() {
                             <div className="flex items-center">
                                 <input
                                 type="text"
-                                value={filters.namaProduk}
-                                onChange={(e) => handleFilterChange(e, "namaProduk")}
+                                value={filters.namaProducts}
+                                onChange={(e) => handleFilterChange(e, "namaProducts")}
                                 className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
                                 placeholder="Filter Produk"
                                 />
@@ -277,17 +245,17 @@ function ProdukPenyuluh() {
                         </tr>
                         {filteredData.map((item) => (
                         <tr key={item.id}>
-                            <td className="px-4 py-2 border">{item.kecamatan}</td>
-                            <td className="px-4 py-2 border">{item.desa}</td>
-                            <td className="px-4 py-2 border">{item.nipPenyuluh}</td>
-                            <td className="px-4 py-2 border">{item.namaPenyuluh}</td>
-                            <td className="px-4 py-2 border">{item.namaProduk}</td>
+                            <td className="px-4 py-2 border">{item.dataPerson.kecamatan}</td>
+                            <td className="px-4 py-2 border">{item.dataPerson.desa}</td>
+                            <td className="px-4 py-2 border">{item.dataPerson.NIP}</td>
+                            <td className="px-4 py-2 border">{item.dataPerson.nama}</td>
+                            <td className="px-4 py-2 border">{item.namaProducts}</td>
                             <td className="px-4 py-2 border">{item.stok}</td>
                             <td className="px-4 py-2 border">{item.satuan}</td>
                             <td className="px-4 py-2 border">{item.harga}</td>
                             <td className="px-4 py-2 border">{item.deskripsi}</td>
-                            <td className="px-4 py-2 border">{item.fotoProduk}</td>
-                            <td className="px-4 py-2 border">{item.statusProduk}</td>
+                            <td className="px-4 py-2 border"><Image width={200} height={80} mx="auto" radius="md" src={item.fotoTanaman} /></td>
+                            <td className="px-4 py-2 border">{item.status}</td>
                         </tr>
                         ))}
                     </tbody>

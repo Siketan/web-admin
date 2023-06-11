@@ -11,7 +11,8 @@ const LaporanPenyuluh = () => {
     const [filters, setFilters] = useState({
         kecamatan: "",
         desa: "",
-        namaPetani: "",
+        NIK:"",
+        nama: "",
         komoditas: "",
         jenisTanaman: "",
         musimTanam: "",
@@ -22,7 +23,6 @@ const LaporanPenyuluh = () => {
         prakiraanHasilPanen: "",
         realisasiHasilPanen: ""
     });
-
     const handleFilterChange = (e, column) => {
         setFilters((prevFilters) => ({
         ...prevFilters,
@@ -30,22 +30,32 @@ const LaporanPenyuluh = () => {
         }));
     };
 
-
-
+    
     const filteredData = datas.filter((item) => {
         return Object.keys(filters).every((key) => {
-        if (filters[key] !== "") {
-            if (typeof item[key] === "number") {
-            return item[key] === Number(filters[key]);
-            } else {
-            return item[key]
-                .toLowerCase()
-                .includes(filters[key].toLowerCase());
+            if (filters[key] !== "") {
+                if ("tanamanPetani" in item) {
+                    if (typeof item.tanamanPetani[key] === "number") {
+                        return item.tanamanPetani[key] === Number(filters[key]);
+                    } else {
+                        return item.tanamanPetani[key]
+                        .toLowerCase()
+                        .includes(filters[key].toLowerCase());
+                    }
+                }else{
+                    if (typeof item[key] === "number") {
+                        return item[key] === Number(filters[key]);
+                    } else {
+                        return item[key]
+                        .toLowerCase()
+                        .includes(filters[key].toLowerCase());
+                    }
+                }
             }
-        }
-        return true;
+            return true;
         });
     });
+    console.log(filteredData)
 
     return (
         <div className="flex justify-center pt-12">
@@ -113,8 +123,8 @@ const LaporanPenyuluh = () => {
                                     <div className="flex items-center">
                                         <input
                                         type="text"
-                                        value={filters.nik}
-                                        onChange={(e) => handleFilterChange(e, "nik")}
+                                        value={filters.NIK}
+                                        onChange={(e) => handleFilterChange(e, "NIK")}
                                         className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
                                         placeholder="Filter NIK"
                                         />
@@ -290,22 +300,22 @@ const LaporanPenyuluh = () => {
                                     </div>
                                 </td>
                             </tr>
-                            {filteredData.map((item) => (
+                            {filteredData?.map((item) => (
                             <tr key={item.id}>
                                 <td className="px-4 py-2 border">{item.kecamatan}</td>
                                 <td className="px-4 py-2 border">{item.desa}</td>
-                                <td className="px-4 py-2 border">{item.nik}</td>
+                                <td className="px-4 py-2 border">{item.NIK}</td>
                                 <td className="px-4 py-2 border">{item.password}</td>
-                                <td className="px-4 py-2 border">{item.namaPetani}</td>
-                                <td className="px-4 py-2 border">{item.komoditas}</td>
-                                <td className="px-4 py-2 border">{item.jenisTanaman}</td>
-                                <td className="px-4 py-2 border">{item.musimTanam}</td>
-                                <td className="px-4 py-2 border">{item.luasLahan}</td>
-                                <td className="px-4 py-2 border">{item.tanggalTanam}</td>
-                                <td className="px-4 py-2 border">{item.prakiraanTanggalPanen}</td>
-                                <td className="px-4 py-2 border">{item.kondisiTanam}</td>
-                                <td className="px-4 py-2 border">{item.prakiraanHasilPanen}</td>
-                                <td className="px-4 py-2 border">{item.realisasiHasilPanen}</td>
+                                <td className="px-4 py-2 border">{item.nama}</td>
+                                <td className="px-4 py-2 border">{item.tanamanPetani.komoditas}</td>
+                                <td className="px-4 py-2 border">{item.tanamanPetani.jenis}</td>
+                                <td className="px-4 py-2 border">{item.tanamanPetani.musimTanam}</td>
+                                <td className="px-4 py-2 border">{item.tanamanPetani.luasLahan}</td>
+                                <td className="px-4 py-2 border">{item.tanamanPetani.tanggalTanam}</td>
+                                <td className="px-4 py-2 border">{item.tanamanPetani.perkiraanPanen}</td>
+                                <td className="px-4 py-2 border">{item.tanamanPetani.komdisiTanam}</td>
+                                <td className="px-4 py-2 border">{item.tanamanPetani.prakiraanHasilPanen}</td>
+                                <td className="px-4 py-2 border">{item.tanamanPetani.realisasiHasilPanen}</td>
                                 <td className="px-4 py-2 border">
                                     <FontAwesomeIcon
                                         icon={faEdit}
