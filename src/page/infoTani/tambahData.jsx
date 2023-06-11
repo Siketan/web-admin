@@ -4,15 +4,28 @@ import { Radio, Group, Button } from '@mantine/core';
 import MainCard from "@/components/MainCard"
 import TextInput from "@/components/uiComponents/inputComponents/textInput" 
 import { IconPlus, IconX, IconDeviceFloppy} from '@tabler/icons-react';
-// import {AddInfoTani} from "@/infrastruture"
+import {AddInfoTani} from "@/infrastruture"
 const TambahInfoTani = ()=>{
     const [judul, setJudul] = useState("");
-    const [tanggal, setTanggal] = useState("");
-    // const [status, setStatus] = useState("");
     const [kategori, setKategori] = useState("");
     const [isi, setIsi] = useState("");
     // const [fotoBerita, setNamaKegiatan] = useState("");
     
+    const currentDate = new Date();
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const formattedDate = currentDate.toLocaleDateString('id-ID', options);
+
+    const handleClick = (e)=>{
+        const data = {
+            tanggal:formattedDate, judul, kategori, isi
+        }
+        console.log(data)
+        if(e == "simpan"){
+            AddInfoTani(data)
+        }else{
+            window.location.reload();
+        }
+    }
     return(
         <MainCard transparent row center style={{paddingTop:"50px"}}>
             <MainCard width="80%" >
@@ -23,7 +36,7 @@ const TambahInfoTani = ()=>{
                     </MainCard >
                     <MainCard transparent noPadding row gap="15rem">
                         <MainCard transparent noPadding gap="0">
-                            <span id="tanggal" name="tanggal" value={tanggal}  onChange={(e) => setTanggal(e.target.value)}>26 Oktober 2023</span>
+                            <span id="tanggal" name="tanggal">{formattedDate}</span>
                             <span>Dibuat Oleh: @suheri_26</span>
                         </MainCard>
                         <MainCard transparent noPadding gap="0">
@@ -35,7 +48,7 @@ const TambahInfoTani = ()=>{
                         <MainCard transparent noPadding gap="0">
                                 <Radio.Group
                                     withAsterisk
-                                    id="kategori" name="kategori" value={kategori}  onChange={(e) => setKategori(e.target.value)}
+                                    id="kategori" name="kategori" value={kategori}  onChange={(e) => setKategori(e)}
                                     >
                                     <Group mt="xs">
                                         <Radio value="berita" label="Berita" />
@@ -46,10 +59,10 @@ const TambahInfoTani = ()=>{
                         </MainCard>
                     </MainCard>
                 </MainCard>
-                <EditorText/>
-                <MainCard transparent id="isi" name="isi" value={isi}  onChange={(e) => setIsi(e.target.value)} row style={{justifyContent:"end"}}>
-                    <Button leftIcon={<IconDeviceFloppy size="1rem" />} variant='outline'>Simpan</Button>
-                    <Button leftIcon={<IconX size="1rem" />} variant='outline'>Batalkan</Button>
+                <EditorText setValue={setIsi}/>
+                <MainCard transparent id="isi" name="isi" row style={{justifyContent:"end"}}>
+                    <Button leftIcon={<IconDeviceFloppy size="1rem" />} variant='outline' onClick={()=>handleClick("simpan")}>Simpan</Button>
+                    <Button leftIcon={<IconX size="1rem" />} variant='outline' onClick={()=>handleClick("batal")}>Batalkan</Button>
                 </MainCard>
             </MainCard>
         </MainCard>

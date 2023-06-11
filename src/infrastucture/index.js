@@ -1,6 +1,9 @@
 import Api from "./base"
 import SweatAlert from "../components/uiComponents/swetAlert"
 
+const headers = {
+  headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+};
 // authentication
 export const Register = async(data)=>{
     try {
@@ -13,6 +16,7 @@ export const Register = async(data)=>{
 export const Login = async(data)=>{
     try {
       const response = await Api.post("/auth/login", data);
+      localStorage.setItem('token', response.data.token)
       SweatAlert(String(response.data.message), 'success');
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
@@ -23,7 +27,7 @@ export const Login = async(data)=>{
 export const CekNik = async(data)=>{
     try {
       const response = await Api.post("/cek-nik", data);
-      return response
+      return response.data.users
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
@@ -32,7 +36,7 @@ export const CekNik = async(data)=>{
 // data tani 
 export const DaftarTaniAdd = async(data)=>{
     try {
-      const response = await Api.post("/daftar-tani/add", data);
+      const response = await Api.post("/daftar-tani/add", data, headers);
       SweatAlert(String(response.data.message), 'success');
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
@@ -41,7 +45,7 @@ export const DaftarTaniAdd = async(data)=>{
 
 export const AddLaporanTani = async(data)=>{
     try {
-      const response = await Api.post("/event-tani/add", data);
+      const response = await Api.post("/laporan-tani/add", data, headers);
       SweatAlert(String(response.data.message), 'success');
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
@@ -49,8 +53,8 @@ export const AddLaporanTani = async(data)=>{
 }
 export const GetLaporanTani = async()=>{
     try {
-      const response = await Api.get("/laporan-tani/add");
-      return response
+      const response = await Api.get("/laporan-petani");
+      return response.data
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
@@ -59,7 +63,7 @@ export const GetLaporanTani = async()=>{
 // info tani
 export const AddInfoTani = async(data)=>{
     try {
-      const response = await Api.post("/info-tani/add", data);
+      const response = await Api.post("/info-tani/add", data, headers);
       SweatAlert(String(response.data.message), 'success');
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
@@ -68,7 +72,7 @@ export const AddInfoTani = async(data)=>{
 export const GetInfoTani = async()=>{
     try {
       const response = await Api.get("/info-tani");
-      return response
+      return response.data
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
@@ -76,7 +80,7 @@ export const GetInfoTani = async()=>{
     
 export const AddEventTani = async(data)=>{
     try {
-      const response = await Api.post("/event-tani/add", data);
+      const response = await Api.post("/event-tani/add", data, headers);
       SweatAlert(String(response.data.message), 'success');
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
@@ -85,7 +89,7 @@ export const AddEventTani = async(data)=>{
 export const GetEventTani = async()=>{
     try {
       const response = await Api.get("/event-tani");
-      return response
+      return response.data
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
@@ -94,7 +98,7 @@ export const GetEventTani = async()=>{
 // toko tani
 export const AddPenjual = async(data)=>{
     try {
-      const response = await Api.post("/daftar-penjual/add", data);
+      const response = await Api.post("/daftar-penjual/add", data, headers);
       SweatAlert(String(response.data.message), 'success');
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
@@ -103,7 +107,7 @@ export const AddPenjual = async(data)=>{
 export const ProductsPenyuluh = async()=>{
     try {
       const response = await Api.get("/product-penyuluh");
-      return response
+      return response.data
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
@@ -111,7 +115,7 @@ export const ProductsPenyuluh = async()=>{
 export const ProductsPetani = async()=>{
     try {
       const response = await Api.get("/product-petani");
-      return response
+      return response.data
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
@@ -120,7 +124,7 @@ export const ProductsPetani = async()=>{
 // data penyuluh 
 export const AddPenyuluh = async(data)=>{
     try {
-      const response = await Api.post("/penyuluh/add", data);
+      const response = await Api.post("/penyuluh/add", data, headers);
       SweatAlert(String(response.data.message), 'success');
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
@@ -136,7 +140,7 @@ export const AddPresesiKehadiran = async(data)=>{
 }
 export const AddJurnalKegiatan = async(data)=>{
     try {
-      const response = await Api.post("/jurnal-kegiatan/add", data);
+      const response = await Api.post("/jurnal-kegiatan/add", data, headers);
       SweatAlert(String(response.data.message), 'success');
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
@@ -145,7 +149,7 @@ export const AddJurnalKegiatan = async(data)=>{
 export const GetPreseiKehadiran = async()=>{
     try {
       const response = await Api.get("/presesi-kehadiran");
-      return response
+      return response.data
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
@@ -153,7 +157,7 @@ export const GetPreseiKehadiran = async()=>{
 export const GatJurnalKegiatan = async()=>{
     try {
       const response = await Api.get("/jurnal-kegiatan");
-      return response
+      return response.data
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
@@ -161,7 +165,7 @@ export const GatJurnalKegiatan = async()=>{
 export const GetRiwayatChat = async()=>{
     try {
       const response = await Api.get("/riwayat-chat");
-      return response
+      return response.data
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
@@ -187,7 +191,7 @@ export const AddRating = async()=>{
 export const GetChatt = async()=>{
     try {
       const response = await Api.get("/chat");
-      return response
+      return response.data
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
@@ -195,7 +199,7 @@ export const GetChatt = async()=>{
 export const GetRatting = async()=>{
     try {
       const response = await Api.get("/ratting");
-      return response
+      return response.data
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }

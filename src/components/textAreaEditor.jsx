@@ -10,6 +10,7 @@ import SubScript from '@tiptap/extension-subscript';
 
 const EditorText = ({setValue}) => {
   const [content, setContent] = useState('')
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -21,10 +22,13 @@ const EditorText = ({setValue}) => {
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
     ],
     content,
+    onTransaction:() => handleChange()
   });
-  // const hanldeSave = ()=>{
-  //   console.log(editor.getHTML())
-  // }
+  const handleChange = ()=>{
+    setValue(editor?.getHTML())
+  }
+
+ 
   return (
     <>
     <RichTextEditor editor={editor} >
@@ -67,7 +71,7 @@ const EditorText = ({setValue}) => {
         </RichTextEditor.ControlsGroup>
       </RichTextEditor.Toolbar>
 
-      <RichTextEditor.Content />
+      <RichTextEditor.Content/>
     </RichTextEditor>
     </>
   );
