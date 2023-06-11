@@ -27,7 +27,7 @@ export const Login = async(data)=>{
 export const CekNik = async(data)=>{
     try {
       const response = await Api.post("/cek-nik", data);
-      return response.data
+      return response.data.users
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }

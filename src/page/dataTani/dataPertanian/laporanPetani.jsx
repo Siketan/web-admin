@@ -3,8 +3,8 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
-import {AddLaporanTani} from "@/infrastruture"
+import { useState, useEffect } from 'react';
+import {AddLaporanTani, CekNik} from "@/infrastruture"
 function LaporanPetani() {
     const [NIK, setNIK] = useState("");
     const [komoditas, setKomoditas] = useState("");
@@ -14,7 +14,15 @@ function LaporanPetani() {
     const [kategori, setKategori] = useState("")
     const [deskripsi, setDeskripsi] = useState("");
     const [fotoTanaman, setFotoTanaman] = useState("");
-
+    const [datas, setDatas] = useState({})
+    const [disable, setDisable] = useState(false)
+    const handleCLick = ()=>{
+        CekNik({nik:NIK}).then((data)=>{
+            setDatas(data)
+            setDisable(true)
+        })
+    }
+    
     const handleSubmit = (e)=>{
         e.preventDefault()
         const data = {
@@ -31,12 +39,8 @@ function LaporanPetani() {
             <div className="shadow-xl rounded-xl px-5 py-5">
                 <form onSubmit={(e)=>handleSubmit(e)}>
                         <div className="flex space-x-4 justify-end w-full lg:w-full py-5">
-                            <button type="submit" value={NIK}  onChange={(e) => setNIK(e.target.value)} className="text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto pr-5 hidden md:block">
+                            <button value={NIK} onClick={(e)=>handleCLick(e)} className="text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  ml-auto pr-5 hidden md:block">
                                 <FontAwesomeIcon icon={faSearch} className="mr-2" />
-                                Cek NIK
-                            </button>
-                            <button type="submit" value={NIK}  onChange={(e) => setNIK(e.target.value)} className="text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto pr-5 md:hidden">
-                                <FontAwesomeIcon icon={faSearch} className="mr-2" /> <br />
                                 Cek NIK
                             </button>
                             <button type="submit" className="text-white bg-orange-500 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto">
@@ -45,12 +49,12 @@ function LaporanPetani() {
                             </button>
                         </div>
                         <div className="relative z-0 w-full mb-6 group">
-                            <input type="text" name="NIK" id="NIK" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                            <input type="text" disabled={disable} onChange={(e)=>setNIK(e.target.value)} name="NIK" id="NIK" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                             <label htmlFor="NIK" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>Cek NIK</strong> (Contoh: 3514002000000001)</label>
                         </div>
                         <div className="grid md:grid-cols-2 md:gap-6">
                             <div className="relative z-0 w-full mb-6 gronup">
-                                <p><strong>Nama Petani: </strong> SUROSO DIKDOYO</p>
+                                <p><strong>Nama Petani: </strong> {datas?.nama}</p>
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
                                 <p><strong>Status Tanah: </strong> Milik Sendiri</p>
@@ -58,86 +62,86 @@ function LaporanPetani() {
                         </div>
                         <div className="grid md:grid-cols-2 md:gap-6">
                             <div className="relative z-0 w-full mb-6 gronup">
-                                <p><strong>Kecamatan: </strong> Karanganyar</p>
+                                <p><strong>Kecamatan: </strong> {datas?.kecamatan}</p>
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
-                                <p><strong>Desa: </strong> Pringgodani</p>
+                                <p><strong>Desa: </strong> {datas?.desa}</p>
                             </div>
                         </div>
                         <div className="grid md:grid-cols-2 md:gap-6">
                             <div className="relative z-0 w-full mb-6 gronup">
-                                <p><strong>Gapoktan: </strong> Power Ranger</p>
+                                <p><strong>Gapoktan: </strong> {datas?.kelompok?.gapoktan}</p>
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
-                                <p><strong>Nama Kelompok: </strong> Ranger Merah</p>
+                                <p><strong>Nama Kelompok: </strong> {datas?.kelompok?.namaKelompok}</p>
                             </div>
                         </div>
                         <div className="grid md:grid-cols-2 md:gap-6">
                             <div className="relative z-0 w-full mb-6 gronup">
-                                <p><strong>Penyuluh: </strong> Werkudara Arya Bima</p>
+                                <p><strong>Penyuluh: </strong> {datas?.kelompok?.penyuluh}</p>
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
-                                <p><strong>Musim Tanam: </strong> 2</p>
+                                <p><strong>Musim Tanam: </strong> {datas?.tanamanPetani?.musimTanam + 1 || 1}</p>
                             </div>
                         </div>
                         <div className="grid md:grid-cols-2 md:gap-6">
-<div className="relative z-0 w-full mb-6 group">
-    <label htmlFor="kategori" className="text-sm text-gray-500">
-        <strong>Kategori:</strong>
-    </label>
-    <div className="flex items-center pt-2">
-        <input
-            id="tanaman-pangan"
-            value="tanaman-pangan"
-            onChange={(e) => setKategori(e.target.value)}
-            type="radio"
-            name="kategori"
-            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label htmlFor="tanaman-pangan" className="ml-2 text-sm font-medium text-gray-900">
-            Tanaman Pangan
-        </label>
-    </div>
-    <div className="flex items-center py-2">
-        <input
-            id="tanaman-perkebunan"
-            value="tanaman-perkebunan"
-            onChange={(e) => setKategori(e.target.value)}
-            type="radio"
-            name="kategori"
-            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-900 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label htmlFor="tanaman-perkebunan" className="ml-2 text-sm font-medium text-gray-900">
-            Tanaman Perkebunan
-        </label>
-    </div>
-    <div className="flex items-center">
-        <input
-            id="tanaman-holtikultura"
-            value="tanaman-holtikultura"
-            onChange={(e) => setKategori(e.target.value)}
-            type="radio"
-            name="kategori"
-            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-900 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label htmlFor="tanaman-holtikultura" className="ml-2 text-sm font-medium text-gray-900">
-            Tanaman Holtikultura
-        </label>
-    </div>
-    <div className="flex items-center py-2">
-        <input
-            id="lainnya"
-            value="lainnya"
-            onChange={(e) => setKategori(e.target.value)}
-            type="radio"
-            name="kategori"
-            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-900 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label htmlFor="lainnya" className="ml-2 text-sm font-medium text-gray-900">
-            Lainnya
-        </label>
-    </div>
-</div>
+                        <div className="relative z-0 w-full mb-6 group">
+                            <label htmlFor="kategori" className="text-sm text-gray-500">
+                                <strong>Kategori:</strong>
+                            </label>
+                            <div className="flex items-center pt-2">
+                                <input
+                                    id="tanaman-pangan"
+                                    value="tanaman-pangan"
+                                    onChange={(e) => setKategori(e.target.value)}
+                                    type="radio"
+                                    name="kategori"
+                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                />
+                                <label htmlFor="tanaman-pangan" className="ml-2 text-sm font-medium text-gray-900">
+                                    Tanaman Pangan
+                                </label>
+                            </div>
+                            <div className="flex items-center py-2">
+                                <input
+                                    id="tanaman-perkebunan"
+                                    value="tanaman-perkebunan"
+                                    onChange={(e) => setKategori(e.target.value)}
+                                    type="radio"
+                                    name="kategori"
+                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-900 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                />
+                                <label htmlFor="tanaman-perkebunan" className="ml-2 text-sm font-medium text-gray-900">
+                                    Tanaman Perkebunan
+                                </label>
+                            </div>
+                            <div className="flex items-center">
+                                <input
+                                    id="tanaman-holtikultura"
+                                    value="tanaman-holtikultura"
+                                    onChange={(e) => setKategori(e.target.value)}
+                                    type="radio"
+                                    name="kategori"
+                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-900 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                />
+                                <label htmlFor="tanaman-holtikultura" className="ml-2 text-sm font-medium text-gray-900">
+                                    Tanaman Holtikultura
+                                </label>
+                            </div>
+                            <div className="flex items-center py-2">
+                                <input
+                                    id="lainnya"
+                                    value="lainnya"
+                                    onChange={(e) => setKategori(e.target.value)}
+                                    type="radio"
+                                    name="kategori"
+                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-900 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                />
+                                <label htmlFor="lainnya" className="ml-2 text-sm font-medium text-gray-900">
+                                    Lainnya
+                                </label>
+                            </div>
+                        </div>
 
                             <div className="relative z-0 w-full mb-6 group">
                                 <label htmlFor="underline_select" className="text-sm">
@@ -172,21 +176,21 @@ function LaporanPetani() {
                         </div>
                         <div className="grid md:grid-cols-2 md:gap-6">
                             <div className="relative z-0 w-full mb-6 group">
-                                <input type="date" name="tanggalLaporan" value={tanggalLaporan}  onChange={(e) => setTanggalLaporan(e.target.value)} id="tanggalLaporan" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <input type="date" name="tanggalLaporan" value={tanggalLaporan}  onChange={(e) => setTanggalLaporan(e.target.value)} id="tanggalLaporan" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label htmlFor="tanggalLaporan" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"> <strong>Tanggal Laporan</strong> (Contoh: 03-30-2023)</label>
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name="kondisiTanaman" id="kondisiTanaman" value={kondisiTanaman}  onChange={(e) => setKondisiTanaman(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <input type="text" name="kondisiTanaman" id="kondisiTanaman" value={kondisiTanaman}  onChange={(e) => setKondisiTanaman(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label htmlFor="kondisiTanaman" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>Kondisi Tanaman</strong> (Contoh: Sehat)</label>
                             </div>
                         </div>
                         <div className="grid md:grid-cols-2 md:gap-6">
                             <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name="deskripsi" id="deskripsi" value={deskripsi}  onChange={(e) => setDeskripsi(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <input type="text" name="deskripsi" id="deskripsi" value={deskripsi}  onChange={(e) => setDeskripsi(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label htmlFor="deskripsi" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>Deskripsi Uraian</strong></label>
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
-                                <input type="file" name="fotoTanaman" id="fotoTanaman" value={fotoTanaman}  onChange={(e) => setFotoTanaman(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <input type="file" name="fotoTanaman" id="fotoTanaman" value={fotoTanaman}  onChange={(e) => setFotoTanaman(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label htmlFor="fotoTanaman" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>Foto Tanaman</strong> (Jenis File: .png, .jpg, .jpeg)</label>
                             </div>
                         </div>

@@ -7,7 +7,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import InputImage from "@/components/inputImage"
 import MainCard from "@/components/MainCard"
-import {DaftarTaniAdd} from "@/infrastruture"
+import {DaftarTaniAdd, CekNik} from "@/infrastruture"
 const TambahDataTani = ()=>{
     const [NIK, setNIK] = useState("");
     const [NoWa, setNoWa] = useState("");
@@ -30,10 +30,38 @@ const TambahDataTani = ()=>{
     const [foto, setFoto] = useState("");
     const [realisasiPanen, setRealisasiPanen] = useState("");
     const [hasilPanen, setHasilPanen] = useState("");
-
+    const [datas, setDatas] = useState({})
+    const [disable, setDisable] = useState(false)
     const [countData, setCountData] = useState(1)
     const handleClikAdd = ()=>{
         setCountData(countData + 1)
+    }
+    const handleCLick = ()=>{
+        CekNik({nik:NIK}).then((data)=>{
+            if(data){
+            setNIK(data?.NIK) 
+            setNoWa(data?.NoWa)
+            setNama(data?.nama)
+            setPassword(data?.password) 
+            setKecamatan(data?.kecamatan)  
+            setDesa(data?.desa) 
+            setFoto(data?.foto)
+            setNamaKelompok(data?.kelompok?.namaKelompok)
+            setPenyuluh(data?.kelompok?.penyuluh)
+            setStatusLahan(data?.statusLahan)
+            setLuasLahan(data?.luasLahan)
+            setKategori(data?.kategori)
+            setAlamat(data?.alamat)
+            setGapoktan(data?.kelompok?.gapoktan)
+            setJenis(data?.tanamanPetani?.jenis)
+            setKomoditas(data?.tanamanPetani?.komoditas)
+            setMusimTanam(data?.tanamanPetani?.musimTanam)
+            setTanggalTanam(data?.tanamanPetani?.tanggalTanam)
+            setPerkiraanPanen(data?.tanamanPetani?.perkiraanPanen?.split("T")[0])
+            console.log(data)
+            setDisable(true)
+            }
+        })
     }
     const handleSubmit = (e)=>{
         e.preventDefault()
@@ -51,17 +79,17 @@ const TambahDataTani = ()=>{
             <form onSubmit={(e)=>handleSubmit(e)}>
             <MainCard className="mb-10">
                 <div className="flex items-center justify-center">
-                    <InputImage value={foto}  onChange={(e) => setFoto(event.target.files[0])}/>
+                    <InputImage imageActive={foto}  onChange={(e) => setFoto(e.target.files[0])}/>
                 </div>
                 <div className="w-max lg:w-full pt-5 flex justify-end">
-                    <button  value={NIK}  onChange={(e) => setNIK(e.target.value)} className="text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto">
+                    <button  value={NIK}  onClick={(e)=>handleCLick(e)} className="text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto">
                         <FontAwesomeIcon icon={faSearch} className="mr-2" />
                         Cek NIK
                     </button>
                 </div>
                 <div className="grid md:grid-cols-2 md:gap-6 mt-6">
                     <div className="relative z-0 w-full mb-6 group">
-                        <input type="text" name="NIK" id="NIK" value={NIK}  onChange={(e) => setNIK(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="NIK" id="NIK" disabled={disable} value={NIK}  onChange={(e) => setNIK(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                         <label htmlFor="NIK" className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>NIK</strong> (Contoh: 3514002000000001)</label>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
