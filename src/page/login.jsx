@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-// import {Login} from "@/infrastruture"
+import {Login} from "@/infrastruture"
 const LoginPage = () => {
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');

@@ -1,10 +1,14 @@
 import MainCard from "@/components/MainCard"
-import { useState } from "react";
+import {useState, useEffect} from "react"
 import InputCrud from "@/components/page/infoTani/IconCrud"
 import { IconEdit, IconEye, IconTrash, IconPlus   } from '@tabler/icons-react';
 import { Image,} from '@mantine/core';
 import {GetEventTani} from "@/infrastruture"
 function EventTani() {
+    const [datas, setDatas] = useState([])
+    useEffect(() => {
+        GetEventTani().then((data)=>setDatas(data))
+    }, [])
     return(
     <div className="pt-16">
         {[...Array(3)]?.map((_, i)=>(

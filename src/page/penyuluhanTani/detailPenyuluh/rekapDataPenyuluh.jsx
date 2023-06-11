@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faEdit, faTrash, faDownload } from '@fortawesome/free-solid-svg-icons';
 
 const RekapDataPenyuluh = () => {
+    const [datas, setDatas] = useState([])
+    useEffect(() => {
+
+    }, [])
     const [filters, setFilters] = useState({
         kecamatan: "",
         desa: "",

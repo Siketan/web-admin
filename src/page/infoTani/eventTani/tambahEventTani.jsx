@@ -1,11 +1,17 @@
-// import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import InputImage from "@/components/inputImage"
 import MainCard from "@/components/MainCard"
 import TimeInput from "@/components/uiComponents/inputComponents/timeInput" 
 import TextInput from "@/components/uiComponents/inputComponents/textInput" 
-// import {AddEventTani} from "@/infrastruture"
+import {AddEventTani} from "@/infrastruture"
 function TambahEventTani() {
 
+  const handleSubmit = ()=>{
+    const data = {
+      
+    }
+    AddEventTani(data)
+  }
   return (
     <MainCard transparent row center style={{paddingTop:"50px"}}>
       <MainCard width="80%">

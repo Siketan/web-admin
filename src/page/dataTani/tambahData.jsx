@@ -12,6 +12,12 @@ const TambahDataTani = ()=>{
     const handleClikAdd = ()=>{
         setCountData(countData + 1)
     }
+    const handleSubmit = ()=>{
+        const formData = new FormData();
+        for (const key in data) {
+        formData.append(key, data[key]);
+        }
+    }
     return(
         <div className="px-10 md:px-40 py-10 z-1">
             <form>

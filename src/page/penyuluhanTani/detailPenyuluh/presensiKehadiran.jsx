@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
-// import {GetPreseiKehadiran} from "@/infrastruture"
+import {GetPreseiKehadiran} from "@/infrastruture"
 function PresensiKehadiran() {
+    const [datas, setDatas] = useState([])
+    useEffect(() => {
+
+    }, [])
     const [filters, setFilters] = useState({
         nipPenyuluh: "",
         namaPenyuluh: "",

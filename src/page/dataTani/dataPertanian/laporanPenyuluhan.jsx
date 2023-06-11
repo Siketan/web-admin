@@ -1,7 +1,13 @@
-import { useState } from "react";
+import {useState, useEffect} from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faEdit, faTrash, faDownload } from '@fortawesome/free-solid-svg-icons';
+import {GetLaporanTani} from "@/infrastruture"
 const LaporanPenyuluh = () => {
+    const [datas, setDatas] = useState([])
+    useEffect(() => {
+        GetLaporanTani().then((data)=>setDatas(data.tani))
+    }, [])
+
     const [filters, setFilters] = useState({
         kecamatan: "",
         desa: "",
@@ -24,61 +30,9 @@ const LaporanPenyuluh = () => {
         }));
     };
 
-    const data = [
-        {
-        id: 1,
-        kecamatan: "Kecamatan A",
-        desa: "Desa 1",
-        nik: "350816350816",
-        password: "halo12345678",
-        namaPetani: "John Doe",
-        komoditas: "Padi",
-        jenisTanaman: "Tumbuhan",
-        musimTanam: "Musim 1",
-        luasLahan: 1000,
-        tanggalTanam: "2023-05-01",
-        prakiraanTanggalPanen: "2023-08-01",
-        kondisiTanam: "Baik",
-        prakiraanHasilPanen: 500,
-        realisasiHasilPanen: 450
-        },
-        {
-        id: 2,
-        kecamatan: "AdasaA",
-        desa: "Wonorejo",
-        nik: "350816350817",
-        password: "halo12345679",
-        namaPetani: "John Doe",
-        komoditas: "Padi",
-        jenisTanaman: "Tumbuhan",
-        musimTanam: "Musim 1",
-        luasLahan: 1000,
-        tanggalTanam: "2023-05-01",
-        prakiraanTanggalPanen: "2023-08-01",
-        kondisiTanam: "Baik",
-        prakiraanHasilPanen: 500,
-        realisasiHasilPanen: 450
-        },
-        {
-        id: 3,
-        kecamatan: "testing",
-        desa: "Klakah",
-        namaPetani: "John Doe",
-        nik: "350816350818",
-        password: "halo12345610",
-        komoditas: "Padi",
-        jenisTanaman: "Tumbuhan",
-        musimTanam: "Musim 1",
-        luasLahan: 1000,
-        tanggalTanam: "2023-05-01",
-        prakiraanTanggalPanen: "2023-08-01",
-        kondisiTanam: "Baik",
-        prakiraanHasilPanen: 500,
-        realisasiHasilPanen: 450
-        }
-    ];
 
-    const filteredData = data.filter((item) => {
+
+    const filteredData = datas.filter((item) => {
         return Object.keys(filters).every((key) => {
         if (filters[key] !== "") {
             if (typeof item[key] === "number") {
