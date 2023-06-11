@@ -2,7 +2,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import Coba from "./page"
-import {TambahDataTani, RekapDataPetani, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, PresensiKehadiran, TambahPenjual, ProdukPenyuluh, ProdukPetani, Login, Register, NotFoundPage, Notification, RekapDataPenyuluh} from "./page"
+import {TambahDataTani, RekapDataPetani, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, PresensiKehadiran, TambahPenjual, FormJurnalKegiatan, ProdukPenyuluh, ProdukPetani, Login, Register, NotFoundPage, Notification, RekapDataPenyuluh} from "./page"
 import Navbar from "./components/navbar"
 import Footer from "./components/footer"
 const Path = () => {
@@ -34,6 +34,7 @@ const Path = () => {
           <Route path="/data-penyuluh/tambah" element={<TambahPenyuluhanTani />} />
           <Route path="/data-penyuluh/presensi-kehadiran" element={<PresensiKehadiran />} />
           <Route path="/data-penyuluh/jurnal-kegiatan" element={<JurnalKegiatan />} />
+          <Route path="/data-penyuluh/jurnal-kegiatan/form" element={<FormJurnalKegiatan />} />
           <Route path="/data-penyuluh/riwayat-chat" element={<DataRiwayatChat />} />
           <Route path="/data-penyuluh/rekap-penyuluh" element={<RekapDataPenyuluh />} />
           {/* LiveChat */}

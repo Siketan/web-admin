@@ -10,6 +10,7 @@ import RatingPetugas from "./liveChat/ratingPetugas"
 import TambahPenyuluhanTani from "./penyuluhanTani/tambahData"
 import DataRiwayatChat from "./penyuluhanTani/detailPenyuluh/dataRiwayatChat"
 import JurnalKegiatan from "./penyuluhanTani/detailPenyuluh/jurnalKegiatan"
+import FormJurnalKegiatan from "./penyuluhanTani/detailPenyuluh/formJurnalKegiatan"
 import PresensiKehadiran from "./penyuluhanTani/detailPenyuluh/presensiKehadiran"
 import RekapDataPenyuluh from "./penyuluhanTani/detailPenyuluh/rekapDataPenyuluh"
 import TambahPenjual from "./tokoTani/tambahDataPenjual"
@@ -37,4 +38,4 @@ const NotFoundPage = () => {
   );
 };
 
-export {TambahDataTani, RekapDataPetani, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, PresensiKehadiran, TambahPenjual, ProdukPenyuluh, ProdukPetani, Login, Register, NotFoundPage, Notification, RekapDataPenyuluh}
+export {TambahDataTani, RekapDataPetani, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, FormJurnalKegiatan, PresensiKehadiran, TambahPenjual, ProdukPenyuluh, ProdukPetani, Login, Register, NotFoundPage, Notification, RekapDataPenyuluh}
