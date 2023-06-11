@@ -1,30 +1,30 @@
 import { useState } from "react";
 import EditorText from "@/components/textAreaEditor"
-import { Radio, Group, Button } from '@mantine/core';
+import { Button } from '@mantine/core';
 import MainCard from "@/components/MainCard"
 import TextInput from "@/components/uiComponents/inputComponents/textInput" 
 import { IconPlus, IconX, IconDeviceFloppy} from '@tabler/icons-react';
 // import {AddInfoTani} from "@/infrastruture"
-const TambahInfoTani = ()=>{
+const FormJurnalKegiatan = ()=>{
+    // const [NIP, setNIP] = useState("");
     const [judul, setJudul] = useState("");
-    const [tanggal, setTanggal] = useState("");
-    // const [status, setStatus] = useState("");
-    const [kategori, setKategori] = useState("");
+    const [tanggalDibuat, setTanggalDibuat] = useState("");
+    // const [statusJurnal, setStatusJurnal] = useState("");
     const [isi, setIsi] = useState("");
-    // const [fotoBerita, setNamaKegiatan] = useState("");
+    // const [gambar, setGambar] = useState("");
     
     return(
         <MainCard transparent row center style={{paddingTop:"50px"}}>
             <MainCard width="80%" >
-                <h1 className="text-center">Tambahkan Data Tani</h1>
+                <h1 className="text-center">Tambahkan Jurnal Kegiatan</h1>
                 <MainCard transparent gap="0">
                     <MainCard transparent noPadding  width="40%">
                         <TextInput id="judul" name="judul" label="Judul" value={judul}  onChange={(e) => setJudul(e.target.value)} />
                     </MainCard >
                     <MainCard transparent noPadding row gap="15rem">
                         <MainCard transparent noPadding gap="0">
-                            <span id="tanggal" name="tanggal" value={tanggal}  onChange={(e) => setTanggal(e.target.value)}>26 Oktober 2023</span>
-                            <span>Dibuat Oleh: @suheri_26</span>
+                            <span id="tanggal" name="tanggal" value={tanggalDibuat}  onChange={(e) => setTanggalDibuat(e.target.value)}>26 Oktober 2023</span>
+                            <span >Dibuat Oleh: @suheri_26</span>
                         </MainCard>
                         <MainCard transparent noPadding gap="0">
                             <div className="flex justify-center">
@@ -32,7 +32,7 @@ const TambahInfoTani = ()=>{
                                 <span className="underline">Upload Baru</span>            
                             </div>
                         </MainCard>
-                        <MainCard transparent noPadding gap="0">
+                        {/* <MainCard transparent noPadding gap="0">
                                 <Radio.Group
                                     withAsterisk
                                     id="kategori" name="kategori" value={kategori}  onChange={(e) => setKategori(e.target.value)}
@@ -43,7 +43,7 @@ const TambahInfoTani = ()=>{
                                         <Radio value="tips" label="Tips" />
                                     </Group>
                                 </Radio.Group>
-                        </MainCard>
+                        </MainCard> */}
                     </MainCard>
                 </MainCard>
                 <EditorText/>
@@ -56,4 +56,4 @@ const TambahInfoTani = ()=>{
     )
 }
 
-export default TambahInfoTani
+export default FormJurnalKegiatan

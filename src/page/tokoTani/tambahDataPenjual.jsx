@@ -6,19 +6,28 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 // import {AddPenjual} from "@/infrastruture"
 const TambahTokoTani = ()=>{
+    const [NIK, setNIK] = useState ("");
+    const [profesiPenjual, setProfesiPenjual] = useState ("");
+    const [namaProducts, setNamaProducts] = useState ("");
+    const [stok, setStok] = useState ("");
+    const [satuan, setSatuan] = useState ("");
+    const [harga, setHarga] = useState ("");
+    const [deskripsi, setDeskripsi] = useState ("");
+    const [status, setStatus] = useState ("");
+    const [fotoTanaman, setFotoTanaman] = useState ("");
     return(
         <div className="px-10 md:px-40 py-10">
             <div className="shadow-xl rounded-xl px-5 py-5">
                 <form>
                         <div className="w-max lg:w-full py-5 flex justify-end">
-                            <button type="submit" id="NIK" name="NIK" className="text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto">
+                            <button type="submit" id="NIK" name="NIK" value={NIK}  onChange={(e) => setNIK(e.target.value)} className="text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto">
                                 <FontAwesomeIcon icon={faSearch} className="mr-2" />
                                 Cek NIK
                             </button>
                         </div>
                         <div className="grid md:grid-cols-2 md:gap-6">
                             <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name="NIK" id="NIK" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <input type="text" name="NIK" id="NIK" value={NIK}  onChange={(e) => setNIK(e.target.value)}  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label htmlFor="NIK" className="peer-focus:font-medium absolute text-sm dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>Cek NIK</strong> (Contoh: 3514002000000001)</label>
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
@@ -54,7 +63,7 @@ const TambahTokoTani = ()=>{
                                 <p><strong>Penyuluh: </strong> Werkudara Arya Bima</p>
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
-                                <label htmlFor="underline_select" id="profesiPenjual" name="profesiPenjual" className="text-sm ">
+                                <label htmlFor="underline_select" id="profesiPenjual" name="profesiPenjual" value={profesiPenjual}  onChange={(e) => setProfesiPenjual(e.target.value)}  className="text-sm ">
                                     <strong>Profesi Penjual:</strong>
                                 </label>
                                 <div className="flex items-center pt-2">
@@ -69,11 +78,11 @@ const TambahTokoTani = ()=>{
                         </div>
                         <div className="grid md:grid-cols-2 md:gap-6">
                             <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name="namaProducts" id="namaProducts" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <input type="text" name="namaProducts" id="namaProducts" value={namaProducts}  onChange={(e) => setNamaProducts(e.target.value)}  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label htmlFor="namaProducts" className="peer-focus:font-medium absolute text-sm dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"> <strong>Nama Produk</strong> (Contoh: Siketan)</label>
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name="stok" id="stok" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <input type="text" name="stok" id="stok" value={stok}  onChange={(e) => setStok(e.target.value)}  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label htmlFor="stok" className="peer-focus:font-medium absolute text-sm dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>Stok</strong> (Contoh: 10kg)</label>
                             </div>
                         </div>
@@ -83,7 +92,7 @@ const TambahTokoTani = ()=>{
                                         <strong>Satuan</strong>
                                     </label>
                                     <select
-                                        id="satuan" name="satuan" 
+                                        id="satuan" name="satuan" value={satuan}  onChange={(e) => setSatuan(e.target.value)} 
                                         className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                                     >
                                         <option value="US">Sewa</option>
@@ -91,17 +100,17 @@ const TambahTokoTani = ()=>{
                                     </select>
                                 </div>
                             <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name="harga" id="harga" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <input type="text" name="harga" id="harga" value={harga}  onChange={(e) => setHarga(e.target.value)}  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label htmlFor="harga" className="peer-focus:font-medium absolute text-sm dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>Harga</strong> (Contoh: 100.000)</label>
                             </div>
                         </div>
                         <div className="grid md:grid-cols-2 md:gap-6">
                             <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name="deskripsi" id="deskripsi" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <input type="text" name="deskripsi" id="deskripsi" value={deskripsi}  onChange={(e) => setDeskripsi(e.target.value)}  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label htmlFor="deskripsi" className="peer-focus:font-medium absolute text-sm dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>Deskripsi Uraian</strong></label>
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
-                                <input type="file" name="fotoTanaman" accept=".png, .jpg, .jpeg" id="fotoTanaman" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <input type="file" name="fotoTanaman" value={fotoTanaman}  onChange={(e) => setFotoTanaman(e.target.value)}  accept=".png, .jpg, .jpeg" id="fotoTanaman" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label htmlFor="fotoTanaman" className="peer-focus:font-medium absolute text-sm dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>Foto Tanaman</strong> (Jenis File: .png, .jpg, .jpeg)</label>
                             </div>
                         </div>
@@ -111,7 +120,7 @@ const TambahTokoTani = ()=>{
                                     <strong>Status</strong>
                                 </label>
                                 <select
-                                    id="status" name="status"
+                                    id="status" name="status" value={status}  onChange={(e) => setStatus(e.target.value)} 
                                     className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                                 >
                                     <option value="US">Sewa</option>

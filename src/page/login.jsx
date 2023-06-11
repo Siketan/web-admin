@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import {Login} from "@/infrastruture"
 const LoginPage = () => {
-const [email, setEmail] = useState('');
-const [password, setPassword] = useState('');
-const [errors, setErrors] = useState({});
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [errors, setErrors] = useState({});
 
-useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
 
-    return () => {
-    document.body.style.overflow = 'auto';
-    };
-}, []);
+        return () => {
+        document.body.style.overflow = 'auto';
+        };
+    }, []);
 
 const handleSubmit = (e) => {
     e.preventDefault();
