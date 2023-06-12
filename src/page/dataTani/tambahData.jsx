@@ -7,8 +7,8 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import InputImage from "@/components/inputImage"
 import MainCard from "@/components/MainCard"
-import {DaftarTaniAdd, CekNik} from "@/infrastruture"
-import {fecthKecamatan, fecthDesa} from "../../infrastucture/daerah"
+import {DaftarTaniAdd, CekNik,select} from "@/infrastruture"
+import {fecthKecamatan, fecthDesa, } from "../../infrastucture/daerah"
 const TambahDataTani = ()=>{
     const [NIK, setNIK] = useState("");
     const [NoWa, setNoWa] = useState("");
@@ -37,6 +37,7 @@ const TambahDataTani = ()=>{
     const [daftarKecamatan, setDaftarKecamatan] = useState([])
     const [kecamatanActive, setKecamatanActive] = useState('')
     const [dafatarDesa, setDafatarDesa] = useState([{nama:""}])
+    const [daftarNamaKelompok, setDaftarNamaKelompok] = useState([{nama:""}])
     const handleClikAdd = ()=>{
         setCountData(countData + 1)
     }
@@ -46,9 +47,14 @@ const TambahDataTani = ()=>{
             setDaftarKecamatan(data.kecamatan)
         })
     }, [])
-    // const handleselect = ()=>{
-
-    // }
+    const handleselect = (e)=>{
+        setDesa(e)
+        select(e).then((data)=>{
+            setGapoktan(data?.kelompok[0]?.gapoktan || '')
+            setDaftarNamaKelompok(data?.kelompok)
+            console.log(data)
+        })
+    }
 
     const handleCLick = ()=>{
         CekNik({nik:NIK}).then((data)=>{
@@ -92,8 +98,7 @@ const TambahDataTani = ()=>{
         const nama = e?.split("-")[0]
         setKecamatan(nama)
         setKecamatanActive(e)
-        fecthDesa(id).then((data)=>setDafatarDesa(data.kelurahan))
-        
+        fecthDesa(id).then((data)=>setDafatarDesa(data.kelurahan)) 
     }
 
     return(
@@ -148,7 +153,7 @@ const TambahDataTani = ()=>{
                     <select
                         id="desa"
                         value={desa}  
-                        onChange={(e) => setDesa(e.target.value)}
+                        onChange={(e) =>  handleselect(e.target.value)}
                         className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                     >
                          <option value="">--Silahkan Pilih Desa--</option>
@@ -168,10 +173,27 @@ const TambahDataTani = ()=>{
                         <input type="text" name="gapoktan" id="gapoktan" value={gapoktan}  onChange={(e) => setGapoktan(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                         <label htmlFor="gapoktan" className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>Gapoktan</strong> (Contoh: Power Ranger)</label>
                     </div>
+                    { daftarNamaKelompok?.length > 0 ? 
+                    <div className="relative z-0 w-full mb-6 group">
+                        <select
+                            id="namaKelompok"
+                            value={namaKelompok}  
+                            onChange={(e) => setNamaKelompok(e.target.value)}
+                            className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
+                        >
+                            <option value="">--Silahkan Pilih Naka Kelompok--</option>
+                            {daftarNamaKelompok?.map((item, i)=>(
+                                    <option value={item.namaKelompok} key={i}>{item.namaKelompok}</option>
+                            ))}
+                        </select>
+                        <label htmlFor="desa" className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>Desa</strong> (Contoh:  Karanganyar)</label>
+                    </div>
+                    :
                     <div className="relative z-0 w-full mb-6 group">
                         <input type="text" name="namaKelompok" id="namaKelompok" value={namaKelompok}  onChange={(e) => setNamaKelompok(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                         <label htmlFor="namaKelompok" className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>Nama Kelompok </strong>(Contoh: Ranger Merah)</label>
                     </div>
+                    }
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
                     <input type="text" name="penyuluh" id="penyuluh" value={penyuluh}  onChange={(e) => setPenyuluh(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />

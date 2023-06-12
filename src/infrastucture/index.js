@@ -177,6 +177,16 @@ export const GetRiwayatChat = async()=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
+export const getDaftarPenyuluh = async()=>{
+    try {
+      const response = await Api.get("/daftar-penyuluh");
+      return response.data
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
+
+
 
 // live chat
 export const AddChat = async(data)=>{
@@ -206,6 +216,18 @@ export const GetChatt = async()=>{
 export const GetRatting = async()=>{
     try {
       const response = await Api.get("/ratting");
+      return response.data
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
+
+
+
+
+export const select = async(desa)=>{
+    try {
+      const response = await Api.get(`/select-tani?desa=${desa}`);
       return response.data
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');

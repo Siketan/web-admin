@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
-import {Logout} from "../infrastucture"
+import { Logout } from "../infrastucture"
 
-const Navbar = ()=>{
+const Navbar = () => {
     const [navbar, setNavbar] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(null);
 
@@ -14,28 +14,28 @@ const Navbar = ()=>{
     const token = window.localStorage.getItem('token')
 
     useEffect(() => {
-    const handleScroll = () => {
-        if (window.scrollY > 0) {
-        setIsScrolled(true);
-        } else {
-        setIsScrolled(false);
-        }
-    };
+        const handleScroll = () => {
+            if (window.scrollY > 0) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
 
-    window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll);
 
-    return () => {
-        window.removeEventListener('scroll', handleScroll);
-    };
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, []);
     useEffect(() => {
-        
+
     }, []);
-    const handleClik = ()=>{
+    const handleClik = () => {
         Logout()
     }
-    
-    return(
+
+    return (
         <nav className={`w-full shadow fixed top-0 left-0 right-0 z-[999] px-6 md:px-0 ${isScrolled ? 'bg-white' : ''}`}>
             <div className="justify-between bg-white mx-auto lg:max-w-7xl md:items-center md:flex">
                 <div className="bg-white">
@@ -84,124 +84,124 @@ const Navbar = ()=>{
                 <div>
                     <div className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${navbar ? "block" : "hidden"}`}>
                         <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
-                        {token &&
-                        <>
-                        <li className="text-black">
-                            <button onClick={() => toggleDropdown("data-tani")} className="hover:underline underline-offset-auto">
-                            Data Tani
-                            </button>
-                            {activeDropdown === "data-tani" && (
-                            <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
-                                <li className="text-gray-600 hover:text-black hover:font-bold">
-                                    <a href="/data-tani/tambah">Tambah Daftar Tani</a>
+                            {token &&
+                                <>
+                                    <li className="text-black">
+                                        <button onClick={() => toggleDropdown("data-tani")} className="hover:underline underline-offset-auto">
+                                            Data Tani
+                                        </button>
+                                        {activeDropdown === "data-tani" && (
+                                            <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
+                                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                                    <a href="/data-tani/tambah">Tambah Daftar Tani</a>
+                                                </li>
+                                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                                    <a href="/data-tani/laporan-tanam">Tambah Laporan Tanam</a>
+                                                </li>
+                                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                                    <a href="/data-tani/rekap-petani">Rekap Data Petani</a>
+                                                </li>
+                                            </ul>
+                                        )}
+                                    </li>
+                                    <li className="text-black">
+                                        <button onClick={() => toggleDropdown("info-tani")} className="hover:underline underline-offset-auto">
+                                            Info Tani
+                                        </button>
+                                        {activeDropdown === "info-tani" && (
+                                            <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
+                                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                                    <a href="/info-tani">Berita / Artikel Tani</a>
+                                                </li>
+                                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                                    <a href="/info-tani/tambah">Tambah Berita / Artikel Tani</a>
+                                                </li>
+                                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                                    <a href="/event-tani/tambah">Tambah Event Tani</a>
+                                                </li>
+                                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                                    <a href="/info-tani/event-tani">Lihat Semua Event</a>
+                                                </li>
+                                            </ul>
+                                        )}
+                                    </li>
+                                    <li className="text-black">
+                                        <button onClick={() => toggleDropdown("toko-tani")} className="hover:underline underline-offset-auto">
+                                            Toko Tani
+                                        </button>
+                                        {activeDropdown === "toko-tani" && (
+                                            <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
+                                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                                    <a href="/toko-tani/tambah-penjual">Tambah Daftar Penjual</a>
+                                                </li>
+                                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                                    <a href="/toko-tani/produk-petani">Produk Tani</a>
+                                                </li>
+                                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                                    <a href="/toko-tani/produk-penyuluh">Produk Penyuluh</a>
+                                                </li>
+                                            </ul>
+                                        )}
+                                    </li>
+                                    <li className="text-black">
+                                        <button onClick={() => toggleDropdown("data-penyuluh")} className="hover:underline underline-offset-auto">
+                                            Data Penyuluh
+                                        </button>
+                                        {activeDropdown === "data-penyuluh" && (
+                                            <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
+                                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                                    <a href="/data-penyuluh/tambah">Tambah Data Penyuluh</a>
+                                                </li>
+                                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                                    <a href="/data-penyuluh/presensi-kehadiran">Presensi Kehadiran</a>
+                                                </li>
+                                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                                    <a href="/data-penyuluh/jurnal-kegiatan">Jurnal Kegiatan</a>
+                                                </li>
+                                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                                    <a href="/data-penyuluh/riwayat-chat">Data Riwayat Chat</a>
+                                                </li>
+                                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                                    <a href="/data-penyuluh/rekap-penyuluh">Rekap Data Penyuluh</a>
+                                                </li>
+                                            </ul>
+                                        )}
+                                    </li>
+                                    <li className="text-black">
+                                        <button onClick={() => toggleDropdown("live-chat")} className="hover:underline underline-offset-auto">
+                                            Live Chat
+                                        </button>
+                                        {activeDropdown === "live-chat" && (
+                                            <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
+                                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                                    <a href="/live-chat">Live Semua Chat</a>
+                                                </li>
+                                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                                    <a href="/live-chat/rating-petugas">Rating Petugas</a>
+                                                </li>
+                                            </ul>
+                                        )}
+                                    </li>
+
+                                    <li className="text-white0 px-5 py-2 rounded-md box-shadow">
+                                        <a href="/notification"><FontAwesomeIcon
+                                            icon={faBell}
+                                            className="text-gray-500 hover:text-black cursor-pointer"
+                                        />
+                                        </a>
+                                    </li>
+                                </>
+                            }
+                            {token ?
+                                <li className="text-white bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-md box-shadow" onClick={handleClik}>
+                                    <a href="/login">Logout</a>
                                 </li>
-                                <li className="text-gray-600 hover:text-black hover:font-bold">
-                                    <a href="/data-tani/laporan-tanam">Tambah Laporan Tanam</a>
+                                :
+                                <li className="text-white bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-md box-shadow">
+                                    <a href="/login">Login</a>
                                 </li>
-                                <li className="text-gray-600 hover:text-black hover:font-bold">
-                                    <a href="/data-tani/rekap-petani">Rekap Data Petani</a>
-                                </li>
-                            </ul>
-                            )}
-                        </li>
-                        <li className="text-black">
-                            <button onClick={() => toggleDropdown("info-tani")} className="hover:underline underline-offset-auto">
-                            Info Tani
-                            </button>
-                            {activeDropdown === "info-tani" && (
-                            <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
-                                <li className="text-gray-600 hover:text-black hover:font-bold">
-                                    <a href="/info-tani">Info Tani</a>
-                                </li>
-                                <li className="text-gray-600 hover:text-black hover:font-bold">
-                                    <a href="/info-tani/tambah">Tambah Data Tani</a>
-                                </li>
-                                <li className="text-gray-600 hover:text-black hover:font-bold">
-                                    <a href="/event-tani/tambah">Tambah Event Tani</a>
-                                </li>
-                                <li className="text-gray-600 hover:text-black hover:font-bold">
-                                    <a href="/info-tani/event-tani">Lihat Semua Event</a>
-                                </li>
-                            </ul>
-                            )}
-                        </li>
-                        <li className="text-black">
-                            <button onClick={() => toggleDropdown("toko-tani")} className="hover:underline underline-offset-auto">
-                            Toko Tani
-                            </button>
-                            {activeDropdown === "toko-tani" && (
-                            <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
-                                <li className="text-gray-600 hover:text-black hover:font-bold">
-                                    <a href="/toko-tani/tambah-penjual">Tambah Daftar Penjual</a>
-                                </li>
-                                <li className="text-gray-600 hover:text-black hover:font-bold">
-                                    <a href="/toko-tani/produk-petani">Produk Tani</a>
-                                </li>
-                                <li className="text-gray-600 hover:text-black hover:font-bold">
-                                    <a href="/toko-tani/produk-penyuluh">Produk Penyuluh</a>
-                                </li>
-                            </ul>
-                            )}
-                        </li>
-                        <li className="text-black">
-                            <button onClick={() => toggleDropdown("data-penyuluh")} className="hover:underline underline-offset-auto">
-                            Data Penyuluh
-                            </button>
-                            {activeDropdown === "data-penyuluh" && (
-                            <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
-                                <li className="text-gray-600 hover:text-black hover:font-bold">
-                                    <a href="/data-penyuluh/tambah">Tambah Data Penyuluh</a>
-                                </li>
-                                <li className="text-gray-600 hover:text-black hover:font-bold">
-                                    <a href="/data-penyuluh/presensi-kehadiran">Presensi Kehadiran</a>
-                                </li>
-                                <li className="text-gray-600 hover:text-black hover:font-bold">
-                                    <a href="/data-penyuluh/jurnal-kegiatan">Jurnal Kegiatan</a>
-                                </li>
-                                <li className="text-gray-600 hover:text-black hover:font-bold">
-                                    <a href="/data-penyuluh/riwayat-chat">Data Riwayat Chat</a>
-                                </li>
-                                <li className="text-gray-600 hover:text-black hover:font-bold">
-                                    <a href="/data-penyuluh/rekap-penyuluh">Rekap Data Petani</a>
-                                </li>
-                            </ul>
-                            )}
-                        </li>
-                        <li className="text-black">
-                            <button onClick={() => toggleDropdown("live-chat")} className="hover:underline underline-offset-auto">
-                            Live Chat
-                            </button>
-                            {activeDropdown === "live-chat" && (
-                            <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
-                                <li className="text-gray-600 hover:text-black hover:font-bold">
-                                <a href="/live-chat">Live Semua Chat</a>
-                                </li>
-                                <li className="text-gray-600 hover:text-black hover:font-bold">
-                                <a href="/live-chat/rating-petugas">Rating Petugas</a>
-                                </li>
-                            </ul>
-                            )}
-                        </li>
-                            
-                        <li className="text-white0 px-5 py-2 rounded-md box-shadow">
-                            <a href="/notification"><FontAwesomeIcon
-                                icon={faBell}
-                                className="text-gray-500 hover:text-black cursor-pointer"
-                                />
-                            </a>
-                        </li>
-                        </>
-                        }
-                        {token ? 
-                        <li className="text-white bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-md box-shadow" onClick={handleClik}>
-                                <a href="/login">Logout</a>
-                        </li>
-                        :
-                        <li className="text-white bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-md box-shadow">
-                                <a href="/login">Login</a>
-                        </li>
-                        }
-                        {/* <li>
+                            }
+                            {/* <li>
                             <div className="text-black">
                             <button onClick={() => toggleDropdown("profile")} className="hover:underline underline-offset-auto">
                                 <FontAwesomeIcon icon={faUser} />
