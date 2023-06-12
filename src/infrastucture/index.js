@@ -23,6 +23,12 @@ export const Login = async(data)=>{
     }
 }
 
+
+export const Logout = ()=>{
+  localStorage.clear()
+  window.location = "./login"
+} 
+
 // cekNik
 export const CekNik = async(data)=>{
     try {
