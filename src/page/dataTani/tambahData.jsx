@@ -7,8 +7,8 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import InputImage from "@/components/inputImage"
 import MainCard from "@/components/MainCard"
-import {DaftarTaniAdd, CekNik} from "@/infrastruture"
-import {fecthKecamatan, fecthDesa} from "../../infrastucture/daerah"
+import {DaftarTaniAdd, CekNik,select} from "@/infrastruture"
+import {fecthKecamatan, fecthDesa, } from "../../infrastucture/daerah"
 const TambahDataTani = ()=>{
     const [NIK, setNIK] = useState("");
     const [NoWa, setNoWa] = useState("");
@@ -46,9 +46,10 @@ const TambahDataTani = ()=>{
             setDaftarKecamatan(data.kecamatan)
         })
     }, [])
-    // const handleselect = ()=>{
-
-    // }
+    const handleselect = (e)=>{
+        setDesa(e)
+        select(e).then((data)=>console.log(data))
+    }
 
     const handleCLick = ()=>{
         CekNik({nik:NIK}).then((data)=>{
@@ -92,8 +93,7 @@ const TambahDataTani = ()=>{
         const nama = e?.split("-")[0]
         setKecamatan(nama)
         setKecamatanActive(e)
-        fecthDesa(id).then((data)=>setDafatarDesa(data.kelurahan))
-        
+        fecthDesa(id).then((data)=>setDafatarDesa(data.kelurahan)) 
     }
 
     return(
@@ -148,7 +148,7 @@ const TambahDataTani = ()=>{
                     <select
                         id="desa"
                         value={desa}  
-                        onChange={(e) => setDesa(e.target.value)}
+                        onChange={(e) =>  handleselect(e.target.value)}
                         className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                     >
                          <option value="">--Silahkan Pilih Desa--</option>

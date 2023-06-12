@@ -111,10 +111,10 @@ const Navbar = ()=>{
                             {activeDropdown === "info-tani" && (
                             <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
-                                    <a href="/info-tani">Info Tani</a>
+                                    <a href="/info-tani">Berita / Artikel Tani</a>
                                 </li>
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
-                                    <a href="/info-tani/tambah">Tambah Data Tani</a>
+                                    <a href="/info-tani/tambah">Tambah Berita / Artikel Tani</a>
                                 </li>
                                 <li className="text-gray-600 hover:text-black hover:font-bold">
                                     <a href="/event-tani/tambah">Tambah Event Tani</a>
