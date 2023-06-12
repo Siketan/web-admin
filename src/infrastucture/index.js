@@ -17,6 +17,7 @@ export const Login = async(data)=>{
     try {
       const response = await Api.post("/auth/login", data);
       localStorage.setItem('token', response.data.token)
+      window.location.href = "data-tani/rekap-petani"
       SweatAlert(String(response.data.message), 'success');
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
