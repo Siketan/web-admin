@@ -125,7 +125,7 @@ const TambahPenyuluhanTani = ()=>{
                     <div className="grid md:grid-cols-2 mt-2 md:gap-6">
                         <div className="relative z-0 w-full mb-6 group">
                             <label htmlFor="underline_select" className="text-sm text-gray-500 dark:text-gray-400 pt-5 md:pt-0">
-                                <strong>Nama Kecamatan: </strong>
+                                <strong>Nama Kecamatan Binaan: </strong>
                             </label>
                             <select
                                 id="kecamatan"

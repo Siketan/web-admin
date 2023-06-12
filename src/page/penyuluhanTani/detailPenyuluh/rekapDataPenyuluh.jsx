@@ -14,7 +14,11 @@ const RekapDataPenyuluh = () => {
         desa: "",
         namaPenyuluh: "",
         NIP:"",
-        nama:""
+        nama:"",
+        NoWa:"",
+        kecamatanBinaan: "",
+        desaBinaan: "",
+        namaProduct: "",
     });
 
     const handleFilterChange = (e, column) => {
@@ -57,6 +61,10 @@ const RekapDataPenyuluh = () => {
                                 <th className="px-4 py-2 truncate border">NIP</th>
                                 <th className="px-4 py-2 truncate border">Password</th>
                                 <th className="px-4 py-2 truncate border">Nama Penyuluh</th>
+                                <th className="px-4 py-2 truncate border">Nomor WhatsApp</th>
+                                <th className="px-4 py-2 truncate border">Kecamatan Binaan</th>
+                                <th className="px-4 py-2 truncate border">Desa Binaan</th>
+                                <th className="px-4 py-2 truncate border">Nama Product</th>
                                 <th className="px-4 py-2 truncate border">Action</th>
                             </tr>
                         </thead>
@@ -98,8 +106,8 @@ const RekapDataPenyuluh = () => {
                                     type="text"
                                     value={filters.NIP}
                                     onChange={(e) => handleFilterChange(e, "NIP")}
-                                    className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600"
-                                    placeholder="Filter NIK"
+                                    className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                                    placeholder="Filter NIP"
                                     />
                                     <FontAwesomeIcon
                                     icon={faFilter}
@@ -128,7 +136,67 @@ const RekapDataPenyuluh = () => {
                                     type="text"
                                     value={filters.nama}
                                     onChange={(e) => handleFilterChange(e, "nama")}
-                                    className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600"
+                                    className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                                    placeholder="Filter Nama"
+                                    />
+                                    <FontAwesomeIcon
+                                    icon={faFilter}
+                                    className="text-gray-500 ml-2"
+                                    />
+                                </div>
+                            </td>
+                            <td className="px-4 py-2 border">
+                                <div className="flex items-center">
+                                    <input
+                                    type="text"
+                                    value={filters.NoWa}
+                                    onChange={(e) => handleFilterChange(e, "NoWa")}
+                                    className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                                    placeholder="Filter Nomor WhatsaApp"
+                                    />
+                                    <FontAwesomeIcon
+                                    icon={faFilter}
+                                    className="text-gray-500 ml-2"
+                                    />
+                                </div>
+                            </td>
+                            <td className="px-4 py-2 border">
+                                <div className="flex items-center">
+                                    <input
+                                    type="text"
+                                    value={filters.kecamatanBinaan}
+                                    onChange={(e) => handleFilterChange(e, "kecamatanBinaan")}
+                                    className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                                    placeholder="Filter Kecamatan Binaan"
+                                    />
+                                    <FontAwesomeIcon
+                                    icon={faFilter}
+                                    className="text-gray-500 ml-2"
+                                    />
+                                </div>
+                            </td>
+                            <td className="px-4 py-2 border">
+                                <div className="flex items-center">
+                                    <input
+                                    type="text"
+                                    value={filters.desaBinaan}
+                                    onChange={(e) => handleFilterChange(e, "desaBinaan")}
+                                    className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                                    placeholder="Filter Desa Binaan"
+                                    />
+                                    <FontAwesomeIcon
+                                    icon={faFilter}
+                                    className="text-gray-500 ml-2"
+                                    />
+                                </div>
+                            </td>
+                            <td className="px-4 py-2 border">
+                                <div className="flex items-center">
+                                    <input
+                                    type="text"
+                                    value={filters.namaProduct}
+                                    onChange={(e) => handleFilterChange(e, "namaProduct")}
+                                    className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
                                     placeholder="Filter Password"
                                     />
                                     <FontAwesomeIcon
@@ -145,6 +213,10 @@ const RekapDataPenyuluh = () => {
                                     <td className="px-4 py-2 border">{item.NIP}</td>
                                     <td className="px-4 py-2 border">{item.password}</td>
                                     <td className="px-4 py-2 border">{item.nama}</td>
+                                    <td className="px-4 py-2 border">{item.NoWa}</td>
+                                    <td className="px-4 py-2 border">{item.kecamatanBinaan}</td>
+                                    <td className="px-4 py-2 border">{item.desaBinaan}</td>
+                                    <td className="px-4 py-2 border">{item.namaProduct}</td>
                                     <td className="px-4 py-2 border">
                                         <FontAwesomeIcon
                                             icon={faEdit}
