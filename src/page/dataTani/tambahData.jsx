@@ -52,6 +52,7 @@ const TambahDataTani = ()=>{
         select(e).then((data)=>{
             setGapoktan(data?.kelompok[0]?.gapoktan || '')
             setDaftarNamaKelompok(data?.kelompok)
+            console.log(data)
         })
     }
 
