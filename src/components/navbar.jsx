@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
+import {Logout} from "../infrastucture"
 
 const Navbar = ()=>{
     const [navbar, setNavbar] = useState(false);
@@ -10,6 +11,7 @@ const Navbar = ()=>{
         setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
     };
     const [isScrolled, setIsScrolled] = useState(false);
+    const token = window.localStorage.getItem('token')
 
     useEffect(() => {
     const handleScroll = () => {
@@ -26,7 +28,12 @@ const Navbar = ()=>{
         window.removeEventListener('scroll', handleScroll);
     };
     }, []);
-
+    useEffect(() => {
+        
+    }, []);
+    const handleClik = ()=>{
+        Logout()
+    }
     
     return(
         <nav className={`w-full shadow fixed top-0 left-0 right-0 z-[999] px-6 md:px-0 ${isScrolled ? 'bg-white' : ''}`}>
@@ -77,6 +84,8 @@ const Navbar = ()=>{
                 <div>
                     <div className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${navbar ? "block" : "hidden"}`}>
                         <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
+                        {token &&
+                        <>
                         <li className="text-black">
                             <button onClick={() => toggleDropdown("data-tani")} className="hover:underline underline-offset-auto">
                             Data Tani
@@ -181,9 +190,17 @@ const Navbar = ()=>{
                                 />
                             </a>
                         </li>
+                        </>
+                        }
+                        {token ? 
+                        <li className="text-white bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-md box-shadow" onClick={handleClik}>
+                                <a href="/login">Logout</a>
+                        </li>
+                        :
                         <li className="text-white bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-md box-shadow">
                                 <a href="/login">Login</a>
                         </li>
+                        }
                         {/* <li>
                             <div className="text-black">
                             <button onClick={() => toggleDropdown("profile")} className="hover:underline underline-offset-auto">

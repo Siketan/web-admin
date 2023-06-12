@@ -311,8 +311,8 @@ const LaporanPenyuluh = () => {
                                 <td className="px-4 py-2 border">{item.tanamanPetani.jenis}</td>
                                 <td className="px-4 py-2 border">{item.tanamanPetani.musimTanam}</td>
                                 <td className="px-4 py-2 border">{item.tanamanPetani.luasLahan}</td>
-                                <td className="px-4 py-2 border">{item.tanamanPetani.tanggalTanam}</td>
-                                <td className="px-4 py-2 border">{item.tanamanPetani.perkiraanPanen}</td>
+                                <td className="px-4 py-2 border">{item.tanamanPetani.tanggalTanam?.split("T")[0]}</td>
+                                <td className="px-4 py-2 border">{item.tanamanPetani.perkiraanPanen?.split("T")[0]}</td>
                                 <td className="px-4 py-2 border">{item.tanamanPetani.komdisiTanam}</td>
                                 <td className="px-4 py-2 border">{item.tanamanPetani.prakiraanHasilPanen}</td>
                                 <td className="px-4 py-2 border">{item.tanamanPetani.realisasiHasilPanen}</td>
