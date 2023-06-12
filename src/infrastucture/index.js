@@ -177,7 +177,7 @@ export const GetRiwayatChat = async()=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
-export const getDaftarTani = async()=>{
+export const getDaftarPenyuluh = async()=>{
     try {
       const response = await Api.get("/daftar-penyuluh");
       return response.data

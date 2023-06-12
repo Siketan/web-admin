@@ -1,25 +1,20 @@
 import { useState,useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faEdit, faTrash, faDownload } from '@fortawesome/free-solid-svg-icons';
+import {getDaftarPenyuluh} from "@/infrastruture"
 
 const RekapDataPenyuluh = () => {
     const [datas, setDatas] = useState([])
     useEffect(() => {
-
+        getDaftarPenyuluh().then((data)=>setDatas(data.dataDaftarPenyuluh))
     }, [])
+    console.log(datas)
     const [filters, setFilters] = useState({
         kecamatan: "",
         desa: "",
         namaPenyuluh: "",
-        komoditas: "",
-        jenisTanaman: "",
-        musimTanam: "",
-        luasLahan: "",
-        tanggalTanam: "",
-        prakiraanTanggalPanen: "",
-        kondisiTanam: "",
-        prakiraanHasilPanen: "",
-        realisasiHasilPanen: ""
+        NIP:"",
+        nama:""
     });
 
     const handleFilterChange = (e, column) => {
@@ -29,61 +24,7 @@ const RekapDataPenyuluh = () => {
         }));
     };
 
-    const data = [
-        {
-        id: 1,
-        kecamatan: "Kecamatan A",
-        desa: "Desa 1",
-        nik: "350816350816",
-        password: "halo12345678",
-        namaPenyuluh: "John Doe",
-        komoditas: "Padi",
-        jenisTanaman: "Tumbuhan",
-        musimTanam: "Musim 1",
-        luasLahan: 1000,
-        tanggalTanam: "2023-05-01",
-        prakiraanTanggalPanen: "2023-08-01",
-        kondisiTanam: "Baik",
-        prakiraanHasilPanen: 500,
-        realisasiHasilPanen: 450
-        },
-        {
-        id: 2,
-        kecamatan: "AdasaA",
-        desa: "Wonorejo",
-        nik: "350816350817",
-        password: "halo12345679",
-        namaPenyuluh: "John Doe",
-        komoditas: "Padi",
-        jenisTanaman: "Tumbuhan",
-        musimTanam: "Musim 1",
-        luasLahan: 1000,
-        tanggalTanam: "2023-05-01",
-        prakiraanTanggalPanen: "2023-08-01",
-        kondisiTanam: "Baik",
-        prakiraanHasilPanen: 500,
-        realisasiHasilPanen: 450
-        },
-        {
-        id: 3,
-        kecamatan: "testing",
-        desa: "Klakah",
-        namaPenyuluh: "John Doe",
-        nik: "350816350818",
-        password: "halo12345610",
-        komoditas: "Padi",
-        jenisTanaman: "Tumbuhan",
-        musimTanam: "Musim 1",
-        luasLahan: 1000,
-        tanggalTanam: "2023-05-01",
-        prakiraanTanggalPanen: "2023-08-01",
-        kondisiTanam: "Baik",
-        prakiraanHasilPanen: 500,
-        realisasiHasilPanen: 450
-        }
-    ];
-
-    const filteredData = data.filter((item) => {
+    const filteredData = datas.filter((item) => {
         return Object.keys(filters).every((key) => {
         if (filters[key] !== "") {
             if (typeof item[key] === "number") {
@@ -113,18 +54,9 @@ const RekapDataPenyuluh = () => {
                             <tr>
                                 <th className="px-4 py-2 truncate border">Kecamatan</th>
                                 <th className="px-4 py-2 truncate border">Desa</th>
-                                <th className="px-4 py-2 truncate border">NIK</th>
+                                <th className="px-4 py-2 truncate border">NIP</th>
                                 <th className="px-4 py-2 truncate border">Password</th>
                                 <th className="px-4 py-2 truncate border">Nama Penyuluh</th>
-                                <th className="px-4 py-2 truncate border">Komoditas</th>
-                                <th className="px-4 py-2 truncate border">Jenis Tanaman</th>
-                                <th className="px-4 py-2 truncate border">Musim Tanam</th>
-                                <th className="px-4 py-2 truncate border">Luas Lahan</th>
-                                <th className="px-4 py-2 truncate border">Tanggal Tanam</th>
-                                <th className="px-4 py-2 truncate border">Prakiraan Tanggal Panen</th>
-                                <th className="px-4 py-2 truncate border">Kondisi Tanam</th>
-                                <th className="px-4 py-2 truncate border">Prakiraan Hasil Panen</th>
-                                <th className="px-4 py-2 truncate border">Realisasi Hasil Panen</th>
                                 <th className="px-4 py-2 truncate border">Action</th>
                             </tr>
                         </thead>
@@ -164,8 +96,8 @@ const RekapDataPenyuluh = () => {
                                 <div className="flex items-center">
                                     <input
                                     type="text"
-                                    value={filters.nik}
-                                    onChange={(e) => handleFilterChange(e, "nik")}
+                                    value={filters.NIP}
+                                    onChange={(e) => handleFilterChange(e, "NIP")}
                                     className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
                                     placeholder="Filter NIK"
                                     />
@@ -194,145 +126,10 @@ const RekapDataPenyuluh = () => {
                                 <div className="flex items-center">
                                     <input
                                     type="text"
-                                    value={filters.namaPenyuluh}
-                                    onChange={(e) => handleFilterChange(e, "namaPenyuluh")}
+                                    value={filters.nama}
+                                    onChange={(e) => handleFilterChange(e, "nama")}
                                     className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                    placeholder="Filter Nama Penyuluh"
-                                    />
-                                    <FontAwesomeIcon
-                                    icon={faFilter}
-                                    className="text-gray-500 ml-2"
-                                    />
-                                </div>
-                            </td>
-                            <td className="px-4 py-2 border">
-                                <div className="flex items-center">
-                                    <input
-                                    type="text"
-                                    value={filters.komoditas}
-                                    onChange={(e) => handleFilterChange(e, "komoditas")}
-                                    className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                    placeholder="Filter Komoditas"
-                                    />
-                                    <FontAwesomeIcon
-                                    icon={faFilter}
-                                    className="text-gray-500 ml-2"
-                                    />
-                                </div>
-                            </td>
-                            <td className="px-4 py-2 border">
-                                <div className="flex items-center">
-                                    <input
-                                    type="text"
-                                    value={filters.jenisTanaman}
-                                    onChange={(e) => handleFilterChange(e, "jenisTanaman")}
-                                    className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                    placeholder="Filter Jenis Tanaman"
-                                    />
-                                    <FontAwesomeIcon
-                                    icon={faFilter}
-                                    className="text-gray-500 ml-2"
-                                    />
-                                </div>
-                            </td>
-                            <td className="px-4 py-2 border">
-                                <div className="flex items-center">
-                                    <input
-                                    type="text"
-                                    value={filters.musimTanam}
-                                    onChange={(e) => handleFilterChange(e, "musimTanam")}
-                                    className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                    placeholder="Filter Musim Tanam"
-                                    />
-                                    <FontAwesomeIcon
-                                    icon={faFilter}
-                                    className="text-gray-500 ml-2"
-                                    />
-                                </div>
-                            </td>
-                            <td className="px-4 py-2 border">
-                                <div className="flex items-center">
-                                    <input
-                                    type="text"
-                                    value={filters.luasLahan}
-                                    onChange={(e) => handleFilterChange(e, "luasLahan")}
-                                    className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                    placeholder="Filter Luas Lahan"
-                                    />
-                                    <FontAwesomeIcon
-                                    icon={faFilter}
-                                    className="text-gray-500 ml-2"
-                                    />
-                                </div>
-                            </td>
-                            <td className="px-4 py-2 border">
-                                <div className="flex items-center">
-                                    <input
-                                    type="text"
-                                    value={filters.tanggalTanam}
-                                    onChange={(e) => handleFilterChange(e, "tanggalTanam")}
-                                    className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                    placeholder="Filter Tanggal Tanam"
-                                    />
-                                    <FontAwesomeIcon
-                                    icon={faFilter}
-                                    className="text-gray-500 ml-2"
-                                    />
-                                </div>
-                            </td>
-                            <td className="px-4 py-2 border">
-                                <div className="flex items-center">
-                                    <input
-                                    type="text"
-                                    value={filters.prakiraanTanggalPanen}
-                                    onChange={(e) => handleFilterChange(e, "prakiraanTanggalPanen")}
-                                    className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                    placeholder="Filter Prakiraan Tanggal Panen"
-                                    />
-                                    <FontAwesomeIcon
-                                    icon={faFilter}
-                                    className="text-gray-500 ml-2"
-                                    />
-                                </div>
-                            </td>
-                            <td className="px-4 py-2 border">
-                                <div className="flex items-center">
-                                    <input
-                                    type="text"
-                                    value={filters.kondisiTanam}
-                                    onChange={(e) => handleFilterChange(e, "kondisiTanam")}
-                                    className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                    placeholder="Filter Kondisi Tanam"
-                                    />
-                                    <FontAwesomeIcon
-                                    icon={faFilter}
-                                    className="text-gray-500 ml-2"
-                                    />
-                                </div>
-                            </td>
-                            <td className="px-4 py-2 border">
-                                <div className="flex items-center">
-                                    <input
-                                    type="text"
-                                    value={filters.prakiraanHasilPanen}
-                                    onChange={(e) => handleFilterChange(e, "prakiraanHasilPanen")}
-                                    className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                    placeholder="Filter Prakiraan Hasil Panen"
-                                    />
-                                    <FontAwesomeIcon
-                                    icon={faFilter}
-                                    className="text-gray-500 ml-2"
-                                    />
-                                </div>
-                            </td>
-                            <td className="px-4 py-2 border">
-                                <div className="flex items-center">
-                                    <input
-                                    type="text"
-                                    value={filters.realisasiHasilPanen}
-                                    onChange={(e) => handleFilterChange(e, "realisasiHasilPanen")}
-                                    className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                                    placeholder="Filter Realisasi Hasil Panen"
+                                    placeholder="Filter Password"
                                     />
                                     <FontAwesomeIcon
                                     icon={faFilter}
@@ -345,18 +142,9 @@ const RekapDataPenyuluh = () => {
                                 <tr key={item.id}>
                                     <td className="px-4 py-2 border">{item.kecamatan}</td>
                                     <td className="px-4 py-2 border">{item.desa}</td>
-                                    <td className="px-4 py-2 border">{item.nik}</td>
+                                    <td className="px-4 py-2 border">{item.NIP}</td>
                                     <td className="px-4 py-2 border">{item.password}</td>
-                                    <td className="px-4 py-2 border">{item.namaPenyuluh}</td>
-                                    <td className="px-4 py-2 border">{item.komoditas}</td>
-                                    <td className="px-4 py-2 border">{item.jenisTanaman}</td>
-                                    <td className="px-4 py-2 border">{item.musimTanam}</td>
-                                    <td className="px-4 py-2 border">{item.luasLahan}</td>
-                                    <td className="px-4 py-2 border">{item.tanggalTanam}</td>
-                                    <td className="px-4 py-2 border">{item.prakiraanTanggalPanen}</td>
-                                    <td className="px-4 py-2 border">{item.kondisiTanam}</td>
-                                    <td className="px-4 py-2 border">{item.prakiraanHasilPanen}</td>
-                                    <td className="px-4 py-2 border">{item.realisasiHasilPanen}</td>
+                                    <td className="px-4 py-2 border">{item.nama}</td>
                                     <td className="px-4 py-2 border">
                                         <FontAwesomeIcon
                                             icon={faEdit}
