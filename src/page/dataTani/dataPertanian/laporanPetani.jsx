@@ -16,13 +16,26 @@ function LaporanPetani() {
     const [fotoTanaman, setFotoTanaman] = useState("");
     const [datas, setDatas] = useState({})
     const [disable, setDisable] = useState(false)
+    const [daftarKomoditas, setDaftarKomoditas] = useState([])
     const handleCLick = ()=>{
         CekNik({nik:NIK}).then((data)=>{
             setDatas(data)
             setDisable(true)
         })
     }
-    
+    useEffect(() => {
+        if(kategori == 'Tanaman Pangan'){
+            setDaftarKomoditas(['Padi Konvensional','Padi Ramah Lingkungan','Padi Organik','Jagung','Kedelai','Ubi Jalar','Ubi Kayu','Kacang Tanah','Kacang Hijau'])
+        }else if(kategori == 'Tanaman Perkebunan'){
+            setDaftarKomoditas(['Kopi','Kakao','Cengkeh','The','Karet','Kelapa','Tembakau','Tebu'])
+        }else if(kategori == 'Tanaman Holtikultura'){
+            setDaftarKomoditas(['Cabe Kecil','Cabe Besar','Bawang Merah','Tomat','Terong','Pare','Gambas','Bayam','Kangkung','Sawi','Kacang Panjang '])
+        }else if(kategori == 'lainnya'){
+            setDaftarKomoditas([ 'Mangga', 'Durian', 'Manggis', 'Alpukat', 'Rambutan', 'Jeruk Lemon', 'Jeruk nipis', 'Jeruk Keprok', 'Jeruk Besar', 'Nangka', 'Jambu Biji', 'Jambu air', 'Sukun', 'Sirsat', 'Sawo', 'Duku', 'Melon', 'Semangka', 'Pisang', 'Blewah'])
+        }else{
+            setDaftarKomoditas([''])
+        }
+    }, [kategori])
     const handleSubmit = (e)=>{
         e.preventDefault()
         const data = {
@@ -92,7 +105,7 @@ function LaporanPetani() {
                             <div className="flex items-center pt-2">
                                 <input
                                     id="tanaman-pangan"
-                                    value="tanaman-pangan"
+                                    value="Tanaman Pangan"
                                     onChange={(e) => setKategori(e.target.value)}
                                     type="radio"
                                     name="kategori"
@@ -105,7 +118,7 @@ function LaporanPetani() {
                             <div className="flex items-center py-2">
                                 <input
                                     id="tanaman-perkebunan"
-                                    value="tanaman-perkebunan"
+                                    value="Tanaman Perkebunan"
                                     onChange={(e) => setKategori(e.target.value)}
                                     type="radio"
                                     name="kategori"
@@ -118,7 +131,7 @@ function LaporanPetani() {
                             <div className="flex items-center">
                                 <input
                                     id="tanaman-holtikultura"
-                                    value="tanaman-holtikultura"
+                                    value="Tanaman Holtikultura"
                                     onChange={(e) => setKategori(e.target.value)}
                                     type="radio"
                                     name="kategori"
@@ -143,34 +156,38 @@ function LaporanPetani() {
                             </div>
                         </div>
 
+                           {kategori == 'Tanaman Holtikultura' && 
                             <div className="relative z-0 w-full mb-6 group">
-                                <label htmlFor="underline_select" className="text-sm">
+                                <label htmlFor="underline_select" className="text-sm text-gray-500 ">
                                     <strong>Pilih Jenis Tanaman</strong>
                                 </label>
                                 <select
-                                    id="jenisTanaman"
+                                    id="jenis"
                                     value={jenisTanaman}  
                                     onChange={(e) => setJenisTanaman(e.target.value)}
-                                    className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
+                                    className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                                 >
-                                    <option value="US">Buah</option>
-                                    <option value="CA">Sayur</option>
+                                    <option value="Buah">Buah</option>
+                                    <option value="Sayur">Sayur</option>
                                 </select>
                             </div>
+                            }
                         </div>
                         <div className="grid md:grid-cols-2 mt-2 md:gap-6">
                             <div className="relative z-0 w-full mb-6 group">
-                                <label htmlFor="underline_select" className="text-sm text-gray-500 dark:text-gray-400 pt-5 md:pt-0">
+                                <label htmlFor="underline_select" className="text-sm text-gray-500  pt-5 md:pt-0">
                                     <strong>Pilih komoditas: </strong>
                                 </label>
                                 <select
                                     id="komoditas"
                                     value={komoditas}  
                                     onChange={(e) => setKomoditas(e.target.value)}
-                                    className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
+                                    className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                                 >
-                                    <option value="US">Pilih Komoditas</option>
-                                    <option value="CA">Milik Sendiri</option>
+                                    <option value="">-- Pilih Komoditas --</option>
+                                    {daftarKomoditas?.map((item, i)=>(
+                                        <option value={item} key={i}>{item}</option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
