@@ -71,6 +71,7 @@ export const GetLaporanTani = async()=>{
 export const AddInfoTani = async(data)=>{
     try {
       const response = await Api.post("/info-tani/add", data, headers);
+      window.location.href='/info-tani'
       SweatAlert(String(response.data.message), 'success');
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
