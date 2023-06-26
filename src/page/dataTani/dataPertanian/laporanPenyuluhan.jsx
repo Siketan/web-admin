@@ -2,6 +2,7 @@ import {useState, useEffect} from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faEdit, faTrash, faDownload } from '@fortawesome/free-solid-svg-icons';
 import {GetLaporanTani} from "@/infrastruture"
+import ExcelComponent from "../../../components/exelComponent"
 const LaporanPenyuluh = () => {
     const [datas, setDatas] = useState([])
     useEffect(() => {
@@ -55,13 +56,16 @@ const LaporanPenyuluh = () => {
             return true;
         });
     });
-    console.log(filteredData)
+    const handleDownlod = ()=>{
+        const dataExel = filteredData.map((item)=>{return {NIK:item.NIK, ["No Wa"]:item.NoWa, Alamat:item.alamat, Kecamatan:item.kecamatan,Desa: item.desa}})
+        ExcelComponent(dataExel, 'data.xlsx', 'Sheet1')
+    }
 
     return (
         <div className="flex justify-center pt-12">
             <div className="w-full max-w-screen-xl shadow-xl rounded-lg overflow-x-auto overflow-y-auto">
                 <div className="w-max lg:w-full pt-10 px-10">
-                    <button type="submit" className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto">
+                    <button onClick={handleDownlod} type="submit" className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto">
                         <FontAwesomeIcon icon={faDownload} className="mr-2" />
                         Download/Cetak
                     </button>
