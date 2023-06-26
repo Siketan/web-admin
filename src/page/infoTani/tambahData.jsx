@@ -48,7 +48,7 @@ const TambahInfoTani = () => {
               <span id="tanggal" name="tanggal">
                 {formattedDate}
               </span>
-              <span>Dibuat Oleh: @suheri_26</span>
+              <span>Dibuat Oleh: Inputan ini nanti her</span>
             </MainCard>
             {/* <MainCard transparent noPadding gap="0">
                             <div className="flex justify-center">

@@ -185,7 +185,7 @@ const Navbar = () => {
                         </li>
                         <li className="text-gray-600 hover:text-black hover:font-bold">
                           <a href="/data-penyuluh/presensi-kehadiran">
-                            Presensi Kehadiran
+                            Laporan Harian
                           </a>
                         </li>
                         <li className="text-gray-600 hover:text-black hover:font-bold">
