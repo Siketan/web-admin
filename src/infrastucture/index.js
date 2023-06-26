@@ -71,8 +71,7 @@ export const GetLaporanTani = async()=>{
 export const AddInfoTani = async(data)=>{
     try {
       const response = await Api.post("/info-tani/add", data, headers);
-      window.location.href='/info-tani'
-      SweatAlert(String(response.data.message), 'success');
+      SweatAlert(String(response.data.message), 'success', '/info-tani');
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
@@ -89,7 +88,7 @@ export const GetInfoTani = async()=>{
 export const AddEventTani = async(data)=>{
     try {
       const response = await Api.post("/event-tani/add", data, headers);
-      SweatAlert(String(response.data.message), 'success');
+      SweatAlert(String(response.data.message), 'success', '/info-tani/event-tani');
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
@@ -102,6 +101,24 @@ export const GetEventTani = async()=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
+export const DeleteEventTani = async(id)=>{
+    try {
+      const response = await Api.delete(`/event-tani/${id}`);
+      SweatAlert(String(response.data.message), 'success', "reload");
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
+export const DeleteInfoTani = async(id)=>{
+    try {
+      const response = await Api.delete(`/info-tani/${id}`);
+      SweatAlert(String(response.data.message), 'success', "reload");
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
+
+
 
 // toko tani
 export const AddPenjual = async(data)=>{

@@ -1,11 +1,12 @@
 import React, {useState} from 'react'
 import { IconPhoto } from '@tabler/icons-react';
 
-function InputImage({imageActive}) {
+function InputImage({imageActive, onChange}) {
   const [image, setImage] = useState("")
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(URL.createObjectURL(file));
+    onChange(file)
   };
   return (
     <label htmlFor="imageInput" className="cursor-pointer border-solid border-2 border-slate-800 w-80 h-60 rounded-2xl">
