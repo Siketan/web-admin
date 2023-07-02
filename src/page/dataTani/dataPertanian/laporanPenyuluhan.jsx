@@ -57,7 +57,7 @@ const LaporanPenyuluh = () => {
         });
     });
     const handleDownlod = ()=>{
-        const dataExel = filteredData.map((item)=>{return {NIK:item.NIK, ["No Wa"]:item.NoWa, Alamat:item.alamat, Kecamatan:item.kecamatan,Desa: item.desa}})
+        const dataExel = filteredData.map((item)=>{return {NIK:item.NIK, ["No Wa"]:item.NoWa, Alamat:item.alamat, Kecamatan:item.kecamatan,Desa: item.desa, nama:item.nama, password: item.password}})
         ExcelComponent(dataExel, 'data.xlsx', 'Sheet1')
     }
 

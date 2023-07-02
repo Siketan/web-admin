@@ -7,6 +7,7 @@ import {
   faDownload,
 } from "@fortawesome/free-solid-svg-icons";
 import { getDaftarPenyuluh } from "@/infrastruture";
+import ExcelComponent from "../../../components/exelComponent"
 
 const RekapDataPenyuluh = () => {
   const [datas, setDatas] = useState([]);
@@ -45,12 +46,16 @@ const RekapDataPenyuluh = () => {
       return true;
     });
   });
-
+    const handleDownlod = ()=>{
+         const dataExel = filteredData.map((item)=>{return {NIP:item.NIP, ["No Wa"]:item.NoWa, Alamat:item.alamat, Kecamatan:item.kecamatan,Desa: item.desa, nama:item.nama, foto:item.foto, password:item.password}})
+        ExcelComponent(dataExel, 'data.xlsx', 'Sheet1')
+    }
   return (
     <div className="flex justify-center pt-12">
       <div className="w-full max-w-screen-xl shadow-xl rounded-lg overflow-x-auto">
         <div className="w-max lg:w-full pt-10 px-10">
           <button
+          onClick={handleDownlod}
             type="submit"
             className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto"
           >

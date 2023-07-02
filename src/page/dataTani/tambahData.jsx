@@ -196,6 +196,7 @@ const TambahDataTani = () => {
             <InputImage
               imageActive={foto}
               onChange={(e) => setFoto(e.target.files[0])}
+              title="Foto Profil"
             />
           </div>
           <div className="w-max lg:w-full pt-5 flex justify-end">
