@@ -44,7 +44,18 @@ const Navbar = () => {
         <div className="bg-white">
           <div className="flex items-center justify-between py-3 md:py-5 md:block">
             <a href="/">
-              <img src="/image/logo.png" width={80} alt="Logo" />
+              <img
+                className="hidden md:block"
+                src="/image/logo-navbar.png"
+                width={200}
+                alt="Logo"
+              />
+              <img
+                className="md:hidden"
+                src="/image/logo-navbar.png"
+                width={150}
+                alt="Logo"
+              />
             </a>
             <div className="md:hidden">
               <button
