@@ -104,7 +104,7 @@ const Navbar = () => {
             <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
               {token && (
                 <>
-                  <li className="text-black">
+                  <li className="text-green-primary">
                     <button
                       onClick={() => toggleDropdown("data-tani")}
                       className="hover:underline underline-offset-auto"
@@ -113,15 +113,15 @@ const Navbar = () => {
                     </button>
                     {activeDropdown === "data-tani" && (
                       <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
-                        <li className="text-gray-600 hover:text-black hover:font-bold">
+                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/data-tani/tambah">Tambah Daftar Tani</a>
                         </li>
-                        <li className="text-gray-600 hover:text-black hover:font-bold">
+                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/data-tani/laporan-tanam">
                             Tambah Laporan Tanam
                           </a>
                         </li>
-                        <li className="text-gray-600 hover:text-black hover:font-bold">
+                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/data-tani/rekap-petani">
                             Rekap Data Petani
                           </a>
@@ -129,7 +129,7 @@ const Navbar = () => {
                       </ul>
                     )}
                   </li>
-                  <li className="text-black">
+                  <li className="text-green-primary">
                     <button
                       onClick={() => toggleDropdown("info-tani")}
                       className="hover:underline underline-offset-auto"
@@ -138,24 +138,24 @@ const Navbar = () => {
                     </button>
                     {activeDropdown === "info-tani" && (
                       <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
-                        <li className="text-gray-600 hover:text-black hover:font-bold">
+                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/info-tani">Berita / Artikel Tani</a>
                         </li>
-                        <li className="text-gray-600 hover:text-black hover:font-bold">
+                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/info-tani/tambah">
                             Tambah Berita / Artikel Tani
                           </a>
                         </li>
-                        <li className="text-gray-600 hover:text-black hover:font-bold">
+                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/event-tani/tambah">Tambah Event Tani</a>
                         </li>
-                        <li className="text-gray-600 hover:text-black hover:font-bold">
+                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/info-tani/event-tani">Lihat Semua Event</a>
                         </li>
                       </ul>
                     )}
                   </li>
-                  <li className="text-black">
+                  <li className="text-green-primary">
                     <button
                       onClick={() => toggleDropdown("toko-tani")}
                       className="hover:underline underline-offset-auto"
@@ -164,15 +164,15 @@ const Navbar = () => {
                     </button>
                     {activeDropdown === "toko-tani" && (
                       <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
-                        <li className="text-gray-600 hover:text-black hover:font-bold">
+                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/toko-tani/tambah-penjual">
                             Tambah Daftar Penjual
                           </a>
                         </li>
-                        <li className="text-gray-600 hover:text-black hover:font-bold">
+                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/toko-tani/produk-petani">Produk Tani</a>
                         </li>
-                        <li className="text-gray-600 hover:text-black hover:font-bold">
+                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/toko-tani/produk-penyuluh">
                             Produk Penyuluh
                           </a>
@@ -180,7 +180,7 @@ const Navbar = () => {
                       </ul>
                     )}
                   </li>
-                  <li className="text-black">
+                  <li className="text-green-primary">
                     <button
                       onClick={() => toggleDropdown("data-penyuluh")}
                       className="hover:underline underline-offset-auto"
@@ -189,27 +189,27 @@ const Navbar = () => {
                     </button>
                     {activeDropdown === "data-penyuluh" && (
                       <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
-                        <li className="text-gray-600 hover:text-black hover:font-bold">
+                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/data-penyuluh/tambah">
                             Tambah Data Penyuluh
                           </a>
                         </li>
-                        <li className="text-gray-600 hover:text-black hover:font-bold">
+                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/data-penyuluh/presensi-kehadiran">
                             Laporan Harian
                           </a>
                         </li>
-                        <li className="text-gray-600 hover:text-black hover:font-bold">
+                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/data-penyuluh/jurnal-kegiatan">
                             Jurnal Kegiatan
                           </a>
                         </li>
-                        <li className="text-gray-600 hover:text-black hover:font-bold">
+                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/data-penyuluh/riwayat-chat">
                             Data Riwayat Chat
                           </a>
                         </li>
-                        <li className="text-gray-600 hover:text-black hover:font-bold">
+                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/data-penyuluh/rekap-penyuluh">
                             Rekap Data Penyuluh
                           </a>
@@ -217,7 +217,7 @@ const Navbar = () => {
                       </ul>
                     )}
                   </li>
-                  <li className="text-black">
+                  <li className="text-green-primary">
                     <button
                       onClick={() => toggleDropdown("live-chat")}
                       className="hover:underline underline-offset-auto"
@@ -226,10 +226,10 @@ const Navbar = () => {
                     </button>
                     {activeDropdown === "live-chat" && (
                       <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
-                        <li className="text-gray-600 hover:text-black hover:font-bold">
+                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/live-chat">Live Semua Chat</a>
                         </li>
-                        <li className="text-gray-600 hover:text-black hover:font-bold">
+                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/live-chat/rating-petugas">Rating Petugas</a>
                         </li>
                       </ul>
@@ -240,7 +240,7 @@ const Navbar = () => {
                     <a href="/notification">
                       <FontAwesomeIcon
                         icon={faBell}
-                        className="text-gray-500 hover:text-black cursor-pointer"
+                        className="text-gray-500 hover:text-green-primary cursor-pointer"
                       />
                     </a>
                   </li>
@@ -268,7 +268,7 @@ const Navbar = () => {
                             </button>
                             {activeDropdown === "profile" && (
                                 <ul className="absolute mt-2 py-2 w-35 bg-white border rounded-md shadow-lg px-2">
-                                <li className="text-gray-600 hover:text-black hover:font-bold">
+                                <li className="text-green-primary hover:text-black hover:font-bold">
                                     <FontAwesomeIcon icon={faArrowRightFromBracket} />
                                     <a href="/" className="pl-3">Logout</a>
                                 </li>
