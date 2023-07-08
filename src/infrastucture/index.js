@@ -17,6 +17,7 @@ export const Login = async(data)=>{
     try {
       const response = await Api.post("/auth/login", data);
       localStorage.setItem('token', response.data.token)
+      localStorage.setItem('nama', response?.data?.user?.nama)
       window.location.href = "data-tani/rekap-petani"
       SweatAlert(String(response.data.message), 'success');
     } catch (error) {
@@ -84,6 +85,14 @@ export const GetInfoTani = async()=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
+export const GetInfoTaniById = async(id)=>{
+    try {
+      const response = await Api.get(`/info-tani/${id}`);
+      return response.data
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
     
 export const AddEventTani = async(data)=>{
     try {
@@ -96,6 +105,14 @@ export const AddEventTani = async(data)=>{
 export const GetEventTani = async()=>{
     try {
       const response = await Api.get("/event-tani");
+      return response.data
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
+export const GetEventTaniById = async(id)=>{
+    try {
+      const response = await Api.get(`/event-tani/${id}`);
       return response.data
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');

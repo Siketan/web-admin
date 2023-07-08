@@ -2,7 +2,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import Coba from "./page"
-import {TambahDataTani, RekapDataPetani, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, PresensiKehadiran, TambahPenjual, FormJurnalKegiatan, ProdukPenyuluh, ProdukPetani, Login, Register, NotFoundPage, Notification, RekapDataPenyuluh} from "./page"
+import {TambahDataTani, RekapDataPetani, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, PresensiKehadiran, TambahPenjual, FormJurnalKegiatan, ProdukPenyuluh, ProdukPetani, Login, Register, NotFoundPage, Notification, RekapDataPenyuluh, DetailInfoTani, DetailEventTani, EditInfoTani} from "./page"
 import Navbar from "./components/navbar"
 import Footer from "./components/footer"
 import ProtectedRoute from "./page/protectedRoute"
@@ -27,6 +27,9 @@ const Path = () => {
             <Route path="/info-tani" element={<InfoTani />} />
             <Route path="/info-tani/tambah" element={<TambahInfoTani />} />
             <Route path="/event-tani/tambah" element={<TambahEventTani />} />
+            <Route path="/info-tani/detail" element={<DetailInfoTani />} />
+            <Route path="/info-tani/edit" element={<EditInfoTani />} />
+            <Route path="/event-tani/detail" element={<DetailEventTani />} />
             <Route path="/info-tani/event-tani" element={<EventTani />} />
             {/* Toko Tani */}
             <Route path="/toko-tani/tambah-penjual" element={<TambahPenjual />} />
