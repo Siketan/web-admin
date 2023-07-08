@@ -27,9 +27,6 @@ const Path = () => {
             <Route path="/info-tani" element={<InfoTani />} />
             <Route path="/info-tani/tambah" element={<TambahInfoTani />} />
             <Route path="/event-tani/tambah" element={<TambahEventTani />} />
-            <Route path="/info-tani/detail" element={<DetailInfoTani />} />
-            <Route path="/info-tani/edit" element={<EditInfoTani />} />
-            <Route path="/event-tani/detail" element={<DetailEventTani />} />
             <Route path="/info-tani/event-tani" element={<EventTani />} />
             {/* Toko Tani */}
             <Route path="/toko-tani/tambah-penjual" element={<TambahPenjual />} />
@@ -53,6 +50,6 @@ const Path = () => {
       <Footer />
     </div>
   );
-}
+};
 
 export default Path;
