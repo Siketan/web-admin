@@ -66,7 +66,7 @@ const TambahPenyuluhanTani = ()=>{
             <div className="shadow-xl rounded-xl px-5 py-5">
                 <form onSubmit={(e)=>handleSubmit(e)}>
                     <div className="flex items-center justify-center">
-                        <InputImage id="foto" name="foto" value={foto}  onChange={(e) => setFoto(e.target.value)} />
+                        <InputImage id="foto" name="foto" value={foto}  onChange={(e) => setFoto(e.target.value)} title="Foto Profil"/>
                     </div>
                     <div className="grid md:grid-cols-2 md:gap-6">
                         <div className="relative z-0 w-full mb-6 group">

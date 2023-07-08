@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
+import { useNavigate  } from 'react-router-dom';
 import MainCard from "@/components/MainCard";
 import InputCrud from "@/components/page/infoTani/IconCrud";
 import { IconEdit, IconEye, IconTrash, IconPlus } from "@tabler/icons-react";
 import { Image } from "@mantine/core";
-import { GetInfoTani } from "@/infrastruture";
+import { GetInfoTani, DeleteInfoTani } from "@/infrastruture";
+import { Text, Button, Modal } from '@mantine/core';
 const InfoTani = () => {
   const [datas, setDatas] = useState([]);
   const [checekd, setChecekd] = useState([false]);
   const [id, setId] = useState([]);
+  const [modalDeleteData, setModalDeleteData] = useState(false);
+  const history = useNavigate ();
   const handleCheckd = (e) => {
     if (e == true) {
       setChecekd([true, true, true]);
@@ -33,6 +37,15 @@ const InfoTani = () => {
   useEffect(() => {
     setChecekd([...Array(datas.lengh).fill(false)]);
   }, [datas]);
+  const handleDeleteUser = (ids)=>{
+    DeleteInfoTani(ids)
+  }
+  const navigateToEdit = (itemId) => {
+    history(`/info-tani/edit?id=${itemId}`, { state: { id:itemId } });
+  };
+  const navigateToDetail = (itemId) => {
+    history(`/info-tani/detail?id=${itemId}`, { state: { id:itemId } });
+  };
   return (
     <div className="pt-16">
       <div className="flex justify-center gap-3">
@@ -53,6 +66,34 @@ const InfoTani = () => {
           <span className="underline">Tambah Baru</span>
         </div>
       </div>
+        <Modal
+          opened={modalDeleteData}
+          onClose={() => setModalDeleteData(false)}
+          withCloseButton={false}
+          centered
+        >
+          <Text>Apakah Kamu Yakin Akan Menghapus Data Ini ?</Text>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}>
+            <Button
+              color="cyan"
+              style={{ color: 'white', backgroundColor: '#303A47', marginRight: 8 }}
+              onClick={() => setModalDeleteData(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              color="cyan"
+              style={{ color: 'white', backgroundColor: 'red' }}
+              type="submit"
+              onClick={() => {
+                handleDeleteUser(modalDeleteData); 
+                setModalDeleteData(false);
+              }}
+            >
+              Delete
+            </Button>
+          </div>
+        </Modal>
       {datas?.map((item, i) => (
         <MainCard row transparent center gap="0" key={i}>
           <div className="self-center h-[20px] w-[20px] border border-black me-2 flex justify-center">
@@ -104,9 +145,9 @@ const InfoTani = () => {
             </MainCard>
           </MainCard>
           <MainCard width="3%" noPadding gap="0" transparent>
-            <InputCrud icon={<IconEye />}>Liat</InputCrud>
-            <InputCrud icon={<IconEdit />}>Edit</InputCrud>
-            <InputCrud icon={<IconTrash />}>Hapus</InputCrud>
+            <InputCrud onClick={() => navigateToDetail(item.id)} icon={<IconEye />}>Liat</InputCrud>
+            <InputCrud onClick={() => navigateToEdit(item.id)} icon={<IconEdit />}>Edit</InputCrud>
+            <InputCrud onClick={()=>setModalDeleteData(item.id)} icon={<IconTrash />}>Hapus</InputCrud>
           </MainCard>
         </MainCard>
       ))}

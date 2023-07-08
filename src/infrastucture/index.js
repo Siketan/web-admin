@@ -17,6 +17,7 @@ export const Login = async(data)=>{
     try {
       const response = await Api.post("/auth/login", data);
       localStorage.setItem('token', response.data.token)
+      localStorage.setItem('nama', response?.data?.user?.nama)
       window.location.href = "data-tani/rekap-petani"
       SweatAlert(String(response.data.message), 'success');
     } catch (error) {
@@ -49,7 +50,14 @@ export const DaftarTaniAdd = async(data)=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
-
+export const DeleteDaftarTani = async(id)=>{
+    try {
+      const response = await Api.delete(`/daftar-tani/${id}`);
+      SweatAlert(String(response.data.message), 'success', "reload");
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
 export const AddLaporanTani = async(data)=>{
     try {
       const response = await Api.post("/laporan-tani/add", data, headers);
@@ -71,8 +79,7 @@ export const GetLaporanTani = async()=>{
 export const AddInfoTani = async(data)=>{
     try {
       const response = await Api.post("/info-tani/add", data, headers);
-      window.location.href='/info-tani'
-      SweatAlert(String(response.data.message), 'success');
+      SweatAlert(String(response.data.message), 'success', '/info-tani');
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
@@ -85,11 +92,19 @@ export const GetInfoTani = async()=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
+export const GetInfoTaniById = async(id)=>{
+    try {
+      const response = await Api.get(`/info-tani/${id}`);
+      return response.data
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
     
 export const AddEventTani = async(data)=>{
     try {
       const response = await Api.post("/event-tani/add", data, headers);
-      SweatAlert(String(response.data.message), 'success');
+      SweatAlert(String(response.data.message), 'success', '/info-tani/event-tani');
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
@@ -102,6 +117,32 @@ export const GetEventTani = async()=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
+export const GetEventTaniById = async(id)=>{
+    try {
+      const response = await Api.get(`/event-tani/${id}`);
+      return response.data
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
+export const DeleteEventTani = async(id)=>{
+    try {
+      const response = await Api.delete(`/event-tani/${id}`);
+      SweatAlert(String(response.data.message), 'success', "reload");
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
+export const DeleteInfoTani = async(id)=>{
+    try {
+      const response = await Api.delete(`/info-tani/${id}`);
+      SweatAlert(String(response.data.message), 'success', "reload");
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
+
+
 
 // toko tani
 export const AddPenjual = async(data)=>{
@@ -186,7 +227,14 @@ export const getDaftarPenyuluh = async()=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
-
+export const DeleteDaftarPenyuluh = async(id)=>{
+    try {
+      const response = await Api.delete(`/daftar-penyuluh/${id}`);
+      SweatAlert(String(response.data.message), 'success', "reload");
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
 
 
 // live chat
