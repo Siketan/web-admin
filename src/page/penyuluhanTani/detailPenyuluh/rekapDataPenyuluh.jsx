@@ -6,15 +6,16 @@ import {
   faTrash,
   faDownload,
 } from "@fortawesome/free-solid-svg-icons";
-import { getDaftarPenyuluh } from "@/infrastruture";
+import { getDaftarPenyuluh, DeleteDaftarPenyuluh } from "@/infrastruture";
 import ExcelComponent from "../../../components/exelComponent"
+import { Text, Button,  Modal } from '@mantine/core';
 
 const RekapDataPenyuluh = () => {
   const [datas, setDatas] = useState([]);
+  const [modalDeleteData, setModalDeleteData] = useState(false);
   useEffect(() => {
     getDaftarPenyuluh().then((data) => setDatas(data.dataDaftarPenyuluh));
   }, []);
-  console.log(datas);
   const [filters, setFilters] = useState({
     kecamatan: "",
     desa: "",
@@ -33,7 +34,9 @@ const RekapDataPenyuluh = () => {
       [column]: e.target.value,
     }));
   };
-
+  const handleDeleteUser = (ids)=>{
+    DeleteDaftarPenyuluh(ids)
+  }
   const filteredData = datas.filter((item) => {
     return Object.keys(filters).every((key) => {
       if (filters[key] !== "") {
@@ -52,6 +55,34 @@ const RekapDataPenyuluh = () => {
     }
   return (
     <div className="flex justify-center pt-12">
+      <Modal
+        opened={modalDeleteData}
+        onClose={() => setModalDeleteData(false)}
+        withCloseButton={false}
+        centered
+      >
+        <Text>Apakah Kamu Yakin Akan Menghapus Data Ini ?</Text>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}>
+          <Button
+            color="cyan"
+            style={{ color: 'white', backgroundColor: '#303A47', marginRight: 8 }}
+            onClick={() => setModalDeleteData(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="cyan"
+            style={{ color: 'white', backgroundColor: 'red' }}
+            type="submit"
+            onClick={() => {
+              handleDeleteUser(modalDeleteData); 
+              setModalDeleteData(false);
+            }}
+          >
+            Delete
+          </Button>
+        </div>
+      </Modal>
       <div className="w-full max-w-screen-xl shadow-xl rounded-lg overflow-x-auto">
         <div className="w-max lg:w-full pt-10 px-10">
           <button
@@ -255,8 +286,9 @@ const RekapDataPenyuluh = () => {
                       <FontAwesomeIcon
                         icon={faEdit}
                         className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
-                      />
+                        />
                       <FontAwesomeIcon
+                        onClick={()=>setModalDeleteData(item?.id)}
                         icon={faTrash}
                         className="cursor-pointer text-red-500 hover:text-red-600"
                       />
