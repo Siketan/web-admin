@@ -251,14 +251,14 @@ const Navbar = () => {
                   className="text-white bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-md box-shadow"
                   onClick={handleClik}
                 >
-                  <a href="/login" className="pr-3">
+                  <a href="/loginAdminSiketan" className="pr-3">
                     Logout
                   </a>
                   <FontAwesomeIcon icon={faArrowRightFromBracket} />
                 </li>
               ) : (
                 <li className="text-white bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-md box-shadow">
-                  <a href="/login">Login</a>
+                  <a href="/loginAdminSiketan">Login</a>
                 </li>
               )}
               {/* <li>

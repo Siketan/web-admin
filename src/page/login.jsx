@@ -36,30 +36,29 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="grid md:grid-cols-2 bg-gradient-to-t from-blue-300 to-white">
-      <div className="hidden md:block">
-        <div className="flex justify-center items-center pt-20">
-          <div className="bg-green-secondary rounded-lg shadow-lg">
-            <img src="/image/icon-login.png" alt="Icon Login" width={400} />
-          </div>
+    <div className="grid md:grid-cols-2 bg-gradient-to-l from-blue-300 to-white h-[100vh]">
+      <div className="hidden md:flex py-3 justify-center items-center bg-gradient-to-t from-green-primary to-green-secondary">
+        <div>
+          <img src="/image/logo-navbar.png" alt="Icon Navbar" />
+          <p className="text-base md:text-3xl font-bold py-10 text-white">
+            Melesat Lebih Cepat <br /> Bertumbuh Lebih Baik
+          </p>
+          <img src="/image/icon-login.png" alt="Icon Login" width={400} />
         </div>
       </div>
-      <div className="flex justify-center items-center px-3 pt-10 md:pt-20">
+      <div className="flex justify-center items-center px-3">
         <form
           onSubmit={handleSubmit}
           className="bg-white shadow-xl rounded px-8 pt-8 pb-8 w-full sm:max-w-md"
         >
-          <p className="text-base md:text-3xl font-bold">
-            Melesat Lebih Cepat Bertumbuh Lebih Baik
-          </p>
           <div className="flex justify-between py-5">
             <p className="text-base md:text-3xl text-green-secondary font-bold">
-              Login
+              Login Admin Siketan
             </p>
             <img
               src="/image/icon-home.png"
               className="justify-end"
-              width={60}
+              width={50}
               alt="Logo Home"
             />
           </div>
@@ -113,8 +112,7 @@ const LoginPage = () => {
           </button>
           <div className="flex justify-between">
             <p className="text-gray-700 text-base mt-4 cursor-pointer">
-              Buat Akun Baru
-              <a href="/register"></a>
+              <a href="/registerAdminSiketan">Buat Akun Baru</a>
             </p>
             <p className="text-red-500 hover:text-red-600 text-base mt-4 cursor-pointer">
               Lupa Password?
