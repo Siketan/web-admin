@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate  } from 'react-router-dom';
 import MainCard from "@/components/MainCard";
 import InputCrud from "@/components/page/infoTani/IconCrud";
 import { IconEdit, IconEye, IconTrash, IconPlus } from "@tabler/icons-react";
@@ -10,6 +11,7 @@ const InfoTani = () => {
   const [checekd, setChecekd] = useState([false]);
   const [id, setId] = useState([]);
   const [modalDeleteData, setModalDeleteData] = useState(false);
+  const history = useNavigate ();
   const handleCheckd = (e) => {
     if (e == true) {
       setChecekd([true, true, true]);
@@ -36,9 +38,14 @@ const InfoTani = () => {
     setChecekd([...Array(datas.lengh).fill(false)]);
   }, [datas]);
   const handleDeleteUser = (ids)=>{
-    console.log(ids)
     DeleteInfoTani(ids)
   }
+  const navigateToEdit = (itemId) => {
+    history(`/info-tani/edit?id=${itemId}`, { state: { id:itemId } });
+  };
+  const navigateToDetail = (itemId) => {
+    history(`/info-tani/detail?id=${itemId}`, { state: { id:itemId } });
+  };
   return (
     <div className="pt-16">
       <div className="flex justify-center gap-3">
@@ -138,8 +145,8 @@ const InfoTani = () => {
             </MainCard>
           </MainCard>
           <MainCard width="3%" noPadding gap="0" transparent>
-            <InputCrud icon={<IconEye />}>Liat</InputCrud>
-            <InputCrud icon={<IconEdit />}>Edit</InputCrud>
+            <InputCrud onClick={() => navigateToDetail(item.id)} icon={<IconEye />}>Liat</InputCrud>
+            <InputCrud onClick={() => navigateToEdit(item.id)} icon={<IconEdit />}>Edit</InputCrud>
             <InputCrud onClick={()=>setModalDeleteData(item.id)} icon={<IconTrash />}>Hapus</InputCrud>
           </MainCard>
         </MainCard>

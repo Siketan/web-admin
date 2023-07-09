@@ -17,6 +17,7 @@ export const Login = async(data)=>{
     try {
       const response = await Api.post("/auth/login", data);
       localStorage.setItem('token', response.data.token)
+      localStorage.setItem('nama', response?.data?.user?.nama)
       window.location.href = "data-tani/rekap-petani"
       SweatAlert(String(response.data.message), 'success');
     } catch (error) {
@@ -49,7 +50,14 @@ export const DaftarTaniAdd = async(data)=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
-
+export const DeleteDaftarTani = async(id)=>{
+    try {
+      const response = await Api.delete(`/daftar-tani/${id}`);
+      SweatAlert(String(response.data.message), 'success', "reload");
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
 export const AddLaporanTani = async(data)=>{
     try {
       const response = await Api.post("/laporan-tani/add", data, headers);
@@ -84,6 +92,14 @@ export const GetInfoTani = async()=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
+export const GetInfoTaniById = async(id)=>{
+    try {
+      const response = await Api.get(`/info-tani/${id}`);
+      return response.data
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
     
 export const AddEventTani = async(data)=>{
     try {
@@ -96,6 +112,14 @@ export const AddEventTani = async(data)=>{
 export const GetEventTani = async()=>{
     try {
       const response = await Api.get("/event-tani");
+      return response.data
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
+export const GetEventTaniById = async(id)=>{
+    try {
+      const response = await Api.get(`/event-tani/${id}`);
       return response.data
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
@@ -203,7 +227,14 @@ export const getDaftarPenyuluh = async()=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
-
+export const DeleteDaftarPenyuluh = async(id)=>{
+    try {
+      const response = await Api.delete(`/daftar-penyuluh/${id}`);
+      SweatAlert(String(response.data.message), 'success', "reload");
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
 
 
 // live chat

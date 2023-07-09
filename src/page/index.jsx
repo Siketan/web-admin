@@ -20,6 +20,9 @@ import Login from "./login"
 import Register from "./register"
 import Notification from "./notification"
 import Airplane404 from "../assets/notFound.svg"
+import DetailInfoTani from "./infoTani/detailInfoTani"
+import DetailEventTani from "./infoTani/eventTani/DetailEventTani"
+import EditInfoTani from "./infoTani/editInfoTani"
 
 const NotFoundPage = () => {
   return (
@@ -38,4 +41,4 @@ const NotFoundPage = () => {
   );
 };
 
-export {TambahDataTani, RekapDataPetani, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, FormJurnalKegiatan, PresensiKehadiran, TambahPenjual, ProdukPenyuluh, ProdukPetani, Login, Register, NotFoundPage, Notification, RekapDataPenyuluh}
+export {TambahDataTani, RekapDataPetani, LaporanPetani, InfoTani, TambahInfoTani,EventTani, TambahEventTani, LiveChat, RatingPetugas, TambahPenyuluhanTani, DataRiwayatChat, JurnalKegiatan, FormJurnalKegiatan, PresensiKehadiran, TambahPenjual, ProdukPenyuluh, ProdukPetani, Login, Register, NotFoundPage, Notification, RekapDataPenyuluh, DetailInfoTani, DetailEventTani, EditInfoTani}
