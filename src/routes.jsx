@@ -43,7 +43,7 @@ const Path = () => {
         className={
           window.location.pathname != "/loginAdminSiketan" &&
           window.location.pathname != "/registerAdminSiketan"
-            ? "my-20"
+            ? "my-32"
             : ""
         }
       >

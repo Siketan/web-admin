@@ -126,15 +126,26 @@ const LaporanPenyuluh = () => {
           </button>
         </div>
         <div className="pt-10">
-          <table className="w-full">
-            <thead className="bg-slate-100">
-              <tr>
-                <th className="px-4 py-2 truncate border">Kecamatan</th>
-                <th className="px-4 py-2 truncate border">Desa</th>
-                <th className="px-4 py-2 truncate border">NIK</th>
-                <th className="px-4 py-2 truncate border">Password</th>
-                <th className="px-4 py-2 truncate border">Nama Petani</th>
-                {/* <th className="px-4 py-2 truncate border">Komoditas</th>
+          <div className="h-[calc(100vh-200px)] overflow-y-scroll ">
+            <table className="min-w-full">
+              <thead className="bg-slate-100">
+                <tr>
+                  <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
+                    Kecamatan
+                  </th>
+                  <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
+                    Desa
+                  </th>
+                  <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
+                    NIK
+                  </th>
+                  <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
+                    Password
+                  </th>
+                  <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
+                    Nama Petani
+                  </th>
+                  {/* <th className="px-4 py-2 truncate border">Komoditas</th>
                 <th className="px-4 py-2 truncate border">Jenis Tanaman</th>
                 <th className="px-4 py-2 truncate border">Musim Tanam</th>
                 <th className="px-4 py-2 truncate border">Luas Lahan</th>
@@ -149,87 +160,87 @@ const LaporanPenyuluh = () => {
                 <th className="px-4 py-2 truncate border">
                   Realisasi Hasil Panen
                 </th> */}
-                <th className="px-4 py-2 truncate border">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="px-4 py-2 border">
-                  <div className="flex items-center">
-                    <input
-                      type="text"
-                      value={filters.kecamatan}
-                      onChange={(e) => handleFilterChange(e, "kecamatan")}
-                      className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                      placeholder="Filter Kecamatan"
-                    />
-                    <FontAwesomeIcon
-                      icon={faFilter}
-                      className="text-gray-500 ml-2"
-                    />
-                  </div>
-                </td>
-                <td className="px-4 py-2 border">
-                  <div className="flex items-center">
-                    <input
-                      type="text"
-                      value={filters.desa}
-                      onChange={(e) => handleFilterChange(e, "desa")}
-                      className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                      placeholder="Filter Desa"
-                    />
-                    <FontAwesomeIcon
-                      icon={faFilter}
-                      className="text-gray-500 ml-2"
-                    />
-                  </div>
-                </td>
-                <td className="px-4 py-2 border">
-                  <div className="flex items-center">
-                    <input
-                      type="text"
-                      value={filters.NIK}
-                      onChange={(e) => handleFilterChange(e, "NIK")}
-                      className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                      placeholder="Filter NIK"
-                    />
-                    <FontAwesomeIcon
-                      icon={faFilter}
-                      className="text-gray-500 ml-2"
-                    />
-                  </div>
-                </td>
-                <td className="px-4 py-2 border">
-                  <div className="flex items-center">
-                    <input
-                      type="text"
-                      value={filters.password}
-                      onChange={(e) => handleFilterChange(e, "password")}
-                      className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                      placeholder="Filter Password"
-                    />
-                    <FontAwesomeIcon
-                      icon={faFilter}
-                      className="text-gray-500 ml-2"
-                    />
-                  </div>
-                </td>
-                <td className="px-4 py-2 border">
-                  <div className="flex items-center">
-                    <input
-                      type="text"
-                      value={filters.namaPetani}
-                      onChange={(e) => handleFilterChange(e, "namaPetani")}
-                      className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                      placeholder="Filter Nama Petani"
-                    />
-                    <FontAwesomeIcon
-                      icon={faFilter}
-                      className="text-gray-500 ml-2"
-                    />
-                  </div>
-                </td>
-                {/* <td className="px-4 py-2 border">
+                  <th className="px-4 py-2 truncate border">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="sticky bg-white top-[40px] z-10  px-4 py-2 border">
+                    <div className="flex items-center">
+                      <input
+                        type="text"
+                        value={filters.kecamatan}
+                        onChange={(e) => handleFilterChange(e, "kecamatan")}
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        placeholder="Filter Kecamatan"
+                      />
+                      <FontAwesomeIcon
+                        icon={faFilter}
+                        className="text-gray-500 ml-2"
+                      />
+                    </div>
+                  </td>
+                  <td className="sticky bg-white top-[40px] z-10  px-4 py-2 border">
+                    <div className="flex items-center">
+                      <input
+                        type="text"
+                        value={filters.desa}
+                        onChange={(e) => handleFilterChange(e, "desa")}
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        placeholder="Filter Desa"
+                      />
+                      <FontAwesomeIcon
+                        icon={faFilter}
+                        className="text-gray-500 ml-2"
+                      />
+                    </div>
+                  </td>
+                  <td className="sticky bg-white top-[40px] z-10  px-4 py-2 border">
+                    <div className="flex items-center">
+                      <input
+                        type="text"
+                        value={filters.NIK}
+                        onChange={(e) => handleFilterChange(e, "NIK")}
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        placeholder="Filter NIK"
+                      />
+                      <FontAwesomeIcon
+                        icon={faFilter}
+                        className="text-gray-500 ml-2"
+                      />
+                    </div>
+                  </td>
+                  <td className="sticky bg-white top-[40px] z-10  px-4 py-2 border">
+                    <div className="flex items-center">
+                      <input
+                        type="text"
+                        value={filters.password}
+                        onChange={(e) => handleFilterChange(e, "password")}
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        placeholder="Filter Password"
+                      />
+                      <FontAwesomeIcon
+                        icon={faFilter}
+                        className="text-gray-500 ml-2"
+                      />
+                    </div>
+                  </td>
+                  <td className="sticky bg-white top-[40px] z-10  px-4 py-2 border">
+                    <div className="flex items-center">
+                      <input
+                        type="text"
+                        value={filters.namaPetani}
+                        onChange={(e) => handleFilterChange(e, "namaPetani")}
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        placeholder="Filter Nama Petani"
+                      />
+                      <FontAwesomeIcon
+                        icon={faFilter}
+                        className="text-gray-500 ml-2"
+                      />
+                    </div>
+                  </td>
+                  {/* <td className="sticky bg-white top-[40px] z-10  px-4 py-2 border">
                   <div className="flex items-center">
                     <input
                       type="text"
@@ -370,15 +381,15 @@ const LaporanPenyuluh = () => {
                     />
                   </div>
                 </td> */}
-              </tr>
-              {filteredData?.map((item) => (
-                <tr key={item.id}>
-                  <td className="px-4 py-2 border">{item.kecamatan}</td>
-                  <td className="px-4 py-2 border">{item.desa}</td>
-                  <td className="px-4 py-2 border">{item.NIK}</td>
-                  <td className="px-4 py-2 border">{item.password}</td>
-                  <td className="px-4 py-2 border">{item.nama}</td>
-                  {/* <td className="px-4 py-2 border">
+                </tr>
+                {filteredData?.map((item) => (
+                  <tr key={item.id}>
+                    <td className="px-4 py-2 border">{item.kecamatan}</td>
+                    <td className="px-4 py-2 border">{item.desa}</td>
+                    <td className="px-4 py-2 border">{item.NIK}</td>
+                    <td className="px-4 py-2 border">{item.password}</td>
+                    <td className="px-4 py-2 border">{item.nama}</td>
+                    {/* <td className="px-4 py-2 border">
                     {item.tanamanPetani?.komoditas}
                   </td>
                   <td className="px-4 py-2 border">
@@ -405,26 +416,27 @@ const LaporanPenyuluh = () => {
                   <td className="px-4 py-2 border">
                     {item.tanamanPetani?.realisasiHasilPanen}
                   </td> */}
-                  <td className="px-2 py-2 border">
-                    <FontAwesomeIcon
-                      onClick={() => setModalDeleteData(item?.id)}
-                      icon={faBullseye}
-                      className="cursor-pointer text-black hover:text-black"
-                    />
-                    <FontAwesomeIcon
-                      icon={faEdit}
-                      className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
-                    />
-                    <FontAwesomeIcon
-                      onClick={() => setModalDeleteData(item?.id)}
-                      icon={faTrash}
-                      className="cursor-pointer text-red-500 hover:text-red-600"
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    <td className="px-2 py-2 border">
+                      <FontAwesomeIcon
+                        onClick={() => setModalDeleteData(item?.id)}
+                        icon={faBullseye}
+                        className="cursor-pointer text-black hover:text-black"
+                      />
+                      <FontAwesomeIcon
+                        icon={faEdit}
+                        className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
+                      />
+                      <FontAwesomeIcon
+                        onClick={() => setModalDeleteData(item?.id)}
+                        icon={faTrash}
+                        className="cursor-pointer text-red-500 hover:text-red-600"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

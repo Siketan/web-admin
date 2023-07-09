@@ -7,8 +7,8 @@ import {
   faDownload,
 } from "@fortawesome/free-solid-svg-icons";
 import { getDaftarPenyuluh, DeleteDaftarPenyuluh } from "@/infrastruture";
-import ExcelComponent from "../../../components/exelComponent"
-import { Text, Button,  Modal } from '@mantine/core';
+import ExcelComponent from "../../../components/exelComponent";
+import { Text, Button, Modal } from "@mantine/core";
 
 const RekapDataPenyuluh = () => {
   const [datas, setDatas] = useState([]);
@@ -34,9 +34,9 @@ const RekapDataPenyuluh = () => {
       [column]: e.target.value,
     }));
   };
-  const handleDeleteUser = (ids)=>{
-    DeleteDaftarPenyuluh(ids)
-  }
+  const handleDeleteUser = (ids) => {
+    DeleteDaftarPenyuluh(ids);
+  };
   const filteredData = datas.filter((item) => {
     return Object.keys(filters).every((key) => {
       if (filters[key] !== "") {
@@ -49,10 +49,21 @@ const RekapDataPenyuluh = () => {
       return true;
     });
   });
-    const handleDownlod = ()=>{
-         const dataExel = filteredData.map((item)=>{return {NIP:item.NIP, ["No Wa"]:item.NoWa, Alamat:item.alamat, Kecamatan:item.kecamatan,Desa: item.desa, nama:item.nama, foto:item.foto, password:item.password}})
-        ExcelComponent(dataExel, 'data.xlsx', 'Sheet1')
-    }
+  const handleDownlod = () => {
+    const dataExel = filteredData.map((item) => {
+      return {
+        NIP: item.NIP,
+        ["No Wa"]: item.NoWa,
+        Alamat: item.alamat,
+        Kecamatan: item.kecamatan,
+        Desa: item.desa,
+        nama: item.nama,
+        foto: item.foto,
+        password: item.password,
+      };
+    });
+    ExcelComponent(dataExel, "data.xlsx", "Sheet1");
+  };
   return (
     <div className="flex justify-center pt-12">
       <Modal
@@ -62,20 +73,26 @@ const RekapDataPenyuluh = () => {
         centered
       >
         <Text>Apakah Kamu Yakin Akan Menghapus Data Ini ?</Text>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}>
+        <div
+          style={{ display: "flex", justifyContent: "flex-end", marginTop: 20 }}
+        >
           <Button
             color="cyan"
-            style={{ color: 'white', backgroundColor: '#303A47', marginRight: 8 }}
+            style={{
+              color: "white",
+              backgroundColor: "#303A47",
+              marginRight: 8,
+            }}
             onClick={() => setModalDeleteData(false)}
           >
             Cancel
           </Button>
           <Button
             color="cyan"
-            style={{ color: 'white', backgroundColor: 'red' }}
+            style={{ color: "white", backgroundColor: "red" }}
             type="submit"
             onClick={() => {
-              handleDeleteUser(modalDeleteData); 
+              handleDeleteUser(modalDeleteData);
               setModalDeleteData(false);
             }}
           >
@@ -86,7 +103,7 @@ const RekapDataPenyuluh = () => {
       <div className="w-full max-w-screen-xl shadow-xl rounded-lg overflow-x-auto">
         <div className="w-max lg:w-full pt-10 px-10">
           <button
-          onClick={handleDownlod}
+            onClick={handleDownlod}
             type="submit"
             className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto"
           >
@@ -95,10 +112,10 @@ const RekapDataPenyuluh = () => {
           </button>
         </div>
         <div className="pt-10">
-          <div className="h-[calc(100vh-200px)] overflow-y-scroll">
-            <table className="min-w-full  bg-white">
+          <div className="h-[calc(100vh-200px)] overflow-y-scroll ">
+            <table className="min-w-full">
               <thead className="bg-slate-100">
-                <tr>
+                <tr className="">
                   <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
                     Kecamatan
                   </th>
@@ -133,7 +150,7 @@ const RekapDataPenyuluh = () => {
               </thead>
               <tbody>
                 <tr>
-                  <td className="sticky bg-white top-[52px] z-10 px-4 py-2">
+                  <td className="sticky bg-white top-[40px] z-10 px-4 py-2">
                     <div className="flex items-center">
                       <input
                         type="text"
@@ -148,7 +165,7 @@ const RekapDataPenyuluh = () => {
                       />
                     </div>
                   </td>
-                  <td className="sticky bg-white top-[52px] z-10 px-4 py-2">
+                  <td className="sticky bg-white top-[40px] z-10 px-4 py-2">
                     <div className="flex items-center">
                       <input
                         type="text"
@@ -163,7 +180,7 @@ const RekapDataPenyuluh = () => {
                       />
                     </div>
                   </td>
-                  <td className="sticky bg-white top-[52px] z-10 px-4 py-2">
+                  <td className="sticky bg-white top-[40px] z-10 px-4 py-2">
                     <div className="flex items-center">
                       <input
                         type="text"
@@ -178,7 +195,7 @@ const RekapDataPenyuluh = () => {
                       />
                     </div>
                   </td>
-                  <td className="sticky bg-white top-[52px] z-10 px-4 py-2">
+                  <td className="sticky bg-white top-[40px] z-10 px-4 py-2">
                     <div className="flex items-center">
                       <input
                         type="text"
@@ -193,7 +210,7 @@ const RekapDataPenyuluh = () => {
                       />
                     </div>
                   </td>
-                  <td className="sticky bg-white top-[52px] z-10 px-4 py-2">
+                  <td className="sticky bg-white top-[40px] z-10 px-4 py-2">
                     <div className="flex items-center">
                       <input
                         type="text"
@@ -208,7 +225,7 @@ const RekapDataPenyuluh = () => {
                       />
                     </div>
                   </td>
-                  <td className="sticky bg-white top-[52px] z-10 px-4 py-2">
+                  <td className="sticky bg-white top-[40px] z-10 px-4 py-2">
                     <div className="flex items-center">
                       <input
                         type="text"
@@ -223,7 +240,7 @@ const RekapDataPenyuluh = () => {
                       />
                     </div>
                   </td>
-                  <td className="sticky bg-white top-[52px] z-10 px-4 py-2">
+                  <td className="sticky bg-white top-[40px] z-10 px-4 py-2">
                     <div className="flex items-center">
                       <input
                         type="text"
@@ -240,7 +257,7 @@ const RekapDataPenyuluh = () => {
                       />
                     </div>
                   </td>
-                  <td className="sticky bg-white top-[52px] z-10 px-4 py-2">
+                  <td className="sticky bg-white top-[40px] z-10 px-4 py-2">
                     <div className="flex items-center">
                       <input
                         type="text"
@@ -255,7 +272,7 @@ const RekapDataPenyuluh = () => {
                       />
                     </div>
                   </td>
-                  <td className="sticky bg-white top-[52px] z-10 px-4 py-2">
+                  <td className="sticky bg-white top-[40px] z-10 px-4 py-2">
                     <div className="flex items-center">
                       <input
                         type="text"
@@ -286,9 +303,9 @@ const RekapDataPenyuluh = () => {
                       <FontAwesomeIcon
                         icon={faEdit}
                         className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
-                        />
+                      />
                       <FontAwesomeIcon
-                        onClick={()=>setModalDeleteData(item?.id)}
+                        onClick={() => setModalDeleteData(item?.id)}
                         icon={faTrash}
                         className="cursor-pointer text-red-500 hover:text-red-600"
                       />
