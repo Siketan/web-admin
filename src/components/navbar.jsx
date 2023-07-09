@@ -204,11 +204,11 @@ const Navbar = () => {
                             Jurnal Kegiatan
                           </a>
                         </li>
-                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
+                        {/* <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/data-penyuluh/riwayat-chat">
                             Data Riwayat Chat
                           </a>
-                        </li>
+                        </li> */}
                         <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/data-penyuluh/rekap-penyuluh">
                             Rekap Data Penyuluh
@@ -217,7 +217,7 @@ const Navbar = () => {
                       </ul>
                     )}
                   </li>
-                  <li className="text-green-primary">
+                  {/* <li className="text-green-primary">
                     <button
                       onClick={() => toggleDropdown("live-chat")}
                       className="hover:underline underline-offset-auto"
@@ -234,7 +234,7 @@ const Navbar = () => {
                         </li>
                       </ul>
                     )}
-                  </li>
+                  </li> */}
 
                   <li className="text-white0 px-5 py-2 rounded-md box-shadow">
                     <a href="/notification">
@@ -251,14 +251,14 @@ const Navbar = () => {
                   className="text-white bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-md box-shadow"
                   onClick={handleClik}
                 >
-                  <a href="/login" className="pr-3">
+                  <a href="/loginAdminSiketan" className="pr-3">
                     Logout
                   </a>
                   <FontAwesomeIcon icon={faArrowRightFromBracket} />
                 </li>
               ) : (
                 <li className="text-white bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-md box-shadow">
-                  <a href="/login">Login</a>
+                  <a href="/loginAdminSiketan">Login</a>
                 </li>
               )}
               {/* <li>

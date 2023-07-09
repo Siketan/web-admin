@@ -7,6 +7,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import InputImage from "@/components/inputImage";
 import MainCard from "@/components/MainCard";
+import { DatePicker } from '@mantine/dates';
 import { DaftarTaniAdd, CekNik, select } from "@/infrastruture";
 import { fecthKecamatan, fecthDesa } from "../../infrastucture/daerah";
 const TambahDataTani = () => {
@@ -39,6 +40,14 @@ const TambahDataTani = () => {
   const [dafatarDesa, setDafatarDesa] = useState([{ nama: "" }]);
   const [daftarNamaKelompok, setDaftarNamaKelompok] = useState([{ nama: "" }]);
   const [daftarKomoditas, setDaftarKomoditas] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [jenisPanen, setjenisPanen] = useState(false)
+
+  console.log(jenis)
+  console.log(jenisPanen)
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
   const handleClikAdd = () => {
     setCountData(countData + 1);
   };
@@ -62,57 +71,31 @@ const TambahDataTani = () => {
         "Kacang Hijau",
       ]);
     } else if (kategori == "Tanaman Perkebunan") {
-      setDaftarKomoditas([
-        "Kopi",
-        "Kakao",
-        "Cengkeh",
-        "The",
-        "Karet",
-        "Kelapa",
-        "Tembakau",
-        "Tebu",
-      ]);
+      if(jenisPanen == "Musiman"){
+        setDaftarKomoditas(["Tembakau", "Tebu"])
+      }else if(jenisPanen == "Tahunan"){
+        setDaftarKomoditas(["Kopi", "Kakao", "Cengkeh", "Teh", "Karet", "Kelapa"])
+      }else{
+        setDaftarKomoditas([""])
+      }
     } else if (kategori == "Tanaman Holtikultura") {
-      setDaftarKomoditas([
-        "Cabe Kecil",
-        "Cabe Besar",
-        "Bawang Merah",
-        "Tomat",
-        "Terong",
-        "Pare",
-        "Gambas",
-        "Bayam",
-        "Kangkung",
-        "Sawi",
-        "Kacang Panjang ",
-      ]);
-    } else if (kategori == "lainnya") {
-      setDaftarKomoditas([
-        "Mangga",
-        "Durian",
-        "Manggis",
-        "Alpukat",
-        "Rambutan",
-        "Jeruk Lemon",
-        "Jeruk nipis",
-        "Jeruk Keprok",
-        "Jeruk Besar",
-        "Nangka",
-        "Jambu Biji",
-        "Jambu air",
-        "Sukun",
-        "Sirsat",
-        "Sawo",
-        "Duku",
-        "Melon",
-        "Semangka",
-        "Pisang",
-        "Blewah",
-      ]);
+      if(jenis == "Buah"){
+        if(jenisPanen == "Musiman"){
+          setDaftarKomoditas(["Melon", "Semangka", "Pisang", "Blewah"])
+        }else if(jenisPanen == "Tahunan"){
+          setDaftarKomoditas(["Mangga", "Durian", "Manggis", "Alpukat", "Rambutan", "Jeruk Lemon", "Jeruk nipis", "Jeruk Keprok", "Jeruk Besar", "Nangka", "Jambu Biji", "Jambu air", "Sukun", "Sirsat", "Sawo", "Duku"])
+        }else{
+          setDaftarKomoditas([""])
+        }
+      }else if(jenis == "Sayuran"){
+        setDaftarKomoditas(["Cabe Kecil", "Cabe Besar", "Bawang Merah", "Tomat", "Terong", "Pare", "Gambas", "Bayam", "Kangkung", "Sawi", "Kacang Panjang"] );
+      }else{
+        setDaftarKomoditas[""]
+      }
     } else {
       setDaftarKomoditas([""]);
     }
-  }, [kategori]);
+  }, [kategori, jenis, jenisPanen]);
   const handleselect = (e) => {
     setDesa(e);
     select(e).then((data) => {
@@ -533,22 +516,6 @@ const TambahDataTani = () => {
                       Tanaman Holtikultura
                     </label>
                   </div>
-                  <div className="flex items-center py-2">
-                    <input
-                      id="lainnya"
-                      value="lainnya"
-                      onChange={(e) => setKategori(e.target.value)}
-                      type="radio"
-                      name="kategori"
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-900 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    />
-                    <label
-                      htmlFor="lainnya"
-                      className="ml-2 text-sm font-medium text-gray-900"
-                    >
-                      Lainnya
-                    </label>
-                  </div>
                 </div>
 
                 {kategori == "Tanaman Holtikultura" && (
@@ -567,6 +534,26 @@ const TambahDataTani = () => {
                     >
                       <option value="Buah">Buah</option>
                       <option value="Sayur">Sayur</option>
+                    </select>
+                  </div>
+                )}
+                {((kategori == "Tanaman Holtikultura" && jenis == "Buah") || (kategori == "Tanaman Perkebunan")) && (
+                  <div className="relative z-0 w-full mb-6 group">
+                    <label
+                      htmlFor="underline_select"
+                      className="text-sm text-gray-500 "
+                    >
+                      <strong>Pilih Jenis Panen</strong>
+                    </label>
+                    <select
+                      id="jenis"
+                      value={jenisPanen}
+                      onChange={(e) => setjenisPanen(e.target.value)}
+                      className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
+                    >
+                      <option value="">-- pilih jenis panen --</option>
+                      <option value="Musiman">Musiman</option>
+                      <option value="Tahunan">Tahunan</option>
                     </select>
                   </div>
                 )}
@@ -589,24 +576,47 @@ const TambahDataTani = () => {
                     <option value="CA">Rizal</option>
                   </select>
                 </div>
-                <div className="relative z-0 w-full mb-6 grou pt-6">
-                  <input
-                    type="date"
-                    name="tanggalTanam"
-                    id="tanggalTanam"
-                    value={tanggalTanam}
-                    onChange={(e) => setTanggalTanam(e.target.value)}
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" "
-                    required
-                  />
+                {kategori == "Tanaman Perkebunan" ?  
+                <div className="relative z-0 w-full mb-6 group">
                   <label
-                    htmlFor="tanggalTanam"
-                    className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    htmlFor="underline_select"
+                    className="text-sm text-gray-500  pt-5 md:pt-0"
                   >
-                    <strong>Bulan Tanam </strong>
+                    <strong>Tahun Tanam </strong>
                   </label>
+                  <select
+                    id="musimTanam"
+                    // value={tanggalTanam}
+                    // onChange={(e) => setMusimTanam(e.target.value)}
+                    className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
+                  >
+                    <option value="">-- Pilih Tahun --</option>
+                    {[...Array(16)].map((_,i)=>(
+                      <option value={`20${i + 15}`} key={i}>{`20${i + 15}`}</option>
+                    ))}
+                  </select>
                 </div>
+                :(
+                  <div className="relative z-0 w-full mb-6 grou pt-6">
+                    <input
+                      type="month"
+                      name="tanggalTanam"
+                      id="tanggalTanam"
+                      value={tanggalTanam}
+                      onChange={(e) => setTanggalTanam(e.target.value)}
+                      className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                      placeholder=" "
+                      required
+                    />
+                    <label
+                      htmlFor="tanggalTanam"
+                      className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    >
+                      <strong>Bulan Tanam </strong>
+                    </label>
+                  </div>
+                )
+              }
               </div>
               <div className="grid md:grid-cols-2 mt-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
@@ -749,3 +759,12 @@ const TambahDataTani = () => {
 };
 
 export default TambahDataTani;
+
+
+// Taman perkebunan
+// perkebunanTahunan=
+// perkebunanMusiman=
+// Tanaman Holtikutura
+// holtikuturaTahunan=
+// holtikuturaBuahSemusim=
+// holtikuturaBuahTahunan=
