@@ -7,14 +7,16 @@ import Navbar from "./components/navbar"
 import Footer from "./components/footer"
 import ProtectedRoute from "./page/protectedRoute"
 const Path = () => {
+  console.log(window.location.pathname)
   return (
     <div>
-      <Navbar />
+      {/* {window.location.pathname !== "/loginAdminSiketan" && <Navbar /> } */}
+      {window.location.pathname != "/loginAdminSiketan" && window.location.pathname != "/registerAdminSiketan" && <Navbar /> }
       <div className="my-20">
       <Router>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/loginAdminSiketan" element={<Login />} />
+          <Route path="/registerAdminSiketan" element={<Register />} />
            <Route element={<ProtectedRoute />}>
             <Route path="/" element={<EventTani />} />
             <Route path="/notification" element={<Notification />} />
@@ -27,7 +29,10 @@ const Path = () => {
             <Route path="/info-tani" element={<InfoTani />} />
             <Route path="/info-tani/tambah" element={<TambahInfoTani />} />
             <Route path="/event-tani/tambah" element={<TambahEventTani />} />
+            <Route path="/event-tani/detail" element={<DetailEventTani />} />
             <Route path="/info-tani/event-tani" element={<EventTani />} />
+            <Route path="/info-tani/detail" element={<DetailInfoTani />} />
+            <Route path="/info-tani/edit" element={<EditInfoTani />} />
             {/* Toko Tani */}
             <Route path="/toko-tani/tambah-penjual" element={<TambahPenjual />} />
             <Route path="/toko-tani/produk-petani" element={<ProdukPetani />} />
@@ -47,7 +52,7 @@ const Path = () => {
         </Routes>
       </Router>
       </div>
-      <Footer />
+      {window.location.pathname != "/loginAdminSiketan" && window.location.pathname != "/registerAdminSiketan" && <Footer /> }
     </div>
   );
 };
