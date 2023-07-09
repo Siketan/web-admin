@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://lovely-bull-tweed-jacket.cyclic.app",
+  baseURL: "http://localhost:3000",
   headers: {
     Accept: "application/json",
     Authorization: `${localStorage.getItem("token") || ""}`,

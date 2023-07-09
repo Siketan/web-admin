@@ -46,6 +46,7 @@ const InfoTani = () => {
   const navigateToDetail = (itemId) => {
     history(`/info-tani/detail?id=${itemId}`, { state: { id:itemId } });
   };
+  console.log(datas)
   return (
     <div className="pt-16">
       <div className="flex justify-center gap-3">
@@ -114,7 +115,7 @@ const InfoTani = () => {
               <Image
                 width={200}
                 height={120}
-                src={item.fotoBerita}
+                src={item?.fotoBerita}
                 alt="With default placeholder"
                 withPlaceholder
               />
