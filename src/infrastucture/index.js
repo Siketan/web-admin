@@ -28,7 +28,7 @@ export const Login = async(data)=>{
 
 export const Logout = ()=>{
   localStorage.clear()
-  window.location = "./login"
+  window.location = "./loginAdminSiketan"
 } 
 
 // cekNik

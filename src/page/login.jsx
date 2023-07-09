@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import { Login } from "@/infrastruture";
+import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-
+  const navigate = useNavigate()
   useEffect(() => {
     document.body.style.overflow = "hidden";
-
+    if(window.localStorage.getItem("token")){
+      navigate("/")
+    }
     return () => {
       document.body.style.overflow = "auto";
     };
