@@ -77,7 +77,7 @@ const LaporanPenyuluh = () => {
     });
     ExcelComponent(dataExel, "data.xlsx", "Sheet1");
   };
-
+  const totalData = filteredData.length;
   return (
     <div className="flex justify-center pt-12">
       <Modal
@@ -124,6 +124,9 @@ const LaporanPenyuluh = () => {
             <FontAwesomeIcon icon={faDownload} className="mr-2" />
             Download/Cetak
           </button>
+          <p className="text-right mt-4">
+            <strong>Total Data :</strong> {totalData} Data Rekap Petani
+          </p>
         </div>
         <div className="pt-10">
           <div className="h-[calc(100vh-200px)] overflow-y-scroll ">

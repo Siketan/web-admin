@@ -76,6 +76,9 @@ function JurnalKegiatan() {
       return true;
     });
   });
+
+  const totalData = filteredData.length;
+
   return (
     <div className="flex justify-center pt-12">
       <div className="w-full max-w-screen-xl shadow-xl rounded-lg overflow-x-auto overflow-y-auto">
@@ -89,6 +92,9 @@ function JurnalKegiatan() {
               Tambah
             </a>
           </button>
+          <p className="text-right mt-4">
+            <strong>Total Data :</strong> {totalData} Data Jurnal Kegiatan
+          </p>
         </div>
         <div className="pt-10">
           <div className="h-[calc(100vh-200px)] overflow-y-scroll ">
