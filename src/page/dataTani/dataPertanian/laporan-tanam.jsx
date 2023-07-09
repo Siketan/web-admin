@@ -5,7 +5,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { AddLaporanTani, CekNik } from "@/infrastruture";
-function LaporanPetani() {
+function LaporanTanam() {
   const [NIK, setNIK] = useState("");
   const [komoditas, setKomoditas] = useState("");
   const [tanggalLaporan, setTanggalLaporan] = useState("");
@@ -408,4 +408,4 @@ function LaporanPetani() {
   );
 }
 
-export default LaporanPetani;
+export default LaporanTanam;

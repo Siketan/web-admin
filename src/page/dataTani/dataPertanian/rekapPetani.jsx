@@ -10,7 +10,7 @@ import {
 import { GetLaporanTani, DeleteDaftarTani } from "@/infrastruture";
 import ExcelComponent from "../../../components/exelComponent";
 import { Text, Button, Modal } from "@mantine/core";
-const LaporanPenyuluh = () => {
+const RekapPetani = () => {
   const [datas, setDatas] = useState([]);
   const [modalDeleteData, setModalDeleteData] = useState(false);
   useEffect(() => {
@@ -420,11 +420,13 @@ const LaporanPenyuluh = () => {
                     {item.tanamanPetani?.realisasiHasilPanen}
                   </td> */}
                     <td className="px-2 py-2 border">
-                      <FontAwesomeIcon
-                        onClick={() => setModalDeleteData(item?.id)}
-                        icon={faBullseye}
-                        className="cursor-pointer text-black hover:text-black"
-                      />
+                      <a href="/data-tani/rekap-petani/detail">
+                        <FontAwesomeIcon
+                          onClick={() => setModalDeleteData(item?.id)}
+                          icon={faBullseye}
+                          className="cursor-pointer text-black hover:text-black"
+                        />
+                      </a>
                       <FontAwesomeIcon
                         icon={faEdit}
                         className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
@@ -446,4 +448,4 @@ const LaporanPenyuluh = () => {
   );
 };
 
-export default LaporanPenyuluh;
+export default RekapPetani;

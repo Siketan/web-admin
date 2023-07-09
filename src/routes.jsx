@@ -28,6 +28,7 @@ import {
   DetailInfoTani,
   DetailEventTani,
   EditInfoTani,
+  DetailRekapPetani,
 } from "./page";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
@@ -63,6 +64,10 @@ const Path = () => {
               <Route
                 path="/data-tani/rekap-petani"
                 element={<RekapDataPetani />}
+              />
+              <Route
+                path="/data-tani/rekap-petani/detail"
+                element={<DetailRekapPetani />}
               />
               {/* <Route path="/data-tanaman" element={<DataTanaman />} /> */}
               {/* Info Tani */}
