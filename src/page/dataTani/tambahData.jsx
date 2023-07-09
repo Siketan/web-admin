@@ -1,10 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Divider } from "@mantine/core";
 import { useState, useEffect } from "react";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { faClose } from "@fortawesome/free-solid-svg-icons";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faSearch, faClose, faSave } from "@fortawesome/free-solid-svg-icons";
 import InputImage from "@/components/inputImage";
 import MainCard from "@/components/MainCard";
 import { DatePicker } from '@mantine/dates';
@@ -87,7 +84,7 @@ const TambahDataTani = () => {
         }else{
           setDaftarKomoditas([""])
         }
-      }else if(jenis == "Sayuran"){
+      }else if(jenis == "Sayur"){
         setDaftarKomoditas(["Cabe Kecil", "Cabe Besar", "Bawang Merah", "Tomat", "Terong", "Pare", "Gambas", "Bayam", "Kangkung", "Sawi", "Kacang Panjang"] );
       }else{
         setDaftarKomoditas[""]
@@ -160,7 +157,7 @@ const TambahDataTani = () => {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    // DaftarTaniAdd(formData)
+    DaftarTaniAdd(formData)
     console.log(kategori);
   };
   const handleSelectKecamatan = (e) => {

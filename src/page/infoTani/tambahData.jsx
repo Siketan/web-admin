@@ -3,13 +3,14 @@ import EditorText from "@/components/textAreaEditor";
 import { Radio, Group, Button } from "@mantine/core";
 import MainCard from "@/components/MainCard";
 import TextInput from "@/components/uiComponents/inputComponents/textInput";
-import { IconPlus, IconX, IconDeviceFloppy } from "@tabler/icons-react";
+import { IconX, IconDeviceFloppy } from "@tabler/icons-react";
 import { AddInfoTani } from "@/infrastruture";
+import InputImage from "@/components/inputImage";
 const TambahInfoTani = () => {
   const [judul, setJudul] = useState("");
   const [kategori, setKategori] = useState("");
   const [isi, setIsi] = useState("");
-  // const [fotoBerita, setNamaKegiatan] = useState("");
+  const [fotoBerita, setFotoBerita] = useState("");
 
   const currentDate = new Date();
   const options = { day: "numeric", month: "long", year: "numeric" };
@@ -21,10 +22,14 @@ const TambahInfoTani = () => {
       judul,
       kategori,
       isi,
+      fotoBerita
     };
-    console.log(data);
     if (e == "simpan") {
-      AddInfoTani(data);
+      const formData = new FormData();
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+      AddInfoTani(formData);
     } else {
       window.location.reload();
     }
@@ -32,7 +37,7 @@ const TambahInfoTani = () => {
   return (
     <MainCard transparent row center style={{ paddingTop: "50px" }}>
       <MainCard width="80%">
-        <h1 className="text-center">Tambahkan Data Tani</h1>
+        <h1 className="text-center">Tambahkan Berita Tani</h1>
         <MainCard transparent gap="0">
           <MainCard transparent noPadding width="40%">
             <TextInput
@@ -72,6 +77,13 @@ const TambahInfoTani = () => {
               </Radio.Group>
             </MainCard>
           </MainCard>
+        </MainCard>
+        <MainCard transparent noPadding width="27%" style={{height:"39%", backgroubdColor:"blue"}}>
+        <InputImage
+          imageActive={fotoBerita}
+          onChange={(e) => setFotoBerita(e)}
+          title="Foto Berita"
+        />
         </MainCard>
         <EditorText setValue={setIsi} />
         <MainCard
