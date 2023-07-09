@@ -40,11 +40,7 @@ const LoginPage = () => {
       <div className="hidden md:block">
         <div className="flex justify-center items-center pt-20">
           <div className="bg-green-secondary rounded-lg shadow-lg">
-            <img
-              src="/public/image/icon-login.png"
-              alt="Icon Login"
-              width={400}
-            />
+            <img src="/image/icon-login.png" alt="Icon Login" width={400} />
           </div>
         </div>
       </div>
@@ -61,7 +57,7 @@ const LoginPage = () => {
               Login
             </p>
             <img
-              src="/public/image/icon-home.png"
+              src="/image/icon-home.png"
               className="justify-end"
               width={60}
               alt="Logo Home"
@@ -72,11 +68,7 @@ const LoginPage = () => {
               htmlFor="email"
               className="block text-gray-700 font-medium mb-1 px-1 py-2"
             >
-              <img
-                src="/public/image/icon-email.png"
-                alt="Logo Key"
-                width={30}
-              />
+              <img src="/image/icon-email.png" alt="Logo Key" width={30} />
             </label>
             <input
               type="email"
@@ -97,7 +89,7 @@ const LoginPage = () => {
               htmlFor="password"
               className="block text-gray-700 font-medium mb-1 px-1 py-1"
             >
-              <img src="/public/image/icon-key.png" alt="Logo Key" width={30} />
+              <img src="/image/icon-key.png" alt="Logo Key" width={30} />
             </label>
             <input
               type="password"
