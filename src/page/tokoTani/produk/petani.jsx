@@ -57,7 +57,7 @@ function ProdukPetani() {
     <div className="flex justify-center pt-12">
       <div className="w-full max-w-screen-xl shadow-xl rounded-lg overflow-x-auto">
         <p className="text-right mt-4 px-10">
-          <strong>Total Data :</strong> {totalData} Data Produk Petani
+          <strong>Jumlah Data :</strong> {totalData} Data Produk Petani
         </p>
         <div className=" pt-10">
           <div className="h-[calc(100vh-200px)] overflow-y-scroll">
