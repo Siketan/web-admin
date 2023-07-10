@@ -93,7 +93,7 @@ function JurnalKegiatan() {
             </a>
           </button>
           <p className="text-right mt-4">
-            <strong>Total Data :</strong> {totalData} Data Jurnal Kegiatan
+            <strong>Jumlah Data :</strong> {totalData} Data Jurnal Kegiatan
           </p>
         </div>
         <div className="pt-10">

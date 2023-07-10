@@ -125,7 +125,7 @@ const RekapPetani = () => {
             Download/Cetak
           </button>
           <p className="text-right mt-4">
-            <strong>Total Data :</strong> {totalData} Data Rekap Petani
+            <strong>Jumlah Data :</strong> {totalData} Data Rekap Petani
           </p>
         </div>
         <div className="pt-10">

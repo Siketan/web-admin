@@ -112,7 +112,7 @@ const RekapDataPenyuluh = () => {
             Download/Cetak
           </button>
           <p className="text-right mt-4">
-            <strong>Total Data :</strong> {totalData} Data Rekap Penyuluh
+            <strong>Jumlah Data :</strong> {totalData} Data Rekap Penyuluh
           </p>
         </div>
         <div className="pt-10">
