@@ -51,9 +51,9 @@ const TambahInfoTani = () => {
           <MainCard transparent noPadding row gap="15rem">
             <MainCard transparent noPadding gap="0">
               <span id="tanggal" name="tanggal">
-                {formattedDate}
+                Di Buat Pada: {formattedDate}
               </span>
-              <span>{window.localStorage.getItem("nama")}</span>
+              <span>Di Buat Oleh: {window.localStorage.getItem("nama")}</span>
             </MainCard>
             {/* <MainCard transparent noPadding gap="0">
                             <div className="flex justify-center">
