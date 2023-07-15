@@ -66,10 +66,26 @@ export const AddLaporanTani = async(data)=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
+export const editDaftarTani = async(id, data)=>{
+    try {
+      const response = await Api.put(`/daftar-tani/${id}`, data, headers);
+      SweatAlert(String(response.data.message), 'success');
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
 export const GetLaporanTani = async()=>{
     try {
       const response = await Api.get("/laporan-petani");
       return response.data
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
+export const GetDaftarTaniById = async(id)=>{
+    try {
+      const response = await Api.get(`/daftar-tani/${id}`);
+      return response.data.detailTani
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
@@ -143,7 +159,7 @@ export const DeleteInfoTani = async(id)=>{
 }
 export const updateEventTani = async(id, data)=>{
     try {
-      const response = await Api.put(`/event-tani/${id}`, data);
+      const response = await Api.put(`/event-tani/${id}`, data, headers);
       SweatAlert(String(response.data.message), 'success', "reload");
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');

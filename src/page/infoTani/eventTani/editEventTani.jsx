@@ -4,7 +4,7 @@ import InputImage from "@/components/inputImage"
 import MainCard from "@/components/MainCard"
 import TimeInput from "@/components/uiComponents/inputComponents/timeInputEdit" 
 import TextInput from "@/components/uiComponents/inputComponents/textInput" 
-import {GetEventTaniById} from "@/infrastruture"
+import {GetEventTaniById, updateEventTani} from "@/infrastruture"
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { useParams } from 'react-router-dom';
 import { Loader } from '@mantine/core'; 
@@ -16,6 +16,7 @@ function EditEventTani() {
   const [tempat, setTempat] = useState("");
   const [peserta, setPeserta] = useState("");
   const [fotoKegiatan, setFotoKegiatan] = useState("");
+  const [fotoKegiatanBaru, setFotoKegiatanBaru] = useState("");
   const [isLoading, setisLoading] = useState(false)
   const params = useParams()
   const id = params.id
@@ -36,21 +37,20 @@ function EditEventTani() {
   const tanggalAkhir =`${tahun}-${bulan?.padStart(2, '0')}-${tanggal?.padStart(2, '0')}`;
   const handleSubmit = ()=>{
     const data = {
-      namaKegiatan, tanggalAcara, waktuAcara, tempat, peserta,  fotoKegiatan
+      namaKegiatan, tanggalAcara, waktuAcara, tempat, peserta,  fotoKegiatanBaru
     }
     const formData = new FormData();
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    console.log(data)
-    AddEventTani(formData)
+    updateEventTani(id,formData)
     
   }
   return (
     <MainCard transparent row center style={{paddingTop:"50px"}}>
       <MainCard width="80%">
         <MainCard transparent nopadding center>
-          <InputImage id="fotoKegiatan" name="fotoKegiatan" imageActive={fotoKegiatan}  onChange={(e) => setFotoKegiatan(e)}/>
+          <InputImage id="fotoKegiatan" name="fotoKegiatan" imageActive={fotoKegiatan}  onChange={(e) => setFotoKegiatanBaru(e)}/>
         </MainCard>
         <MainCard fullwidth transparent className="mt-10">
           <TextInput id="namaKegiatan" name="namaKegiatan" label="Nama Kegiatan" value={namaKegiatan}  onChange={(e) => setNamaKegiatan(e.target.value)} contoh="Penyuluhan Tanaman"/>
