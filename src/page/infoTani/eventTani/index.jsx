@@ -1,5 +1,6 @@
 import MainCard from "@/components/MainCard"
 import {useState, useEffect} from "react"
+import { useNavigate  } from 'react-router-dom';
 import InputCrud from "@/components/page/infoTani/IconCrud"
 import { IconEdit, IconEye, IconTrash, IconPlus   } from '@tabler/icons-react';
 import { Image,} from '@mantine/core';
@@ -8,6 +9,7 @@ import { Text, Button, Modal } from '@mantine/core';
 function EventTani() {
     const [datas, setDatas] = useState([])
     const [modalDeleteData, setModalDeleteData] = useState(false);
+    const history = useNavigate ();
     useEffect(() => {
         GetEventTani().then((data)=>setDatas(data.infotani))
     }, [])
@@ -19,6 +21,12 @@ function EventTani() {
       const updatedDatas = datas.filter((d) => d.id !== id);
       setDatas(updatedDatas);
     }
+    const navigateToEdit = (itemId) => {
+        history(`/event-tani/edit/${itemId}`, { state: { id:itemId } });
+    };
+    const navigateToDetail = (itemId) => {
+        history(`/event-tani/detail?id=${itemId}`, { state: { id:itemId } });
+    };
     return(
     <div className="pt-16">
         <Modal
@@ -58,16 +66,17 @@ function EventTani() {
                         <MainCard transparent noPadding>
                             <MainCard row transparent noPadding>
                                 <p><span className="font-medium">Dibuat Oleh : </span>{d.createdBy}</p>
-                                <p>{d.createdAt?.split("T")[0]}</p>
                                 <p><span className="font-medium">Status : </span>{new Date(d.createdAt?.split("T")[0] || "").getTime() < new Date().getTime() ? 'sudah Terlewat' : 'akan Datang'}</p>
                             </MainCard>
-                        <p>{d.isi}<span className="italic cursor-pointer">... (Baca Selengkapnya)</span></p>
+                        <p>Waktu Pelaksanaan: {d.createdAt?.split("T")[0]}</p>
+                        <p>Tempat: {d.tempat}</p>
+                        <p>Peserta: {d.peserta}</p>
                         </MainCard>
                     </MainCard>
                 </MainCard>
                 <MainCard width="3%" noPadding gap="0" transparent>
-                    <InputCrud icon={<IconEye/>}>Lihat</InputCrud>
-                    <InputCrud icon={<IconEdit/>}>Edit</InputCrud>
+                    <InputCrud onClick={() => navigateToDetail(d.id)} icon={<IconEye />}>Liat</InputCrud>
+                    <InputCrud onClick={() => navigateToEdit(d.id)} icon={<IconEdit />}>Edit</InputCrud>
                     <InputCrud onClick={()=>setModalDeleteData(d.id)} icon={<IconTrash/>}>Hapus</InputCrud>
                 </MainCard>
             </MainCard>       

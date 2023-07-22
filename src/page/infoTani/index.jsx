@@ -41,12 +41,11 @@ const InfoTani = () => {
     DeleteInfoTani(ids)
   }
   const navigateToEdit = (itemId) => {
-    history(`/info-tani/edit?id=${itemId}`, { state: { id:itemId } });
+    history(`/info-tani/edit/${itemId}`, { state: { id:itemId } });
   };
   const navigateToDetail = (itemId) => {
     history(`/info-tani/detail?id=${itemId}`, { state: { id:itemId } });
   };
-  console.log(datas)
   return (
     <div className="pt-16">
       <div className="flex justify-center gap-3">
@@ -139,9 +138,6 @@ const InfoTani = () => {
                   </p>
                 </MainCard>
                 <span dangerouslySetInnerHTML={{ __html: item.isi }} />
-                <span className="italic cursor-pointer">
-                  (Baca Selengkapnya)
-                </span>
               </MainCard>
             </MainCard>
           </MainCard>

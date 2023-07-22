@@ -18,7 +18,7 @@ function DetailInfoTani() {
     DeleteInfoTani(ids)
   }
   const navigateToEdit = (itemId) => {
-    history(`/info-tani/edit?id=${itemId}`, { state: { id:itemId } });
+    navigate(`/info-tani/edit/${itemId}`, { state: { id:itemId } });
   };
   return (
     <MainCard noPadding transparent row center style={{marginTop:"100px"}}>

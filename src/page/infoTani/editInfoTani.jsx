@@ -1,38 +1,60 @@
-import { useState } from "react";
-import EditorText from "@/components/textAreaEditor";
+import { useState, useEffect } from "react";
+import EditorText from "@/components/textAreaEditorEdit";
 import { Radio, Group, Button } from "@mantine/core";
 import MainCard from "@/components/MainCard";
 import TextInput from "@/components/uiComponents/inputComponents/textInput";
 import { IconPlus, IconX, IconDeviceFloppy } from "@tabler/icons-react";
-import { AddInfoTani } from "@/infrastruture";
+import { useParams } from 'react-router-dom';
+import InputImage from "@/components/inputImage";
+import { GetInfoTaniById, updateInfoTani } from "@/infrastruture";
 const TambahInfoTani = () => {
   const [judul, setJudul] = useState("");
   const [kategori, setKategori] = useState("");
   const [isi, setIsi] = useState("");
-  // const [fotoBerita, setNamaKegiatan] = useState("");
-
-  const currentDate = new Date();
+  const [isiBaru, setIsiBaru] = useState("");
+  const [fotoBerita, setFotoBerita] = useState("");
+  const [fotoBeritaBaru, setFotoBeritaBaru] = useState("");
+  const [createdBy, setCreatedBy] = useState("");
+  const [tanggal, setTanggal] = useState("");
+  const params = useParams()
+  const id = params.id
+  const currentDate = new Date(tanggal);
   const options = { day: "numeric", month: "long", year: "numeric" };
   const formattedDate = currentDate.toLocaleDateString("id-ID", options);
-
+  useEffect(() => {
+    if(id){
+      GetInfoTaniById(id).then(({infotani}) => {
+          setJudul(infotani.judul)
+          setKategori(infotani.kategori)
+          setIsi(infotani.isi)
+          setFotoBerita(infotani.fotoBerita)
+          setCreatedBy(infotani.createdBy)
+          setTanggal(infotani.tanggal)
+      });
+    }
+  }, []);
   const handleClick = (e) => {
     const data = {
-      tanggal: formattedDate,
       judul,
       kategori,
-      isi,
+      isi: isiBaru || isi,
+      fotoBeritaBaru
     };
-    console.log(data);
+    console.log(data, e);
     if (e == "simpan") {
-      AddInfoTani(data);
+      const formData = new FormData();
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+      updateInfoTani(id, formData);
     } else {
-      window.location.reload();
+      window.location = "/info-tani"
     }
   };
   return (
     <MainCard transparent row center style={{ paddingTop: "50px" }}>
       <MainCard width="80%">
-        <h1 className="text-center">Tambahkan Data Tani</h1>
+        <h1 className="text-center">Edit Berita Tani</h1>
         <MainCard transparent gap="0">
           <MainCard transparent noPadding width="40%">
             <TextInput
@@ -46,9 +68,9 @@ const TambahInfoTani = () => {
           <MainCard transparent noPadding row gap="15rem">
             <MainCard transparent noPadding gap="0">
               <span id="tanggal" name="tanggal">
-                {formattedDate}
+                Di Buat Pada: {formattedDate}
               </span>
-              <span>{window.localStorage.getItem("nama")}</span>
+              <span>Di Buat Oleh: {createdBy}</span>
             </MainCard>
             {/* <MainCard transparent noPadding gap="0">
                             <div className="flex justify-center">
@@ -73,7 +95,14 @@ const TambahInfoTani = () => {
             </MainCard>
           </MainCard>
         </MainCard>
-        <EditorText setValue={setIsi} />
+        <MainCard transparent noPadding width="27%" style={{height:"39%", backgroubdColor:"blue"}}>
+        <InputImage
+          imageActive={fotoBerita}
+          onChange={(e) => setFotoBeritaBaru(e)}
+          title="Foto Berita"
+        />
+        </MainCard>
+        <EditorText setValue={setIsiBaru} isi={isi}/>
         <MainCard
           transparent
           id="isi"

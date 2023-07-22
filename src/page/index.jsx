@@ -23,7 +23,9 @@ import Airplane404 from "../assets/notFound.svg";
 import DetailInfoTani from "./infoTani/detailInfoTani";
 import DetailEventTani from "./infoTani/eventTani/DetailEventTani";
 import EditInfoTani from "./infoTani/editInfoTani";
-import DetailRekapPetani from "./dataTani/dataPertanian/detailRekapPetani";
+import EditEventTani from "./infoTani/eventTani/editEventTani";
+import DetailRekapPetani from "./dataTani/dataPertanian/tanamanPetani";
+import EditRekapPetani from "./dataTani/dataPertanian/editDataPetani";
 
 const NotFoundPage = () => {
   return (
@@ -42,10 +44,12 @@ const NotFoundPage = () => {
 };
 
 export {
+  EditRekapPetani,
   TambahDataTani,
   RekapDataPetani,
   LaporanPetani,
   InfoTani,
+  EditEventTani,
   TambahInfoTani,
   DetailRekapPetani,
   EventTani,

@@ -1,33 +1,94 @@
-import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
+import React, { useState, useEffect  } from 'react';
+import { Card, Image, Text, Badge, Button, Group, Modal } from '@mantine/core';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { GetEventTaniById } from "@/infrastruture";
+import MainCard from "@/components/MainCard";
 
-function DetailInfoTani() {
+function DetailEventTani() {
+  const [data, setData] = useState(null);
+  const location = useLocation();
+  const [modalDeleteData, setModalDeleteData] = useState(false);
+  const id = location.state?.id;
+  const navigate = useNavigate();
+  useEffect(() => {
+    if(id){
+      GetEventTaniById(id).then((data) => setData(data));
+    }
+  }, []);
+    const handleDeleteUser = (ids)=>{
+    DeleteInfoTani(ids)
+  }
+  const navigateToEdit = (itemId) => {
+    navigate(`/info-tani/edit/${itemId}`, { state: { id:itemId } });
+  };
+  console.log(data)
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
-      <Card.Section>
-        <Image
-          src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
-          height={160}
-          alt="Norway"
-        />
-      </Card.Section>
-
-      <Group position="apart" mt="md" mb="xs">
-        <Text weight={500}>Norway Fjord Adventures</Text>
-        <Badge color="pink" variant="light">
-          On Sale
-        </Badge>
-      </Group>
-
-      <Text size="sm" color="dimmed">
-        With Fjord Tours you can explore more of the magical fjord landscapes with tours and
-        activities on and around the fjords of Norway
-      </Text>
-
-      <Button variant="light" color="blue" fullWidth mt="md" radius="md">
-        Book classic tour now
+    <MainCard noPadding transparent row center style={{marginTop:"100px"}}>
+        <Modal
+          opened={modalDeleteData}
+          onClose={() => setModalDeleteData(false)}
+          withCloseButton={false}
+          centered
+        >
+          <Text>Apakah Kamu Yakin Akan Menghapus Data Ini ?</Text>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}>
+            <Button
+              color="cyan"
+              style={{ color: 'white', backgroundColor: '#303A47', marginRight: 8 }}
+              onClick={() => setModalDeleteData(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              color="cyan"
+              style={{ color: 'white', backgroundColor: 'red' }}
+              type="submit"
+              onClick={() => {
+                handleDeleteUser(modalDeleteData); 
+                setModalDeleteData(false);
+              }}
+            >
+              Delete
+            </Button>
+          </div>
+        </Modal>
+      <Button variant='outline' color="cyan" sx={{marginTop:"19px"}} onClick={()=>navigate(-1)}>
+        kembali
       </Button>
-    </Card>
+      <MainCard width="50%" transparent>
+      <Card shadow="sm" padding="lg" radius="md" withBorder>
+        <Card.Section>
+          <Image
+            src={data?.fotoKegiatan}
+            height={"35vh"}
+            alt={data?.namaKegiatan}
+            withPlaceholder 
+          />
+        </Card.Section>
+
+        <Group position="apart" mt="md" mb="xs">
+          <Text weight={500}>{data?.namaKegiatan}</Text>
+          {data?.createdAt ? new Date(data?.createdAt?.split("T")[0] || "").getTime() < new Date().getTime() ? <Badge color="pink" variant="light">Sudah Terlewat</Badge> : <Badge color="pink" variant="light">"Akan Datang</Badge> : ""}
+        </Group>
+
+        <Text size="sm" color="black">
+            <p><span className="font-medium">Dibuat Oleh : </span>{data?.createdBy}</p>
+            <p>Waktu Pelaksanaan: {data?.createdAt?.split("T")[0]}</p>
+            <p>Tempat: {data?.tempat}</p>
+            <p>Peserta: {data?.peserta}</p>
+        </Text>
+        <Group position="right" sx={{marginTop:"19px"}}>
+          <Button variant='outline' color="cyan" onClick={() => navigateToEdit(data?.id)}>
+            Edit
+          </Button>
+          <Button variant='outline' color="cyan" onClick={()=>setModalDeleteData(data?.id)}>
+            Delete
+          </Button>
+        </Group>
+      </Card>
+      </MainCard>
+    </MainCard>
   );
 }
 
-export default DetailInfoTani
+export default DetailEventTani
