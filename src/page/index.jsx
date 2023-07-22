@@ -24,7 +24,7 @@ import DetailInfoTani from "./infoTani/detailInfoTani";
 import DetailEventTani from "./infoTani/eventTani/DetailEventTani";
 import EditInfoTani from "./infoTani/editInfoTani";
 import EditEventTani from "./infoTani/eventTani/editEventTani";
-import DetailRekapPetani from "./dataTani/dataPertanian/detailRekapPetani";
+import DetailRekapPetani from "./dataTani/dataPertanian/tanamanPetani";
 import EditRekapPetani from "./dataTani/dataPertanian/editDataPetani";
 
 const NotFoundPage = () => {

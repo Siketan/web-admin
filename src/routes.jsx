@@ -62,10 +62,7 @@ const Path = () => {
               <Route path="/data-tani/tambah" element={<TambahDataTani />} />
               <Route path="/data-tani/laporan-tanam" element={<LaporanPetani />}/>
               <Route path="/data-tani/rekap-petani" element={<RekapDataPetani />}/>
-              <Route
-                path="/data-tani/rekap-petani/detail"
-                element={<DetailRekapPetani />}
-              />
+              <Route path="/data-tani/detail/:id" element={<DetailRekapPetani />} />
               {/* <Route path="/data-tanaman" element={<DataTanaman />} /> */}
               {/* event Tani */}
               <Route path="/event-tani/tambah" element={<TambahEventTani />} />
@@ -78,49 +75,19 @@ const Path = () => {
               <Route path="/info-tani/detail" element={<DetailInfoTani />} />
               <Route path="/info-tani/edit/:id" element={<EditInfoTani />} />
               {/* Toko Tani */}
-              <Route
-                path="/toko-tani/tambah-penjual"
-                element={<TambahPenjual />}
-              />
-              <Route
-                path="/toko-tani/produk-petani"
-                element={<ProdukPetani />}
-              />
-              <Route
-                path="/toko-tani/produk-penyuluh"
-                element={<ProdukPenyuluh />}
-              />
+              <Route path="/toko-tani/tambah-penjual" element={<TambahPenjual />} />
+              <Route path="/toko-tani/produk-petani" element={<ProdukPetani />} />
+              <Route path="/toko-tani/produk-penyuluh" element={<ProdukPenyuluh />} />
               {/* Data Penyuluh */}
-              <Route
-                path="/data-penyuluh/tambah"
-                element={<TambahPenyuluhanTani />}
-              />
-              <Route
-                path="/data-penyuluh/presensi-kehadiran"
-                element={<PresensiKehadiran />}
-              />
-              <Route
-                path="/data-penyuluh/jurnal-kegiatan"
-                element={<JurnalKegiatan />}
-              />
-              <Route
-                path="/data-penyuluh/jurnal-kegiatan/form"
-                element={<FormJurnalKegiatan />}
-              />
-              <Route
-                path="/data-penyuluh/riwayat-chat"
-                element={<DataRiwayatChat />}
-              />
-              <Route
-                path="/data-penyuluh/rekap-penyuluh"
-                element={<RekapDataPenyuluh />}
-              />
+              <Route path="/data-penyuluh/tambah" element={<TambahPenyuluhanTani />} />
+              <Route path="/data-penyuluh/presensi-kehadiran" element={<PresensiKehadiran />} />
+              <Route path="/data-penyuluh/jurnal-kegiatan" element={<JurnalKegiatan />} />
+              <Route path="/data-penyuluh/jurnal-kegiatan/form" element={<FormJurnalKegiatan />} />
+              <Route path="/data-penyuluh/riwayat-chat" element={<DataRiwayatChat />} />
+              <Route path="/data-penyuluh/rekap-penyuluh" element={<RekapDataPenyuluh />} />
               {/* LiveChat */}
               <Route path="/live-chat" element={<LiveChat />} />
-              <Route
-                path="/live-chat/rating-petugas"
-                element={<RatingPetugas />}
-              />
+              <Route path="/live-chat/rating-petugas" element={<RatingPetugas />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

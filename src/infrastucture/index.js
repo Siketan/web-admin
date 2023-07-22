@@ -24,11 +24,9 @@ export const Login = async(data)=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
-
-
 export const Logout = ()=>{
   localStorage.clear()
-  window.location = "./loginAdminSiketan"
+  window.location = "/loginAdminSiketan"
 } 
 
 // cekNik
@@ -82,6 +80,14 @@ export const GetLaporanTani = async()=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
+export const GetDaftarTani = async()=>{
+    try {
+      const response = await Api.get(`/daftar-tani`);
+      return response.data.tani
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
 export const GetDaftarTaniById = async(id)=>{
     try {
       const response = await Api.get(`/daftar-tani/${id}`);
@@ -90,7 +96,47 @@ export const GetDaftarTaniById = async(id)=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
-
+    // tanaman petani 
+export const GetTanmanPetani = async(id)=>{
+    try {
+      const response = await Api.get(`/tanaman-petani/${id}`);
+      return response.data.tani
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
+export const GetDetailTanmanTani = async(id)=>{
+    try {
+      const response = await Api.get(`/tanaman-petani/detail/${id}`);
+      return response.data
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
+export const AddTanmanPetani = async(data)=>{
+    try {
+      const response = await Api.post("/tanaman-petani", data);
+      SweatAlert(String(response.data.message), 'success');
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
+export const editTanmanPetani = async(id, data)=>{
+    try {
+      const response = await Api.put(`/tanaman-petani/${id}`, data);
+      SweatAlert(String(response.data.message), 'success');
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
+export const DeleteTanamanPetani = async(id)=>{
+    try {
+      const response = await Api.delete(`/tanaman-petani/${id}`);
+      SweatAlert(String(response.data.message), 'success', "reload");
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
 // info tani
 export const AddInfoTani = async(data)=>{
     try {

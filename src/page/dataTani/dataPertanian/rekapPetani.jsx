@@ -7,14 +7,14 @@ import {
   faDownload,
   faBullseye,
 } from "@fortawesome/free-solid-svg-icons";
-import { GetLaporanTani, DeleteDaftarTani } from "@/infrastruture";
+import { GetDaftarTani, DeleteDaftarTani } from "@/infrastruture";
 import ExcelComponent from "../../../components/exelComponent";
 import { Text, Button, Modal } from "@mantine/core";
 const RekapPetani = () => {
   const [datas, setDatas] = useState([]);
   const [modalDeleteData, setModalDeleteData] = useState(false);
   useEffect(() => {
-    GetLaporanTani().then((data) => setDatas(data.tani));
+    GetDaftarTani().then((data) => setDatas(data));
   }, []);
 
   const [filters, setFilters] = useState({
@@ -22,15 +22,6 @@ const RekapPetani = () => {
     desa: "",
     NIK: "",
     nama: "",
-    komoditas: "",
-    jenisTanaman: "",
-    musimTanam: "",
-    luasLahan: "",
-    tanggalTanam: "",
-    prakiraanTanggalPanen: "",
-    kondisiTanam: "",
-    prakiraanHasilPanen: "",
-    realisasiHasilPanen: "",
   });
   const handleFilterChange = (e, column) => {
     setFilters((prevFilters) => ({
@@ -420,7 +411,7 @@ const RekapPetani = () => {
                     {item.tanamanPetani?.realisasiHasilPanen}
                   </td> */}
                     <td className="px-2 py-2 border">
-                      <a href="/data-tani/rekap-petani/detail">
+                      <a href={`/data-tani/detail/${item.id}`}>
                         <FontAwesomeIcon
                           icon={faBullseye}
                           className="cursor-pointer text-black hover:text-black"
