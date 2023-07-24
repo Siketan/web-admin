@@ -17,7 +17,7 @@ const TambahPenyuluhanTani = ()=>{
     const [alamat, setAlamat] = useState("");
     const [foto, setFoto] = useState("");
     const [namaProduct, setNamaProduct] = useState("");
-    const [desaBinaan, setDesaBinaan] = useState("");
+    const [desaBinaan, setDesaBinaan] = useState([]);
     const [daftarKecamatan, setDaftarKecamatan] = useState([])
     const [dafatarDesa, setDafatarDesa] = useState([])
     const [dafatarDesaBinaan, setDafatarDesaBinaan] = useState([])
@@ -26,7 +26,7 @@ const TambahPenyuluhanTani = ()=>{
     const handleSubmit = (e)=>{
         e.preventDefault()
         const data = {
-            NIP, NoWa, nama, password, kecamatan, desa, foto, namaProduct, desaBinaan, alamat, kecamatanBinaan
+            NIP, NoWa, nama, password, kecamatan, desa, foto, namaProduct, desaBinaan:desaBinaan.join(", "), alamat, kecamatanBinaan
         }
         const formData = new FormData();
         for (const key in data) {
@@ -39,7 +39,7 @@ const TambahPenyuluhanTani = ()=>{
             setDaftarKecamatan(data.kecamatan)
         })
     }, [])
-    console.log(desaBinaan)
+    console.log(desaBinaan.join(", "))
     const handleSelectKecamatan = (e)=>{
         const id = e?.split("-")[1]
         const nama = e?.split("-")[0]

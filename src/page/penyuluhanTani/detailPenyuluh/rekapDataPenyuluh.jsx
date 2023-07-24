@@ -60,6 +60,7 @@ const RekapDataPenyuluh = () => {
         nama: item.nama,
         foto: item.foto,
         password: item.password,
+        // ["Kecamatan Binaan"]: 
       };
     });
     ExcelComponent(dataExel, "data.xlsx", "Sheet1");

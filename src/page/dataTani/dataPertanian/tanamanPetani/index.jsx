@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Image, ScrollArea } from '@mantine/core';
 import { GetTanmanPetani, DeleteDaftarTani } from "@/infrastruture";
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 export default function DetailRekapPetani() {
   const params = useParams()
@@ -37,8 +37,6 @@ export default function DetailRekapPetani() {
       setDatas(data.tanamanPetanis)
     });
   }, []);
-  console.log(Petani)
-  console.log(datas)
   const handleFilterChange = (e, column) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -73,26 +71,26 @@ export default function DetailRekapPetani() {
               <Image width={170} height={170} mx="auto" radius="md" src={Petani.foto} alt="Random image" withPlaceholder />
             <div className="text-left lg:ms-16 xl:ms-26 2xl:ms-36">
               <div className="flex">
-                <p className="relative z-0 w-full mb-6 group">
+                <p className="relative z-0 w-full mb-5 group">
                   <strong>Nama : </strong> {Petani?.nama}
                 </p>
-                <p className="relative z-0 w-full mb-6 group">
+                <p className="relative z-0 w-full mb-5 group">
                   <strong>NIK : </strong> {Petani?.NIK}
                 </p>
               </div>
               <div className="flex">
-                <p className="relative z-0 w-full mb-6 group">
+                <p className="relative z-0 w-full mb-5 group">
                   <strong>Kecamatan : </strong> {Petani?.kecamatan}
                 </p>
-                <p className="relative z-0 w-full mb-6 group">
+                <p className="relative z-0 w-full mb-5 group">
                   <strong>Desa : </strong> {Petani?.desa}
                 </p>
               </div>
               <div className="flex">
-                <p className="relative z-0 w-full mb-6 group">
+                <p className="relative z-0 w-full mb-5 group">
                   <strong>No Wa/HP : </strong> {Petani?.NoWa}
                 </p>
-                <p className="relative z-0 w-full mb-6 group">
+                <p className="relative z-0 w-full mb-5 group">
                   <strong>Desa : </strong> {Petani?.desa}
                 </p>
               </div>
@@ -100,9 +98,11 @@ export default function DetailRekapPetani() {
           </MainCard>
         </MainCard>
       </MainCard>
-        <h1 className="text-center mt-20 font-bold">Tanaman {Petani?.nama}</h1>
-        <button class="ms-16 rounded-full bg-cyan-900 text-white p-2 w-35 h-10">Tambah Tanaman</button>
-        <div className="pt-10 mx-10 overflow-y-scroll">
+        <h1 className="text-center mt-5 font-bold">Tanaman {Petani?.nama}</h1>
+        <Link to={`/tanaman-petani/add?petaniId=${Petani.id}`}>
+          <button class="ms-16 rounded-full bg-cyan-900 text-white p-2 w-35 h-10">Tambah Tanaman</button>
+        </Link>
+        <div className="pt-5 mx-8 overflow-y-scroll">
           <div className="h-[calc(100vh-200px)]">
             <table className="min-w-full">
               <thead className="bg-slate-100">
@@ -327,13 +327,13 @@ export default function DetailRekapPetani() {
                     <td className="px-4 py-2 border">{item.jenis}</td>
                     <td className="px-4 py-2 border">{item.janisPanen}</td>
                     <td className="px-2 py-2 border">
-                      <a href="/data-tani/rekap-petani/detail">
+                      <a href={`/tanaman-petani/detail/${item.id}`}>
                         <FontAwesomeIcon
                           icon={faBullseye}
                           className="cursor-pointer text-black hover:text-black"
                         />
                       </a>
-                      <a href={`/rekap-data-tani/edit/${item.id}`}>
+                      <a href={`/tanaman-petani/edit/${item.id}`}>
                         <FontAwesomeIcon
                           icon={faEdit}
                           className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
