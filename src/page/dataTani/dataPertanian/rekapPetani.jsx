@@ -125,6 +125,9 @@ const RekapPetani = () => {
               <thead className="bg-slate-100">
                 <tr>
                   <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
+                    Nama Petani
+                  </th>
+                  <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
                     Kecamatan
                   </th>
                   <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
@@ -135,9 +138,6 @@ const RekapPetani = () => {
                   </th>
                   <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
                     Password
-                  </th>
-                  <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
-                    Nama Petani
                   </th>
                   {/* <th className="px-4 py-2 truncate border">Komoditas</th>
                 <th className="px-4 py-2 truncate border">Jenis Tanaman</th>
@@ -159,6 +159,21 @@ const RekapPetani = () => {
               </thead>
               <tbody>
                 <tr>
+                  <td className="sticky bg-white top-[40px] z-10  px-4 py-2 border">
+                    <div className="flex items-center">
+                      <input
+                        type="text"
+                        value={filters.namaPetani}
+                        onChange={(e) => handleFilterChange(e, "namaPetani")}
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        placeholder="Filter Nama Petani"
+                      />
+                      <FontAwesomeIcon
+                        icon={faFilter}
+                        className="text-gray-500 ml-2"
+                      />
+                    </div>
+                  </td>
                   <td className="sticky bg-white top-[40px] z-10  px-4 py-2 border">
                     <div className="flex items-center">
                       <input
@@ -212,21 +227,6 @@ const RekapPetani = () => {
                         onChange={(e) => handleFilterChange(e, "password")}
                         className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
                         placeholder="Filter Password"
-                      />
-                      <FontAwesomeIcon
-                        icon={faFilter}
-                        className="text-gray-500 ml-2"
-                      />
-                    </div>
-                  </td>
-                  <td className="sticky bg-white top-[40px] z-10  px-4 py-2 border">
-                    <div className="flex items-center">
-                      <input
-                        type="text"
-                        value={filters.namaPetani}
-                        onChange={(e) => handleFilterChange(e, "namaPetani")}
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                        placeholder="Filter Nama Petani"
                       />
                       <FontAwesomeIcon
                         icon={faFilter}
@@ -378,11 +378,11 @@ const RekapPetani = () => {
                 </tr>
                 {filteredData?.map((item) => (
                   <tr key={item.id}>
+                    <td className="px-4 py-2 border">{item.nama}</td>
                     <td className="px-4 py-2 border">{item.kecamatan}</td>
                     <td className="px-4 py-2 border">{item.desa}</td>
                     <td className="px-4 py-2 border">{item.NIK}</td>
                     <td className="px-4 py-2 border">{item.password}</td>
-                    <td className="px-4 py-2 border">{item.nama}</td>
                     {/* <td className="px-4 py-2 border">
                     {item.tanamanPetani?.komoditas}
                   </td>

@@ -2,11 +2,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useEffect } from "react";
 import { faClose, faSave } from "@fortawesome/free-solid-svg-icons";
 import MainCard from "@/components/MainCard";
-import { DaftarTaniAdd, CekNik, select } from "@/infrastruture";
+import { AddTanmanPetani, } from "@/infrastruture";
 import { fecthKecamatan, fecthDesa } from "../../../../infrastucture/daerah";
 import {useLocation, useNavigate } from "react-router-dom"
 const TambahDataTani = () => {
-  const [penyuluh, setPenyuluh] = useState("");
   const [statusLahan, setStatusLahan] = useState("");
   const [luasLahan, setLuasLahan] = useState("");
   const [kategori, setKategori] = useState("");
@@ -18,15 +17,11 @@ const TambahDataTani = () => {
   const [realisasiPanen, setRealisasiPanen] = useState("");
   const [hasilPanen, setHasilPanen] = useState("");
   const [daftarKomoditas, setDaftarKomoditas] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
   const [jenisPanen, setjenisPanen] = useState(false)
   
-  const location= useLocation()
+  const location = useLocation()
   const history = useNavigate()
   const petaniId = new URLSearchParams(location.search).get('petaniId');
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
 
   useEffect(() => {
     fecthKecamatan().then((data) => {
@@ -72,14 +67,6 @@ const TambahDataTani = () => {
       setDaftarKomoditas([""]);
     }
   }, [kategori, jenis, jenisPanen]);
-  const handleselect = (e) => {
-    setDesa(e);
-    select(e).then((data) => {
-      setGapoktan(data?.kelompok[0]?.gapoktan || "");
-      setDaftarNamaKelompok(data?.kelompok);
-      console.log(data);
-    });
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -94,12 +81,9 @@ const TambahDataTani = () => {
       perkiraanPanen,
       realisasiPanen,
       hasilPanen,
+      dataPersonId:petaniId
     };
-    const formData = new FormData();
-    for (const key in data) {
-      formData.append(key, data[key]);
-    }
-    DaftarTaniAdd(formData)
+    AddTanmanPetani(data)
     console.log(kategori);
   };
   const handleSelectKecamatan = (e) => {
@@ -129,8 +113,9 @@ const TambahDataTani = () => {
                     onChange={(e) => setStatusLahan(e.target.value)}
                     className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                   >
-                    <option value="US">Sewa</option>
-                    <option value="CA">Milik Sendiri</option>
+                    <option value="">--pilih status lahan--</option>
+                    <option value="Sewa">Sewa</option>
+                    <option value="Milik Sendiri">Milik Sendiri</option>
                   </select>
                 </div>
                 <div className="relative z-0 w-full mb-6 grou pt-6">
@@ -221,11 +206,14 @@ const TambahDataTani = () => {
                       onChange={(e) => setJenis(e.target.value)}
                       className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                     >
+                      <option value="">--Pilih Jenis Tanaman--</option>
                       <option value="Buah">Buah</option>
                       <option value="Sayur">Sayur</option>
                     </select>
                   </div>
                 )}
+              </div>
+              <div className="grid md:grid-cols-2 md:gap-6">
                 {((kategori == "Tanaman Holtikultura" && jenis == "Buah") || (kategori == "Tanaman Perkebunan")) && (
                   <div className="relative z-0 w-full mb-6 group">
                     <label
@@ -246,25 +234,6 @@ const TambahDataTani = () => {
                     </select>
                   </div>
                 )}
-              </div>
-              <div className="grid md:grid-cols-2 md:gap-6">
-                <div className="relative z-0 w-full mb-6 group">
-                  <label
-                    htmlFor="underline_select"
-                    className="text-sm text-gray-500 "
-                  >
-                    <strong>Nama Penyuluh</strong>
-                  </label>
-                  <select
-                    id="penyuluh"
-                    value={penyuluh}
-                    onChange={(e) => setPenyuluh(e.target.value)}
-                    className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
-                  >
-                    <option value="US">Riski</option>
-                    <option value="CA">Rizal</option>
-                  </select>
-                </div>
                 {kategori == "Tanaman Perkebunan" ?  
                 <div className="relative z-0 w-full mb-6 group">
                   <label

@@ -353,7 +353,15 @@ export const GetRatting = async()=>{
 
 
 
-export const select = async(kecamatan)=>{
+export const select = async(desa)=>{
+    try {
+      const response = await Api.get(`/kelompok-tani/${desa}`);
+      return response.data
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
+export const selectPenyuluh = async(kecamatan)=>{
     try {
       const response = await Api.get(`/select-tani/${kecamatan}`);
       return response.data

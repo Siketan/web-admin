@@ -5,7 +5,7 @@ import { faPlus, faSearch, faClose, faSave } from "@fortawesome/free-solid-svg-i
 import InputImage from "@/components/inputImage";
 import MainCard from "@/components/MainCard";
 import { DatePicker } from '@mantine/dates';
-import { DaftarTaniAdd, CekNik, select } from "@/infrastruture";
+import { DaftarTaniAdd, CekNik, select,selectPenyuluh } from "@/infrastruture";
 import { fecthKecamatan, fecthDesa } from "../../infrastucture/daerah";
 const TambahDataTani = () => {
   const [NIK, setNIK] = useState("");
@@ -16,118 +16,114 @@ const TambahDataTani = () => {
   const [desa, setDesa] = useState("");
   const [namaKelompok, setNamaKelompok] = useState("");
   const [penyuluh, setPenyuluh] = useState("");
-  const [statusLahan, setStatusLahan] = useState("");
-  const [luasLahan, setLuasLahan] = useState("");
-  const [kategori, setKategori] = useState("");
+  // const [statusLahan, setStatusLahan] = useState("");
+  // const [luasLahan, setLuasLahan] = useState("");
+  // const [kategori, setKategori] = useState("");
   const [alamat, setAlamat] = useState("");
   const [gapoktan, setGapoktan] = useState("");
-  const [jenis, setJenis] = useState("");
-  const [komoditas, setKomoditas] = useState("");
-  const [musimTanam, setMusimTanam] = useState("");
-  const [tanggalTanam, setTanggalTanam] = useState("");
-  const [perkiraanPanen, setPerkiraanPanen] = useState("");
+  // const [jenis, setJenis] = useState("");
+  // const [komoditas, setKomoditas] = useState("");
+  // const [musimTanam, setMusimTanam] = useState("");
+  // const [tanggalTanam, setTanggalTanam] = useState("");
+  // const [perkiraanPanen, setPerkiraanPanen] = useState("");
   const [foto, setFoto] = useState("");
-  const [realisasiPanen, setRealisasiPanen] = useState("");
-  const [hasilPanen, setHasilPanen] = useState("");
-  const [datas, setDatas] = useState({});
+  // const [realisasiPanen, setRealisasiPanen] = useState("");
+  // const [hasilPanen, setHasilPanen] = useState("");
+  // const [datas, setDatas] = useState({});
   const [disable, setDisable] = useState(false);
-  const [countData, setCountData] = useState(1);
+  // const [countData, setCountData] = useState(1);
   const [daftarKecamatan, setDaftarKecamatan] = useState([]);
   const [kecamatanActive, setKecamatanActive] = useState("");
   const [dafatarDesa, setDafatarDesa] = useState([{ nama: "" }]);
-  const [daftarNamaKelompok, setDaftarNamaKelompok] = useState([{ nama: "" }]);
-  const [daftarKomoditas, setDaftarKomoditas] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [jenisPanen, setjenisPanen] = useState(false)
+  const [daftarNamaKelompok, setDaftarNamaKelompok] = useState([]);
+  // const [daftarKomoditas, setDaftarKomoditas] = useState([]);
+  // const [jenisPanen, setjenisPanen] = useState(false)
+  const [daftarPenyuluh, setDaftarPenyuluh] = useState([])
 
-  console.log(jenis)
-  console.log(jenisPanen)
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
-  const handleClikAdd = () => {
-    setCountData(countData + 1);
-  };
+  // console.log(jenis)
+  // console.log(jenisPanen)
+  // const handleClikAdd = () => {
+  //   setCountData(countData + 1);
+  // };
 
   useEffect(() => {
     fecthKecamatan().then((data) => {
       setDaftarKecamatan(data.kecamatan);
     });
   }, []);
-  useEffect(() => {
-    if (kategori == "Tanaman Pangan") {
-      setDaftarKomoditas([
-        "Padi Konvensional",
-        "Padi Ramah Lingkungan",
-        "Padi Organik",
-        "Jagung",
-        "Kedelai",
-        "Ubi Jalar",
-        "Ubi Kayu",
-        "Kacang Tanah",
-        "Kacang Hijau",
-      ]);
-    } else if (kategori == "Tanaman Perkebunan") {
-      if(jenisPanen == "Musiman"){
-        setDaftarKomoditas(["Tembakau", "Tebu"])
-      }else if(jenisPanen == "Tahunan"){
-        setDaftarKomoditas(["Kopi", "Kakao", "Cengkeh", "Teh", "Karet", "Kelapa"])
-      }else{
-        setDaftarKomoditas([""])
-      }
-    } else if (kategori == "Tanaman Holtikultura") {
-      if(jenis == "Buah"){
-        if(jenisPanen == "Musiman"){
-          setDaftarKomoditas(["Melon", "Semangka", "Pisang", "Blewah"])
-        }else if(jenisPanen == "Tahunan"){
-          setDaftarKomoditas(["Mangga", "Durian", "Manggis", "Alpukat", "Rambutan", "Jeruk Lemon", "Jeruk nipis", "Jeruk Keprok", "Jeruk Besar", "Nangka", "Jambu Biji", "Jambu air", "Sukun", "Sirsat", "Sawo", "Duku"])
-        }else{
-          setDaftarKomoditas([""])
-        }
-      }else if(jenis == "Sayur"){
-        setDaftarKomoditas(["Cabe Kecil", "Cabe Besar", "Bawang Merah", "Tomat", "Terong", "Pare", "Gambas", "Bayam", "Kangkung", "Sawi", "Kacang Panjang"] );
-      }else{
-        setDaftarKomoditas[""]
-      }
-    } else {
-      setDaftarKomoditas([""]);
-    }
-  }, [kategori, jenis, jenisPanen]);
+  // useEffect(() => {
+  //   if (kategori == "Tanaman Pangan") {
+  //     setDaftarKomoditas([
+  //       "Padi Konvensional",
+  //       "Padi Ramah Lingkungan",
+  //       "Padi Organik",
+  //       "Jagung",
+  //       "Kedelai",
+  //       "Ubi Jalar",
+  //       "Ubi Kayu",
+  //       "Kacang Tanah",
+  //       "Kacang Hijau",
+  //     ]);
+  //   } else if (kategori == "Tanaman Perkebunan") {
+  //     if(jenisPanen == "Musiman"){
+  //       setDaftarKomoditas(["Tembakau", "Tebu"])
+  //     }else if(jenisPanen == "Tahunan"){
+  //       setDaftarKomoditas(["Kopi", "Kakao", "Cengkeh", "Teh", "Karet", "Kelapa"])
+  //     }else{
+  //       setDaftarKomoditas([""])
+  //     }
+  //   } else if (kategori == "Tanaman Holtikultura") {
+  //     if(jenis == "Buah"){
+  //       if(jenisPanen == "Musiman"){
+  //         setDaftarKomoditas(["Melon", "Semangka", "Pisang", "Blewah"])
+  //       }else if(jenisPanen == "Tahunan"){
+  //         setDaftarKomoditas(["Mangga", "Durian", "Manggis", "Alpukat", "Rambutan", "Jeruk Lemon", "Jeruk nipis", "Jeruk Keprok", "Jeruk Besar", "Nangka", "Jambu Biji", "Jambu air", "Sukun", "Sirsat", "Sawo", "Duku"])
+  //       }else{
+  //         setDaftarKomoditas([""])
+  //       }
+  //     }else if(jenis == "Sayur"){
+  //       setDaftarKomoditas(["Cabe Kecil", "Cabe Besar", "Bawang Merah", "Tomat", "Terong", "Pare", "Gambas", "Bayam", "Kangkung", "Sawi", "Kacang Panjang"] );
+  //     }else{
+  //       setDaftarKomoditas[""]
+  //     }
+  //   } else {
+  //     setDaftarKomoditas([""]);
+  //   }
+  // }, [kategori, jenis, jenisPanen]);
   const handleselect = (e) => {
     setDesa(e);
     select(e).then((data) => {
-      setGapoktan(data?.kelompok[0]?.gapoktan || "");
-      setDaftarNamaKelompok(data?.kelompok);
-      console.log(data);
+      setGapoktan(data?.kelompokTani[0]?.gapoktan || "");
+      setDaftarNamaKelompok(data?.kelompokTani);
     });
   };
 
-  const handleCLick = () => {
-    CekNik({ nik: NIK }).then((data) => {
-      if (data) {
-        setNIK(data?.NIK);
-        setNoWa(data?.NoWa);
-        setNama(data?.nama);
-        setPassword(data?.password);
-        setKecamatan(data?.kecamatan);
-        setDesa(data?.desa);
-        setFoto(data?.foto);
-        setNamaKelompok(data?.kelompok?.namaKelompok);
-        setPenyuluh(data?.kelompok?.penyuluh);
-        setStatusLahan(data?.statusLahan);
-        setLuasLahan(data?.luasLahan);
-        setKategori(data?.kategori);
-        setAlamat(data?.alamat);
-        setGapoktan(data?.kelompok?.gapoktan);
-        setJenis(data?.tanamanPetani?.jenis);
-        setKomoditas(data?.tanamanPetani?.komoditas);
-        setMusimTanam(data?.tanamanPetani?.musimTanam);
-        setTanggalTanam(data?.tanamanPetani?.tanggalTanam);
-        setPerkiraanPanen(data?.tanamanPetani?.perkiraanPanen?.split("T")[0]);
-        setDisable(true);
-      }
-    });
-  };
+  // const handleCLick = () => {
+  //   CekNik({ nik: NIK }).then((data) => {
+  //     if (data) {
+  //       setNIK(data?.NIK);
+  //       setNoWa(data?.NoWa);
+  //       setNama(data?.nama);
+  //       setPassword(data?.password);
+  //       setKecamatan(data?.kecamatan);
+  //       setDesa(data?.desa);
+  //       setFoto(data?.foto);
+  //       setNamaKelompok(data?.kelompok?.namaKelompok);
+  //       setPenyuluh(data?.kelompok?.penyuluh);
+  //       setStatusLahan(data?.statusLahan);
+  //       setLuasLahan(data?.luasLahan);
+  //       setKategori(data?.kategori);
+  //       setAlamat(data?.alamat);
+  //       setGapoktan(data?.kelompok?.gapoktan);
+  //       setJenis(data?.tanamanPetani?.jenis);
+  //       setKomoditas(data?.tanamanPetani?.komoditas);
+  //       setMusimTanam(data?.tanamanPetani?.musimTanam);
+  //       setTanggalTanam(data?.tanamanPetani?.tanggalTanam);
+  //       setPerkiraanPanen(data?.tanamanPetani?.perkiraanPanen?.split("T")[0]);
+  //       setDisable(true);
+  //     }
+  //   });
+  // };
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
@@ -137,28 +133,29 @@ const TambahDataTani = () => {
       password,
       kecamatan,
       desa,
-      namaKelompok,
-      penyuluh,
-      statusLahan,
-      luasLahan,
-      kategori,
       alamat,
+      namaKelompok,
       gapoktan,
-      jenis,
-      komoditas,
-      musimTanam,
-      tanggalTanam,
-      perkiraanPanen,
+      penyuluh,
       foto,
-      realisasiPanen,
-      hasilPanen,
+      // statusLahan,
+      // luasLahan,
+      // kategori,
+      // jenis,
+      // komoditas,
+      // musimTanam,
+      // tanggalTanam,
+      // perkiraanPanen,
+      // realisasiPanen,
+      // hasilPanen,
     };
     const formData = new FormData();
     for (const key in data) {
       formData.append(key, data[key]);
     }
+    console.log(data);
+    console.log(formData);
     DaftarTaniAdd(formData)
-    console.log(kategori);
   };
   const handleSelectKecamatan = (e) => {
     const id = e?.split("-")[1];
@@ -166,6 +163,7 @@ const TambahDataTani = () => {
     setKecamatan(nama);
     setKecamatanActive(e);
     fecthDesa(id).then((data) => setDafatarDesa(data.kelurahan));
+    selectPenyuluh(nama).then((data)=> setDaftarPenyuluh(data.penyuluh))
   };
 
   return (
@@ -175,11 +173,11 @@ const TambahDataTani = () => {
           <div className="flex items-center justify-center">
             <InputImage
               imageActive={foto}
-              onChange={(e) => setFoto(e.target.files[0])}
+              onChange={(e) => setFoto(e)}
               title="Foto Profil"
             />
           </div>
-          <div className="w-max lg:w-full pt-5 flex justify-end">
+          {/* <div className="w-max lg:w-full pt-5 flex justify-end">
             <button
               value={NIK}
               onClick={(e) => handleCLick(e)}
@@ -188,7 +186,7 @@ const TambahDataTani = () => {
               <FontAwesomeIcon icon={faSearch} className="mr-2" />
               Cek NIK
             </button>
-          </div>
+          </div> */}
           <div className="grid md:grid-cols-2 md:gap-6 mt-6">
             <div className="relative z-0 w-full mb-6 group">
               <input
@@ -365,10 +363,10 @@ const TambahDataTani = () => {
                   ))}
                 </select>
                 <label
-                  htmlFor="desa"
+                  htmlFor="namaKelompok"
                   className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  <strong>Desa</strong> (Contoh: Karanganyar)
+                  <strong>Nama Kelompok</strong> (Contoh: Karanganyar)
                 </label>
               </div>
             ) : (
@@ -392,26 +390,66 @@ const TambahDataTani = () => {
               </div>
             )}
           </div>
-          <div className="relative z-0 w-full mb-6 group">
-            <input
-              type="text"
-              name="penyuluh"
-              id="penyuluh"
-              value={penyuluh}
-              onChange={(e) => setPenyuluh(e.target.value)}
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=" "
-              required
-            />
-            <label
-              htmlFor="penyuluh"
-              className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          {daftarPenyuluh?.length ?
+            <div className="relative z-0 w-full mb-6 group">
+              <select
+                id="penyuluh"
+                value={penyuluh}
+                onChange={(e) => setPenyuluh(e.target.value)}
+                className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
+              >
+                <option value="">--Silahkan Pilih Nama Kelompok--</option>
+                {daftarPenyuluh?.map((item, i) => (
+                  <option value={item?.nama} key={i}>
+                    {item?.nama}
+                  </option>
+                ))}
+              </select>
+              <label
+                htmlFor="penyuluh"
+                className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >
+                <strong>Nama Kelompok</strong> (Contoh: Karanganyar)
+              </label>
+            </div>
+          :
+            <div className="relative z-0 w-full mb-6 group">
+              <input
+                type="text"
+                name="penyuluh"
+                id="penyuluh"
+                value={penyuluh}
+                onChange={(e) => setPenyuluh(e.target.value)}
+                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" "
+                required
+              />
+              <label
+                htmlFor="penyuluh"
+                className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >
+                <strong>Nama Penyuluh</strong> (Contoh: Nama Penyuluh)
+              </label>
+            </div>
+          }
+          <div className="flex space-x-4 justify-end">
+            <button
+              type="submit"
+              className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-orange-800"
             >
-              <strong>Nama Penyuluh</strong> (Contoh: Nama Penyuluh)
-            </label>
+              <FontAwesomeIcon icon={faSave} className="mr-2" />
+              Simpan
+            </button>
+            <button
+              type="submit"
+              className="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-orange-800"
+            >
+              <FontAwesomeIcon icon={faClose} className="mr-2" />
+              Batalkan
+            </button>
           </div>
         </MainCard>
-        <MainCard>
+        {/* <MainCard>
           <div className="flex justify-end">
             <button
               className="text-white bg-orange-500 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto"
@@ -733,23 +771,8 @@ const TambahDataTani = () => {
               {countData != i + 1 && <Divider my="sm" variant="dotted" />}
             </div>
           ))}
-          <div className="flex space-x-4 justify-end">
-            <button
-              type="submit"
-              className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-orange-800"
-            >
-              <FontAwesomeIcon icon={faSave} className="mr-2" />
-              Simpan
-            </button>
-            <button
-              type="submit"
-              className="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-orange-800"
-            >
-              <FontAwesomeIcon icon={faClose} className="mr-2" />
-              Batalkan
-            </button>
-          </div>
-        </MainCard>
+
+        </MainCard> */}
       </form>
     </div>
   );
