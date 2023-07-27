@@ -4,7 +4,21 @@ import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { GetPreseiKehadiran } from "@/infrastruture";
 function PresensiKehadiran() {
   const [datas, setDatas] = useState([]);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    GetPreseiKehadiran().then((data)=>{
+      console.log(data)
+      const datafix = data?.newData?.map((item)=>{
+        return {
+          id: item?.jurnalHarian?.id,
+          kecamatan: item?.kecamatan,
+          nipPenyuluh: item?.NIP,
+          namaPenyuluh: item?.nama,
+          wilayahBinaan: item?.dataPenyuluh?.desaBinaan,
+        }
+      })
+      setDatas(datafix)
+    })
+  }, []);
   const [filters, setFilters] = useState({
     nipPenyuluh: "",
     namaPenyuluh: "",
