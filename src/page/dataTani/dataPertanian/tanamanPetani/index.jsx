@@ -8,8 +8,8 @@ import {
   faDownload,
   faBullseye,
 } from "@fortawesome/free-solid-svg-icons";
-import { Image, ScrollArea } from '@mantine/core';
-import { GetTanmanPetani, DeleteDaftarTani } from "@/infrastruture";
+import { Image, Modal,Text,Button } from '@mantine/core';
+import { GetTanmanPetani, DeleteTanamanPetani } from "@/infrastruture";
 import { useParams, Link } from 'react-router-dom';
 
 export default function DetailRekapPetani() {
@@ -57,8 +57,45 @@ export default function DetailRekapPetani() {
       return true;
     });
   });
+  const handleTanaman = (ids) => {
+    DeleteTanamanPetani(ids);
+  };
   return (
     <div>
+     <Modal
+        opened={modalDeleteData}
+        onClose={() => setModalDeleteData(false)}
+        withCloseButton={false}
+        centered
+      >
+        <Text>Apakah Kamu Yakin Akan Menghapus Data Ini ?</Text>
+        <div
+          style={{ display: "flex", justifyContent: "flex-end", marginTop: 20 }}
+        >
+          <Button
+            color="cyan"
+            style={{
+              color: "white",
+              backgroundColor: "#303A47",
+              marginRight: 8,
+            }}
+            onClick={() => setModalDeleteData(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="cyan"
+            style={{ color: "white", backgroundColor: "red" }}
+            type="submit"
+            onClick={() => {
+              handleTanaman(modalDeleteData);
+              setModalDeleteData(false);
+            }}
+          >
+            Delete
+          </Button>
+        </div>
+      </Modal>
       <MainCard row transparent noPadding center>
         <MainCard width="40%">
           <MainCard fullwidth transparent>
@@ -325,7 +362,7 @@ export default function DetailRekapPetani() {
                     <td className="px-4 py-2 border">{item.komoditas}</td>
                     <td className="px-4 py-2 border">{item.kategori}</td>
                     <td className="px-4 py-2 border">{item.jenis}</td>
-                    <td className="px-4 py-2 border">{item.janisPanen}</td>
+                    <td className="px-4 py-2 border">{item.jenisPanen}</td>
                     <td className="px-2 py-2 border">
                       <a href={`/tanaman-petani/detail/${item.id}`}>
                         <FontAwesomeIcon

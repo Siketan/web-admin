@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EditorText from "@/components/textAreaEditor"
 import { Button } from '@mantine/core';
 import MainCard from "@/components/MainCard"
@@ -12,6 +12,11 @@ const FormJurnalKegiatan = ()=>{
     // const [statusJurnal, setStatusJurnal] = useState("");
     const [isi, setIsi] = useState("");
     // const [gambar, setGambar] = useState("");
+    const [first, setfirst] = useState(second)
+
+    useEffect(() => {
+      
+    }, [])
     
     return(
         <MainCard transparent row center style={{paddingTop:"50px"}}>
@@ -24,7 +29,7 @@ const FormJurnalKegiatan = ()=>{
                     <MainCard transparent noPadding row gap="15rem">
                         <MainCard transparent noPadding gap="0">
                             <span id="tanggal" name="tanggal" value={tanggalDibuat}  onChange={(e) => setTanggalDibuat(e.target.value)}>26 Oktober 2023</span>
-                            <span >Dibuat Oleh: @suheri_26</span>
+                            <span >Dibuat Oleh: {}</span>
                         </MainCard>
                         <MainCard transparent noPadding gap="0">
                             <div className="flex justify-center">

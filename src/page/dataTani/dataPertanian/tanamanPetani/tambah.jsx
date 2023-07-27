@@ -4,7 +4,7 @@ import { faClose, faSave } from "@fortawesome/free-solid-svg-icons";
 import MainCard from "@/components/MainCard";
 import { AddTanmanPetani, } from "@/infrastruture";
 import { fecthKecamatan, fecthDesa } from "../../../../infrastucture/daerah";
-import {useLocation, useNavigate } from "react-router-dom"
+import {useLocation, useNavigate, Link } from "react-router-dom"
 const TambahDataTani = () => {
   const [statusLahan, setStatusLahan] = useState("");
   const [luasLahan, setLuasLahan] = useState("");
@@ -13,9 +13,10 @@ const TambahDataTani = () => {
   const [komoditas, setKomoditas] = useState("");
   const [musimTanam, setMusimTanam] = useState("");
   const [tanggalTanam, setTanggalTanam] = useState("");
+  const [perkiraanHasilPanen, setPerkiraanHasilPanen] = useState("");
   const [perkiraanPanen, setPerkiraanPanen] = useState("");
-  const [realisasiPanen, setRealisasiPanen] = useState("");
-  const [hasilPanen, setHasilPanen] = useState("");
+  const [realisasiHasilPanen, setRealisasiHasilPanen] = useState("");
+  const [realisasiLuasLahan, setRealisasiLuasLahan] = useState("");
   const [daftarKomoditas, setDaftarKomoditas] = useState([]);
   const [jenisPanen, setjenisPanen] = useState(false)
   
@@ -23,11 +24,6 @@ const TambahDataTani = () => {
   const history = useNavigate()
   const petaniId = new URLSearchParams(location.search).get('petaniId');
 
-  useEffect(() => {
-    fecthKecamatan().then((data) => {
-      setDaftarKecamatan(data.kecamatan);
-    });
-  }, []);
   useEffect(() => {
     if (kategori == "Tanaman Pangan") {
       setDaftarKomoditas([
@@ -75,27 +71,24 @@ const TambahDataTani = () => {
       luasLahan,
       kategori,
       jenis,
+      jenisPanen,
       komoditas,
       musimTanam,
       tanggalTanam,
       perkiraanPanen,
-      realisasiPanen,
-      hasilPanen,
-      dataPersonId:petaniId
+      perkiraanHasilPanen,
+      realisasiHasilPanen,
+      dataPersonId:petaniId,
+      realisasiLuasLahan
     };
     AddTanmanPetani(data)
-    console.log(kategori);
-  };
-  const handleSelectKecamatan = (e) => {
-    const id = e?.split("-")[1];
-    const nama = e?.split("-")[0];
-    setKecamatan(nama);
-    setKecamatanActive(e);
-    fecthDesa(id).then((data) => setDafatarDesa(data.kelurahan));
   };
 
   return (
     <div className="px-10 md:px-40 py-10 z-1">
+      <Link to={`/data-tani/detail/${petaniId}`}>
+        <button className="mb-5 ms-8 rounded-full bg-cyan-900 text-white p-2 w-35 h-10">kembali</button>
+      </Link>
       <form onSubmit={(e) => handleSubmit(e)}>
         <MainCard>
             <div>
@@ -244,8 +237,8 @@ const TambahDataTani = () => {
                   </label>
                   <select
                     id="musimTanam"
-                    // value={tanggalTanam}
-                    // onChange={(e) => setMusimTanam(e.target.value)}
+                    value={tanggalTanam}
+                    onChange={(e) => setTanggalTanam(e.target.value)}
                     className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                   >
                     <option value="">-- Pilih Tahun --</option>
@@ -319,7 +312,7 @@ const TambahDataTani = () => {
               <div className="grid md:grid-cols-2 mt-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 grou pt-6">
                   <input
-                    type="date"
+                    type="month"
                     name="perkiraanPanen"
                     id="perkiraanPanen"
                     value={perkiraanPanen}
@@ -340,8 +333,8 @@ const TambahDataTani = () => {
                     type="text"
                     name="realisasipanen"
                     id="realisasipanen"
-                    value={realisasiPanen}
-                    onChange={(e) => setRealisasiPanen(e.target.value)}
+                    value={perkiraanHasilPanen}
+                    onChange={(e) => setPerkiraanHasilPanen(e.target.value)}
                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" "
                     required
@@ -358,8 +351,8 @@ const TambahDataTani = () => {
                     type="text"
                     name="hasilpanen"
                     id="hasilpanen"
-                    value={hasilPanen}
-                    onChange={(e) => setHasilPanen(e.target.value)}
+                    value={realisasiHasilPanen}
+                    onChange={(e) => setRealisasiHasilPanen(e.target.value)}
                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" "
                     required
@@ -376,8 +369,8 @@ const TambahDataTani = () => {
                     type="text"
                     name="hasilpanen"
                     id="hasilpanen"
-                    value={hasilPanen}
-                    onChange={(e) => setHasilPanen(e.target.value)}
+                    value={realisasiLuasLahan}
+                    onChange={(e) => setRealisasiLuasLahan(e.target.value)}
                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" "
                     required

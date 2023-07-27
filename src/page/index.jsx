@@ -27,6 +27,7 @@ import EditEventTani from "./infoTani/eventTani/editEventTani";
 import EditRekapPetani from "./dataTani/dataPertanian/editDataPetani";
 import DetailRekapPetani from "./dataTani/dataPertanian/tanamanPetani";
 import TambahTanamanPetani from "./dataTani/dataPertanian/tanamanPetani/tambah";
+import EditTanamanPetani from "./dataTani/dataPertanian/tanamanPetani/edit";
 
 const NotFoundPage = () => {
   return (
@@ -46,6 +47,7 @@ const NotFoundPage = () => {
 
 export {
   EditRekapPetani,
+  EditTanamanPetani,
   TambahTanamanPetani,
   TambahDataTani,
   RekapDataPetani,

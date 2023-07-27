@@ -117,6 +117,9 @@ export const AddTanmanPetani = async(data)=>{
     try {
       const response = await Api.post("/tanaman-petani", data);
       SweatAlert(String(response.data.message), 'success');
+      setTimeout(() => {
+        window.location.href = `/data-tani/detail/${data.dataPersonId}`
+      }, 500);
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
