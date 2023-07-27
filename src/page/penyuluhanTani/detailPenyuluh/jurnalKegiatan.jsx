@@ -2,10 +2,30 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-// import {GatJurnalKegiatan} from "@/infrastruture"
+import {GatJurnalKegiatan} from "@/infrastruture"
+import { Image } from '@mantine/core';
+import {Link} from "react-router-dom"
 function JurnalKegiatan() {
   const [datas, setDatas] = useState([]);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    GatJurnalKegiatan().then((data)=>{
+      const datafix = data?.newData?.map((item)=>{
+        return {
+          id: item?.jurnalHarian?.id,
+          tanggalDibuat: item?.jurnalHarian?.tanggalDibuat?.split("T")[0],
+          uraian: item?.jurnalHarian?.uraian,
+          gambar: item?.jurnalHarian?.gambar,
+          statusJurnal: item?.jurnalHarian?.statusJurnal,
+          judulJurnalHarian: item?.jurnalHarian?.judul,
+          kecamatan: item?.kecamatan,
+          nipPenyuluh: item?.NIP,
+          namaPenyuluh: item?.nama,
+          wilayahBinaan: item?.dataPenyuluh?.desaBinaan,
+        }
+      })
+      setDatas(datafix)
+    })
+  }, []);
   const [filters, setFilters] = useState({
     kecamatan: "",
     nipPenyuluh: "",
@@ -25,46 +45,7 @@ function JurnalKegiatan() {
     }));
   };
 
-  const data = [
-    {
-      id: 1,
-      kecamatan: "Karanganyar",
-      nipPenyuluh: "350877994433",
-      namaPenyuluh: "John Doe",
-      wilayahBinaan: "Wilayah Binaan 1",
-      judulJurnalHarian: "Judul Jurnal Harian 1",
-      tanggalDibuat: "2023-05-29",
-      uraian: "Judul jurnal harian 1 adalah",
-      gambar: "gambar 1",
-      statusJurnal: "Terbit",
-    },
-    {
-      id: 2,
-      kecamatan: "Benowo",
-      nipPenyuluh: "350877994432",
-      namaPenyuluh: "John Doa",
-      wilayahBinaan: "Wilayah Binaan 2",
-      judulJurnalHarian: "Judul Jurnal Harian 2",
-      tanggalDibuat: "2023-05-30",
-      uraian: "Judul jurnal harian 2 adalah",
-      gambar: "gambar 2",
-      statusJurnal: "Draft",
-    },
-    {
-      id: 3,
-      kecamatan: "Kita",
-      nipPenyuluh: "350877994431",
-      namaPenyuluh: "John Dou",
-      wilayahBinaan: "Wilayah Binaan 3",
-      judulJurnalHarian: "Judul Jurnal Harian 3",
-      tanggalDibuat: "2023-05-31",
-      uraian: "Judul jurnal harian 3 adalah",
-      gambar: "gambar 3",
-      statusJurnal: "Terbit",
-    },
-  ];
-
-  const filteredData = data.filter((item) => {
+  const filteredData = datas.filter((item) => {
     return Object.keys(filters).every((key) => {
       if (filters[key] !== "") {
         if (typeof item[key] === "number") {
@@ -83,15 +64,15 @@ function JurnalKegiatan() {
     <div className="flex justify-center pt-12">
       <div className="w-full max-w-screen-xl shadow-xl rounded-lg overflow-x-auto overflow-y-auto">
         <div className="w-max lg:w-full pt-10 px-10">
+          <Link to="/data-penyuluh/jurnal-kegiatan/form">
           <button
             type="submit"
             className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto"
           >
             <FontAwesomeIcon icon={faPlus} className="mr-2" />
-            <a href="/data-penyuluh/jurnal-kegiatan/form" target="_blank">
               Tambah
-            </a>
           </button>
+          </Link>
           <p className="text-right mt-4">
             <strong>Jumlah Data :</strong> {totalData} Data Jurnal Kegiatan
           </p>
@@ -102,19 +83,19 @@ function JurnalKegiatan() {
               <thead className="bg-slate-100">
                 <tr>
                   <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
-                    Kecamatan
+                    Nama Penyuluh
                   </th>
                   <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
                     NIP Penyuluh
                   </th>
                   <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
-                    Nama Penyuluh
+                    Kecamatan
                   </th>
                   <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
                     Wilayah Binaan
                   </th>
                   <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
-                    Judul Journal Harian
+                    Judul Jurnal Harian
                   </th>
                   <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
                     Tanggal Dibuat
@@ -123,10 +104,10 @@ function JurnalKegiatan() {
                     Uraian
                   </th>
                   <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
-                    Gambar
+                    Status Journal
                   </th>
                   <th className="sticky top-0 bg-slate-100 px-4 py-2 truncate border">
-                    Status Journal
+                    Gambar
                   </th>
                 </tr>
               </thead>
@@ -136,10 +117,10 @@ function JurnalKegiatan() {
                     <div className="flex items-center">
                       <input
                         type="text"
-                        value={filters.kecamatan}
-                        onChange={(e) => handleFilterChange(e, "kecamatan")}
+                        value={filters.namaPenyuluh}
+                        onChange={(e) => handleFilterChange(e, "namaPenyuluh")}
                         className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                        placeholder="Filter Kecamatan"
+                        placeholder="Filter Nama Penyuluh"
                       />
                       <FontAwesomeIcon
                         icon={faFilter}
@@ -166,10 +147,10 @@ function JurnalKegiatan() {
                     <div className="flex items-center">
                       <input
                         type="text"
-                        value={filters.namaPenyuluh}
-                        onChange={(e) => handleFilterChange(e, "namaPenyuluh")}
+                        value={filters.kecamatan}
+                        onChange={(e) => handleFilterChange(e, "kecamatan")}
                         className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                        placeholder="Filter Nama Penyuluh"
+                        placeholder="Filter Kecamatan"
                       />
                       <FontAwesomeIcon
                         icon={faFilter}
@@ -243,21 +224,6 @@ function JurnalKegiatan() {
                     <div className="flex items-center">
                       <input
                         type="text"
-                        value={filters.gambar}
-                        onChange={(e) => handleFilterChange(e, "gambar")}
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                        placeholder="Filter Gambar"
-                      />
-                      <FontAwesomeIcon
-                        icon={faFilter}
-                        className="text-gray-500 ml-2"
-                      />
-                    </div>
-                  </td>
-                  <td className="sticky bg-white top-[40px] z-10 px-4 py-2 border">
-                    <div className="flex items-center">
-                      <input
-                        type="text"
                         value={filters.statusJurnal}
                         onChange={(e) => handleFilterChange(e, "statusJurnal")}
                         className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
@@ -269,24 +235,29 @@ function JurnalKegiatan() {
                       />
                     </div>
                   </td>
+                  <td className="sticky bg-grey-200 top-[40px] z-10 px-4 py-2 border">
+                    <div className="bg-blue-200">
+                    </div>
+                  </td>
                 </tr>
                 {filteredData.map((item) => (
                   <tr key={item.id}>
-                    <td className="px-4 py-2 border">{item.kecamatan}</td>
-                    <td className="px-4 py-2 border">{item.nipPenyuluh}</td>
                     <td className="px-4 py-2 border">{item.namaPenyuluh}</td>
+                    <td className="px-4 py-2 border">{item.nipPenyuluh}</td>
+                    <td className="px-4 py-2 border">{item.kecamatan}</td>
                     <td className="px-4 py-2 border">{item.wilayahBinaan}</td>
-                    <td className="px-4 py-2 border">
-                      {item.judulJurnalHarian}
-                    </td>
+                    <td className="px-4 py-2 border">{item.judulJurnalHarian}</td>
                     <td className="px-4 py-2 border">{item.tanggalDibuat}</td>
                     <td className="px-4 py-2 border">{item.uraian}</td>
-                    <td className="px-4 py-2 border">{item.gambar}</td>
                     <td className="px-4 py-2 border">{item.statusJurnal}</td>
+                    <td className="px-4 py-2 border">
+                      <Image maw={240} mx="auto" radius="md" src={item.gambar} alt={item.judulJurnalHarian || ""} withPlaceholder />
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            {!datas && <h1>Loading...</h1>}
           </div>
         </div>
       </div>
@@ -295,3 +266,4 @@ function JurnalKegiatan() {
 }
 
 export default JurnalKegiatan;
+

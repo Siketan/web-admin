@@ -279,8 +279,8 @@ export const AddJurnalKegiatan = async(data)=>{
 }
 export const GetPreseiKehadiran = async()=>{
     try {
-      const response = await Api.get("/presesi-kehadiran");
-      return response.data
+      const response = await Api.get("/presensi-kehadiran");
+      return response.data?.DataPresesiKehadiran
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
