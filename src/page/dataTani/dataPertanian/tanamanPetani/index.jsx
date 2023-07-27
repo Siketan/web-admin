@@ -368,7 +368,7 @@ export default function DetailRekapPetani() {
                     <td className="px-4 py-2 border">{item.jenis}</td>
                     <td className="px-4 py-2 border">{item.jenisPanen}</td>
                     <td className="px-2 py-2 border">
-                      <a href={`/tanaman-petani/detail/${item.id}`}>
+                      <a href={`/laporan-tanam/${item.id}`}>
                         <FontAwesomeIcon
                           icon={faBullseye}
                           className="cursor-pointer text-black hover:text-black"
