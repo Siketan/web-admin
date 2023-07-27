@@ -71,8 +71,8 @@ const Path = () => {
               <Route path="/tanaman-petani/add" element={<TambahTanamanPetani />} />
               <Route path="/tanaman-petani/edit/:id" element={<EditTanamanPetani />} />
               <Route path="/laporan-tanam/add" element={<TambahLaporanTanam />} />
-              <Route path="/laporan-tanam/detail/:id" element={<DetailTanamanPetani />} />
               <Route path="/laporan-tanam/edit/:id" element={<EditLaporanTanam />} />
+              <Route path="/laporan-tanam/:id" element={<DetailTanamanPetani />} />
               {/* <Route path="/data-tanaman" element={<DataTanaman />} /> */}
               {/* event Tani */}
               <Route path="/event-tani/tambah" element={<TambahEventTani />} />

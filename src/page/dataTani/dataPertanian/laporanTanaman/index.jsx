@@ -4,6 +4,7 @@ import { Image } from "@mantine/core";
 import {
   faEdit,
   faTrash,
+  faPlus
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
 export default function DetailTanamanPetani() {
@@ -60,7 +61,7 @@ export default function DetailTanamanPetani() {
         </MainCard>
       </MainCard>
       <h1 className="text-center font-bold my-5">Laporan Tanaman</h1>
-        <Link to={`/laporan-tanam/add?tanamanId=${Petani.id}`}>
+        <Link to={`/laporan-tanam/add?tanamanId=${1}`}>
           <button className="ms-16 rounded-md bg-blue-500 text-white p-2 px-5 w-35 h-10"> 
             <FontAwesomeIcon
               icon={faPlus}
