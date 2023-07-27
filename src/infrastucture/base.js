@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const baseURL = "http://localhost:3000"
-const baseURL = "https://siketan-api.cyclic.app/"
+const baseURL = "http://localhost:3000"
+// const baseURL = "https://siketan-api.cyclic.app/"
 const API = axios.create({
   baseURL,
   headers: {
