@@ -5,8 +5,8 @@ import {
   faFilter,
   faEdit,
   faTrash,
-  faDownload,
   faBullseye,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { Image, Modal,Text,Button } from '@mantine/core';
 import { GetTanmanPetani, DeleteTanamanPetani } from "@/infrastruture";
@@ -137,7 +137,11 @@ export default function DetailRekapPetani() {
       </MainCard>
         <h1 className="text-center mt-5 font-bold">Tanaman {Petani?.nama}</h1>
         <Link to={`/tanaman-petani/add?petaniId=${Petani.id}`}>
-          <button className="ms-16 rounded-full bg-cyan-900 text-white p-2 w-35 h-10">Tambah Tanaman</button>
+          <button className="ms-16 rounded-md bg-blue-500 text-white p-2 px-5 w-35 h-10"> 
+            <FontAwesomeIcon
+              icon={faPlus}
+            />
+            Tambah Tanaman</button>
         </Link>
         <div className="pt-5 mx-8 overflow-y-scroll">
           <div className="h-[calc(100vh-200px)]">
@@ -364,7 +368,7 @@ export default function DetailRekapPetani() {
                     <td className="px-4 py-2 border">{item.jenis}</td>
                     <td className="px-4 py-2 border">{item.jenisPanen}</td>
                     <td className="px-2 py-2 border">
-                      <a href={`/tanaman-petani/detail/${item.id}`}>
+                      <a href={`/laporan-tanam/${item.id}`}>
                         <FontAwesomeIcon
                           icon={faBullseye}
                           className="cursor-pointer text-black hover:text-black"

@@ -32,7 +32,10 @@ import {
   EditEventTani,
   EditRekapPetani,
   TambahTanamanPetani,
-  EditTanamanPetani
+  EditTanamanPetani,
+  DetailTanamanPetani,
+  EditLaporanTanam,
+  TambahLaporanTanam,
 } from "./page";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
@@ -67,6 +70,9 @@ const Path = () => {
               <Route path="/data-tani/detail/:id" element={<DetailRekapPetani />} />
               <Route path="/tanaman-petani/add" element={<TambahTanamanPetani />} />
               <Route path="/tanaman-petani/edit/:id" element={<EditTanamanPetani />} />
+              <Route path="/laporan-tanam/add" element={<TambahLaporanTanam />} />
+              <Route path="/laporan-tanam/edit/:id" element={<EditLaporanTanam />} />
+              <Route path="/laporan-tanam/:id" element={<DetailTanamanPetani />} />
               {/* <Route path="/data-tanaman" element={<DataTanaman />} /> */}
               {/* event Tani */}
               <Route path="/event-tani/tambah" element={<TambahEventTani />} />
