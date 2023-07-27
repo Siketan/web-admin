@@ -2,18 +2,23 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { GetPreseiKehadiran } from "@/infrastruture";
+import { Image, } from '@mantine/core';
 function PresensiKehadiran() {
   const [datas, setDatas] = useState([]);
   useEffect(() => {
     GetPreseiKehadiran().then((data)=>{
       console.log(data)
-      const datafix = data?.newData?.map((item)=>{
+      const datafix = data?.map((item)=>{
         return {
-          id: item?.jurnalHarian?.id,
-          kecamatan: item?.kecamatan,
-          nipPenyuluh: item?.NIP,
-          namaPenyuluh: item?.nama,
-          wilayahBinaan: item?.dataPenyuluh?.desaBinaan,
+          id: item?.id,
+          nipPenyuluh: item?.dataPerson?.NIP,
+          namaPenyuluh: item?.dataPerson?.nama,
+          tanggalPresensi: item?.tanggalPresesi?.split("T")[0],
+          judulKegiatan: item?.judulKegiatan,
+          deskripsiKegiatan: item?.deskripsiKegiatan,
+          kecamatan: item?.dataPerson?.kecamatan,
+          wilayahBinaan: item?.dataPerson?.dataPenyuluh?.desaBinaan,
+          fotoKegiatan: item?.FotoKegiatan,
         }
       })
       setDatas(datafix)
@@ -23,8 +28,8 @@ function PresensiKehadiran() {
     nipPenyuluh: "",
     namaPenyuluh: "",
     tanggalPresensi: "",
-    jamKedatangan: "",
-    jamPulang: "",
+    judulKegiatan: "",
+    deskripsiKegiatan: "",
     kecamatan: "",
     wilayahBinaan: "",
     fotoKegiatan: "",
@@ -37,43 +42,7 @@ function PresensiKehadiran() {
     }));
   };
 
-  const data = [
-    {
-      id: 1,
-      nipPenyuluh: "350877994433",
-      namaPenyuluh: "John Doe",
-      tanggalPresensi: "2023-05-29",
-      jamKedatangan: "08.10",
-      jamPulang: "17.30",
-      kecamatan: "Karanganyar",
-      wilayahBinaan: "Wilayah Binaan 1",
-      fotoKegiatan: "Isinya nanti foto",
-    },
-    {
-      id: 2,
-      nipPenyuluh: "350877994432",
-      namaPenyuluh: "John Doa",
-      tanggalPresensi: "2023-05-0",
-      jamKedatangan: "08.14",
-      jamPulang: "17.42",
-      kecamatan: "Benowo",
-      wilayahBinaan: "Wilayah Binaan 2",
-      fotoKegiatan: "Isinya nanti foto",
-    },
-    {
-      id: 3,
-      nipPenyuluh: "350877994431",
-      namaPenyuluh: "John Dou",
-      tanggalPresensi: "2023-05-31",
-      jamKedatangan: "08.20",
-      jamPulang: "17.39",
-      kecamatan: "Kita",
-      wilayahBinaan: "Wilayah Binaan 3",
-      fotoKegiatan: "Isinya nanti foto",
-    },
-  ];
-
-  const filteredData = data.filter((item) => {
+  const filteredData = datas.filter((item) => {
     return Object.keys(filters).every((key) => {
       if (filters[key] !== "") {
         if (typeof item[key] === "number") {
@@ -87,7 +56,7 @@ function PresensiKehadiran() {
   });
   return (
     <div className="flex justify-center pt-12">
-      <div className="w-full max-w-screen-xl shadow-xl rounded-lg overflow-x-auto overflow-y-auto">
+      <div className="w-full lg:max-w-screen-lg 2xl:max-w-screen-xl xl:max-w-screen-xl 2xl:max-w-screen-2xl shadow-xl rounded-lg overflow-x-auto overflow-y-auto">
         <div className="pt-20">
           <table className="w-full">
             <thead className="bg-slate-100">
@@ -156,7 +125,7 @@ function PresensiKehadiran() {
                     <input
                       type="text"
                       value={filters.jamKedatangan}
-                      onChange={(e) => handleFilterChange(e, "jamKedatangan")}
+                      onChange={(e) => handleFilterChange(e, "judulKegiatan")}
                       className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
                       placeholder="Filter Judul kegiatan"
                     />
@@ -171,7 +140,7 @@ function PresensiKehadiran() {
                     <input
                       type="text"
                       value={filters.jamPulang}
-                      onChange={(e) => handleFilterChange(e, "jamPulang")}
+                      onChange={(e) => handleFilterChange(e, "deskripsiKegiatan")}
                       className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
                       placeholder="Filter Deskripsi kegiatan"
                     />
@@ -213,17 +182,6 @@ function PresensiKehadiran() {
                 </td>
                 <td className="px-4 py-2 border">
                   <div className="flex items-center">
-                    <input
-                      type="text"
-                      value={filters.fotoKegiatan}
-                      onChange={(e) => handleFilterChange(e, "fotoKegiatan")}
-                      className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
-                      placeholder="Filter Wilayah Binaan"
-                    />
-                    <FontAwesomeIcon
-                      icon={faFilter}
-                      className="text-gray-500 ml-2"
-                    />
                   </div>
                 </td>
               </tr>
@@ -232,11 +190,13 @@ function PresensiKehadiran() {
                   <td className="px-4 py-2 border">{item.nipPenyuluh}</td>
                   <td className="px-4 py-2 border">{item.namaPenyuluh}</td>
                   <td className="px-4 py-2 border">{item.tanggalPresensi}</td>
-                  <td className="px-4 py-2 border">{item.jamKedatangan}</td>
-                  <td className="px-4 py-2 border">{item.jamPulang}</td>
+                  <td className="px-4 py-2 border">{item.judulKegiatan}</td>
+                  <td className="px-4 py-2 border">{item.deskripsiKegiatan}</td>
                   <td className="px-4 py-2 border">{item.kecamatan}</td>
                   <td className="px-4 py-2 border">{item.wilayahBinaan}</td>
-                  <td className="px-4 py-2 border">{item.fotoKegiatan}</td>
+                  <td className="px-4 py-2 border">
+                    <Image width={170} height={170} mx="auto" radius="md" src={item.fotoKegiatan} alt={item?.judulKegiatan || ''} withPlaceholder />
+                  </td>
                 </tr>
               ))}
             </tbody>
