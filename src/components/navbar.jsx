@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { Logout } from "../infrastucture";
-
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -59,7 +58,7 @@ const Navbar = () => {
             </a>
             <div className="md:hidden">
               <button
-                className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border"
+                className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-600 focus:border-4"
                 onClick={() => setNavbar(!navbar)}
               >
                 {navbar ? (
@@ -105,29 +104,14 @@ const Navbar = () => {
               {token && (
                 <>
                   <li className="text-green-primary">
+                    <a href="/data-tani/rekap-petani">
                     <button
                       onClick={() => toggleDropdown("data-tani")}
                       className="hover:underline underline-offset-auto"
-                    >
+                      >
                       Data Tani
                     </button>
-                    {activeDropdown === "data-tani" && (
-                      <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
-                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
-                          <a href="/data-tani/tambah">Tambah Daftar Tani</a>
-                        </li>
-                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
-                          <a href="/data-tani/laporan-tanam">
-                            Tambah Laporan Tanam
-                          </a>
-                        </li>
-                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
-                          <a href="/data-tani/rekap-petani">
-                            Rekap Data Petani
-                          </a>
-                        </li>
-                      </ul>
-                    )}
+                      </a>
                   </li>
                   <li className="text-green-primary">
                     <button
