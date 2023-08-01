@@ -64,12 +64,20 @@ export const AddLaporanTani = async(data)=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
+export const tambahLaporanAkhir = async(data)=>{
+    try {
+      const response = await Api.post("/laporan-akhir", data, headers);
+      SweatAlert(String(response.data.message), 'success');
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error',"reload");
+    }
+}
 export const editDaftarTani = async(id, data)=>{
     try {
       const response = await Api.put(`/daftar-tani/${id}`, data, headers);
       SweatAlert(String(response.data.message), 'success');
     } catch (error) {
-      SweatAlert(String(error.response.data.message), 'error');
+      SweatAlert(String(error.response.data.message), 'error',"reload");
     }
 }
 export const GetLaporanTani = async()=>{

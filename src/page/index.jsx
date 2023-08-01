@@ -31,6 +31,7 @@ import EditTanamanPetani from "./dataTani/dataPertanian/tanamanPetani/edit";
 import DetailTanamanPetani from "./dataTani/dataPertanian/laporanTanaman";
 import EditLaporanTanam from "./dataTani/dataPertanian/laporanTanaman/edit";
 import TambahLaporanTanam from "./dataTani/dataPertanian/laporanTanaman/tambah";
+import TambahLaporanAhir from "./dataTani/dataPertanian/laporanTanaman/laporanAkhir";
 
 const NotFoundPage = () => {
   return (
@@ -82,4 +83,5 @@ export {
   DetailInfoTani,
   DetailEventTani,
   EditInfoTani,
+  TambahLaporanAhir
 };

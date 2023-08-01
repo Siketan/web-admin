@@ -15,8 +15,6 @@ const TambahDataTani = () => {
   const [tanggalTanam, setTanggalTanam] = useState("");
   const [perkiraanHasilPanen, setPerkiraanHasilPanen] = useState("");
   const [perkiraanPanen, setPerkiraanPanen] = useState("");
-  const [realisasiHasilPanen, setRealisasiHasilPanen] = useState("");
-  const [realisasiLuasLahan, setRealisasiLuasLahan] = useState("");
   const [daftarKomoditas, setDaftarKomoditas] = useState([]);
   const [jenisPanen, setjenisPanen] = useState(false)
 
@@ -26,9 +24,7 @@ const TambahDataTani = () => {
     GetDetailTanmanTani(id).then((data) => {
       setKategori(data?.tani?.kategori || '')
       setjenisPanen(data?.tani?.jenisPanen || '')
-      setRealisasiHasilPanen(data?.tani?.realisasiHasilPanen || '')
       setPerkiraanHasilPanen(data?.tani?.perkiraanHasilPanen || '')
-      setRealisasiLuasLahan(data?.tani?.realisasiLuasLahan || '')
       setPerkiraanPanen(data?.tani?.perkiraanPanen || '')
       setTanggalTanam(data?.tani?.tanggalTanam || '')
       setMusimTanam(data?.tani?.musimTanam || '')
@@ -91,9 +87,7 @@ const TambahDataTani = () => {
       tanggalTanam,
       perkiraanPanen,
       perkiraanHasilPanen,
-      realisasiHasilPanen,
       dataPersonId:id,
-      realisasiLuasLahan
     };
     console.log(data)
     editTanmanPetani(id,data)
@@ -361,43 +355,6 @@ const TambahDataTani = () => {
                     className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                   >
                     <strong>Prakiraan Produksi Panen </strong>(Contoh: 10 kw)
-                  </label>
-                </div>
-                <div className="relative z-0 w-full mb-6 grou pt-6">
-                  <input
-                    type="text"
-                    name="hasilpanen"
-                    id="hasilpanen"
-                    value={realisasiHasilPanen}
-                    onChange={(e) => setRealisasiHasilPanen(e.target.value)}
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" "
-                    required
-                  />
-                  <label
-                    htmlFor="hasilpanen"
-                    className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                  >
-                    <strong>Realisasi Produksi Panen </strong>(Contoh: 10 kw)
-                  </label>
-                </div>
-                <div className="relative z-0 w-full mb-6 grou pt-6">
-                  <input
-                    type="text"
-                    name="hasilpanen"
-                    id="hasilpanen"
-                    value={realisasiLuasLahan}
-                    onChange={(e) => setRealisasiLuasLahan(e.target.value)}
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" "
-                    required
-                  />
-                  <label
-                    htmlFor="hasilpanen"
-                    className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                  >
-                    <strong>Realisasi Luas Lahan Panen per M2</strong>(Contoh:
-                    100)
                   </label>
                 </div>
               </div>
