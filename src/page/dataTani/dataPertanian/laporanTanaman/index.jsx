@@ -114,13 +114,23 @@ export default function DetailTanamanPetani() {
           </MainCard>
       </MainCard>
       <h1 className="text-center font-bold my-5">Laporan Tanaman</h1>
+      <div className="flex flex-row">
         <Link to={`/laporan-tanam/add?tanamanId=${tanaman.id}`}>
-          <button className="ms-16 rounded-md bg-blue-500 text-white p-2 px-5 w-35 h-10"> 
+          <button className="ms-16 rounded-md bg-sky-500 text-white p-1 px-5 w-30 h-10"> 
             <FontAwesomeIcon
               icon={faPlus}
             />
-            Tambah Tanaman</button>
+            Tambah Laporan</button>
         </Link>
+        <Link to={`/laporan-akhir/add?tanamanId=${tanaman.id}`}>
+          <button className="ms-2 rounded-md bg-sky-500 text-white p-1 px-5 w-30 h-10"> 
+            <FontAwesomeIcon
+              icon={faPlus}
+            />
+            Tambah Laporan Akhir</button>
+        </Link>
+
+      </div>
         {!laporan?.length && <h3 className="text-center font-semibold">Belum Ada Laporan Tanaman</h3>}
         <MainCard row transparent center className="flex-wrap">
             {laporan?.map((data, index) => (
