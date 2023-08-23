@@ -14,8 +14,21 @@ const RekapDataPenyuluh = () => {
   const [datas, setDatas] = useState([]);
   const [modalDeleteData, setModalDeleteData] = useState(false);
   useEffect(() => {
-    getDaftarPenyuluh().then((data) => setDatas(data.dataDaftarPenyuluh));
+    getDaftarPenyuluh().then((data) => {
+      const filterData = data.map(obj => {
+        return Object.keys(obj).reduce((result, key) => {
+          if (key === 'dataPenyuluh') {
+            result = { ...result, ...obj[key] };
+          } else {
+            result[key] = obj[key];
+          }
+          return result;
+        }, {});
+      });
+      setDatas(filterData)
+    });
   }, []);
+  console.log(datas)
   const [filters, setFilters] = useState({
     kecamatan: "",
     desa: "",
@@ -60,7 +73,8 @@ const RekapDataPenyuluh = () => {
         nama: item.nama,
         foto: item.foto,
         password: item.password,
-        // ["Kecamatan Binaan"]: 
+        ["Kecamatan Binaan"]: item?.dataPenyuluh?.kecamatanBinaan,
+        ["Desa Binaan"]: item?.dataPenyuluh?.desaBinaan
       };
     });
     ExcelComponent(dataExel, "data.xlsx", "Sheet1");

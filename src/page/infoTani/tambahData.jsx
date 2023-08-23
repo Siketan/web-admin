@@ -18,7 +18,7 @@ const TambahInfoTani = () => {
 
   const handleClick = (e) => {
     const data = {
-      tanggal: formattedDate,
+      tanggal: currentDate,
       judul,
       kategori,
       isi,
