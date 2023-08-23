@@ -312,7 +312,7 @@ export const GetRiwayatChat = async()=>{
 export const getDaftarPenyuluh = async()=>{
     try {
       const response = await Api.get("/daftar-penyuluh");
-      return response.data
+      return response.data.dataDaftarPenyuluh
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
