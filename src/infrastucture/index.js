@@ -75,7 +75,7 @@ export const tambahLaporanAkhir = async(data)=>{
 export const editDaftarTani = async(id, data)=>{
     try {
       const response = await Api.put(`/daftar-tani/${id}`, data, headers);
-      SweatAlert(String(response.data.message), 'success');
+      SweatAlert(String(response.data.message), 'success', "/data-tani/rekap-petani");
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error',"reload");
     }
@@ -227,7 +227,6 @@ export const updateInfoTani = async(id, data)=>{
       const response = await Api.put(`/info-tani/${id}`, data, headers);
       SweatAlert(String(response.data.message), 'success', "reload");
     } catch (error) {
-      console.log(error)
       SweatAlert(String(error.response.data.message), 'error');
     }
 }

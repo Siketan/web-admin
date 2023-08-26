@@ -8,7 +8,6 @@ function ProdukPetani() {
   useEffect(() => {
     ProductsPetani().then((data) => setDatas(data.productPetani));
   }, []);
-  console.log(datas);
   const [filters, setFilters] = useState({
     kecamatan: "",
     desa: "",

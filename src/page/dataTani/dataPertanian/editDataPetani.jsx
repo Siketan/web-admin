@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { faPlus, faSearch, faClose, faSave } from "@fortawesome/free-solid-svg-icons";
 import InputImage from "@/components/inputImage";
 import MainCard from "@/components/MainCard";
-import { GetDaftarTaniById, editDaftarTani, select } from "@/infrastruture";
+import { GetDaftarTaniById, editDaftarTani, select,selectPenyuluh } from "@/infrastruture";
 import { fecthKecamatan, fecthDesa } from "../../../infrastucture/daerah";
-import { useParams } from "react-router-dom";
+import { useParams,Link } from "react-router-dom";
 const EditRekapPetani = () => {
   const [NIK, setNIK] = useState("");
   const [NoWa, setNoWa] = useState("");
@@ -23,13 +23,15 @@ const EditRekapPetani = () => {
   const [kecamatanActive, setKecamatanActive] = useState("");
   const [dafatarDesa, setDafatarDesa] = useState([{ nama: "" }]);
   const [daftarNamaKelompok, setDaftarNamaKelompok] = useState([{ nama: "" }]);
+  const [daftarPenyuluh, setDaftarPenyuluh] = useState([])
+
   const { id } = useParams()
   useEffect(() => {
     fecthKecamatan().then((data) => {
       setDaftarKecamatan(data.kecamatan);
     });
     GetDaftarTaniById(id).then((data)=>{
-      // console.log(data)
+      console.log(data)
         setDafatarDesa([{nama:data?.desa}])
         setNIK(data?.NIK);
         setNoWa(data?.NoWa);
@@ -48,20 +50,21 @@ const EditRekapPetani = () => {
       if(daftarKecamatan && kecamatan && !kecamatanActive){
         const filteredData = daftarKecamatan?.filter(item => {
             const parts = item?.nama?.split('-');
-            // console.log(parts)
-            console.log(parts[0], {kecamatan})
             return parts[0] == kecamatan;
           });
           const kecamatanActivate = `${filteredData[0]?.nama}-${filteredData[0]?.id}`
         setKecamatanActive(kecamatanActivate)
-        console.log(kecamatanActivate)
+      }
+      if(kecamatan){
+        selectPenyuluh(kecamatan).then((data)=> setDaftarPenyuluh(data.penyuluh))
       }
   }, [daftarKecamatan, kecamatan]);
   const handleselect = (e) => {
     setDesa(e);
+    console.log(e)
     select(e).then((data) => {
-      setGapoktan(data?.kelompok[0]?.gapoktan || "");
-      setDaftarNamaKelompok(data?.kelompok);
+      setGapoktan(data?.kelompokTani[0]?.gapoktan || "");
+      setDaftarNamaKelompok(data?.kelompokTani);
     });
   };
 
@@ -76,6 +79,7 @@ const EditRekapPetani = () => {
       desa,
       namaKelompok,
       penyuluh,
+      gapoktan,
       alamat,
       foto,
     };
@@ -83,15 +87,14 @@ const EditRekapPetani = () => {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    editDaftarTani(formData)
-    console.log(kategori);
+    editDaftarTani(id,formData)
   };
+  
   const handleSelectKecamatan = (e) => {
     const id = e?.split("-")[1];
     const nama = e?.split("-")[0];
     setKecamatanActive(e);
     setKecamatan(nama);
-    console.log(e)
     fecthDesa(id).then((data) => setDafatarDesa(data.kelurahan));
   };
 
@@ -109,7 +112,7 @@ const EditRekapPetani = () => {
           <div className="grid md:grid-cols-2 md:gap-6 mt-6">
             <div className="relative z-0 w-full mb-6 group">
               <input
-                type="text"
+                type="number"
                 name="NIK"
                 id="NIK"
                 disabled={disable}
@@ -128,7 +131,7 @@ const EditRekapPetani = () => {
             </div>
             <div className="relative z-0 w-full mb-6 group">
               <input
-                type="text"
+                type="number"
                 name="NoWa"
                 id="NoWa"
                 value={NoWa}
@@ -286,7 +289,7 @@ const EditRekapPetani = () => {
                   htmlFor="desa"
                   className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  <strong>Desa</strong> (Contoh: Karanganyar)
+                  <strong>Nama Kelompok </strong>(Contoh: Ranger Merah)
                 </label>
               </div>
             ) : (
@@ -310,24 +313,48 @@ const EditRekapPetani = () => {
               </div>
             )}
           </div>
-          <div className="relative z-0 w-full mb-6 group">
-            <input
-              type="text"
-              name="penyuluh"
-              id="penyuluh"
-              value={penyuluh}
-              onChange={(e) => setPenyuluh(e.target.value)}
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=" "
-              required
-            />
-            <label
-              htmlFor="penyuluh"
-              className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              <strong>Nama Penyuluh</strong> (Contoh: Nama Penyuluh)
-            </label>
-          </div>
+          {daftarPenyuluh?.length ?
+            <div className="relative z-0 w-full mb-6 group">
+              <select
+                id="penyuluh"
+                value={penyuluh}
+                onChange={(e) => setPenyuluh(e.target.value)}
+                className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
+              >
+                <option value="">--Silahkan Pilih Nama Penyuluh--</option>
+                {daftarPenyuluh?.map((item, i) => (
+                  <option value={item?.nama} key={i}>
+                    {item?.nama}
+                  </option>
+                ))}
+              </select>
+              <label
+                htmlFor="penyuluh"
+                className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >
+                <strong>Nama Kelompok</strong> (Contoh: Karanganyar)
+              </label>
+            </div>
+          :
+            <div className="relative z-0 w-full mb-6 group">
+              <input
+                type="text"
+                name="penyuluh"
+                id="penyuluh"
+                value={penyuluh}
+                onChange={(e) => setPenyuluh(e.target.value)}
+                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" "
+                required
+              />
+              <label
+                htmlFor="penyuluh"
+                className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >
+                <strong>Nama Penyuluh</strong> (Contoh: Nama Penyuluh)
+              </label>
+            </div>
+          }
           <div className="flex space-x-4 justify-end">
             <button
               type="submit"
@@ -336,13 +363,14 @@ const EditRekapPetani = () => {
               <FontAwesomeIcon icon={faSave} className="mr-2" />
               Simpan
             </button>
-            <button
-              type="submit"
-              className="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-orange-800"
-            >
-              <FontAwesomeIcon icon={faClose} className="mr-2" />
-              Batalkan
-            </button>
+            <Link to="/data-tani/rekap-petani">
+              <button
+                className="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-orange-800"
+              >
+                <FontAwesomeIcon icon={faClose} className="mr-2" />
+                Batalkan
+              </button>
+            </Link>
           </div>
         </MainCard>
       </form>

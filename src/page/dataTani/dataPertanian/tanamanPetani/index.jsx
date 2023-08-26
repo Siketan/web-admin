@@ -131,6 +131,22 @@ export default function DetailRekapPetani() {
                   <strong>Desa : </strong> {Petani?.desa}
                 </p>
               </div>
+              <div className="flex">
+                <p className="relative z-0 w-full mb-5 group">
+                  <strong>Nama Kelompok: </strong> {Petani?.kelompok?.namaKelompok}
+                </p>
+                <p className="relative z-0 w-full mb-5 group">
+                  <strong>gapoktan : </strong> {Petani?.kelompok?.gapoktan}
+                </p>
+              </div>
+              <div className="flex">
+                <p className="relative z-0 w-full mb-5 group">
+                  <strong>Penyuluh: </strong> {Petani?.kelompok?.penyuluh}
+                </p>
+                <p className="relative z-0 w-full mb-5 group">
+                  {/* <strong>gapoktan : </strong> {Petani?.kelompok?.gapoktan} */}
+                </p>
+              </div>
             </div>
           </MainCard>
         </MainCard>
@@ -143,6 +159,13 @@ export default function DetailRekapPetani() {
             />
             Tambah Tanaman</button>
         </Link>
+          <Link to="/data-tani/rekap-petani">
+            <button
+              className="ms-2 text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-orange-800"
+            >
+              Kembali
+            </button>
+          </Link>
         <div className="pt-5 mx-8 overflow-y-scroll">
           <div className="h-[calc(100vh-200px)]">
             <table className="min-w-full">
@@ -365,8 +388,8 @@ export default function DetailRekapPetani() {
                     <td className="px-4 py-2 border">{item.tanggalTanam}</td>
                     <td className="px-4 py-2 border">{item.komoditas}</td>
                     <td className="px-4 py-2 border">{item.kategori}</td>
-                    <td className="px-4 py-2 border">{item.jenis}</td>
-                    <td className="px-4 py-2 border">{item.jenisPanen}</td>
+                    <td className="px-4 py-2 border">{item.jenis || "-"}</td>
+                    <td className="px-4 py-2 border">{item.jenisPanen || "-"}</td>
                     <td className="px-2 py-2 border">
                       <a href={`/laporan-tanam/${item.id}`}>
                         <FontAwesomeIcon

@@ -42,7 +42,6 @@ import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import ProtectedRoute from "./page/protectedRoute";
 const Path = () => {
-  console.log(window.location.pathname);
   return (
     <div>
       {/* {window.location.pathname !== "/loginAdminSiketan" && <Navbar /> } */}

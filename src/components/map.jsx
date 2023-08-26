@@ -16,7 +16,6 @@ export default function MapIndonesiaChart() {
       let data = [];
       for (var i = 0; i < event.target.data.features.length; i++) {
         const feature = event.target.data.features[i];
-        console.log(feature)
         data.push({
           id: feature.id,
           value: 2000,

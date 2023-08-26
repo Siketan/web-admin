@@ -39,7 +39,6 @@ const TambahPenyuluhanTani = ()=>{
             setDaftarKecamatan(data.kecamatan)
         })
     }, [])
-    console.log(desaBinaan.join(", "))
     const handleSelectKecamatan = (e)=>{
         const id = e?.split("-")[1]
         const nama = e?.split("-")[0]
