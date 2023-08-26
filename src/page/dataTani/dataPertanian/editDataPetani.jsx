@@ -29,7 +29,8 @@ const EditRekapPetani = () => {
       setDaftarKecamatan(data.kecamatan);
     });
     GetDaftarTaniById(id).then((data)=>{
-      console.log(data)
+      // console.log(data)
+        setDafatarDesa([{nama:data?.desa}])
         setNIK(data?.NIK);
         setNoWa(data?.NoWa);
         setNama(data?.nama);
@@ -41,8 +42,21 @@ const EditRekapPetani = () => {
         setPenyuluh(data?.kelompok?.penyuluh);
         setAlamat(data?.alamat);
         setGapoktan(data?.kelompok?.gapoktan);
-    })
-  }, []);
+      })
+    }, []);
+    useEffect(() => {
+      if(daftarKecamatan && kecamatan && !kecamatanActive){
+        const filteredData = daftarKecamatan?.filter(item => {
+            const parts = item?.nama?.split('-');
+            // console.log(parts)
+            console.log(parts[0], {kecamatan})
+            return parts[0] == kecamatan;
+          });
+          const kecamatanActivate = `${filteredData[0]?.nama}-${filteredData[0]?.id}`
+        setKecamatanActive(kecamatanActivate)
+        console.log(kecamatanActivate)
+      }
+  }, [daftarKecamatan, kecamatan]);
   const handleselect = (e) => {
     setDesa(e);
     select(e).then((data) => {
@@ -69,14 +83,15 @@ const EditRekapPetani = () => {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    DaftarTaniAdd(formData)
+    editDaftarTani(formData)
     console.log(kategori);
   };
   const handleSelectKecamatan = (e) => {
     const id = e?.split("-")[1];
     const nama = e?.split("-")[0];
-    setKecamatan(nama);
     setKecamatanActive(e);
+    setKecamatan(nama);
+    console.log(e)
     fecthDesa(id).then((data) => setDafatarDesa(data.kelurahan));
   };
 
@@ -195,6 +210,7 @@ const EditRekapPetani = () => {
               <select
                 id="desa"
                 value={desa}
+                defaultValue={desa}
                 onChange={(e) => handleselect(e.target.value)}
                 className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
               >

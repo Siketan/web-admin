@@ -43,7 +43,7 @@ export const CekNik = async(data)=>{
 export const DaftarTaniAdd = async(data)=>{
     try {
       const response = await Api.post("/daftar-tani/add", data, headers);
-      SweatAlert(String(response.data.message), 'success');
+      SweatAlert(String(response.data.message), 'success', '/data-tani/rekap-petani');
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
