@@ -16,7 +16,7 @@ const TambahDataTani = () => {
   const [perkiraanHasilPanen, setPerkiraanHasilPanen] = useState("");
   const [perkiraanPanen, setPerkiraanPanen] = useState("");
   const [daftarKomoditas, setDaftarKomoditas] = useState([]);
-  const [jenisPanen, setjenisPanen] = useState(false)
+  const [jenisPanen, setjenisPanen] = useState("")
   
   const location = useLocation()
   const history = useNavigate()

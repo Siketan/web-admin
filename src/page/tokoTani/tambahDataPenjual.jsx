@@ -60,7 +60,6 @@ const TambahTokoTani = () => {
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="w-max lg:w-full py-5 flex justify-end">
             <button
-              type="submit"
               id="NIK"
               name="NIK"
               onClick={() => handleCLick()}
@@ -89,22 +88,11 @@ const TambahTokoTani = () => {
                 <strong>Cek NIK</strong> (Contoh: 3514002000000001)
               </label>
             </div>
-            <div className="relative z-0 w-full mb-6 group">
-              <p>
-                <strong>Status Tanah: </strong>{" "}
-                {datas?.tanamanPetani?.statusLahan}
-              </p>
-            </div>
           </div>
           <div className="grid md:grid-cols-2 md:gap-6">
             <div className="relative z-0 w-full mb-6 gronup">
               <p>
                 <strong>Nama Petani: </strong> {datas?.nama}
-              </p>
-            </div>
-            <div className="relative z-0 w-full mb-6 group">
-              <p>
-                <strong>Luas Tanah: </strong> {datas?.tanamanPetani?.luasLahan}
               </p>
             </div>
           </div>
@@ -296,22 +284,20 @@ const TambahTokoTani = () => {
           </div>
           <div className="grid md:grid-cols-2 md:gap-6">
             <div className="relative z-0 w-full mb-6 group">
-              <label
-                htmlFor="underline_select"
-                className="text-sm dark:text-gray-400 pt-5 md:pt-0"
-              >
-                <strong>Status</strong>
-              </label>
-              <select
+              <input
                 id="status"
                 name="status"
-                value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
+                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" "
+                required
+              />
+              <label
+                htmlFor="status"
+                className="peer-focus:font-medium absolute text-sm dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
-                <option value="US">Sewa</option>
-                <option value="CA">Milik Sendiri</option>
-              </select>
+                <strong>Status</strong> (Contoh: Habis)
+              </label>
             </div>
           </div>
           <div className="flex space-x-4 justify-end">

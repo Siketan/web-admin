@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { faPlus, faSearch, faClose, faSave } from "@fortawesome/free-solid-svg-icons";
 import InputImage from "@/components/inputImage";
 import MainCard from "@/components/MainCard";
-import { DatePicker } from '@mantine/dates';
+import { useParams,Link } from "react-router-dom";
 import { DaftarTaniAdd, CekNik, select,selectPenyuluh } from "@/infrastruture";
 import { fecthKecamatan, fecthDesa } from "../../infrastucture/daerah";
 const TambahDataTani = () => {
@@ -30,45 +30,9 @@ const TambahDataTani = () => {
       setDaftarKecamatan(data.kecamatan);
     });
   }, []);
-  //   if (kategori == "Tanaman Pangan") {
-  //     setDaftarKomoditas([
-  //       "Padi Konvensional",
-  //       "Padi Ramah Lingkungan",
-  //       "Padi Organik",
-  //       "Jagung",
-  //       "Kedelai",
-  //       "Ubi Jalar",
-  //       "Ubi Kayu",
-  //       "Kacang Tanah",
-  //       "Kacang Hijau",
-  //     ]);
-  //   } else if (kategori == "Tanaman Perkebunan") {
-  //     if(jenisPanen == "Musiman"){
-  //       setDaftarKomoditas(["Tembakau", "Tebu"])
-  //     }else if(jenisPanen == "Tahunan"){
-  //       setDaftarKomoditas(["Kopi", "Kakao", "Cengkeh", "Teh", "Karet", "Kelapa"])
-  //     }else{
-  //       setDaftarKomoditas([""])
-  //     }
-  //   } else if (kategori == "Tanaman Holtikultura") {
-  //     if(jenis == "Buah"){
-  //       if(jenisPanen == "Musiman"){
-  //         setDaftarKomoditas(["Melon", "Semangka", "Pisang", "Blewah"])
-  //       }else if(jenisPanen == "Tahunan"){
-  //         setDaftarKomoditas(["Mangga", "Durian", "Manggis", "Alpukat", "Rambutan", "Jeruk Lemon", "Jeruk nipis", "Jeruk Keprok", "Jeruk Besar", "Nangka", "Jambu Biji", "Jambu air", "Sukun", "Sirsat", "Sawo", "Duku"])
-  //       }else{
-  //         setDaftarKomoditas([""])
-  //       }
-  //     }else if(jenis == "Sayur"){
-  //       setDaftarKomoditas(["Cabe Kecil", "Cabe Besar", "Bawang Merah", "Tomat", "Terong", "Pare", "Gambas", "Bayam", "Kangkung", "Sawi", "Kacang Panjang"] );
-  //     }else{
-  //       setDaftarKomoditas[""]
-  //     }
-  //   } else {
-  //     setDaftarKomoditas([""]);
-  //   }
-  // }, [kategori, jenis, jenisPanen]);
+ 
   const handleselect = (e) => {
+    console.log(e)
     setDesa(e);
     select(e).then((data) => {
       setGapoktan(data?.kelompokTani[0]?.gapoktan || "");
@@ -89,16 +53,6 @@ const TambahDataTani = () => {
       gapoktan,
       penyuluh,
       foto,
-      // statusLahan,
-      // luasLahan,
-      // kategori,
-      // jenis,
-      // komoditas,
-      // musimTanam,
-      // tanggalTanam,
-      // perkiraanPanen,
-      // realisasiPanen,
-      // hasilPanen,
     };
     const formData = new FormData();
     for (const key in data) {
@@ -379,13 +333,14 @@ const TambahDataTani = () => {
               <FontAwesomeIcon icon={faSave} className="mr-2" />
               Simpan
             </button>
-            <button
-              type="submit"
-              className="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-orange-800"
-            >
-              <FontAwesomeIcon icon={faClose} className="mr-2" />
-              Batalkan
-            </button>
+            <Link to="/data-tani/rekap-petani">
+              <button
+                className="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-orange-800"
+              >
+                <FontAwesomeIcon icon={faClose} className="mr-2" />
+                Batalkan
+              </button>
+            </Link>
           </div>
         </MainCard>
         {/* <MainCard>

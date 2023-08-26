@@ -7,9 +7,11 @@ import {
   faTrash,
   faPlus
 } from "@fortawesome/free-solid-svg-icons";
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate  } from 'react-router-dom';
 import {getAllLaporanTanam,deleteLaporanTanam} from "@/infrastruture";
+
 export default function DetailTanamanPetani() {
+  const history = useNavigate()
   const [tanaman, setTanaman] = useState({})
   const [laporan, setLaporan] = useState([])
   const [modalDeleteData, setModalDeleteData] = useState(false);
@@ -23,6 +25,7 @@ export default function DetailTanamanPetani() {
   const handleDelete = (idLaporan)=>{
     deleteLaporanTanam(idLaporan)
   }
+
   return (
     <div>
       <MainCard row transparent noPadding center>
@@ -60,6 +63,12 @@ export default function DetailTanamanPetani() {
               </Button>
             </div>
           </Modal>
+            <button
+              onClick={()=>history(-1)}
+              className="ms-2 text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-orange-800"
+            >
+              Kembali
+            </button>
           <MainCard width="50%">
             <MainCard fullwidth transparent>
               <p className="font-bold text-center text-2xl">Detail Tanaman</p>
@@ -96,14 +105,20 @@ export default function DetailTanamanPetani() {
                     <strong>Kategori : {tanaman?.kategori}</strong>
                   </p>
                 </div>
+                {tanaman?.jenis && tanaman?.jenisPanen &&
                 <div className="flex">
+                  {tanaman?.jenis &&
                   <p className="relative z-0 w-full mb-5 group">
                     <strong>Jenis Tanaman : {tanaman?.jenis}</strong>
                   </p>
+                  }
+                  {tanaman?.jenisPanen &&
                   <p className="relative z-0 w-full mb-5 group">
                     <strong>Jenis Panen : {tanaman?.jenisPanen}</strong>
                   </p>
+                  }
                 </div>
+                }
                 <div className="flex">
                   <p className="relative z-0 w-full mb-5 group">
                     <strong>Perkiraan Tanggal Panen : {tanaman?.perkiraanPanen}</strong>
