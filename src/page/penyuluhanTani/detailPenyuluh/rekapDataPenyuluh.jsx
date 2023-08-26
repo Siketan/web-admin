@@ -28,7 +28,6 @@ const RekapDataPenyuluh = () => {
       setDatas(filterData)
     });
   }, []);
-  console.log(datas)
   const [filters, setFilters] = useState({
     kecamatan: "",
     desa: "",

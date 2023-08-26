@@ -227,7 +227,6 @@ export const updateInfoTani = async(id, data)=>{
       const response = await Api.put(`/info-tani/${id}`, data, headers);
       SweatAlert(String(response.data.message), 'success', "reload");
     } catch (error) {
-      console.log(error)
       SweatAlert(String(error.response.data.message), 'error');
     }
 }

@@ -21,7 +21,6 @@ function DetailEventTani() {
   const navigateToEdit = (itemId) => {
     navigate(`/info-tani/edit/${itemId}`, { state: { id:itemId } });
   };
-  console.log(data)
   return (
     <MainCard noPadding transparent row center style={{marginTop:"100px"}}>
         <Modal

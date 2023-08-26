@@ -104,8 +104,6 @@ const TambahDataTani = () => {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    console.log(data);
-    console.log(formData);
     DaftarTaniAdd(formData)
   };
   const handleSelectKecamatan = (e) => {

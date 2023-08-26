@@ -29,7 +29,6 @@ const EditRekapPetani = () => {
       setDaftarKecamatan(data.kecamatan);
     });
     GetDaftarTaniById(id).then((data)=>{
-      // console.log(data)
         setDafatarDesa([{nama:data?.desa}])
         setNIK(data?.NIK);
         setNoWa(data?.NoWa);
@@ -48,13 +47,10 @@ const EditRekapPetani = () => {
       if(daftarKecamatan && kecamatan && !kecamatanActive){
         const filteredData = daftarKecamatan?.filter(item => {
             const parts = item?.nama?.split('-');
-            // console.log(parts)
-            console.log(parts[0], {kecamatan})
             return parts[0] == kecamatan;
           });
           const kecamatanActivate = `${filteredData[0]?.nama}-${filteredData[0]?.id}`
         setKecamatanActive(kecamatanActivate)
-        console.log(kecamatanActivate)
       }
   }, [daftarKecamatan, kecamatan]);
   const handleselect = (e) => {
@@ -84,14 +80,12 @@ const EditRekapPetani = () => {
       formData.append(key, data[key]);
     }
     editDaftarTani(formData)
-    console.log(kategori);
   };
   const handleSelectKecamatan = (e) => {
     const id = e?.split("-")[1];
     const nama = e?.split("-")[0];
     setKecamatanActive(e);
     setKecamatan(nama);
-    console.log(e)
     fecthDesa(id).then((data) => setDafatarDesa(data.kelurahan));
   };
 

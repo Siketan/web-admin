@@ -7,7 +7,6 @@ function PresensiKehadiran() {
   const [datas, setDatas] = useState([]);
   useEffect(() => {
     GetPreseiKehadiran().then((data)=>{
-      console.log(data)
       const datafix = data?.map((item)=>{
         return {
           id: item?.id,

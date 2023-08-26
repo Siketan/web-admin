@@ -40,7 +40,6 @@ const TambahInfoTani = () => {
       isi: isiBaru || isi,
       fotoBeritaBaru
     };
-    console.log(data, e);
     if (e == "simpan") {
       const formData = new FormData();
       for (const key in data) {

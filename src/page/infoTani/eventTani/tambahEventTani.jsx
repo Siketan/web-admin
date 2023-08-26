@@ -30,7 +30,6 @@ function TambahEventTani() {
     AddEventTani(formData).then(setisLoading(false))
     
   }
-  console.log(fotoKegiatan)
   return (
     <MainCard transparent row center style={{paddingTop:"50px"}}>
       <MainCard width="80%">

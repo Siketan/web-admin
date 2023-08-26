@@ -89,7 +89,6 @@ const TambahDataTani = () => {
       perkiraanHasilPanen,
       dataPersonId:id,
     };
-    console.log(data)
     editTanmanPetani(id,data)
   };
 

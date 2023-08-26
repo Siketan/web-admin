@@ -8,7 +8,6 @@ function ProdukPenyuluh() {
   useEffect(() => {
     ProductsPenyuluh().then((data) => setDatas(data.productPenyuluh));
   }, []);
-  console.log(datas);
   const [filters, setFilters] = useState({
     kecamatan: "",
     desa: "",

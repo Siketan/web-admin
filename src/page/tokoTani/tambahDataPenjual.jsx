@@ -22,7 +22,6 @@ const TambahTokoTani = ()=>{
         CekNik({nik:NIK}).then((data)=>{
             setDatas(data)
             setDisable(true)
-            console.log(data)
         })
     }
 
