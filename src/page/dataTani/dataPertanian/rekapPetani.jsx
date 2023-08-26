@@ -6,10 +6,12 @@ import {
   faTrash,
   faDownload,
   faBullseye,
+  faPlus
 } from "@fortawesome/free-solid-svg-icons";
 import { GetDaftarTani, DeleteDaftarTani } from "@/infrastruture";
 import ExcelComponent from "../../../components/exelComponent";
 import { Text, Button, Modal } from "@mantine/core";
+import { Link } from 'react-router-dom';
 const RekapPetani = () => {
   const [datas, setDatas] = useState([]);
   const [modalDeleteData, setModalDeleteData] = useState(false);
@@ -115,6 +117,13 @@ const RekapPetani = () => {
             <FontAwesomeIcon icon={faDownload} className="mr-2" />
             Download/Cetak
           </button>
+          <Link to={`/data-tani/tambah`}>
+            <button className="ms-5 rounded-md bg-sky-500 text-white p-1 px-5 w-30 h-10"> 
+              <FontAwesomeIcon
+                icon={faPlus}
+              />
+              Tambah Daftar Tani</button>
+          </Link>
           <p className="text-right mt-4">
             <strong>Jumlah Data :</strong> {totalData} Data Rekap Petani
           </p>

@@ -16,42 +16,20 @@ const TambahDataTani = () => {
   const [desa, setDesa] = useState("");
   const [namaKelompok, setNamaKelompok] = useState("");
   const [penyuluh, setPenyuluh] = useState("");
-  // const [statusLahan, setStatusLahan] = useState("");
-  // const [luasLahan, setLuasLahan] = useState("");
-  // const [kategori, setKategori] = useState("");
   const [alamat, setAlamat] = useState("");
   const [gapoktan, setGapoktan] = useState("");
-  // const [jenis, setJenis] = useState("");
-  // const [komoditas, setKomoditas] = useState("");
-  // const [musimTanam, setMusimTanam] = useState("");
-  // const [tanggalTanam, setTanggalTanam] = useState("");
-  // const [perkiraanPanen, setPerkiraanPanen] = useState("");
   const [foto, setFoto] = useState("");
-  // const [realisasiPanen, setRealisasiPanen] = useState("");
-  // const [hasilPanen, setHasilPanen] = useState("");
-  // const [datas, setDatas] = useState({});
   const [disable, setDisable] = useState(false);
-  // const [countData, setCountData] = useState(1);
   const [daftarKecamatan, setDaftarKecamatan] = useState([]);
   const [kecamatanActive, setKecamatanActive] = useState("");
   const [dafatarDesa, setDafatarDesa] = useState([{ nama: "" }]);
   const [daftarNamaKelompok, setDaftarNamaKelompok] = useState([]);
-  // const [daftarKomoditas, setDaftarKomoditas] = useState([]);
-  // const [jenisPanen, setjenisPanen] = useState(false)
   const [daftarPenyuluh, setDaftarPenyuluh] = useState([])
-
-  // console.log(jenis)
-  // console.log(jenisPanen)
-  // const handleClikAdd = () => {
-  //   setCountData(countData + 1);
-  // };
-
   useEffect(() => {
     fecthKecamatan().then((data) => {
       setDaftarKecamatan(data.kecamatan);
     });
   }, []);
-  // useEffect(() => {
   //   if (kategori == "Tanaman Pangan") {
   //     setDaftarKomoditas([
   //       "Padi Konvensional",
@@ -97,33 +75,6 @@ const TambahDataTani = () => {
       setDaftarNamaKelompok(data?.kelompokTani);
     });
   };
-
-  // const handleCLick = () => {
-  //   CekNik({ nik: NIK }).then((data) => {
-  //     if (data) {
-  //       setNIK(data?.NIK);
-  //       setNoWa(data?.NoWa);
-  //       setNama(data?.nama);
-  //       setPassword(data?.password);
-  //       setKecamatan(data?.kecamatan);
-  //       setDesa(data?.desa);
-  //       setFoto(data?.foto);
-  //       setNamaKelompok(data?.kelompok?.namaKelompok);
-  //       setPenyuluh(data?.kelompok?.penyuluh);
-  //       setStatusLahan(data?.statusLahan);
-  //       setLuasLahan(data?.luasLahan);
-  //       setKategori(data?.kategori);
-  //       setAlamat(data?.alamat);
-  //       setGapoktan(data?.kelompok?.gapoktan);
-  //       setJenis(data?.tanamanPetani?.jenis);
-  //       setKomoditas(data?.tanamanPetani?.komoditas);
-  //       setMusimTanam(data?.tanamanPetani?.musimTanam);
-  //       setTanggalTanam(data?.tanamanPetani?.tanggalTanam);
-  //       setPerkiraanPanen(data?.tanamanPetani?.perkiraanPanen?.split("T")[0]);
-  //       setDisable(true);
-  //     }
-  //   });
-  // };
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
@@ -177,20 +128,10 @@ const TambahDataTani = () => {
               title="Foto Profil"
             />
           </div>
-          {/* <div className="w-max lg:w-full pt-5 flex justify-end">
-            <button
-              value={NIK}
-              onClick={(e) => handleCLick(e)}
-              className="text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto"
-            >
-              <FontAwesomeIcon icon={faSearch} className="mr-2" />
-              Cek NIK
-            </button>
-          </div> */}
           <div className="grid md:grid-cols-2 md:gap-6 mt-6">
             <div className="relative z-0 w-full mb-6 group">
               <input
-                type="text"
+                type="number"
                 name="NIK"
                 id="NIK"
                 disabled={disable}
@@ -209,7 +150,7 @@ const TambahDataTani = () => {
             </div>
             <div className="relative z-0 w-full mb-6 group">
               <input
-                type="text"
+                type="number"
                 name="NoWa"
                 id="NoWa"
                 value={NoWa}
@@ -398,7 +339,7 @@ const TambahDataTani = () => {
                 onChange={(e) => setPenyuluh(e.target.value)}
                 className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
               >
-                <option value="">--Silahkan Pilih Nama Kelompok--</option>
+                <option value="">--Silahkan Pilih Nama Penyuluh--</option>
                 {daftarPenyuluh?.map((item, i) => (
                   <option value={item?.nama} key={i}>
                     {item?.nama}
