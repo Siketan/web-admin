@@ -21,10 +21,11 @@ const EditRekapPetani = () => {
   const [disable, setDisable] = useState(false);
   const [daftarKecamatan, setDaftarKecamatan] = useState([]);
   const [kecamatanActive, setKecamatanActive] = useState("");
-  const [dafatarDesa, setDafatarDesa] = useState([{ nama: "" }]);
-  const [daftarNamaKelompok, setDaftarNamaKelompok] = useState([{ nama: "" }]);
+  const [dafatarDesa, setDafatarDesa] = useState([]);
+  const [daftarNamaKelompok, setDaftarNamaKelompok] = useState([]);
   const [daftarPenyuluh, setDaftarPenyuluh] = useState([])
-
+  const [idKecamatan, setIdKecamanan] = useState("")
+  
   const { id } = useParams()
   useEffect(() => {
     fecthKecamatan().then((data) => {
@@ -32,7 +33,6 @@ const EditRekapPetani = () => {
     });
     GetDaftarTaniById(id).then((data)=>{
       console.log(data)
-        setDafatarDesa([{nama:data?.desa}])
         setNIK(data?.NIK);
         setNoWa(data?.NoWa);
         setNama(data?.nama);
@@ -46,26 +46,33 @@ const EditRekapPetani = () => {
         setGapoktan(data?.kelompok?.gapoktan);
       })
     }, []);
-    useEffect(() => {
-      if(daftarKecamatan && kecamatan && !kecamatanActive){
-        const filteredData = daftarKecamatan?.filter(item => {
-            const parts = item?.nama?.split('-');
-            return parts[0] == kecamatan;
-          });
-          const kecamatanActivate = `${filteredData[0]?.nama}-${filteredData[0]?.id}`
-        setKecamatanActive(kecamatanActivate)
-      }
-      if(kecamatan){
-        selectPenyuluh(kecamatan).then((data)=> setDaftarPenyuluh(data.penyuluh))
-      }
+  useEffect(() => {
+    if(daftarKecamatan && kecamatan && !kecamatanActive){
+      const filteredData = daftarKecamatan?.filter(item => {
+          const parts = item?.nama?.split('-');
+          return parts[0] == kecamatan;
+        });
+        const kecamatanActivate = `${filteredData[0]?.nama}-${filteredData[0]?.id}`
+        setIdKecamanan(filteredData[0]?.id)
+      setKecamatanActive(kecamatanActivate)
+    }
+    if(kecamatan){
+      selectPenyuluh(kecamatan).then((data)=> setDaftarPenyuluh(data.penyuluh))
+    }
   }, [daftarKecamatan, kecamatan]);
+  useEffect(() => {
+      fecthDesa(idKecamatan).then((data) => setDafatarDesa(data.kelurahan));
+  }, [idKecamatan]);
+  useEffect(() => {
+    if(desa){
+        select(desa).then((data) => {
+          setGapoktan(data?.kelompokTani[0]?.gapoktan || "");
+          setDaftarNamaKelompok(data?.kelompokTani);
+        });
+      }
+  }, [desa]);
   const handleselect = (e) => {
     setDesa(e);
-    console.log(e)
-    select(e).then((data) => {
-      setGapoktan(data?.kelompokTani[0]?.gapoktan || "");
-      setDaftarNamaKelompok(data?.kelompokTani);
-    });
   };
 
   const handleSubmit = (e) => {
@@ -91,13 +98,12 @@ const EditRekapPetani = () => {
   };
   
   const handleSelectKecamatan = (e) => {
-    const id = e?.split("-")[1];
+    setIdKecamanan(e?.split("-")[1])
     const nama = e?.split("-")[0];
     setKecamatanActive(e);
     setKecamatan(nama);
-    fecthDesa(id).then((data) => setDafatarDesa(data.kelurahan));
   };
-
+console.log(dafatarDesa)
   return (
     <div className="px-10 md:px-40 py-10 z-1">
       <form onSubmit={(e) => handleSubmit(e)}>
@@ -105,7 +111,7 @@ const EditRekapPetani = () => {
           <div className="flex items-center justify-center">
             <InputImage
               imageActive={foto}
-              onChange={(e) => setFoto(e.target.files[0])}
+              onChange={(e) => setFoto(e)}
               title="Foto Profil"
             />
           </div>
@@ -213,7 +219,6 @@ const EditRekapPetani = () => {
               <select
                 id="desa"
                 value={desa}
-                defaultValue={desa}
                 onChange={(e) => handleselect(e.target.value)}
                 className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
               >
