@@ -1,5 +1,6 @@
 import Api from "./base"
 import SweatAlert from "../components/uiComponents/swetAlert"
+// import LoadingAnimation from "../components/loading";
 
 const headers = {
   headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
@@ -20,6 +21,7 @@ export const Login = async(data)=>{
       localStorage.setItem('nama', response?.data?.user?.nama)
       window.location.href = "data-tani/rekap-petani"
       SweatAlert(String(response.data.message), 'success');
+      // <LoadingAnimation/>
     } catch (error) {
       SweatAlert(String(error.response.data.message), 'error');
     }
