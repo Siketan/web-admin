@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Login } from "@/infrastruture";
 import { useNavigate } from "react-router-dom";
+import LoadingAnimation from "../components/loading";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -42,6 +43,7 @@ const LoginPage = () => {
     <div className="grid md:grid-cols-2 bg-gradient-to-l from-blue-300 to-white h-[100vh]">
       <div className="hidden md:flex py-3 justify-center items-center bg-gradient-to-t from-green-primary to-green-secondary">
         <div>
+          `<LoadingAnimation/>`
           <img src="/image/logo-navbar.png" alt="Icon Navbar" />
           <p className="text-base md:text-3xl font-bold py-10 text-white">
             Melesat Lebih Cepat <br /> Bertumbuh Lebih Baik
