@@ -8,8 +8,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { getDaftarPenyuluh, DeleteDaftarPenyuluh } from "@/infrastruture";
 import ExcelComponent from "../../../components/exelComponent";
-import { Text, Button, Modal } from "@mantine/core";
-
+import { Text, Button, Modal, Tooltip } from "@mantine/core";
+import { Link } from 'react-router-dom';
 const RekapDataPenyuluh = () => {
   const [datas, setDatas] = useState([]);
   const [modalDeleteData, setModalDeleteData] = useState(false);
@@ -28,6 +28,7 @@ const RekapDataPenyuluh = () => {
       setDatas(filterData)
     });
   }, []);
+  console.log(datas)
   const [filters, setFilters] = useState({
     kecamatan: "",
     desa: "",
@@ -204,7 +205,7 @@ const RekapDataPenyuluh = () => {
                         type="text"
                         value={filters.NIP}
                         onChange={(e) => handleFilterChange(e, "NIP")}
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                         placeholder="Filter NIP"
                       />
                       <FontAwesomeIcon
@@ -234,7 +235,7 @@ const RekapDataPenyuluh = () => {
                         type="text"
                         value={filters.nama}
                         onChange={(e) => handleFilterChange(e, "nama")}
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                         placeholder="Filter Nama"
                       />
                       <FontAwesomeIcon
@@ -249,7 +250,7 @@ const RekapDataPenyuluh = () => {
                         type="text"
                         value={filters.NoWa}
                         onChange={(e) => handleFilterChange(e, "NoWa")}
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                         placeholder="Filter Nomor WhatsaApp"
                       />
                       <FontAwesomeIcon
@@ -266,7 +267,7 @@ const RekapDataPenyuluh = () => {
                         onChange={(e) =>
                           handleFilterChange(e, "kecamatanBinaan")
                         }
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                         placeholder="Filter Kecamatan Binaan"
                       />
                       <FontAwesomeIcon
@@ -281,7 +282,7 @@ const RekapDataPenyuluh = () => {
                         type="text"
                         value={filters.desaBinaan}
                         onChange={(e) => handleFilterChange(e, "desaBinaan")}
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                         placeholder="Filter Desa Binaan"
                       />
                       <FontAwesomeIcon
@@ -296,7 +297,7 @@ const RekapDataPenyuluh = () => {
                         type="text"
                         value={filters.namaProduct}
                         onChange={(e) => handleFilterChange(e, "namaProduct")}
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                         placeholder="Filter Password"
                       />
                       <FontAwesomeIcon
@@ -318,15 +319,21 @@ const RekapDataPenyuluh = () => {
                     <td className="px-4 py-2 border">{item.desaBinaan}</td>
                     <td className="px-4 py-2 border">{item.namaProduct}</td>
                     <td className="px-4 py-2 border">
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
-                      />
-                      <FontAwesomeIcon
-                        onClick={() => setModalDeleteData(item?.id)}
-                        icon={faTrash}
-                        className="cursor-pointer text-red-500 hover:text-red-600"
-                      />
+                      <Tooltip label="Edit">
+                        <Link to={`/data-penyuluh/${item?.dataPersonId}`}>
+                          <FontAwesomeIcon
+                            icon={faEdit}
+                            className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
+                            />
+                        </Link>
+                      </Tooltip>
+                      <Tooltip label="Delete">
+                        <FontAwesomeIcon
+                          onClick={() => setModalDeleteData(item?.dataPersonId)}
+                          icon={faTrash}
+                          className="cursor-pointer text-red-500 hover:text-red-600"
+                        />
+                      </Tooltip>
                     </td>
                   </tr>
                 ))}

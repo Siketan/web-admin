@@ -36,21 +36,28 @@ import {
   DetailTanamanPetani,
   EditLaporanTanam,
   TambahLaporanTanam,
-  TambahLaporanAhir
+  TambahLaporanAhir,
+  EditPenyuluhan
 } from "./page";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import ProtectedRoute from "./page/protectedRoute";
 const Path = () => {
+  const login = window.localStorage.getItem('token')
+  const chekToken = ()=>{
+    if((login && window.location.pathname != "/loginAdminSiketan") || (login && window.location.pathname != "/registerAdminSiketan")) {
+      return true
+    } else{
+      return false
+    }
+  }
   return (
     <div>
       {/* {window.location.pathname !== "/loginAdminSiketan" && <Navbar /> } */}
-      {window.location.pathname != "/loginAdminSiketan" &&
-        window.location.pathname != "/registerAdminSiketan" && <Navbar />}
+      { chekToken() && <Navbar />}
       <div
         className={
-          window.location.pathname != "/loginAdminSiketan" &&
-          window.location.pathname != "/registerAdminSiketan"
+          chekToken()
             ? "my-32"
             : ""
         }
@@ -91,6 +98,7 @@ const Path = () => {
               <Route path="/toko-tani/produk-penyuluh" element={<ProdukPenyuluh />} />
               {/* Data Penyuluh */}
               <Route path="/data-penyuluh/tambah" element={<TambahPenyuluhanTani />} />
+              <Route path="/data-penyuluh/:id" element={<EditPenyuluhan />} />
               <Route path="/data-penyuluh/presensi-kehadiran" element={<PresensiKehadiran />} />
               <Route path="/data-penyuluh/jurnal-kegiatan" element={<JurnalKegiatan />} />
               <Route path="/data-penyuluh/jurnal-kegiatan/form" element={<FormJurnalKegiatan />} />
@@ -104,8 +112,7 @@ const Path = () => {
           </Routes>
         </Router>
       </div>
-      {window.location.pathname != "/loginAdminSiketan" &&
-        window.location.pathname != "/registerAdminSiketan" && <Footer />}
+      {chekToken() && <Footer />}
     </div>
   );
 };

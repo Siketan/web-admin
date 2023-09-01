@@ -8,7 +8,7 @@ import {
   faBullseye,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import { Image, Modal,Text,Button } from '@mantine/core';
+import { Image, Modal,Text,Button, Tooltip } from '@mantine/core';
 import { GetTanmanPetani, DeleteTanamanPetani } from "@/infrastruture";
 import { useParams, Link } from 'react-router-dom';
 
@@ -37,6 +37,7 @@ export default function DetailRekapPetani() {
       setDatas(data.tanamanPetanis)
     });
   }, []);
+  console.log(datas)
   const handleFilterChange = (e, column) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -46,9 +47,9 @@ export default function DetailRekapPetani() {
     const filteredData = datas.filter((item) => {
     return Object.keys(filters).every((key) => {
       if (filters[key] !== "") {
-          if (typeof item[key] === "number") {
-            return item[key] === Number(filters[key]);
-          } else {
+          if (typeof item[key] == "number") {
+            return item[key] == Number(filters[key]);
+          } else if(typeof item[key] == "string"){
             return item[key]
               .toLowerCase()
               .includes(filters[key].toLowerCase());
@@ -391,23 +392,29 @@ export default function DetailRekapPetani() {
                     <td className="px-4 py-2 border">{item.jenis || "-"}</td>
                     <td className="px-4 py-2 border">{item.jenisPanen || "-"}</td>
                     <td className="px-2 py-2 border">
-                      <a href={`/laporan-tanam/${item.id}`}>
+                    <Tooltip label="Detail">                      
+                        <a href={`/laporan-tanam/${item.id}`}>
+                          <FontAwesomeIcon
+                            icon={faBullseye}
+                            className="cursor-pointer text-black hover:text-black"
+                            />
+                        </a>
+                      </Tooltip>
+                      <Tooltip label="Edit">   
+                        <a href={`/tanaman-petani/edit/${item.id}`}>
+                          <FontAwesomeIcon
+                            icon={faEdit}
+                            className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
+                          />
+                        </a>
+                      </Tooltip>
+                      <Tooltip label="Delete">  
                         <FontAwesomeIcon
-                          icon={faBullseye}
-                          className="cursor-pointer text-black hover:text-black"
+                          onClick={() => setModalDeleteData(item?.id)}
+                          icon={faTrash}
+                          className="cursor-pointer text-red-500 hover:text-red-600"
                         />
-                      </a>
-                      <a href={`/tanaman-petani/edit/${item.id}`}>
-                        <FontAwesomeIcon
-                          icon={faEdit}
-                          className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
-                        />
-                      </a>
-                      <FontAwesomeIcon
-                        onClick={() => setModalDeleteData(item?.id)}
-                        icon={faTrash}
-                        className="cursor-pointer text-red-500 hover:text-red-600"
-                      />
+                      </Tooltip>
                     </td>
                   </tr>
                 ))}

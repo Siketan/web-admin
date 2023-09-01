@@ -8,6 +8,7 @@ import TambahEventTani from "./infoTani/eventTani/tambahEventTani";
 import LiveChat from "./liveChat";
 import RatingPetugas from "./liveChat/ratingPetugas";
 import TambahPenyuluhanTani from "./penyuluhanTani/tambahData";
+import EditPenyuluhan from "./penyuluhanTani/editPenyuluh";
 import DataRiwayatChat from "./penyuluhanTani/detailPenyuluh/dataRiwayatChat";
 import JurnalKegiatan from "./penyuluhanTani/detailPenyuluh/jurnalKegiatan";
 import FormJurnalKegiatan from "./penyuluhanTani/detailPenyuluh/formJurnalKegiatan";
@@ -83,5 +84,6 @@ export {
   DetailInfoTani,
   DetailEventTani,
   EditInfoTani,
-  TambahLaporanAhir
+  TambahLaporanAhir,
+  EditPenyuluhan
 };

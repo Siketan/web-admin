@@ -28,7 +28,7 @@ const FormJurnalKegiatan = () => {
     const data = {
       NIP,
       judul,
-      isi,
+      uraian:isi,
       gambar,
       createdBy,
       tanggalDibuat,
