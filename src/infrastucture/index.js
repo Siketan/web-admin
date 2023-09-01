@@ -423,3 +423,37 @@ export const selectPenyuluh = async(kecamatan)=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
+export const getNotification = async()=>{
+  try {
+    const response = await Api.get('/auth/verify');
+    return response.data.user
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), 'error');
+  }
+}
+export const updateStatusUser = async(id)=>{
+  try {
+    const response = await Api.get(`/auth/verify/${id}`);
+    return response.data
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), 'error');
+  }
+}
+export const getPenyuluhById = async(id)=>{
+  try {
+    const response = await Api.get(`/daftar-penyuluh/${id}`);
+    return response.data
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), 'error');
+    throw new Error("error")
+  }
+}
+export const updatePenyuluhById = async(payload, id)=>{
+  try {
+    const response = await Api.put(`/daftar-penyuluh/${id}`,payload, headers);
+    SweatAlert(String(response.data.message), 'success', '/data-penyulu/rekap-penyuluh');
+    return response.data
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), 'error');
+  }
+}

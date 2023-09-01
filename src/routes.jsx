@@ -36,7 +36,8 @@ import {
   DetailTanamanPetani,
   EditLaporanTanam,
   TambahLaporanTanam,
-  TambahLaporanAhir
+  TambahLaporanAhir,
+  EditPenyuluhan
 } from "./page";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
@@ -97,6 +98,7 @@ const Path = () => {
               <Route path="/toko-tani/produk-penyuluh" element={<ProdukPenyuluh />} />
               {/* Data Penyuluh */}
               <Route path="/data-penyuluh/tambah" element={<TambahPenyuluhanTani />} />
+              <Route path="/data-penyuluh/:id" element={<EditPenyuluhan />} />
               <Route path="/data-penyuluh/presensi-kehadiran" element={<PresensiKehadiran />} />
               <Route path="/data-penyuluh/jurnal-kegiatan" element={<JurnalKegiatan />} />
               <Route path="/data-penyuluh/jurnal-kegiatan/form" element={<FormJurnalKegiatan />} />
