@@ -11,13 +11,14 @@ import {
 import { Image, Modal,Text,Button, Tooltip } from '@mantine/core';
 import { GetTanmanPetani, DeleteTanamanPetani } from "@/infrastruture";
 import { useParams, Link } from 'react-router-dom';
-
+import LoadingAnimation from '../../../../components/loadingSession'
 export default function DetailRekapPetani() {
   const params = useParams()
   const id = params.id
   const [Petani, setPetani] = useState([]);
   const [datas, setDatas] = useState([]);
   const [modalDeleteData, setModalDeleteData] = useState(false);
+  const [loading, setLoading] = useState(true)
   const [filters, setFilters] = useState({
     janisPanen: "",
     jenis: "",
@@ -25,7 +26,7 @@ export default function DetailRekapPetani() {
     komoditas: "",
     luasLahan: "",
     musimTanam: "",
-    perkiraanHasilPanen: "",
+    perkiraanHasilPanen: '',
     perkiraanPanen: "",
     realisasiHasilPanen: "",
     statusLahan: "",
@@ -35,9 +36,9 @@ export default function DetailRekapPetani() {
     GetTanmanPetani(id).then((data)=>{
       setPetani(data)
       setDatas(data.tanamanPetanis)
+      setLoading(false)
     });
   }, []);
-  console.log(datas)
   const handleFilterChange = (e, column) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -48,7 +49,7 @@ export default function DetailRekapPetani() {
     return Object.keys(filters).every((key) => {
       if (filters[key] !== "") {
           if (typeof item[key] == "number") {
-            return item[key] == Number(filters[key]);
+            return item[key].toString().includes(filters[key].toLowerCase());
           } else if(typeof item[key] == "string"){
             return item[key]
               .toLowerCase()
@@ -420,6 +421,8 @@ export default function DetailRekapPetani() {
                 ))}
               </tbody>
             </table>
+            {loading &&
+            <LoadingAnimation/>}
           </div>
         </div>
     </div>

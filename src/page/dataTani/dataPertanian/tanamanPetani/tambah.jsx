@@ -5,6 +5,7 @@ import MainCard from "@/components/MainCard";
 import { AddTanmanPetani, } from "@/infrastruture";
 import { fecthKecamatan, fecthDesa } from "../../../../infrastucture/daerah";
 import {useLocation, useNavigate, Link } from "react-router-dom"
+import Loading from "../../../../components/loading"
 const TambahDataTani = () => {
   const [statusLahan, setStatusLahan] = useState("");
   const [luasLahan, setLuasLahan] = useState("");
@@ -17,7 +18,7 @@ const TambahDataTani = () => {
   const [perkiraanPanen, setPerkiraanPanen] = useState("");
   const [daftarKomoditas, setDaftarKomoditas] = useState([]);
   const [jenisPanen, setjenisPanen] = useState("")
-  
+  const [loading, setLoading] = useState(false)
   const location = useLocation()
   const history = useNavigate()
   const petaniId = new URLSearchParams(location.search).get('petaniId');
@@ -63,6 +64,7 @@ const TambahDataTani = () => {
   }, [kategori, jenis, jenisPanen]);
 
   const handleSubmit = (e) => {
+    setLoading(true)
     e.preventDefault();
     const data = {
       statusLahan,
@@ -77,7 +79,7 @@ const TambahDataTani = () => {
       perkiraanHasilPanen,
       dataPersonId:petaniId,
     };
-    AddTanmanPetani(data)
+    AddTanmanPetani(data).then(()=>setLoading(false))
   };
 
   return (
@@ -87,6 +89,8 @@ const TambahDataTani = () => {
       </Link>
       <form onSubmit={(e) => handleSubmit(e)}>
         <MainCard>
+            {loading &&
+            <Loading/>}
             <div>
               <div className="grid md:grid-cols-2 mt-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">

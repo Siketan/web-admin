@@ -5,6 +5,7 @@ import MainCard from "@/components/MainCard";
 import { GetDetailTanmanTani, editTanmanPetani} from "@/infrastruture";
 import {useParams, useNavigate } from "react-router-dom"
 import { Array } from "core-js";
+import Loading from "../../../../components/loading"
 const TambahDataTani = () => {
   const [statusLahan, setStatusLahan] = useState("");
   const [luasLahan, setLuasLahan] = useState("");
@@ -17,7 +18,7 @@ const TambahDataTani = () => {
   const [perkiraanPanen, setPerkiraanPanen] = useState("");
   const [daftarKomoditas, setDaftarKomoditas] = useState([]);
   const [jenisPanen, setjenisPanen] = useState(false)
-
+  const [loading, setLoading] = useState(false)
   const {id} = useParams()
   const history = useNavigate()
   useEffect(() => {
@@ -75,6 +76,7 @@ const TambahDataTani = () => {
   }, [kategori, jenis, jenisPanen]);
 
   const handleSubmit = (e) => {
+    setLoading(true)
     e.preventDefault();
     const data = {
       statusLahan,
@@ -89,7 +91,7 @@ const TambahDataTani = () => {
       perkiraanHasilPanen,
       dataPersonId:id,
     };
-    editTanmanPetani(id,data)
+    editTanmanPetani(id,data).then(()=>setLoading(false))
   };
 
   return (
@@ -97,6 +99,8 @@ const TambahDataTani = () => {
       <form onSubmit={(e) => handleSubmit(e)}>
         <MainCard>
             <div>
+            {loading &&
+            <Loading/>}
               <div className="grid md:grid-cols-2 mt-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                   <label

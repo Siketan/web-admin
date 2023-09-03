@@ -9,9 +9,11 @@ import {
 import { getDaftarPenyuluh, DeleteDaftarPenyuluh } from "@/infrastruture";
 import ExcelComponent from "../../../components/exelComponent";
 import { Text, Button, Modal, Tooltip } from "@mantine/core";
+import LoadingAnimation from '../../../components/loadingSession'
 import { Link } from 'react-router-dom';
 const RekapDataPenyuluh = () => {
   const [datas, setDatas] = useState([]);
+  const [loading, setLoading] = useState(true)
   const [modalDeleteData, setModalDeleteData] = useState(false);
   useEffect(() => {
     getDaftarPenyuluh().then((data) => {
@@ -26,6 +28,7 @@ const RekapDataPenyuluh = () => {
         }, {});
       });
       setDatas(filterData)
+      setLoading(false)
     });
   }, []);
   console.log(datas)
@@ -339,6 +342,8 @@ const RekapDataPenyuluh = () => {
                 ))}
               </tbody>
             </table>
+            {loading &&
+            <LoadingAnimation/>}
           </div>
         </div>
       </div>

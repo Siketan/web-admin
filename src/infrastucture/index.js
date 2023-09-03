@@ -40,6 +40,14 @@ export const CekNik = async(data)=>{
       SweatAlert(String(error.response.data.message), 'error');
     }
 }
+export const CekNiP = async(data)=>{
+    try {
+      const response = await Api.post("/cek-nip", data);
+      return response.data.users
+    } catch (error) {
+      SweatAlert(String(error.response.data.message), 'error');
+    }
+}
 
 // data tani 
 export const DaftarTaniAdd = async(data)=>{
@@ -236,12 +244,16 @@ export const updateInfoTani = async(id, data)=>{
 
 
 // toko tani
-export const AddPenjual = async(data)=>{
+export const AddPenjual = async(data, log)=>{
     try {
       const response = await Api.post("/daftar-penjual/add", data, headers);
-      SweatAlert(String(response.data.message), 'success');
+      if(log = 'petani'){
+        SweatAlert(String(response.data.message), 'success', '/toko-tani/produk-petani');
+      }else if(log = 'penyuluh'){
+        SweatAlert(String(response.data.message), 'success', '/toko-tani/produk-penyuluh');
+      }
     } catch (error) {
-      SweatAlert(String(error.response.data.message), 'error');
+      SweatAlert(String(error.response.data.message), 'error', 'reload');
     }
 }
 export const ProductsPenyuluh = async()=>{

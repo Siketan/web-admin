@@ -6,22 +6,34 @@ import { Image } from "@mantine/core";
 function ProdukPenyuluh() {
   const [datas, setDatas] = useState([]);
   useEffect(() => {
-    ProductsPenyuluh().then((data) => setDatas(data.productPenyuluh));
-  }, []);
+    ProductsPenyuluh().then((item) => {
+      const data = item.productPenyuluh
+      const filterData = data.map(obj => {
+        return Object.keys(obj).reduce((result, key) => {
+          if (key === 'dataPerson') {
+            result = { ...result, ...obj[key] };
+          } else {
+            result[key] = obj[key];
+          }
+          return result;
+        }, {});
+      });
+      setDatas(filterData);
+    })
+    }, []);
   const [filters, setFilters] = useState({
     kecamatan: "",
     desa: "",
-    nipPenyuluh: "",
-    namaPenyuluh: "",
+    NIP: "",
+    nama: "",
     namaProducts: "",
     stok: "",
     satuan: "",
     harga: "",
     deskripsi: "",
     fotoProduk: "",
-    statusProduk: "",
+    status: "",
   });
-
   const handleFilterChange = (e, column) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -32,22 +44,12 @@ function ProdukPenyuluh() {
   const filteredData = datas.filter((item) => {
     return Object.keys(filters).every((key) => {
       if (filters[key] !== "") {
-        if ("dataPerson" in item) {
-          if (typeof item.dataPerson[key] === "number") {
-            return item.dataPerson[key] === Number(filters[key]);
-          } else {
-            return item.dataPerson[key]
-              .toLowerCase()
-              .includes(filters[key].toLowerCase());
-          }
-        } else {
-          if (typeof item[key] === "number") {
+          if (typeof item[key] == "number") {
             return item[key] === Number(filters[key]);
-          } else {
+          } else if(typeof item[key] == "string"){
             return item[key].toLowerCase().includes(filters[key].toLowerCase());
           }
-        }
-      }
+    }
       return true;
     });
   });
@@ -107,7 +109,7 @@ function ProdukPenyuluh() {
                         type="text"
                         value={filters.kecamatan}
                         onChange={(e) => handleFilterChange(e, "kecamatan")}
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                         placeholder="Filter Kecamatan"
                       />
                       <FontAwesomeIcon
@@ -122,7 +124,7 @@ function ProdukPenyuluh() {
                         type="text"
                         value={filters.desa}
                         onChange={(e) => handleFilterChange(e, "desa")}
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                         placeholder="Filter Desa"
                       />
                       <FontAwesomeIcon
@@ -135,9 +137,9 @@ function ProdukPenyuluh() {
                     <div className="flex items-center">
                       <input
                         type="text"
-                        value={filters.nipPenyuluh}
-                        onChange={(e) => handleFilterChange(e, "nipPenyuluh")}
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        value={filters.NIP}
+                        onChange={(e) => handleFilterChange(e, "NIP")}
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                         placeholder="Filter NIP Penyuluh"
                       />
                       <FontAwesomeIcon
@@ -150,9 +152,9 @@ function ProdukPenyuluh() {
                     <div className="flex items-center">
                       <input
                         type="text"
-                        value={filters.namaPenyuluh}
-                        onChange={(e) => handleFilterChange(e, "namaPenyuluh")}
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        value={filters.nama}
+                        onChange={(e) => handleFilterChange(e, "nama")}
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                         placeholder="Filter Nama Penyuluh"
                       />
                       <FontAwesomeIcon
@@ -167,7 +169,7 @@ function ProdukPenyuluh() {
                         type="text"
                         value={filters.namaProducts}
                         onChange={(e) => handleFilterChange(e, "namaProducts")}
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                         placeholder="Filter Produk"
                       />
                       <FontAwesomeIcon
@@ -182,7 +184,7 @@ function ProdukPenyuluh() {
                         type="text"
                         value={filters.stok}
                         onChange={(e) => handleFilterChange(e, "stok")}
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                         placeholder="Filter Stok"
                       />
                       <FontAwesomeIcon
@@ -197,7 +199,7 @@ function ProdukPenyuluh() {
                         type="text"
                         value={filters.satuan}
                         onChange={(e) => handleFilterChange(e, "satuan")}
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                         placeholder="Filter Satuan"
                       />
                       <FontAwesomeIcon
@@ -212,7 +214,7 @@ function ProdukPenyuluh() {
                         type="text"
                         value={filters.harga}
                         onChange={(e) => handleFilterChange(e, "harga")}
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                         placeholder="Filter Harga"
                       />
                       <FontAwesomeIcon
@@ -227,7 +229,7 @@ function ProdukPenyuluh() {
                         type="text"
                         value={filters.deskripsi}
                         onChange={(e) => handleFilterChange(e, "deskripsi")}
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                         placeholder="Filter Deskripsi"
                       />
                       <FontAwesomeIcon
@@ -242,7 +244,7 @@ function ProdukPenyuluh() {
                         type="text"
                         value={filters.fotoProduk}
                         onChange={(e) => handleFilterChange(e, "fotoProduk")}
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                         placeholder="Filter Foto Produk"
                       />
                       <FontAwesomeIcon
@@ -255,9 +257,9 @@ function ProdukPenyuluh() {
                     <div className="flex items-center">
                       <input
                         type="text"
-                        value={filters.statusProduk}
-                        onChange={(e) => handleFilterChange(e, "statusProduk")}
-                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600"
+                        value={filters.status}
+                        onChange={(e) => handleFilterChange(e, "status")}
+                        className="pl-8 pr-4 py-2.5 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600"
                         placeholder="Filter Status Produk"
                       />
                       <FontAwesomeIcon
@@ -269,12 +271,10 @@ function ProdukPenyuluh() {
                 </tr>
                 {filteredData.map((item) => (
                   <tr key={item.id}>
-                    <td className="px-4 py-2 border">
-                      {item.dataPerson.kecamatan}
-                    </td>
-                    <td className="px-4 py-2 border">{item.dataPerson.desa}</td>
-                    <td className="px-4 py-2 border">{item.dataPerson.NIP}</td>
-                    <td className="px-4 py-2 border">{item.dataPerson.nama}</td>
+                    <td className="px-4 py-2 border">{item.kecamatan}</td>
+                    <td className="px-4 py-2 border">{item.desa}</td>
+                    <td className="px-4 py-2 border">{item.NIP}</td>
+                    <td className="px-4 py-2 border">{item.nama}</td>
                     <td className="px-4 py-2 border">{item.namaProducts}</td>
                     <td className="px-4 py-2 border">{item.stok}</td>
                     <td className="px-4 py-2 border">{item.satuan}</td>

@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
-import { AddPenjual, CekNik } from "@/infrastruture";
+import { AddPenjual, CekNik, CekNiP } from "@/infrastruture";
+import Loading from "../../components/loading"
 const TambahTokoTani = () => {
   const [NIK, setNIK] = useState("");
   // eslint-disable-next-line no-unused-vars
@@ -17,28 +18,41 @@ const TambahTokoTani = () => {
   const [deskripsi, setDeskripsi] = useState("");
   const [status, setStatus] = useState("");
   const [fotoTanaman, setFotoTanaman] = useState("");
-  const [datas, setDatas] = useState({});
-  // eslint-disable-next-line no-unused-vars
-  const [disable, setDisable] = useState(false);
-
+  const [datas, setDatas] = useState();
+  const [disable, setDisable] = useState(true);
+  const [loading, setLoading] = useState(false)
     const handleCLick = ()=>{
-        CekNik({nik:NIK}).then((data)=>{
+      if(profesiPenjual == "petani"){
+        CekNik({NIK}).then((data)=>{
             setDatas(data)
-            setDisable(true)
         })
+      }else if(profesiPenjual == "penyuluh"){
+        CekNiP({NIP:NIK}).then((data)=>{
+            setDatas(data)
+        })
+      }
     }
+  useEffect(() => {
+    if(datas){
+      setDisable(false)
+    }else if(!datas){
+      setDisable(true)
+    }
+  }, [datas])
+  useEffect(() => {
+    if(datas){
+      setDatas()
+      setNIK("")
+    }
+  }, [profesiPenjual])
 
   const handleSubmit = (e) => {
+    setLoading(true)
     e.preventDefault();
     const data = {
+      NIP:NIK,
       NIK,
-      profesiPenjual: !datas
-        ? ""
-        : datas?.NIK
-        ? "petani"
-        : datas?.NIP
-        ? "penyuluh"
-        : "",
+      profesiPenjual,
       namaProducts,
       stok,
       satuan,
@@ -51,7 +65,7 @@ const TambahTokoTani = () => {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    AddPenjual(formData);
+    AddPenjual(formData, profesiPenjual).then(()=> setLoading(false));
   };
 
   return (
@@ -62,11 +76,12 @@ const TambahTokoTani = () => {
             <button
               id="NIK"
               name="NIK"
+              type="button"
               onClick={() => handleCLick()}
               className="text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto"
             >
               <FontAwesomeIcon icon={faSearch} className="mr-2" />
-              Cek NIK
+              Cek {profesiPenjual == 'penyuluh' ? 'NIP': profesiPenjual == 'petani' ?  'NIK': 'NIK/NIP'}
             </button>
           </div>
           <div className="grid md:grid-cols-2 md:gap-6">
@@ -74,6 +89,7 @@ const TambahTokoTani = () => {
               <input
                 type="text"
                 name="NIK"
+                disabled={!profesiPenjual}
                 id="NIK"
                 value={NIK}
                 onChange={(e) => setNIK(e.target.value)}
@@ -83,23 +99,53 @@ const TambahTokoTani = () => {
               />
               <label
                 htmlFor="NIK"
-                className="peer-focus:font-medium absolute text-sm dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                className="peer-focus:font-medium absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
-                <strong>Cek NIK</strong> (Contoh: 3514002000000001)
+                <strong>Cek {profesiPenjual == 'penyuluh' ? 'NIP': profesiPenjual == 'petani' ?  'NIK': 'NIK/NIP'} </strong> (Contoh: 3514002000000001)
               </label>
             </div>
-          </div>
-          <div className="grid md:grid-cols-2 md:gap-6">
-            <div className="relative z-0 w-full mb-6 gronup">
-              <p>
-                <strong>Nama Petani: </strong> {datas?.nama}
-              </p>
+            <div className="relative z-0 w-full mb-6 group">
+              <label htmlFor="profesiPenjual" className="text-sm">
+                <strong>Profesi Penjual:</strong>
+              </label>
+              <div className="flex items-center pt-2">
+                <input
+                  type="radio"
+                  value="petani"
+                  id="profesiPetani"
+                  name="profesiPenjual"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
+                  onChange={(e) => setProfesiPenjual(e.target.value)}
+                />
+                <label
+                  htmlFor="profesiPetani"
+                  className={`ml-2 text-sm font-medium ${profesiPenjual == 'petani' ? 'text-gray-900': 'text-gray-300'}`}
+                >
+                  Petani
+                </label>
+              </div>
+              <div className="flex items-center py-2">
+                <input
+                  type="radio"
+                  value="penyuluh"
+                  id="profesiPenyuluh"
+                  name="profesiPenjual"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
+                  onChange={(e) => setProfesiPenjual(e.target.value)}
+                />
+                <label
+                  htmlFor="profesiPenyuluh"
+                  className={`ml-2 text-sm font-medium ${profesiPenjual == 'penyuluh' ? 'text-gray-900': 'text-gray-300'}`}
+                >
+                  Penyuluh
+                </label>
+              </div>
             </div>
           </div>
           <div className="grid md:grid-cols-2 md:gap-6">
             <div className="relative z-0 w-full mb-6 gronup">
               <p>
-                <strong>Kecamatan: </strong> {datas?.kecamatan}
+                <strong>Nama {profesiPenjual == 'penyuluh' ? 'Penyuluh': profesiPenjual == 'petani'?  'Petani': ''}: </strong> {datas?.nama}
               </p>
             </div>
             <div className="relative z-0 w-full mb-6 group">
@@ -111,65 +157,52 @@ const TambahTokoTani = () => {
           <div className="grid md:grid-cols-2 md:gap-6">
             <div className="relative z-0 w-full mb-6 gronup">
               <p>
+                <strong>Kecamatan: </strong> {datas?.kecamatan}
+              </p>
+            </div>
+            {profesiPenjual == 'petani'?  
+            <div className="relative z-0 w-full mb-6 gronup">
+              <p>
                 <strong>Gapoktan: </strong> {datas?.kelompok?.gapoktan}
               </p>
             </div>
-            <div className="relative z-0 w-full mb-6 group">
-              <p>
-                <strong>Nama Kelompok: </strong> {datas?.kelompok?.namaKelompok}
-              </p>
-            </div>
-          </div>
-          <div className="grid md:grid-cols-2 md:gap-6">
+            :
             <div className="relative z-0 w-full mb-6 gronup">
               <p>
-                <strong>Penyuluh: </strong> {datas?.kelompok?.penyuluh}
+                <strong>Kecamatan Binaan: </strong> {datas?.dataPenyuluh?.kecamatanBinaan}
               </p>
             </div>
-            <div className="relative z-0 w-full mb-6 group">
-              <label htmlFor="profesiPenjual" className="text-sm">
-                <strong>Profesi Penjual:</strong>
-              </label>
-              <div className="flex items-center pt-2">
-                <input
-                  type="radio"
-                  value="petani"
-                  id="profesiPetani"
-                  checked={datas?.NIK ? true : false}
-                  name="profesiPenjual"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  onChange={(e) => setProfesiPenjual(e.target.value)}
-                />
-                <label
-                  htmlFor="profesiPetani"
-                  className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >
-                  Petani
-                </label>
-              </div>
-              <div className="flex items-center py-2">
-                <input
-                  type="radio"
-                  value="penyuluh"
-                  id="profesiPenyuluh"
-                  checked={datas?.NIP ? true : false}
-                  name="profesiPenjual"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  onChange={(e) => setProfesiPenjual(e.target.value)}
-                />
-                <label
-                  htmlFor="profesiPenyuluh"
-                  className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >
-                  Penyuluh
-                </label>
-              </div>
-            </div>
+            }
           </div>
+          <div className="grid md:grid-cols-2 md:gap-6">
+            {profesiPenjual == 'petani'?  
+            <>
+              <div className="relative z-0 w-full mb-6 group">
+                <p>
+                  <strong>Nama Kelompok: </strong> {datas?.kelompok?.namaKelompok}
+                </p>
+              </div>
+              <div className="relative z-0 w-full mb-6 gronup">
+                <p>
+                  <strong>Penyuluh: </strong> {datas?.kelompok?.penyuluh}
+                </p>
+              </div>
+            </>
+            :
+            <div className="relative z-0 w-full mb-6 gronup">
+              <p>
+                <strong>Desa Binaan: </strong> {datas?.dataPenyuluh?.desaBinaan}
+              </p>
+            </div>
+            }
+          </div>
+          {loading &&
+            <Loading/>}
           <div className="grid md:grid-cols-2 md:gap-6">
             <div className="relative z-0 w-full mb-6 group">
               <input
                 type="text"
+                disabled={disable}
                 name="namaProducts"
                 id="namaProducts"
                 value={namaProducts}
@@ -180,15 +213,15 @@ const TambahTokoTani = () => {
               />
               <label
                 htmlFor="namaProducts"
-                className="peer-focus:font-medium absolute text-sm dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                className="peer-focus:font-medium absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
-                {" "}
                 <strong>Nama Produk</strong> (Contoh: Siketan)
               </label>
             </div>
             <div className="relative z-0 w-full mb-6 group">
               <input
                 type="text"
+                disabled={disable}
                 name="stok"
                 id="stok"
                 value={stok}
@@ -199,7 +232,7 @@ const TambahTokoTani = () => {
               />
               <label
                 htmlFor="stok"
-                className="peer-focus:font-medium absolute text-sm dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                className="peer-focus:font-medium absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 <strong>Stok</strong> (Contoh: 10kg)
               </label>
@@ -209,16 +242,17 @@ const TambahTokoTani = () => {
             <div className="relative z-0 w-full mb-6 group">
               <label
                 htmlFor="underline_select"
-                className="text-sm dark:text-gray-400 pt-5 md:pt-0"
+                className="text-sm pt-5 md:pt-0"
               >
                 <strong>Satuan</strong>
               </label>
               <select
                 id="satuan"
                 name="satuan"
+                disabled={disable}
                 value={satuan}
                 onChange={(e) => setSatuan(e.target.value)}
-                className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
+                className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
               >
                 <option value="pcs">Pcs</option>
                 <option value="kg">Kg</option>
@@ -228,6 +262,7 @@ const TambahTokoTani = () => {
             <div className="relative z-0 w-full mb-6 group">
               <input
                 type="text"
+                disabled={disable}
                 name="harga"
                 id="harga"
                 value={harga}
@@ -238,7 +273,7 @@ const TambahTokoTani = () => {
               />
               <label
                 htmlFor="harga"
-                className="peer-focus:font-medium absolute text-sm dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                className="peer-focus:font-medium absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 <strong>Harga</strong> (Contoh: 100.000)
               </label>
@@ -248,6 +283,7 @@ const TambahTokoTani = () => {
             <div className="relative z-0 w-full mb-6 group">
               <input
                 type="text"
+                disabled={disable}
                 name="deskripsi"
                 id="deskripsi"
                 value={deskripsi}
@@ -258,7 +294,7 @@ const TambahTokoTani = () => {
               />
               <label
                 htmlFor="deskripsi"
-                className="peer-focus:font-medium absolute text-sm dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                className="peer-focus:font-medium absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 <strong>Deskripsi Uraian</strong>
               </label>
@@ -266,6 +302,7 @@ const TambahTokoTani = () => {
             <div className="relative z-0 w-full mb-6 group">
               <input
                 type="file"
+                disabled={disable}
                 name="fotoTanaman"
                 onChange={(e) => setFotoTanaman(e.target.files[0])}
                 accept=".png, .jpg, .jpeg"
@@ -276,7 +313,7 @@ const TambahTokoTani = () => {
               />
               <label
                 htmlFor="fotoTanaman"
-                className="peer-focus:font-medium absolute text-sm dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                className="peer-focus:font-medium absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 <strong>Foto Tanaman</strong> (Jenis File: .png, .jpg, .jpeg)
               </label>
@@ -286,6 +323,7 @@ const TambahTokoTani = () => {
             <div className="relative z-0 w-full mb-6 group">
               <input
                 id="status"
+                disabled={disable}
                 name="status"
                 onChange={(e) => setStatus(e.target.value)}
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -294,7 +332,7 @@ const TambahTokoTani = () => {
               />
               <label
                 htmlFor="status"
-                className="peer-focus:font-medium absolute text-sm dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                className="peer-focus:font-medium absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 <strong>Status</strong> (Contoh: Habis)
               </label>
