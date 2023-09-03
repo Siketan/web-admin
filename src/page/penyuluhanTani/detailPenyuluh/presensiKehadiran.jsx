@@ -3,8 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { GetPreseiKehadiran } from "@/infrastruture";
 import { Image, } from '@mantine/core';
+import LoadingAnimation from '../../../components/loadingSession'
 function PresensiKehadiran() {
   const [datas, setDatas] = useState([]);
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
     GetPreseiKehadiran().then((data)=>{
       const datafix = data?.map((item)=>{
@@ -21,6 +23,7 @@ function PresensiKehadiran() {
         }
       })
       setDatas(datafix)
+      setLoading(false)
     })
   }, []);
   const [filters, setFilters] = useState({
@@ -200,6 +203,7 @@ function PresensiKehadiran() {
               ))}
             </tbody>
           </table>
+              {loading && <LoadingAnimation/>}
         </div>
       </div>
     </div>

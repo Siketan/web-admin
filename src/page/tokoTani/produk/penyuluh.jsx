@@ -3,8 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { ProductsPenyuluh } from "@/infrastruture";
 import { Image } from "@mantine/core";
+import LoadingAnimation from '../../../components/loadingSession'
 function ProdukPenyuluh() {
   const [datas, setDatas] = useState([]);
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
     ProductsPenyuluh().then((item) => {
       const data = item.productPenyuluh
@@ -19,6 +21,7 @@ function ProdukPenyuluh() {
         }, {});
       });
       setDatas(filterData);
+      setLoading(false)
     })
     }, []);
   const [filters, setFilters] = useState({
@@ -45,7 +48,7 @@ function ProdukPenyuluh() {
     return Object.keys(filters).every((key) => {
       if (filters[key] !== "") {
           if (typeof item[key] == "number") {
-            return item[key] === Number(filters[key]);
+            return item[key].toString().includes(filters[key]);
           } else if(typeof item[key] == "string"){
             return item[key].toLowerCase().includes(filters[key].toLowerCase());
           }
@@ -294,6 +297,7 @@ function ProdukPenyuluh() {
                 ))}
               </tbody>
             </table>
+                {loading && <LoadingAnimation/>}
           </div>
         </div>
       </div>

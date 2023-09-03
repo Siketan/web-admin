@@ -6,12 +6,13 @@ import TextInput from "@/components/uiComponents/inputComponents/textInput";
 import { IconX, IconDeviceFloppy } from "@tabler/icons-react";
 import { AddInfoTani } from "@/infrastruture";
 import InputImage from "@/components/inputImage";
+import LoadingAnimation from '../../components/loading'
 const TambahInfoTani = () => {
   const [judul, setJudul] = useState("");
   const [kategori, setKategori] = useState("");
   const [isi, setIsi] = useState("");
   const [fotoBerita, setFotoBerita] = useState("");
-
+  const [loading, setLoading] = useState(false)
   const currentDate = new Date();
   const options = { day: "numeric", month: "long", year: "numeric" };
   const formattedDate = currentDate.toLocaleDateString("id-ID", options);
@@ -25,6 +26,7 @@ const TambahInfoTani = () => {
       fotoBerita
     };
     if (e == "simpan") {
+      setLoading(true)
       const formData = new FormData();
       for (const key in data) {
         formData.append(key, data[key]);
@@ -36,6 +38,7 @@ const TambahInfoTani = () => {
   };
   return (
     <MainCard transparent row center style={{ paddingTop: "50px" }}>
+          {loading && <LoadingAnimation/>}
       <MainCard width="80%">
         <h1 className="text-center">Tambahkan Berita Tani</h1>
         <MainCard transparent gap="0">

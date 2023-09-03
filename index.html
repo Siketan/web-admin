@@ -7,67 +7,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SIKETAN | Admin</title>
     <style>
-      /* Gaya latar belakang abu-abu */
-      .modal-background {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        /* Warna abu-abu dengan kejelasan 50% */
-        z-index: 50;
-        /* Lapisan tinggi untuk menutupi konten di belakangnya */
-      }
-    
-      /* Gaya modal */
-      .modal-content {
-        background-color: #fff;
-        /* Latar belakang modal */
-        padding: 1rem;
-        border-radius: 0.5rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        /* Bayangan untuk efek pop-up */
-        z-index: 51;
-        /* Lapisan yang lebih tinggi dari latar belakang abu-abu */
-        position: relative;
-      }
-    
-      /* Gaya elemen animasi putar */
-      .spinner {
-        border-top: 4px solid blue;
-        border-right: 4px solid transparent;
-        border-radius: 50%;
-        width: 16px;
-        height: 16px;
-        animation: spin 1s linear infinite;
-        margin: 0 auto;
-        margin-top: 20px;
-      }
-    
-      /* Animasi putar */
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-    
-        100% {
-          transform: rotate(360deg);
-        }
-      }
+/* CSS Murni */
+.custom-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+}
+
+.custom-loader > div {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  position: relative;
+}
+
+.custom-loader .animate-spin {
+  border: 4px solid transparent;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  height: 4rem;
+  width: 4rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
     </style>
 </head>
 
 <body>
   <div id="root">
-    <div class="modal-background">
-      <div class="modal-content">
-        <div class="spinner"></div>
-      </div>
+  <div class="custom-loader">
+    <div class="bg-white p-8 rounded-lg shadow-lg z-50 relative">
+      <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
     </div>
+  </div>
   </div>
   <script type="module" src="/src/main.jsx"></script>
 </body>

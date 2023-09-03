@@ -7,6 +7,7 @@ import {updatePenyuluhById, getPenyuluhById, select} from "@/infrastruture"
 import { MultiSelect } from '@mantine/core';
 import {fecthKecamatan, fecthDesa} from "../../infrastucture/daerah"
 import {useParams,  } from "react-router-dom"
+import LoadingAnimation from '../../components/loading'
 const TambahPenyuluhanTani = ()=>{
     const [NIP, setNIP] = useState("");
     const [NoWa, setNoWa] = useState("");
@@ -26,8 +27,10 @@ const TambahPenyuluhanTani = ()=>{
     const [kecamatanBinaanActive, setKecamatanBinaanActive] = useState('')
     const [idKecamatan, setIdKecamanan] = useState("")
     const [idKecamatanBinaan, setIdKecamananBinaan] = useState("")
+    const [loading, setLoading] = useState(true)
     const {id} = useParams()
     const handleSubmit = (e)=>{
+        setLoading(true)
         e.preventDefault()
         const data = {
             NIP, NoWa, nama, password, kecamatan, desa, foto, namaProduct, desaBinaan:desaBinaan.join(", "), alamat, kecamatanBinaan
@@ -36,7 +39,7 @@ const TambahPenyuluhanTani = ()=>{
         for (const key in data) {
         formData.append(key, data[key]);
         }
-        updatePenyuluhById(formData, id)
+        updatePenyuluhById(formData, id).then(()=>setLoading(false))
     }
     useEffect(() => {
         fecthKecamatan().then((data)=>{
@@ -46,8 +49,8 @@ const TambahPenyuluhanTani = ()=>{
     useEffect(() => {
         if(id){
             getPenyuluhById(id).then((item)=>{
-                console.log(item)
                 const data = item?.dataDaftarPenyuluh
+                setLoading(false)
                 setNIP(data?.NIP) 
                 setNoWa(data?.NoWa) 
                 setNama(data?.nama)
@@ -120,6 +123,7 @@ const TambahPenyuluhanTani = ()=>{
     return(
         <div className="px-10 md:px-40 py-10">
             <div className="shadow-xl rounded-xl px-5 py-5">
+                    {loading && <LoadingAnimation/>}
                 <form onSubmit={(e)=>handleSubmit(e)}>
                     <div className="flex items-center justify-center">
                         <InputImage id="foto" name="foto" value={foto}  onChange={(e) => setFoto(e.target.value)} title="Foto Profil"/>

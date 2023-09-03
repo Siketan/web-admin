@@ -3,15 +3,20 @@ import { Card, Image, Text, Badge, Button, Group, Modal } from '@mantine/core';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { GetInfoTaniById } from "@/infrastruture";
 import MainCard from "@/components/MainCard";
+import LoadingAnimation from '../../components/loading'
 function DetailInfoTani() {
   const [data, setData] = useState(null);
   const location = useLocation();
   const [modalDeleteData, setModalDeleteData] = useState(false);
+  const [loading, setLoading] = useState(true)
   const id = location.state?.id;
   const navigate = useNavigate();
   useEffect(() => {
     if(id){
-      GetInfoTaniById(id).then((data) => setData(data.infotani));
+      GetInfoTaniById(id).then((data) => {
+       setLoading(false)
+        setData(data.infotani)
+      });
     }
   }, []);
     const handleDeleteUser = (ids)=>{
@@ -22,6 +27,7 @@ function DetailInfoTani() {
   };
   return (
     <MainCard noPadding transparent row center style={{marginTop:"100px"}}>
+          {loading && <LoadingAnimation/>}
         <Modal
           opened={modalDeleteData}
           onClose={() => setModalDeleteData(false)}
