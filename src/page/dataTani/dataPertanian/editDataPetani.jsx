@@ -6,6 +6,7 @@ import MainCard from "@/components/MainCard";
 import { GetDaftarTaniById, editDaftarTani, select,selectPenyuluh } from "@/infrastruture";
 import { fecthKecamatan, fecthDesa } from "../../../infrastucture/daerah";
 import { useParams,Link } from "react-router-dom";
+import Loading from "../../../components/loading"
 const EditRekapPetani = () => {
   const [NIK, setNIK] = useState("");
   const [NoWa, setNoWa] = useState("");
@@ -25,7 +26,7 @@ const EditRekapPetani = () => {
   const [daftarNamaKelompok, setDaftarNamaKelompok] = useState([]);
   const [daftarPenyuluh, setDaftarPenyuluh] = useState([])
   const [idKecamatan, setIdKecamanan] = useState("")
-  
+  const [loading, setLoading] = useState(false)
   const { id } = useParams()
   useEffect(() => {
     fecthKecamatan().then((data) => {
@@ -76,6 +77,7 @@ const EditRekapPetani = () => {
   };
 
   const handleSubmit = (e) => {
+    setLoading(true)
     e.preventDefault();
     const data = {
       NIK,
@@ -94,7 +96,7 @@ const EditRekapPetani = () => {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    editDaftarTani(id,formData)
+    editDaftarTani(id,formData).then(()=>setLoading(false))
   };
   
   const handleSelectKecamatan = (e) => {
@@ -108,6 +110,8 @@ console.log(dafatarDesa)
     <div className="px-10 md:px-40 py-10 z-1">
       <form onSubmit={(e) => handleSubmit(e)}>
         <MainCard className="mb-10">
+          {loading &&
+            <Loading/>}
           <div className="flex items-center justify-center">
             <InputImage
               imageActive={foto}

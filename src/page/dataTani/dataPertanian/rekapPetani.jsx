@@ -12,8 +12,10 @@ import { GetDaftarTani, DeleteDaftarTani } from "@/infrastruture";
 import ExcelComponent from "../../../components/exelComponent";
 import { Text, Button, Modal,Tooltip } from "@mantine/core";
 import { Link } from 'react-router-dom';
+import LoadingAnimation from '../../../components/loadingSession'
 const RekapPetani = () => {
   const [datas, setDatas] = useState([]);
+  const [loading, setLoading] = useState(true)
   const [modalDeleteData, setModalDeleteData] = useState(false);
   useEffect(() => {
     GetDaftarTani().then((data) => {
@@ -25,6 +27,7 @@ const RekapPetani = () => {
       return petani;
     });
       setDatas(combinedData)
+      setLoading(false)
     });
   }, []);
   const [filters, setFilters] = useState({
@@ -326,6 +329,8 @@ const RekapPetani = () => {
                 ))}
               </tbody>
             </table>
+            {loading &&
+            <LoadingAnimation/>}
           </div>
         </div>
       </div>

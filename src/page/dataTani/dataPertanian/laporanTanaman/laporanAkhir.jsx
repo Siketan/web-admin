@@ -7,6 +7,7 @@ import { IconPlus, IconX, IconDeviceFloppy} from '@tabler/icons-react';
 import {tambahLaporanAkhir} from "@/infrastruture"
 import InputImage from "@/components/inputImage";
 import {useLocation,useNavigate, Link } from "react-router-dom"
+import Loading from "../../../../components/loading"
 const TambahLaporanTanam = ()=>{
     const [tanggalLaporan, setTanggalLaporan] = useState("")
     const [komdisiTanaman, setKomdisiTanaman] = useState("")
@@ -14,11 +15,13 @@ const TambahLaporanTanam = ()=>{
     const [fotoTanaman, setFotoTanaman] = useState("")
     const [realisasiHasilPanen, setRealisasiHasilPanen] = useState("")
     const [realisasiLuasLahan, setRealisasiLuasLahan] = useState("")
+    const [loading, setLoading] = useState(false)
     const location = useLocation()
     const history = useNavigate()
     const tanamanId = new URLSearchParams(location.search).get('tanamanId');
 
     const handleSubmit = (e) => {
+        setLoading(true)
       e.preventDefault();
       const data = {
         tanamanPetaniId:tanamanId ,
@@ -33,10 +36,14 @@ const TambahLaporanTanam = ()=>{
       for (const key in data) {
         formData.append(key, data[key]);
       }
-      tambahLaporanAkhir(formData).then(()=>history(-1))
+      tambahLaporanAkhir(formData).then(()=>{
+        setLoading(false)
+        history(-1)})
     };    
     return(
         <MainCard transparent row center style={{paddingTop:"50px"}}>
+            {loading &&
+            <Loading/>}
             <MainCard width="80%" >
                 <h1 className="text-center">Tambahkan Laporan Tanam</h1>
                 <MainCard transparent row noPadding className="mt-5">

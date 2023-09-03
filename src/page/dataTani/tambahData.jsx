@@ -7,6 +7,7 @@ import MainCard from "@/components/MainCard";
 import { useParams,Link } from "react-router-dom";
 import { DaftarTaniAdd, CekNik, select,selectPenyuluh } from "@/infrastruture";
 import { fecthKecamatan, fecthDesa } from "../../infrastucture/daerah";
+import Loading from "../../components/loading"
 const TambahDataTani = () => {
   const [NIK, setNIK] = useState("");
   const [NoWa, setNoWa] = useState("");
@@ -25,6 +26,7 @@ const TambahDataTani = () => {
   const [dafatarDesa, setDafatarDesa] = useState([{ nama: "" }]);
   const [daftarNamaKelompok, setDaftarNamaKelompok] = useState([]);
   const [daftarPenyuluh, setDaftarPenyuluh] = useState([])
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     fecthKecamatan().then((data) => {
       setDaftarKecamatan(data.kecamatan);
@@ -40,6 +42,7 @@ const TambahDataTani = () => {
     });
   };
   const handleSubmit = (e) => {
+    setLoading(true)
     e.preventDefault();
     const data = {
       NIK,
@@ -58,7 +61,7 @@ const TambahDataTani = () => {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    DaftarTaniAdd(formData)
+    DaftarTaniAdd(formData).then(()=>setLoading(false))
   };
   const handleSelectKecamatan = (e) => {
     const id = e?.split("-")[1];
@@ -72,6 +75,8 @@ const TambahDataTani = () => {
   return (
     <div className="px-10 md:px-40 py-10 z-1">
       <form onSubmit={(e) => handleSubmit(e)}>
+        {loading &&
+            <Loading/>}
         <MainCard className="mb-10">
           <div className="flex items-center justify-center">
             <InputImage
