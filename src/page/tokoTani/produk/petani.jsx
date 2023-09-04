@@ -25,7 +25,6 @@ function ProdukPetani() {
       setLoading(false)
     });
   }, []);
-  console.log(datas)
   const [filters, setFilters] = useState({
     kecamatan: "",
     desa: "",

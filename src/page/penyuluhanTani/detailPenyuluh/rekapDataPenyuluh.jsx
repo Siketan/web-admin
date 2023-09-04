@@ -17,7 +17,6 @@ const RekapDataPenyuluh = () => {
   const [modalDeleteData, setModalDeleteData] = useState(false);
   useEffect(() => {
     getDaftarPenyuluh().then((data) => {
-      console.log(data)
       const filterData = data.map(obj => {
         return Object.keys(obj).reduce((result, key) => {
           if (key === 'dataPenyuluh') {
