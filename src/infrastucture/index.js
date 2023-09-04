@@ -463,7 +463,7 @@ export const getPenyuluhById = async(id)=>{
 export const updatePenyuluhById = async(payload, id)=>{
   try {
     const response = await Api.put(`/daftar-penyuluh/${id}`,payload, headers);
-    SweatAlert(String(response.data.message), 'success', '/data-penyulu/rekap-penyuluh');
+    SweatAlert(String(response.data.message), 'success', '/data-penyuluh/rekap-penyuluh');
     return response.data
   } catch (error) {
     SweatAlert(String(error.response.data.message), 'error');
