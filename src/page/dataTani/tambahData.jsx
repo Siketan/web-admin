@@ -34,7 +34,6 @@ const TambahDataTani = () => {
   }, []);
  
   const handleselect = (e) => {
-    console.log(e)
     setDesa(e);
     select(e).then((data) => {
       setGapoktan(data?.kelompokTani[0]?.gapoktan || "");
@@ -128,8 +127,8 @@ const TambahDataTani = () => {
             <div className="relative z-0 w-full mb-6 group">
               <input
                 type="text"
-                name="nama"
-                id="nama"
+                name="namaPetani"
+                id="namaPetani"
                 value={nama}
                 onChange={(e) => setNama(e.target.value)}
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -137,7 +136,7 @@ const TambahDataTani = () => {
                 required
               />
               <label
-                htmlFor="nama"
+                htmlFor="namaPetani"
                 className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 {" "}
@@ -147,8 +146,8 @@ const TambahDataTani = () => {
             <div className="relative z-0 w-full mb-6 group">
               <input
                 type="password"
-                name="password"
-                id="password"
+                name="passwordPetani"
+                id="passwordPetani"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -156,7 +155,7 @@ const TambahDataTani = () => {
                 required
               />
               <label
-                htmlFor="password"
+                htmlFor="passwordPetani"
                 className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 <strong>Password</strong>
