@@ -7,6 +7,7 @@ import { IconPlus, IconX, IconDeviceFloppy } from "@tabler/icons-react";
 import { useParams } from 'react-router-dom';
 import InputImage from "@/components/inputImage";
 import { GetInfoTaniById, updateInfoTani } from "@/infrastruture";
+import LoadingAnimation from '../../components/loading'
 const TambahInfoTani = () => {
   const [judul, setJudul] = useState("");
   const [kategori, setKategori] = useState("");
@@ -16,6 +17,7 @@ const TambahInfoTani = () => {
   const [fotoBeritaBaru, setFotoBeritaBaru] = useState("");
   const [createdBy, setCreatedBy] = useState("");
   const [tanggal, setTanggal] = useState("");
+  const [loading, setLoading] = useState(true)
   const params = useParams()
   const id = params.id
   const currentDate = new Date(tanggal);
@@ -30,6 +32,7 @@ const TambahInfoTani = () => {
           setFotoBerita(infotani.fotoBerita)
           setCreatedBy(infotani.createdBy)
           setTanggal(infotani.tanggal)
+          setLoading(false)
       });
     }
   }, []);
@@ -41,17 +44,19 @@ const TambahInfoTani = () => {
       fotoBeritaBaru
     };
     if (e == "simpan") {
+      setLoading(true)
       const formData = new FormData();
       for (const key in data) {
         formData.append(key, data[key]);
       }
-      updateInfoTani(id, formData);
+      updateInfoTani(id, formData).then(()=>setLoading(false));
     } else {
       window.location = "/info-tani"
     }
   };
   return (
     <MainCard transparent row center style={{ paddingTop: "50px" }}>
+          {loading && <LoadingAnimation/>}
       <MainCard width="80%">
         <h1 className="text-center">Edit Berita Tani</h1>
         <MainCard transparent gap="0">

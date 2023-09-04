@@ -6,37 +6,41 @@ import { IconEdit, IconEye, IconTrash, IconPlus } from "@tabler/icons-react";
 import { Image } from "@mantine/core";
 import { GetInfoTani, DeleteInfoTani } from "@/infrastruture";
 import { Text, Button, Modal } from '@mantine/core';
+import LoadingAnimation from '../../components/loading'
 const InfoTani = () => {
   const [datas, setDatas] = useState([]);
   const [checekd, setChecekd] = useState([false]);
-  const [id, setId] = useState([]);
+  const [id, setId] = useState();
+  const [loading, setLoading] = useState(true)
   const [modalDeleteData, setModalDeleteData] = useState(false);
   const history = useNavigate ();
   const handleCheckd = (e) => {
     if (e == true) {
-      setChecekd([true, true, true]);
+      setChecekd(true);
     } else {
-      setChecekd([false, false, false]);
+      setChecekd(false);
     }
+    setId()
   };
-  const handleCheckdOne = (e, i, id) => {
-    if (e == true) {
-      const active = [...checekd];
-      active[i] = true;
-      setChecekd(active);
-      setId(id);
-    } else {
-      const active = [...checekd];
-      active[i] = false;
-      setChecekd(active);
+  const handleCheckdOne = (ids) => {
+    if(id){
+      if(id != ids){
+        setId(ids)
+      }else{
+        setId()
+      }
+    }else{
+      setId(ids)
     }
+    
   };
   useEffect(() => {
-    GetInfoTani().then((data) => setDatas(data.infotani));
+    GetInfoTani().then((data) => {
+      setDatas(data.infotani)
+      setLoading(false)
+    });
   }, []);
-  useEffect(() => {
-    setChecekd([...Array(datas.lengh).fill(false)]);
-  }, [datas]);
+
   const handleDeleteUser = (ids)=>{
     DeleteInfoTani(ids)
   }
@@ -47,7 +51,9 @@ const InfoTani = () => {
     history(`/info-tani/detail?id=${itemId}`, { state: { id:itemId } });
   };
   return (
+    <>
     <div className="pt-16">
+    {loading && <LoadingAnimation/>}
       <div className="flex justify-center gap-3">
         <div className="flex justify-center">
           <div className="self-center h-[20px] w-[20px] border border-black me-1 flex justify-center">
@@ -94,13 +100,14 @@ const InfoTani = () => {
             </Button>
           </div>
         </Modal>
+        
       {datas?.map((item, i) => (
         <MainCard row transparent center gap="0" key={i}>
           <div className="self-center h-[20px] w-[20px] border border-black me-2 flex justify-center">
             <input
               type="checkbox"
-              checked={checekd[i]}
-              onChange={(e) => handleCheckdOne(e.target.checked, i, item.id)}
+              checked={checekd == true ? true : id == item.id ? true : false}
+              onChange={(e) => handleCheckdOne(item.id)}
             />
           </div>
           <MainCard
@@ -149,6 +156,7 @@ const InfoTani = () => {
         </MainCard>
       ))}
     </div>
+    </>
   );
 };
 

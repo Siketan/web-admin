@@ -26,14 +26,13 @@ const EditRekapPetani = () => {
   const [daftarNamaKelompok, setDaftarNamaKelompok] = useState([]);
   const [daftarPenyuluh, setDaftarPenyuluh] = useState([])
   const [idKecamatan, setIdKecamanan] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const { id } = useParams()
   useEffect(() => {
     fecthKecamatan().then((data) => {
       setDaftarKecamatan(data.kecamatan);
     });
     GetDaftarTaniById(id).then((data)=>{
-      console.log(data)
         setNIK(data?.NIK);
         setNoWa(data?.NoWa);
         setNama(data?.nama);
@@ -45,6 +44,7 @@ const EditRekapPetani = () => {
         setPenyuluh(data?.kelompok?.penyuluh);
         setAlamat(data?.alamat);
         setGapoktan(data?.kelompok?.gapoktan);
+        setLoading(false)
       })
     }, []);
   useEffect(() => {

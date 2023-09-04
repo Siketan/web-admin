@@ -15,11 +15,12 @@ const EditLaporanTanam = ()=>{
     const [deskripsi, setDeskripsi] = useState("")
     const [fotoTanaman, setFotoTanaman] = useState("")
     const [fotoTanamanActive, setFotoTanamanActive] = useState("")
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const {id} = useParams()
     const history = useNavigate()
     useEffect(() => {
         getByIdLaporanTanam(id).then((data)=>{
+            setLoading(false)
             setTanggalLaporan(data?.tanggalLaporan?.split("T")[0])
             setKomdisiTanaman(data?.komdisiTanaman)
             setDeskripsiActive(data?.deskripsi)

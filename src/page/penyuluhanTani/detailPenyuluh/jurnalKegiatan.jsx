@@ -5,8 +5,10 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import {GatJurnalKegiatan} from "@/infrastruture"
 import { Image } from '@mantine/core';
 import {Link} from "react-router-dom"
+import LoadingAnimation from '../../../components/loadingSession'
 function JurnalKegiatan() {
   const [datas, setDatas] = useState([]);
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
     GatJurnalKegiatan().then((data)=>{
       const datafix = data?.newData?.map((item)=>{
@@ -24,6 +26,7 @@ function JurnalKegiatan() {
         }
       })
       setDatas(datafix)
+      setLoading(false)
     })
   }, []);
   const [filters, setFilters] = useState({
@@ -257,7 +260,7 @@ function JurnalKegiatan() {
                 ))}
               </tbody>
             </table>
-            {!datas && <h1>Loading...</h1>}
+                {loading && <LoadingAnimation/>}
           </div>
         </div>
       </div>

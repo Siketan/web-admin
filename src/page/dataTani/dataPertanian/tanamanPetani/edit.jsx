@@ -18,11 +18,12 @@ const TambahDataTani = () => {
   const [perkiraanPanen, setPerkiraanPanen] = useState("");
   const [daftarKomoditas, setDaftarKomoditas] = useState([]);
   const [jenisPanen, setjenisPanen] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const {id} = useParams()
   const history = useNavigate()
   useEffect(() => {
     GetDetailTanmanTani(id).then((data) => {
+      setLoading(false)
       setKategori(data?.tani?.kategori || '')
       setjenisPanen(data?.tani?.jenisPanen || '')
       setPerkiraanHasilPanen(data?.tani?.perkiraanHasilPanen || '')

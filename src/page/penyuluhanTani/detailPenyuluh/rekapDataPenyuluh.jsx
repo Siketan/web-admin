@@ -17,6 +17,7 @@ const RekapDataPenyuluh = () => {
   const [modalDeleteData, setModalDeleteData] = useState(false);
   useEffect(() => {
     getDaftarPenyuluh().then((data) => {
+      console.log(data)
       const filterData = data.map(obj => {
         return Object.keys(obj).reduce((result, key) => {
           if (key === 'dataPenyuluh') {
@@ -31,7 +32,7 @@ const RekapDataPenyuluh = () => {
       setLoading(false)
     });
   }, []);
-  console.log(datas)
+  // console.log(datas)
   const [filters, setFilters] = useState({
     kecamatan: "",
     desa: "",
@@ -310,8 +311,8 @@ const RekapDataPenyuluh = () => {
                     </div>
                   </td>
                 </tr>
-                {filteredData.map((item) => (
-                  <tr key={item.id}>
+                {filteredData.map((item, index) => (
+                  <tr key={index}>
                     <td className="px-4 py-2 border">{item.kecamatan}</td>
                     <td className="px-4 py-2 border">{item.desa}</td>
                     <td className="px-4 py-2 border">{item.NIP}</td>

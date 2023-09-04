@@ -11,7 +11,7 @@ import {
 import { Image, Modal,Text,Button, Tooltip } from '@mantine/core';
 import { GetTanmanPetani, DeleteTanamanPetani } from "@/infrastruture";
 import { useParams, Link } from 'react-router-dom';
-import LoadingAnimation from '../../../../components/loadingSession'
+import LoadingAnimation from '../../../../components/loading'
 export default function DetailRekapPetani() {
   const params = useParams()
   const id = params.id

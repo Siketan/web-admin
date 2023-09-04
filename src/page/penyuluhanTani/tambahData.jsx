@@ -6,6 +6,7 @@ import InputImage from "@/components/inputImage"
 import {AddPenyuluh} from "@/infrastruture"
 import { MultiSelect } from '@mantine/core';
 import {fecthKecamatan, fecthDesa} from "../../infrastucture/daerah"
+import LoadingAnimation from '../../components/loading'
 const TambahPenyuluhanTani = ()=>{
     const [NIP, setNIP] = useState("");
     const [NoWa, setNoWa] = useState("");
@@ -23,7 +24,9 @@ const TambahPenyuluhanTani = ()=>{
     const [dafatarDesaBinaan, setDafatarDesaBinaan] = useState([])
     const [kecamatanActive, setKecamatanActive] = useState('')
     const [kecamatanBinaanActive, setKecamatanBinaanActive] = useState('')
+    const [loading, setLoading] = useState(false)
     const handleSubmit = (e)=>{
+        setLoading(true)
         e.preventDefault()
         const data = {
             NIP, NoWa, nama, password, kecamatan, desa, foto, namaProduct, desaBinaan:desaBinaan.join(", "), alamat, kecamatanBinaan
@@ -32,7 +35,7 @@ const TambahPenyuluhanTani = ()=>{
         for (const key in data) {
         formData.append(key, data[key]);
         }
-        AddPenyuluh(formData)
+        AddPenyuluh(formData).then(()=>setLoading(false))
     }
     useEffect(() => {
         fecthKecamatan().then((data)=>{
@@ -63,6 +66,7 @@ const TambahPenyuluhanTani = ()=>{
     return(
         <div className="px-10 md:px-40 py-10">
             <div className="shadow-xl rounded-xl px-5 py-5">
+                    {loading && <LoadingAnimation/>}
                 <form onSubmit={(e)=>handleSubmit(e)}>
                     <div className="flex items-center justify-center">
                         <InputImage id="foto" name="foto" value={foto}  onChange={(e) => setFoto(e.target.value)} title="Foto Profil"/>

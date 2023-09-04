@@ -7,6 +7,7 @@ import TextInput from "@/components/uiComponents/inputComponents/textInput";
 import { IconPlus, IconX, IconDeviceFloppy } from "@tabler/icons-react";
 import { AddJurnalKegiatan } from "@/infrastruture";
 import InputImage from "@/components/inputImage";
+import LoadingAnimation from '../../../components/loading'
 const FormJurnalKegiatan = () => {
   const [NIP, setNIP] = useState("");
   const [judul, setJudul] = useState("");
@@ -14,6 +15,7 @@ const FormJurnalKegiatan = () => {
   const [isi, setIsi] = useState("");
   const [gambar, setGambar] = useState("");
   const [createdBy, setCreatedBy] = useState("");
+  const [loading, setLoading] = useState(false)
   const currentDate = new Date();
   const tanggalDibuat = currentDate.toISOString().split("T")[0];
   const tanggalFormatted =
@@ -24,6 +26,7 @@ const FormJurnalKegiatan = () => {
     currentDate.getFullYear();
 
   const handleSubmit = (e) => {
+    setLoading(true)
     e.preventDefault();
     const data = {
       NIP,
@@ -38,10 +41,11 @@ const FormJurnalKegiatan = () => {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    AddJurnalKegiatan(formData);
+    AddJurnalKegiatan(formData).then(()=>setLoading(false));
   };
   return (
     <MainCard transparent row center style={{ paddingTop: "50px" }}>
+          {loading && <LoadingAnimation/>}
       <MainCard width="80%">
         <h1 className="text-center">Tambahkan Jurnal Kegiatan</h1>
         <MainCard transparent gap="10%" row>

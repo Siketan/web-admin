@@ -9,17 +9,19 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, useParams, useNavigate  } from 'react-router-dom';
 import {getAllLaporanTanam,deleteLaporanTanam} from "@/infrastruture";
-
+import LoadingAnimation from '../../../../components/loading'
 export default function DetailTanamanPetani() {
   const history = useNavigate()
   const [tanaman, setTanaman] = useState({})
   const [laporan, setLaporan] = useState([])
   const [modalDeleteData, setModalDeleteData] = useState(false);
+  const [loading, setLoading] = useState(true)
   const {id} = useParams()
   useEffect(() => {
     getAllLaporanTanam(id).then((data)=>{
       setTanaman(data?.daftarTani)
       setLaporan(data?.daftarTani?.laporanTanams)
+      setLoading(false)
     })
   }, [id])
   const handleDelete = (idLaporan)=>{
@@ -148,6 +150,8 @@ export default function DetailTanamanPetani() {
       </div>
         {!laporan?.length && <h3 className="text-center font-semibold">Belum Ada Laporan Tanaman</h3>}
         <MainCard row transparent center className="flex-wrap">
+          {loading &&
+            <LoadingAnimation/>}
             {laporan?.map((data, index) => (
             <MainCard key={index} width="460px">
                 <MainCard fullwidth transparent>

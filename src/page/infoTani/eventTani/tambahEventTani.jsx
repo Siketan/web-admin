@@ -7,6 +7,7 @@ import TextInput from "@/components/uiComponents/inputComponents/textInput"
 import {AddEventTani} from "@/infrastruture"
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { Loader } from '@mantine/core'; 
+import LoadingAnimation from '../../../components/loading'
 function TambahEventTani() {
 
   const [namaKegiatan, setNamaKegiatan] = useState("");
@@ -14,12 +15,12 @@ function TambahEventTani() {
   const [waktuAcara, setWaktuAcara] = useState("");
   const [tempat, setTempat] = useState("");
   const [peserta, setPeserta] = useState("");
+  const [loading, setLoading] = useState(false)
   // const [isi, setIsi] = useState("");
   const [fotoKegiatan, setFotoKegiatan] = useState("");
-  const [isLoading, setisLoading] = useState(false)
 
     const handleSubmit = ()=>{
-      setisLoading(true)
+    setLoading(true)
     const data = {
       namaKegiatan, tanggalAcara, waktuAcara, tempat, peserta,  fotoKegiatan
     }
@@ -27,11 +28,11 @@ function TambahEventTani() {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    AddEventTani(formData).then(setisLoading(false))
-    
+    AddEventTani(formData).then(()=>setLoading(false))
   }
   return (
     <MainCard transparent row center style={{paddingTop:"50px"}}>
+          {loading && <LoadingAnimation/>}
       <MainCard width="80%">
         <MainCard transparent nopadding center>
           <InputImage id="fotoKegiatan" name="fotoKegiatan" value={fotoKegiatan}  onChange={(e) => setFotoKegiatan(e)}/>
@@ -48,7 +49,6 @@ function TambahEventTani() {
             onClick={handleSubmit}
               className="w-[20%] text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-orange-800"
               >
-              {isLoading ? <Loader size="xs"/> : <FontAwesomeIcon icon={faSave} className="mr-2" />}
               Simpan
           </button>
         </MainCard>

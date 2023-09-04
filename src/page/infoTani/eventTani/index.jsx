@@ -6,12 +6,17 @@ import { IconEdit, IconEye, IconTrash, IconPlus   } from '@tabler/icons-react';
 import { Image,} from '@mantine/core';
 import {GetEventTani, DeleteEventTani} from "@/infrastruture"
 import { Text, Button, Modal } from '@mantine/core';
+import LoadingAnimation from '../../../components/loading'
 function EventTani() {
     const [datas, setDatas] = useState([])
     const [modalDeleteData, setModalDeleteData] = useState(false);
+    const [loading, setLoading] = useState(true)
     const history = useNavigate ();
     useEffect(() => {
-        GetEventTani().then((data)=>setDatas(data.infotani))
+        GetEventTani().then((data)=>{
+            setLoading(false)
+            setDatas(data.infotani)}
+            )
     }, [])
     const now = new Date();
     const formattedDate = now.toLocaleDateString("id-ID");
@@ -29,6 +34,7 @@ function EventTani() {
     };
     return(
     <div className="pt-16">
+            {loading && <LoadingAnimation/>}
         <Modal
             opened={modalDeleteData}
             onClose={() => setModalDeleteData(false)}
