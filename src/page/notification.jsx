@@ -35,14 +35,14 @@ return (
         </Button>
         <Button
             color="cyan"
-            style={{ color: 'white', backgroundColor: 'red' }}
+            style={{ color: 'white', backgroundColor: 'blue' }}
             type="submit"
             onClick={() => {
             handleClick(modalDeleteData.id); 
             setModalDeleteData('');
             }}
         >
-            Delete
+            Verivikasi
         </Button>
         </div>
     </Modal>
