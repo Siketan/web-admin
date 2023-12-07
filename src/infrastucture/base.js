@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const baseURL = "http://localhost:3001"
-const baseURL = "https://siketan-api.cyclic.app/"
+const baseURL = "http://localhost:3001/";
+// const baseURL = "https://siketan-api.cyclic.app/"
 const API = axios.create({
   baseURL,
   headers: {
@@ -21,7 +21,7 @@ API.interceptors.response.use(
 
     if (typeof err.response.data.error.name !== "undefined") {
       if (err.response.data.error.name === "TokenExpiredError") {
-        localStorage.clear()
+        localStorage.clear();
         throw err;
       }
     }

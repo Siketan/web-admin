@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React from "react";
+import React, { forwardRef } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import Coba from "./page"
 import {
@@ -39,82 +39,252 @@ import {
   TambahLaporanAhir,
   EditPenyuluhan
 } from "./page";
-import Navbar from "./components/navbar";
+
 import Footer from "./components/footer";
 import ProtectedRoute from "./page/protectedRoute";
-const Path = () => {
-  const login = window.localStorage.getItem('token')
-  const chekToken = ()=>{
-    if((login && window.location.pathname != "/loginAdminSiketan") || (login && window.location.pathname != "/registerAdminSiketan")) {
-      return true
-    } else{
-      return false
-    }
+import { Image, Menu, clsx, Group, Avatar, Text, UnstyledButton } from "@mantine/core";
+import { IconMenu2 } from "@tabler/icons-react";
+import { IoMailUnreadOutline, IoCaretDownOutline } from "react-icons/io5";
+import { FaRegBell } from "react-icons/fa";
+
+
+const menu = [
+  {
+    name: "Statistik",
+    icon: "/public/icons/statistik.svg",
+    path: "/statistik",
+  }, {
+    name: "Data Pertanian",
+    icon: "/public/icons/data-tani.svg",
+    path: "/data-tani",
+  }, {
+    name: "Info Pertanian",
+    icon: "/public/icons/info-tani.svg",
+    path: "/info-tani"
+  }, {
+    name: "Toko Pertanian",
+    icon: "/public/icons/toko-tani.svg",
+    path: "/toko-tani"
+  }, {
+    name: "Info Penyuluh",
+    icon: "/public/icons/data-penyuluh.svg",
+    path: "/data-penyuluh"
+  }, {
+    name: "Hak Akses",
+    icon: "/public/icons/hak-akses.svg",
+    path: "/hak-akses"
+  }, {
+    name: "Log Aktivitas",
+    icon: "/public/icons/log-aktivitas.svg",
+    path: "/log-aktivitas"
+  }, {
+    name: "List Operator",
+    icon: "/public/icons/list-operator.svg",
+    path: "/list-operator"
   }
+]
+const Path = () => {
+  const [sidebarOpen, setSidebarOpen] = React.useState(true);
+  const activePage = window.location.pathname.split("/")[1];
+
+  const sidebar = React.useRef(null);
+  const mainMenuClasses =
+    "flex items-center p-2 bg-white-primary text-green-primary hover:bg-gray-100 hover:text-gray-700 transition-all duration-200 ease-in-out";
+  const activeClasses =
+    "bg-gray-100 text-gray-700";
+  const textMenuClasses = "ml-3 transition-all duration-200 text-left whitespace-nowrap font-bold text-lg uppercase underline"
+
+  // const login = window.localStorage.getItem('token')
+  // const chekToken = () => {
+  //   if ((login && window.location.pathname != "/loginAdminSiketan") || (login && window.location.pathname != "/registerAdminSiketan")) {
+  //     return true
+  //   } else {
+  //     return false
+  //   }
+  // }
+
   return (
-    <div>
-      {/* {window.location.pathname !== "/loginAdminSiketan" && <Navbar /> } */}
-      { chekToken() && <Navbar />}
-      <div
-        className={
-          chekToken()
-            ? "my-32"
-            : ""
-        }
-      >
-        <Router>
-          <Routes>
-            <Route path="/loginAdminSiketan" element={<Login />} />
-            <Route path="/registerAdminSiketan" element={<Register />} />
-            <Route element={<ProtectedRoute />}>
-              <Route path="/" element={<EventTani />} />
-              <Route path="/notification" element={<Notification />} />
-              {/* Data Tani */}
-              <Route path="/rekap-data-tani/edit/:id" element={<EditRekapPetani />} />
-              <Route path="/data-tani/tambah" element={<TambahDataTani />} />
-              <Route path="/data-tani/laporan-tanam" element={<LaporanPetani />}/>
-              <Route path="/data-tani/rekap-petani" element={<RekapDataPetani />}/>
-              <Route path="/data-tani/detail/:id" element={<DetailRekapPetani />} />
-              <Route path="/tanaman-petani/add" element={<TambahTanamanPetani />} />
-              <Route path="/tanaman-petani/edit/:id" element={<EditTanamanPetani />} />
-              <Route path="/laporan-tanam/add" element={<TambahLaporanTanam />} />
-              <Route path="/laporan-akhir/add" element={<TambahLaporanAhir />} />
-              <Route path="/laporan-tanam/edit/:id" element={<EditLaporanTanam />} />
-              <Route path="/laporan-tanam/:id" element={<DetailTanamanPetani />} />
-              {/* <Route path="/data-tanaman" element={<DataTanaman />} /> */}
-              {/* event Tani */}
-              <Route path="/event-tani/tambah" element={<TambahEventTani />} />
-              <Route path="/event-tani/detail" element={<DetailEventTani />} />
-              <Route path="/info-tani/event-tani" element={<EventTani />} />
-              <Route path="/event-tani/edit/:id" element={<EditEventTani />} />
-              {/* info tani */}
-              <Route path="/info-tani" element={<InfoTani />} />
-              <Route path="/info-tani/tambah" element={<TambahInfoTani />} />
-              <Route path="/info-tani/detail" element={<DetailInfoTani />} />
-              <Route path="/info-tani/edit/:id" element={<EditInfoTani />} />
-              {/* Toko Tani */}
-              <Route path="/toko-tani/tambah-penjual" element={<TambahPenjual />} />
-              <Route path="/toko-tani/produk-petani" element={<ProdukPetani />} />
-              <Route path="/toko-tani/produk-penyuluh" element={<ProdukPenyuluh />} />
-              {/* Data Penyuluh */}
-              <Route path="/data-penyuluh/tambah" element={<TambahPenyuluhanTani />} />
-              <Route path="/data-penyuluh/:id" element={<EditPenyuluhan />} />
-              <Route path="/data-penyuluh/presensi-kehadiran" element={<PresensiKehadiran />} />
-              <Route path="/data-penyuluh/jurnal-kegiatan" element={<JurnalKegiatan />} />
-              <Route path="/data-penyuluh/jurnal-kegiatan/form" element={<FormJurnalKegiatan />} />
-              <Route path="/data-penyuluh/riwayat-chat" element={<DataRiwayatChat />} />
-              <Route path="/data-penyuluh/rekap-penyuluh" element={<RekapDataPenyuluh />} />
-              {/* LiveChat */}
-              <Route path="/live-chat" element={<LiveChat />} />
-              <Route path="/live-chat/rating-petugas" element={<RatingPetugas />} />
-            </Route>
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Router>
+    <div className="bg-green-primary bg-opacity-70">
+      <div className="flex">
+        <aside
+          ref={sidebar}
+          className={clsx(
+            "fixed left-0 top-0 z-20 flex h-screen flex-col justify-between bg-green-primary pb-8 shadow-lg duration-300 lg:translate-x-0 text-white",
+            sidebarOpen ? "w-72" : "w-20"
+          )}
+        >
+          <div className={clsx("bg-green-secondary",
+            !sidebarOpen && "p-4"
+          )}>
+            <Image
+              src="/public/image/logo-navbar.png"
+              alt="Logo Siketan"
+              className={sidebarOpen ? "block" : "hidden"}
+            />
+            <Image
+              src="/public/image/logo.png"
+              alt="Logo Siketan"
+              className={sidebarOpen ? "hidden" : "block"}
+            />
+          </div>
+          <div className="h-full px-3 py-2 overflow-y-auto">
+            <ul className="space-y-1.5 font-medium">
+              {
+                menu.map((item, index) => (
+                  <li key={index}>
+                    <a
+                      href={item.path}
+                      className={clsx(
+                        mainMenuClasses,
+                        activePage === item.path &&
+                        activeClasses
+                      )}
+                    >
+                      <Image
+                        src={item.icon}
+                        alt={item.name}
+                        width={24}
+                      />
+                      <span
+                        className={clsx(
+                          textMenuClasses,
+                          sidebarOpen ? "block" : "hidden"
+                        )}
+                      >
+                        {item.name}
+                      </span>
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </aside>
+        <div
+          className={clsx(
+            "box-border h-full min-h-screen w-full transition-all duration-300 ease-in-out relative overflow-hidden",
+            sidebarOpen ? "lg:ml-72" : "lg:ml-20"
+          )}
+        >
+          <nav className="p-5 flex justify-between text-white bg-green-primary">
+            <div className="flex gap-4 items-center text-xl">
+              <button
+                onClick={() => {
+                  setSidebarOpen(!sidebarOpen);
+                }}
+              >
+                <IconMenu2
+                />
+              </button>
+              <h2 className="font-bold">All Data</h2>
+            </div>
+            <div className="flex gap-4 items-center">
+              <IoMailUnreadOutline
+                size={24}
+              />
+              <FaRegBell
+                size={24}
+              />
+              <Menu>
+                <Menu.Target>
+                  <UnstyledButton className="text-white">
+                    <Group>
+
+                      <div style={{ flex: 1 }}>
+                        <Text fw={700} underline>
+                          Alila Indah
+                        </Text>
+
+                        <Text size="xs">
+                          SUPER ADMIN KABUPATEN
+                        </Text>
+                      </div>
+                      <Avatar radius="xl" />
+                      <IoCaretDownOutline />
+                    </Group>
+                  </UnstyledButton>
+                </Menu.Target>
+                <Menu.Dropdown>
+                  <Menu.Item component="a" href="https://mantine.dev">
+                    Mantine website
+                  </Menu.Item>
+                  <Menu.Item
+                    component="a"
+                    href="https://mantine.dev"
+                    target="_blank"
+                  >
+                    External link
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+            </div>
+          </nav>
+          <div
+            className="p-6 overflow-hidden"
+          // style={{
+          //     width: `calc(100% - ${sidebarOpen ? 18 : 7}rem)`,
+          // }}
+          >
+            <RoutesPath />
+          </div>
+        </div>
+        <Footer />
       </div>
-      {chekToken() && <Footer />}
     </div>
   );
 };
+
+
+const RoutesPath = () => {
+  return <Router>
+    <Routes>
+      <Route path="/loginAdminSiketan" element={<Login />} />
+      <Route path="/registerAdminSiketan" element={<Register />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<EventTani />} />
+        <Route path="/notification" element={<Notification />} />
+        {/* Data Tani */}
+        <Route path="/rekap-data-tani/edit/:id" element={<EditRekapPetani />} />
+        <Route path="/data-tani/tambah" element={<TambahDataTani />} />
+        <Route path="/data-tani/laporan-tanam" element={<LaporanPetani />} />
+        <Route path="/data-tani/rekap-petani" element={<RekapDataPetani />} />
+        <Route path="/data-tani/detail/:id" element={<DetailRekapPetani />} />
+        <Route path="/tanaman-petani/add" element={<TambahTanamanPetani />} />
+        <Route path="/tanaman-petani/edit/:id" element={<EditTanamanPetani />} />
+        <Route path="/laporan-tanam/add" element={<TambahLaporanTanam />} />
+        <Route path="/laporan-akhir/add" element={<TambahLaporanAhir />} />
+        <Route path="/laporan-tanam/edit/:id" element={<EditLaporanTanam />} />
+        <Route path="/laporan-tanam/:id" element={<DetailTanamanPetani />} />
+        {/* <Route path="/data-tanaman" element={<DataTanaman />} /> */}
+        {/* event Tani */}
+        <Route path="/event-tani/tambah" element={<TambahEventTani />} />
+        <Route path="/event-tani/detail" element={<DetailEventTani />} />
+        <Route path="/info-tani/event-tani" element={<EventTani />} />
+        <Route path="/event-tani/edit/:id" element={<EditEventTani />} />
+        {/* info tani */}
+        <Route path="/info-tani" element={<InfoTani />} />
+        <Route path="/info-tani/tambah" element={<TambahInfoTani />} />
+        <Route path="/info-tani/detail" element={<DetailInfoTani />} />
+        <Route path="/info-tani/edit/:id" element={<EditInfoTani />} />
+        {/* Toko Tani */}
+        <Route path="/toko-tani/tambah-penjual" element={<TambahPenjual />} />
+        <Route path="/toko-tani/produk-petani" element={<ProdukPetani />} />
+        <Route path="/toko-tani/produk-penyuluh" element={<ProdukPenyuluh />} />
+        {/* Data Penyuluh */}
+        <Route path="/data-penyuluh/tambah" element={<TambahPenyuluhanTani />} />
+        <Route path="/data-penyuluh/:id" element={<EditPenyuluhan />} />
+        <Route path="/data-penyuluh/presensi-kehadiran" element={<PresensiKehadiran />} />
+        <Route path="/data-penyuluh/jurnal-kegiatan" element={<JurnalKegiatan />} />
+        <Route path="/data-penyuluh/jurnal-kegiatan/form" element={<FormJurnalKegiatan />} />
+        <Route path="/data-penyuluh/riwayat-chat" element={<DataRiwayatChat />} />
+        <Route path="/data-penyuluh/rekap-penyuluh" element={<RekapDataPenyuluh />} />
+        {/* LiveChat */}
+        <Route path="/live-chat" element={<LiveChat />} />
+        <Route path="/live-chat/rating-petugas" element={<RatingPetugas />} />
+      </Route>
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
+  </Router>
+}
 
 export default Path;
