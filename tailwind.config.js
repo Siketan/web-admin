@@ -7,6 +7,7 @@ export default {
         "green-primary": "#0E5706",
         "green-secondary": "#6FA31D",
         "green-footer": "#6EB940",
+        "green-sidebar-hover": "#A2FF94",
         "orange-primary": "#F4A21C",
         "grey-primary": "#AEAEAE",
         "white-primary": "#E3EAE2",

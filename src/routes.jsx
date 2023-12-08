@@ -51,36 +51,52 @@ import { FaRegBell } from "react-icons/fa";
 const menu = [
   {
     name: "Statistik",
-    icon: "/public/icons/statistik.svg",
+    icon: "/icons/statistik.svg",
     path: "/statistik",
   }, {
     name: "Data Pertanian",
-    icon: "/public/icons/data-tani.svg",
+    icon: "/icons/data-tani.svg",
     path: "/data-tani",
   }, {
     name: "Info Pertanian",
-    icon: "/public/icons/info-tani.svg",
+    icon: "/icons/info-tani.svg",
     path: "/info-tani"
   }, {
     name: "Toko Pertanian",
-    icon: "/public/icons/toko-tani.svg",
+    icon: "/icons/toko-tani.svg",
     path: "/toko-tani"
   }, {
     name: "Info Penyuluh",
-    icon: "/public/icons/data-penyuluh.svg",
+    icon: "/icons/data-penyuluh.svg",
     path: "/data-penyuluh"
   }, {
     name: "Hak Akses",
-    icon: "/public/icons/hak-akses.svg",
+    icon: "/icons/hak-akses.svg",
     path: "/hak-akses"
   }, {
     name: "Log Aktivitas",
-    icon: "/public/icons/log-aktivitas.svg",
+    icon: "/icons/log-aktivitas.svg",
     path: "/log-aktivitas"
   }, {
     name: "List Operator",
-    icon: "/public/icons/list-operator.svg",
+    icon: "/icons/list-operator.svg",
     path: "/list-operator"
+  }
+]
+
+const dropdownMenu = [
+  {
+    name: "Profil",
+    icon: "/icons/profil.svg",
+    path: "/profil",
+  }, {
+    name: "Pengaturan",
+    icon: "/icons/pengaturan.svg",
+    path: "/pengaturan",
+  }, {
+    name: "Keluar",
+    icon: "/icons/keluar.svg",
+    path: "/keluar",
   }
 ]
 const Path = () => {
@@ -89,7 +105,7 @@ const Path = () => {
 
   const sidebar = React.useRef(null);
   const mainMenuClasses =
-    "flex items-center p-2 bg-white-primary text-green-primary hover:bg-gray-100 hover:text-gray-700 transition-all duration-200 ease-in-out";
+    "flex items-center p-2 bg-white-primary text-green-primary hover:bg-green-sidebar-hover transition-all duration-200 ease-in-out";
   const activeClasses =
     "bg-gray-100 text-gray-700";
   const textMenuClasses = "ml-3 transition-all duration-200 text-left whitespace-nowrap font-bold text-lg uppercase underline"
@@ -113,16 +129,16 @@ const Path = () => {
             sidebarOpen ? "w-72" : "w-20"
           )}
         >
-          <div className={clsx("bg-green-secondary",
+          <div className={clsx("bg-green-secondary bg-opacity-50",
             !sidebarOpen && "p-4"
           )}>
             <Image
-              src="/public/image/logo-navbar.png"
+              src="/image/logo-navbar.png"
               alt="Logo Siketan"
               className={sidebarOpen ? "block" : "hidden"}
             />
             <Image
-              src="/public/image/logo.png"
+              src="/image/logo.png"
               alt="Logo Siketan"
               className={sidebarOpen ? "hidden" : "block"}
             />
@@ -185,11 +201,23 @@ const Path = () => {
               <FaRegBell
                 size={24}
               />
-              <Menu>
+              <Menu
+                styles={{
+                  dropdown: {
+                    background: "linear-gradient(180deg, #22571C 0%, #194115 100%);",
+                  },
+                  item: {
+                    color: "white",
+                    textTransform: "uppercase",
+                    ":hover": {
+                      background: "linear-gradient(180deg, #86BA34 0%, rgba(111, 163, 29, 0.50) 100%)",
+                    },
+                  },
+                }}
+              >
                 <Menu.Target>
                   <UnstyledButton className="text-white">
                     <Group>
-
                       <div style={{ flex: 1 }}>
                         <Text fw={700} underline>
                           Alila Indah
@@ -205,16 +233,21 @@ const Path = () => {
                   </UnstyledButton>
                 </Menu.Target>
                 <Menu.Dropdown>
-                  <Menu.Item component="a" href="https://mantine.dev">
-                    Mantine website
-                  </Menu.Item>
-                  <Menu.Item
-                    component="a"
-                    href="https://mantine.dev"
-                    target="_blank"
-                  >
-                    External link
-                  </Menu.Item>
+                  {
+                    dropdownMenu.map((item, index) => (
+                      <Menu.Item key={index} href={item.path}>
+                        <div className="flex gap-2 items-center">
+                          <Image
+                            src={item.icon}
+                            alt={item.name}
+                            className="inline-block"
+                            width={24}
+                          />
+                          {item.name}
+                        </div>
+                      </Menu.Item>
+                    ))
+                  }
                 </Menu.Dropdown>
               </Menu>
             </div>
@@ -228,8 +261,8 @@ const Path = () => {
             <RoutesPath />
           </div>
         </div>
-        <Footer />
       </div>
+      <Footer sidebarOpen={sidebarOpen} />
     </div>
   );
 };
