@@ -115,12 +115,13 @@ const GetFeatures = () => {
     </ol>
   </div>
 }
+
 const Footer = ({ sidebarOpen }) => {
   return (
     <footer className="relative left-0 right-0 z-[999999999] w-full flex">
       <div
         className={clsx(sidebarOpen ? "block" : "hidden",
-          "bg-green-secondary bg-opacity-50 p-4 w-72"
+          "bg-green-secondary bg-opacity-50 p-4 w-80"
         )}
       >
         <div
@@ -161,9 +162,8 @@ const Footer = ({ sidebarOpen }) => {
           {
             menuPage.map((item, index) => {
               return (
-                <>
+                <div key={index} className="inline-block">
                   <a
-                    key={index}
                     href={item.url}
                     target="_blank"
                     rel="noreferrer"
@@ -174,7 +174,7 @@ const Footer = ({ sidebarOpen }) => {
                   {index !== menuPage.length - 1 && (
                     <span className="text-sm font-bold">|</span>
                   )}
-                </>
+                </div>
               )
             })
           }

@@ -8,6 +8,7 @@ import { GetEventTani, DeleteEventTani } from "@/infrastruture"
 import { Text, Button, Modal } from '@mantine/core';
 import LoadingAnimation from '../../../components/loading'
 
+
 function EventTani() {
     const [datas, setDatas] = useState([])
     const [modalDeleteData, setModalDeleteData] = useState(false);
@@ -20,6 +21,7 @@ function EventTani() {
         }
         )
     }, [])
+
     const handleDeleteUser = (ids) => {
         DeleteEventTani(ids)
         setModalDeleteData(false)
