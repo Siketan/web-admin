@@ -1,11 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Divider } from "@mantine/core";
 import { useState, useEffect } from "react";
-import { faPlus, faSearch, faClose, faSave } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faSave } from "@fortawesome/free-solid-svg-icons";
 import InputImage from "@/components/inputImage";
 import MainCard from "@/components/MainCard";
-import { useParams,Link } from "react-router-dom";
-import { DaftarTaniAdd, CekNik, select,selectPenyuluh } from "@/infrastruture";
+import { Link } from "react-router-dom";
+import { DaftarTaniAdd, select, selectPenyuluh } from "@/infrastruture";
 import { fecthKecamatan, fecthDesa } from "../../infrastucture/daerah";
 import Loading from "../../components/loading"
 const TambahDataTani = () => {
@@ -20,7 +19,6 @@ const TambahDataTani = () => {
   const [alamat, setAlamat] = useState("");
   const [gapoktan, setGapoktan] = useState("");
   const [foto, setFoto] = useState("");
-  const [disable, setDisable] = useState(false);
   const [daftarKecamatan, setDaftarKecamatan] = useState([]);
   const [kecamatanActive, setKecamatanActive] = useState("");
   const [dafatarDesa, setDafatarDesa] = useState([{ nama: "" }]);
@@ -32,7 +30,7 @@ const TambahDataTani = () => {
       setDaftarKecamatan(data.kecamatan);
     });
   }, []);
- 
+
   const handleselect = (e) => {
     setDesa(e);
     select(e).then((data) => {
@@ -60,7 +58,7 @@ const TambahDataTani = () => {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    DaftarTaniAdd(formData).then(()=>setLoading(false))
+    DaftarTaniAdd(formData).then(() => setLoading(false))
   };
   const handleSelectKecamatan = (e) => {
     const id = e?.split("-")[1];
@@ -68,14 +66,14 @@ const TambahDataTani = () => {
     setKecamatan(nama);
     setKecamatanActive(e);
     fecthDesa(id).then((data) => setDafatarDesa(data.kelurahan));
-    selectPenyuluh(nama).then((data)=> setDaftarPenyuluh(data.penyuluh))
+    selectPenyuluh(nama).then((data) => setDaftarPenyuluh(data.penyuluh))
   };
 
   return (
     <div className="px-10 md:px-40 py-10 z-1">
       <form onSubmit={(e) => handleSubmit(e)}>
         {loading &&
-            <Loading/>}
+          <Loading />}
         <MainCard className="mb-10">
           <div className="flex items-center justify-center">
             <InputImage
@@ -90,7 +88,6 @@ const TambahDataTani = () => {
                 type="number"
                 name="NIK"
                 id="NIK"
-                disabled={disable}
                 value={NIK}
                 onChange={(e) => setNIK(e.target.value)}
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -309,7 +306,7 @@ const TambahDataTani = () => {
                 <strong>Nama Kelompok</strong> (Contoh: Karanganyar)
               </label>
             </div>
-          :
+            :
             <div className="relative z-0 w-full mb-6 group">
               <input
                 type="text"

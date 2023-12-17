@@ -56,6 +56,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./infrastucture/redux/state/stateSlice";
 import { RootState } from "./infrastucture/redux/store";
 import { GetProfile } from "./infrastucture";
+import Statistik from "./page/statistik";
+import TambahStatistik from "./page/statistik/tambah";
 
 const menu = [
   {
@@ -66,12 +68,12 @@ const menu = [
       {
         name: "Tambah Data Statistik",
         icon: "/icons/users.svg",
-        path: "#",
+        path: "/statistik/tambah",
       },
       {
         name: "Lihat Tabel Statistik",
         icon: "/icons/users.svg",
-        path: "#",
+        path: "/statistik",
       },
     ],
   },
@@ -441,6 +443,10 @@ const RoutesPath = () => {
         <Route path="/loginAdminSiketan" element={<Login />} />
         <Route path="/registerAdminSiketan" element={<Register />} />
         <Route element={<ProtectedRoute />}>
+          {/* Statistik */}
+          <Route path="/statistik" element={<Statistik />} />
+          <Route path="/statistik/tambah" element={<TambahStatistik />} />
+          {/* ENd of Statistik */}
           <Route path="/" element={<EventTani />} />
           <Route path="/notification" element={<Notification />} />
           {/* Data Tani */}

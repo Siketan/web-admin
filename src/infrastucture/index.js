@@ -127,6 +127,14 @@ export const GetDaftarTaniById = async (id) => {
   }
 };
 // tanaman petani
+export const GetStatistikTanamanAll = async () => {
+  try {
+    const response = await Api.get(`/statistik`);
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), "error");
+  }
+};
 export const GetTanmanPetani = async (id) => {
   try {
     const response = await Api.get(`/tanaman-petani/${id}`);
