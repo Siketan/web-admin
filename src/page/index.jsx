@@ -1,5 +1,5 @@
-import TambahDataTani from "./dataTani/tambahData";
-import RekapDataPetani from "./dataTani/dataPertanian/rekapPetani";
+import TambahDataTani from "./dataTani/petani/tambahData";
+import RekapDataPetani from "./dataTani/petani/rekapPetani";
 import LaporanPetani from "./dataTani/dataPertanian/laporan-tanam";
 import InfoTani from "./infoTani";
 import TambahInfoTani from "./infoTani/tambahData";
@@ -25,7 +25,8 @@ import DetailInfoTani from "./infoTani/detailInfoTani";
 import DetailEventTani from "./infoTani/eventTani/DetailEventTani";
 import EditInfoTani from "./infoTani/editInfoTani";
 import EditEventTani from "./infoTani/eventTani/editEventTani";
-import EditRekapPetani from "./dataTani/dataPertanian/editDataPetani";
+import EditRekapPetani from "./dataTani/petani/editDataPetani";
+import ViewDetailDataPetani from "./dataTani/petani/detailDataPetani"; 
 import DetailRekapPetani from "./dataTani/dataPertanian/tanamanPetani";
 import TambahTanamanPetani from "./dataTani/dataPertanian/tanamanPetani/tambah";
 import EditTanamanPetani from "./dataTani/dataPertanian/tanamanPetani/edit";
@@ -53,6 +54,7 @@ const NotFoundPage = () => {
 export {
   EditRekapPetani,
   EditLaporanTanam,
+  ViewDetailDataPetani,
   TambahLaporanTanam,
   EditTanamanPetani,
   DetailTanamanPetani,

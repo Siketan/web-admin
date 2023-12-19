@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
   TambahDataTani,
   RekapDataPetani,
+  ViewDetailDataPetani,
   LaporanPetani,
   InfoTani,
   TambahInfoTani,
@@ -90,7 +91,7 @@ const menu = [
       {
         name: "Lihat Tabel Tanam",
         icon: "/icons/users.svg",
-        path: "#",
+        path: "/tanaman-petani",
       },
       {
         name: "Daftar User Petani",
@@ -457,7 +458,7 @@ const RoutesPath = () => {
           <Route path="/data-tani/tambah" element={<TambahDataTani />} />
           <Route path="/data-tani/laporan-tanam" element={<LaporanPetani />} />
           <Route path="/data-tani/rekap-petani" element={<RekapDataPetani />} />
-          <Route path="/data-tani/detail/:id" element={<DetailRekapPetani />} />
+          <Route path="/data-tani/detail/:id" element={<ViewDetailDataPetani/>} />
           <Route path="/tanaman-petani/add" element={<TambahTanamanPetani />} />
           <Route
             path="/tanaman-petani/edit/:id"

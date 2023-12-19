@@ -10,6 +10,8 @@ export const Register = async (data) => {
   try {
     const response = await Api.post("/auth/register", data);
     SweatAlert(String(response.data.message), "success");
+    // redirect to login page
+    window.location.href = "/loginAdminSiketan";
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
   }
