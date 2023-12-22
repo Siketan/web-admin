@@ -55,7 +55,7 @@ import { FaRegBell } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./infrastucture/redux/state/stateSlice";
 import { RootState } from "./infrastucture/redux/store";
-import { GetProfile } from "./infrastucture";
+import { GetProfile, Logout } from "./infrastucture";
 import Statistik from "./page/statistik";
 import TambahStatistik from "./page/statistik/tambah";
 
@@ -221,11 +221,6 @@ const dropdownMenu = [
     name: "Pengaturan",
     icon: "/icons/pengaturan.svg",
     path: "/pengaturan",
-  },
-  {
-    name: "Keluar",
-    icon: "/icons/keluar.svg",
-    path: "/keluar",
   },
 ];
 const Path = () => {
@@ -417,6 +412,22 @@ const Path = () => {
                       </div>
                     </Menu.Item>
                   ))}
+                  <Menu.Item
+                    component="b"
+                    onClick={() => {
+                      Logout();
+                    }}
+                  >
+                    <div className="flex gap-2 items-center">
+                      <Image
+                        src="/icons/keluar.svg"
+                        alt="Keluar"
+                        className="inline-block"
+                        width={24}
+                      />
+                      Keluar
+                    </div>
+                  </Menu.Item>
                 </Menu.Dropdown>
               </Menu>
             </div>

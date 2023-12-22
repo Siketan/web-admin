@@ -29,9 +29,12 @@ export default function index() {
         <h3 className="text-white text-2xl font-bold mx-auto">
           TABEL DATA STATISTIK PERTANIAN
         </h3>
-        <button className="absolute right-4 text-[#0FA958] text-xl">
+        <a
+          href="/statistik/tambah"
+          className="absolute right-4 text-[#0FA958] text-xl"
+        >
           <FaPlus />
-        </button>
+        </a>
       </div>
     </div>
   );

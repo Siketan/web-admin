@@ -15,6 +15,11 @@ import SearchInput from "../../components/uiComponents/inputComponents/searchInp
 import { FaRegRectangleList, FaUpload } from "react-icons/fa6";
 import { GetStatistikTanamanAll } from "../../infrastucture";
 import { IoImageOutline } from "react-icons/io5";
+import { useSelector } from "react-redux";
+import { RootState } from "../../infrastucture/redux/store";
+import { dataTanamanDefault } from "../../types/dataTanaman";
+import { addNewDataTanaman } from "../../infrastucture/statistic";
+import { useNavigate } from "react-router-dom";
 
 const breadcrumbItems = [
   { title: "Dashboard", href: "/" },
@@ -27,6 +32,19 @@ const breadcrumbItems = [
 ));
 
 export default function TambahStatistik() {
+  const user = useSelector((state: RootState) => state.state.user);
+  const [newData, setNewData] = React.useState(dataTanamanDefault);
+  const [isHoltikultura, setIsHoltikultura] = React.useState(false);
+
+  const navigate = useNavigate();
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
+    event.preventDefault();
+    addNewDataTanaman({ ...newData, fk_kelompokId: 1 }).then((e) => {
+      if (e) navigate("/statistik");
+    });
+  }
+
   return (
     <div>
       <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
@@ -60,7 +78,11 @@ export default function TambahStatistik() {
           </div>
         </div>
       </div>
-      <div className="bg-[#D9D9D9] rounded-lg">
+      <form
+        className="bg-[#D9D9D9] rounded-lg"
+        onSubmit={handleSubmit}
+        method="POST"
+      >
         <div className="relative bg-[#136B09] mt-6 p-4 flex w-full justify-between rounded-t-lg shadow-lg items-center">
           <h3 className="text-white text-2xl font-bold">
             MASUKKAN DATA TANAMAN
@@ -76,12 +98,65 @@ export default function TambahStatistik() {
               <p>Kategori Tanaman</p>
               <div className="rounded-lg shadow-lg p-4">
                 <Radio.Group className="[&>*]:mt-1 first:mt-0">
-                  <Radio label="Tanaman Pangan" value="pangan" />
-                  <Radio label="Tanaman Perkebunan" value="perkebunan" />
-                  <Radio label="Tanaman Holtikultura" value="holtikultura" />
+                  <Radio
+                    label="Tanaman Pangan"
+                    value="pangan"
+                    onClick={(event) => {
+                      setIsHoltikultura(false);
+                      setNewData({
+                        ...newData,
+                        kategori: event.currentTarget.value,
+                      });
+                    }}
+                    checked={newData.kategori === "pangan"}
+                  />
+                  <Radio
+                    label="Tanaman Perkebunan"
+                    value="perkebunan"
+                    onClick={(event) => {
+                      setIsHoltikultura(false);
+                      setNewData({
+                        ...newData,
+                        kategori: event.currentTarget.value,
+                      });
+                    }}
+                    checked={newData.kategori === "perkebunan"}
+                  />
+                  <Radio
+                    label="Tanaman Holtikultura"
+                    value="holtikultura"
+                    onClick={() => {
+                      setIsHoltikultura(true);
+                    }}
+                    checked={isHoltikultura}
+                  />
                   <Radio.Group className="ml-8 [&>*]:mt-1">
-                    <Radio label="Jenis Buah" value="buah" />
-                    <Radio label="Jenis Sayur" value="sayur" />
+                    <Radio
+                      label="Jenis Buah"
+                      value="buah"
+                      disabled={!isHoltikultura}
+                      onClick={(event) => {
+                        if (isHoltikultura)
+                          setNewData({
+                            ...newData,
+                            kategori: event.currentTarget.value,
+                          });
+                      }}
+                      checked={newData.kategori === "buah" && isHoltikultura}
+                    />
+                    <Radio
+                      label="Jenis Sayur"
+                      value="sayur"
+                      disabled={!isHoltikultura}
+                      onClick={(event) => {
+                        if (isHoltikultura)
+                          setNewData({
+                            ...newData,
+                            kategori: event.currentTarget.value,
+                          });
+                      }}
+                      checked={newData.kategori === "sayur" && isHoltikultura}
+                    />
                   </Radio.Group>
                 </Radio.Group>
               </div>
@@ -96,6 +171,13 @@ export default function TambahStatistik() {
                   <Select
                     className="mt-2"
                     placeholder="-Tanaman Holtikultura Buah-"
+                    value={newData.komoditas}
+                    onChange={(e) =>
+                      setNewData((prev) => ({
+                        ...prev,
+                        komoditas: e ?? "",
+                      }))
+                    }
                     data={[
                       "Melon",
                       "Semangka",
@@ -124,6 +206,13 @@ export default function TambahStatistik() {
                   <Select
                     className="mt-2"
                     placeholder="-Tanaman Holtikultura Sayur-"
+                    value={newData.komoditas}
+                    onChange={(e) =>
+                      setNewData((prev) => ({
+                        ...prev,
+                        komoditas: e ?? "",
+                      }))
+                    }
                     data={[
                       "Cabe Kecil",
                       "Cabe Besar",
@@ -146,6 +235,13 @@ export default function TambahStatistik() {
               <Select
                 className="mt-2"
                 placeholder="-Tanaman Holtikultura Sayur-"
+                value={newData.periodeTanam}
+                onChange={(e) =>
+                  setNewData((prev) => ({
+                    ...prev,
+                    periodeTanam: e ?? "",
+                  }))
+                }
                 data={[
                   "Januari",
                   "Februari",
@@ -166,7 +262,17 @@ export default function TambahStatistik() {
               <p>
                 Luas Lahan Tanam (M<sup>2</sup>)
               </p>
-              <NumberInput placeholder="Luas Lahan Tanaman" min={0} />
+              <NumberInput
+                placeholder="Luas Lahan Tanaman"
+                min={0}
+                value={newData.luasLahan}
+                onChange={(e) =>
+                  setNewData((prev) => ({
+                    ...prev,
+                    luasLahan: Number(e),
+                  }))
+                }
+              />
             </div>
           </div>
           <div className="flex flex-col gap-4 justify-between">
@@ -176,12 +282,39 @@ export default function TambahStatistik() {
               </div>
               <div className="bg-white rounded-lg p-4 rounded-tl-none flex gap-1 flex-col">
                 <p>PRAKIRAAN LUAS PANEN (HA)</p>
-                <NumberInput placeholder="Prakiraan Luas Panen" min={0} />
+                <NumberInput
+                  placeholder="Prakiraan Luas Panen"
+                  min={0}
+                  value={newData.prakiraanLuasPanen}
+                  onChange={(e) =>
+                    setNewData((prev) => ({
+                      ...prev,
+                      prakiraanLuasPanen: Number(e),
+                    }))
+                  }
+                />
                 <p>PRAKIRAAN HASIL PANEN (TON)</p>
-                <NumberInput placeholder="Prakiraan Hasil Panen" min={0} />
+                <NumberInput
+                  placeholder="Prakiraan Hasil Panen"
+                  min={0}
+                  value={newData.prakiraanHasilPanen}
+                  onChange={(e) =>
+                    setNewData((prev) => ({
+                      ...prev,
+                      prakiraanHasilPanen: Number(e),
+                    }))
+                  }
+                />
                 <p>PRAKIRAAN BULAN PANEN</p>
                 <Select
                   placeholder="-Periode Bulan Panen-"
+                  value={newData.prakiraanBulanPanen}
+                  onChange={(e) =>
+                    setNewData((prev) => ({
+                      ...prev,
+                      prakiraanBulanPanen: e ?? "",
+                    }))
+                  }
                   data={[
                     "Januari",
                     "Februari",
@@ -208,11 +341,12 @@ export default function TambahStatistik() {
               </div>
               <div className="bg-white rounded-lg p-4 rounded-tl-none flex gap-1 flex-col">
                 <p>LUAS PANEN (HA)</p>
-                <NumberInput placeholder="Luas Panen" min={0} />
+                <NumberInput placeholder="Luas Panen" min={0} disabled />
                 <p>HASIL PANEN (TON)</p>
-                <NumberInput placeholder="Hasil Panen" min={0} />
+                <NumberInput placeholder="Hasil Panen" min={0} disabled />
                 <p>BULAN PANEN</p>
                 <Select
+                  disabled
                   placeholder="-Periode Bulan Panen-"
                   data={[
                     "Januari",
@@ -234,9 +368,11 @@ export default function TambahStatistik() {
           </div>
         </div>
         <div className="flex px-6 pb-6 justify-end">
-          <Button className="bg-[#307B28]">Simpan Data</Button>
+          <Button type="submit" className="bg-[#307B28]">
+            Simpan Data
+          </Button>
         </div>
-      </div>
+      </form>
       <div className="relative bg-white bg-opacity-20 mt-6 p-4 flex items-center w-full">
         <h3 className="text-white text-2xl font-bold mx-auto">
           TABEL DATA STATISTIK PERTANIAN
