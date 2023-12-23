@@ -137,6 +137,14 @@ export const GetStatistikTanamanAll = async () => {
     SweatAlert(String(error.response.data.message), "error");
   }
 };
+export const GetAllTanamanPetani = async() =>{
+  try {
+    const response = await Api.get(`/list-tanaman`);
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), "error");
+  }
+}
 export const GetTanmanPetani = async (id) => {
   try {
     const response = await Api.get(`/tanaman-petani/${id}`);
