@@ -1,4 +1,4 @@
-export type dataTanaman = {
+export type TDataTanaman = {
   id: number;
   kategori: string;
   komoditas: string;
@@ -14,12 +14,12 @@ export type dataTanaman = {
   updatedAt: string;
 };
 
-export type dataTanamanInput = Omit<
-  dataTanaman,
+export type TDataTanamanInput = Omit<
+  TDataTanaman,
   "id" | "createdAt" | "updatedAt"
 >;
 
-export const dataTanamanDefault: dataTanamanInput = {
+export const dataTanamanDefault: TDataTanamanInput = {
   kategori: "",
   komoditas: "",
   periodeTanam: "",
@@ -31,3 +31,8 @@ export const dataTanamanDefault: dataTanamanInput = {
   realisasiHasilPanen: 0,
   fk_kelompokId: 0,
 };
+
+export type TTableDataTanaman = {
+  no: number;
+  actions: React.ReactNode;
+} & TDataTanaman;

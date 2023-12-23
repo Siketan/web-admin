@@ -58,6 +58,7 @@ import { RootState } from "./infrastucture/redux/store";
 import { GetProfile, Logout } from "./infrastucture";
 import Statistik from "./page/statistik";
 import TambahStatistik from "./page/statistik/tambah";
+import EditStatistik from "./page/statistik/edit";
 
 const menu = [
   {
@@ -457,6 +458,7 @@ const RoutesPath = () => {
           {/* Statistik */}
           <Route path="/statistik" element={<Statistik />} />
           <Route path="/statistik/tambah" element={<TambahStatistik />} />
+          <Route path="/statistik/:id" element={<EditStatistik />} />
           {/* ENd of Statistik */}
           <Route path="/" element={<EventTani />} />
           <Route path="/notification" element={<Notification />} />
