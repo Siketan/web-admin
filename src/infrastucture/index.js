@@ -19,6 +19,7 @@ export const Register = async (data) => {
 export const Login = async (data) => {
   try {
     const response = await Api.post("/auth/login", data);
+    console.log(response);
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("nama", response?.data?.user?.nama);
     window.location.href = "data-tani/rekap-petani";
@@ -128,23 +129,7 @@ export const GetDaftarTaniById = async (id) => {
     SweatAlert(String(error.response.data.message), "error");
   }
 };
-// tanaman petani
-export const GetStatistikTanamanAll = async () => {
-  try {
-    const response = await Api.get(`/statistik`);
-    return response.data;
-  } catch (error) {
-    SweatAlert(String(error.response.data.message), "error");
-  }
-};
-export const GetAllTanamanPetani = async() =>{
-  try {
-    const response = await Api.get(`/list-tanaman`);
-    return response.data;
-  } catch (error) {
-    SweatAlert(String(error.response.data.message), "error");
-  }
-}
+
 export const GetTanmanPetani = async (id) => {
   try {
     const response = await Api.get(`/tanaman-petani/${id}`);

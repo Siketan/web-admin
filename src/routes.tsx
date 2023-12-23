@@ -56,9 +56,10 @@ import { FaRegBell } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./infrastucture/redux/state/stateSlice";
 import { RootState } from "./infrastucture/redux/store";
-import { GetProfile } from "./infrastucture";
+import { GetProfile, Logout } from "./infrastucture";
 import Statistik from "./page/statistik";
 import TambahStatistik from "./page/statistik/tambah";
+import EditStatistik from "./page/statistik/edit";
 
 const menu = [
   {
@@ -222,11 +223,6 @@ const dropdownMenu = [
     name: "Pengaturan",
     icon: "/icons/pengaturan.svg",
     path: "/pengaturan",
-  },
-  {
-    name: "Keluar",
-    icon: "/icons/keluar.svg",
-    path: "/keluar",
   },
 ];
 const Path = () => {
@@ -418,6 +414,22 @@ const Path = () => {
                       </div>
                     </Menu.Item>
                   ))}
+                  <Menu.Item
+                    component="b"
+                    onClick={() => {
+                      Logout();
+                    }}
+                  >
+                    <div className="flex gap-2 items-center">
+                      <Image
+                        src="/icons/keluar.svg"
+                        alt="Keluar"
+                        className="inline-block"
+                        width={24}
+                      />
+                      Keluar
+                    </div>
+                  </Menu.Item>
                 </Menu.Dropdown>
               </Menu>
             </div>
@@ -447,6 +459,7 @@ const RoutesPath = () => {
           {/* Statistik */}
           <Route path="/statistik" element={<Statistik />} />
           <Route path="/statistik/tambah" element={<TambahStatistik />} />
+          <Route path="/statistik/:id" element={<EditStatistik />} />
           {/* ENd of Statistik */}
           <Route path="/" element={<EventTani />} />
           <Route path="/notification" element={<Notification />} />
