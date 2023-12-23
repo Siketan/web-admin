@@ -11,7 +11,8 @@ import {
   TextInput,
 } from "@mantine/core";
 import React, { useEffect } from "react";
-import SearchInput from "../../../../components/uiComponents/inputComponents/SearchInput";
+// import SearchInput from "../../../../components/uiComponents/inputComponents/SearchInput";
+import SearchInput from "../../../../components/uiComponents/inputComponents/searchInput";
 import { FaRegRectangleList, FaUpload } from "react-icons/fa6";
 // import { GetStatistikTanamanAll } from "../../infrastucture";
 import { IoImageOutline } from "react-icons/io5";
@@ -37,7 +38,7 @@ export default function TambahStatistik() {
       <div className="bg-[#D9D9D9] rounded-lg">
         <div className="relative bg-[#136B09] mt-6 p-4 flex w-full justify-between rounded-t-lg shadow-lg">
           <h3 className="text-white text-2xl font-bold">
-            MENAMPILKAN DATA POKTAN
+            MENAMPILKAN DATA PETANI
           </h3>
         </div>
         <div className="grid grid-cols-5 gap-8 p-6">
@@ -51,11 +52,11 @@ export default function TambahStatistik() {
             />
           </div>
           <div className="col-span-3 grid grid-cols-2 gap-4">
-            <TextInput label="Kecamatan" />
+            <TextInput label="NIK" />
+            <TextInput label="Desa Domisili" />
             <TextInput label="Nama Kelompok" />
-            <TextInput label="Desa" />
-            <TextInput label="Luas Baku Lahan" />
             <TextInput label="Nama Gapoktan" />
+            <TextInput label="Nama Petani" />
             <TextInput label="Nama Poktan" />
           </div>
         </div>
@@ -72,6 +73,23 @@ export default function TambahStatistik() {
         </div>
         <div className="grid grid-cols-2 gap-8 p-6">
           <div className="flex flex-col gap-4 justify-between">
+            <div div className="bg-white rounded-lg p-4">
+              <p>STATUS KEPEMILIKAN LAHAN</p>
+              <Select
+                className="mt-2"
+                placeholder="-Tanaman Holtikultura Sayur-"
+                data={[
+                  "MILIK SENDIRI",
+                  "TANAH SEWA",
+                ]}
+              />
+            </div>
+            <div className="bg-white rounded-lg p-4">
+              <p>
+                Luas Lahan Tanam (M<sup>2</sup>)
+              </p>
+              <NumberInput placeholder="Luas Lahan Tanaman" min={0} />
+            </div>
             <div className="bg-white rounded-lg p-4">
               <p>Kategori Tanaman</p>
               <div className="rounded-lg shadow-lg p-4">
@@ -141,7 +159,7 @@ export default function TambahStatistik() {
                 </Tabs.Panel>
               </Tabs>
             </div>
-            <div className="bg-white rounded-lg p-4">
+            {/* <div className="bg-white rounded-lg p-4">
               <p>Periode Tanam</p>
               <Select
                 className="mt-2"
@@ -161,13 +179,7 @@ export default function TambahStatistik() {
                   "Desember",
                 ]}
               />
-            </div>
-            <div className="bg-white rounded-lg p-4">
-              <p>
-                Luas Lahan Tanam (M<sup>2</sup>)
-              </p>
-              <NumberInput placeholder="Luas Lahan Tanaman" min={0} />
-            </div>
+            </div> */}
           </div>
           <div className="flex flex-col gap-4 justify-between">
             <div className="relative">
@@ -200,9 +212,9 @@ export default function TambahStatistik() {
               </div>
             </div>
             <div className="relative">
-              <div className="absolute w-full h-full bg-[#545454] z-50 rounded-lg bg-opacity-75 flex items-center justify-center text-[#888888] font-bold text-4xl cursor-default">
+              {/* <div className="absolute w-full h-full bg-[#545454] z-50 rounded-lg bg-opacity-75 flex items-center justify-center text-[#888888] font-bold text-4xl cursor-default">
                 DISABLED
-              </div>
+              </div> */}
               <div className="bg-[#136B09] text-xl text-white font-bold py-2 px-6 flex w-fit justify-between rounded-t-lg shadow-lg items-center">
                 Realisasi Panen
               </div>

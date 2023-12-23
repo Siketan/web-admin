@@ -472,6 +472,7 @@ const RoutesPath = () => {
           <Route path="/data-tani/laporan-tanam" element={<LaporanPetani />} />
           <Route path="/data-tani/rekap-petani" element={<RekapDataPetani />} />
           <Route path="/data-tani/detail/:id" element={<ViewDetailDataPetani/>} />
+          <Route path="/tanaman-petani" element={<DetailRekapPetani/>} />
           <Route path="/tanaman-petani/add" element={<TambahTanamanPetani />} />
           <Route
             path="/tanaman-petani/edit/:id"

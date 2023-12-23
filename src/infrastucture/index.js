@@ -113,6 +113,14 @@ export const GetLaporanTani = async () => {
     SweatAlert(String(error.response.data.message), "error");
   }
 };
+export const GetListTanaman = async () => {
+  try {
+    const response = await Api.get("/list-tanaman");
+    return response.data.data; // Access 'tanaman' property
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), "error");
+  }
+};
 export const GetDaftarTani = async () => {
   try {
     const response = await Api.get(`/daftar-tani`);
