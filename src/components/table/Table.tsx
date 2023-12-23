@@ -9,13 +9,13 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import React from "react";
-import { PaginatedRespApi } from "../../types/paginatedRespApi";
+import { PaginatedRespApiData } from "../../types/paginatedRespApi";
 import { useSearchParams } from "react-router-dom";
 import TBody from "./TBody";
 import THead from "./THead";
 
 type TableProps<T extends object> = {
-  data: PaginatedRespApi<T> | undefined;
+  data: PaginatedRespApiData<T> | undefined;
   columns: ColumnDef<T>[];
   isLoading?: boolean;
   omitSort?: boolean;
@@ -49,7 +49,7 @@ export default function Table<T extends object>({
   const [searchParams] = useSearchParams();
 
   const table = useReactTable({
-    data: data?.data.data ?? [],
+    data: data?.data ?? [],
     columns,
     state: {
       globalFilter,

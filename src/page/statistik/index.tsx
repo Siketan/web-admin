@@ -7,7 +7,7 @@ import {
   GetStatistikTanamanAll,
 } from "../../infrastucture/statistic";
 import Table from "../../components/table/Table";
-import { PaginatedRespApi } from "../../types/paginatedRespApi";
+import { PaginatedRespApiData } from "../../types/paginatedRespApi";
 import { TDataTanaman, TTableDataTanaman } from "../../types/dataTanaman";
 import { ColumnDef } from "@tanstack/react-table";
 import { Link } from "react-router-dom";
@@ -69,15 +69,15 @@ const columns: ColumnDef<TTableDataTanaman>[] = [
 
 export default function index() {
   const [dataTable, setDataTable] = React.useState<
-    PaginatedRespApi<TTableDataTanaman> | undefined
+    PaginatedRespApiData<TTableDataTanaman> | undefined
   >();
   const [resp, setResp] = React.useState<
-    PaginatedRespApi<TDataTanaman> | undefined
+    PaginatedRespApiData<TDataTanaman> | undefined
   >();
 
   useEffect(() => {
     GetStatistikTanamanAll().then((res) => {
-      setResp(res);
+      setResp(res?.data);
     });
   }, []);
 
@@ -85,40 +85,37 @@ export default function index() {
     if (resp) {
       setDataTable({
         ...resp,
-        data: {
-          ...resp.data,
-          data: resp.data.data.map((item, index) => ({
-            ...item,
-            no: index + 1,
-            actions: (
-              <div className="flex gap-4">
-                <Link to={`/statistik/${item.id}`}>
-                  <div className="flex h-7 w-7 items-center justify-center bg-green-500">
-                    <IoEyeOutline className="h-6 w-6 text-white" />
-                  </div>
-                </Link>
-                <Link to={`/statistik/${item.id}`}>
-                  <div className="flex h-7 w-7 items-center justify-center bg-yellow-500">
-                    <ImPencil className="h-[18px] w-[18px] text-white" />
-                  </div>
-                </Link>
-                <button
-                  onClick={() => {
-                    DeleteStatistikTanamanById(item.id).then(() => {
-                      GetStatistikTanamanAll().then((res) => {
-                        setResp(res);
-                      });
+        data: resp.data.map((item, index) => ({
+          ...item,
+          no: index + 1,
+          actions: (
+            <div className="flex gap-4">
+              <Link to={`/statistik/${item.id}`}>
+                <div className="flex h-7 w-7 items-center justify-center bg-green-500">
+                  <IoEyeOutline className="h-6 w-6 text-white" />
+                </div>
+              </Link>
+              <Link to={`/statistik/${item.id}`}>
+                <div className="flex h-7 w-7 items-center justify-center bg-yellow-500">
+                  <ImPencil className="h-[18px] w-[18px] text-white" />
+                </div>
+              </Link>
+              <button
+                onClick={() => {
+                  DeleteStatistikTanamanById(item.id).then(() => {
+                    GetStatistikTanamanAll().then((res) => {
+                      setResp(res?.data);
                     });
-                  }}
-                >
-                  <div className="flex h-7 w-7 items-center justify-center bg-red-500">
-                    <MdDeleteOutline className="h-6 w-6 text-white" />
-                  </div>
-                </button>
-              </div>
-            ),
-          })),
-        },
+                  });
+                }}
+              >
+                <div className="flex h-7 w-7 items-center justify-center bg-red-500">
+                  <MdDeleteOutline className="h-6 w-6 text-white" />
+                </div>
+              </button>
+            </div>
+          ),
+        })),
       });
     }
   }, [resp]);

@@ -1,5 +1,6 @@
 import SweatAlert from "../components/uiComponents/swetAlert";
-import { TDataTanamanInput } from "../types/dataTanaman";
+import { TDataTanaman, TDataTanamanInput } from "../types/dataTanaman";
+import { PaginatedRespApi } from "../types/paginatedRespApi";
 import Api from "./base";
 
 export const AddNewDataTanaman = async (data: TDataTanamanInput) => {
@@ -15,7 +16,7 @@ export const AddNewDataTanaman = async (data: TDataTanamanInput) => {
 export const GetStatistikTanamanAll = async () => {
   try {
     const response = await Api.get(`/statistik`);
-    return response.data;
+    return response.data as PaginatedRespApi<TDataTanaman>;
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
   }
