@@ -14,6 +14,8 @@ import { Link } from "react-router-dom";
 import { ImPencil } from "react-icons/im";
 import { IoEyeOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
+import { TKelompokTani } from "../../types/kelompokTani";
+import { SearchPoktan } from "../../infrastucture/searchApi";
 
 const breadcrumbItems = [
   { title: "Dashboard", href: "/" },
@@ -67,6 +69,29 @@ const columns: ColumnDef<TTableDataTanaman>[] = [
   },
 ];
 
+const filterDataPoktan = (data: TKelompokTani[]) => {
+  return data.map((item) => ({
+    ...item,
+    value: item.id.toString(),
+    label: `${item.gapoktan} - ${item.namaKelompok}`,
+  }));
+};
+
+const loadOptions = (
+  inputValue: string,
+  callback: (
+    options: (TKelompokTani & {
+      value: string;
+      label: string;
+    })[]
+  ) => void
+) => {
+  setTimeout(async () => {
+    const data = await SearchPoktan(inputValue);
+    callback(filterDataPoktan(data ?? []));
+  }, 1000);
+};
+
 export default function index() {
   const [dataTable, setDataTable] = React.useState<
     PaginatedRespApiData<TTableDataTanaman> | undefined
@@ -74,6 +99,7 @@ export default function index() {
   const [resp, setResp] = React.useState<
     PaginatedRespApiData<TDataTanaman> | undefined
   >();
+  const [poktan, setPoktan] = React.useState<TKelompokTani>();
 
   useEffect(() => {
     GetStatistikTanamanAll().then((res) => {
@@ -119,13 +145,23 @@ export default function index() {
       });
     }
   }, [resp]);
+
   return (
     <div>
       <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
       <h3 className="text-white text-2xl font-bold mt-4">
         TABEL DATA STATISTIK PERTANIAN
       </h3>
-      <SearchInput placeholder="Cari NIK PETANI / POKTAN" />
+      <SearchInput
+        cacheOptions
+        loadOptions={loadOptions}
+        defaultOptions
+        onChange={(value) => {
+          setPoktan(value as TKelompokTani);
+        }}
+        value={poktan}
+        isClearable
+      />
       <div className="relative bg-white bg-opacity-20 mt-6 p-4 flex items-center w-full">
         <h3 className="text-white text-2xl font-bold mx-auto">
           TABEL DATA STATISTIK PERTANIAN

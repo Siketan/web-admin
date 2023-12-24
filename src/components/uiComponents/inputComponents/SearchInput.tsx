@@ -1,17 +1,77 @@
 import React from "react";
-import { FaSearch } from "react-icons/fa";
+import {
+  GroupBase,
+  Props,
+  StylesConfig,
+  ActionMeta,
+  components as ReactSelectComponents,
+} from "react-select";
+import AsyncSelect from "react-select/async";
+import type { AsyncProps } from "react-select/async";
 
-export default function SearchInput(props: { placeholder: string }) {
-  return (
-    <div className="flex gap-8 mt-4">
-      <input
-        className="bg-[#C9C9C9] border-[#A9A9A9] focus-visible:outline-none w-4/5 h-12 rounded-lg placeholder:text-[#A5A5A5] p-8 placeholder:text-lg"
-        placeholder={props.placeholder}
-      />
-      <button className="flex gap-4 bg-[#F29D0E] flex-grow rounded-lg items-center justify-center text-xl text-white active:bg-[#F29D0E] active:shadow-md active:translate-y-1">
-        <span>CARI DATA</span>
-        <FaSearch />
-      </button>
-    </div>
-  );
+const dot = (color = "transparent") => ({
+  alignItems: "center",
+  display: "flex",
+
+  ":before": {
+    backgroundColor: color,
+    borderRadius: 10,
+    content: '" "',
+    display: "block",
+    marginRight: 8,
+    height: 10,
+    width: 10,
+  },
+});
+
+const customStyle: StylesConfig = {
+  control: (styles) => ({
+    ...styles,
+    backgroundColor: "#C9C9C9",
+    borderRadius: 8,
+    padding: "8px",
+  }),
+  option: (styles, { isDisabled, isFocused, isSelected }) => {
+    const color = "#ccc";
+    return {
+      ...styles,
+      backgroundColor: isDisabled
+        ? undefined
+        : isSelected
+        ? color
+        : isFocused
+        ? color
+        : undefined,
+      color: isDisabled
+        ? "#ccc"
+        : isSelected
+        ? "white"
+        : isFocused
+        ? "white"
+        : "black",
+      cursor: isDisabled ? "not-allowed" : "default",
+
+      ":active": {
+        ...styles[":active"],
+        backgroundColor: !isDisabled
+          ? isSelected
+            ? color
+            : "#ccc"
+          : undefined,
+      },
+    };
+  },
+  input: (styles) => ({ ...styles, ...dot() }),
+  placeholder: (styles) => ({ ...styles, ...dot("#ccc") }),
+  singleValue: (styles, { data }) => ({ ...styles, ...dot("#ccc") }),
+};
+
+export interface AsyncSelectProps<
+  Option,
+  IsMulti extends boolean = false,
+  Group extends GroupBase<Option> = GroupBase<Option>
+> extends AsyncProps<Option, IsMulti, Group> {}
+
+export default function SearchInput(props: AsyncSelectProps<any>) {
+  return <AsyncSelect styles={customStyle} className="mt-4" {...props} />;
 }
