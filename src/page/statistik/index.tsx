@@ -7,13 +7,15 @@ import {
   GetStatistikTanamanAll,
 } from "../../infrastucture/statistic";
 import Table from "../../components/table/Table";
-import { PaginatedRespApi } from "../../types/paginatedRespApi";
+import { PaginatedRespApiData } from "../../types/paginatedRespApi";
 import { TDataTanaman, TTableDataTanaman } from "../../types/dataTanaman";
 import { ColumnDef } from "@tanstack/react-table";
 import { Link } from "react-router-dom";
 import { ImPencil } from "react-icons/im";
 import { IoEyeOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
+import { TKelompokTani } from "../../types/kelompokTani";
+import { SearchPoktan } from "../../infrastucture/searchApi";
 
 const breadcrumbItems = [
   { title: "Dashboard", href: "/" },
@@ -67,17 +69,41 @@ const columns: ColumnDef<TTableDataTanaman>[] = [
   },
 ];
 
+const filterDataPoktan = (data: TKelompokTani[]) => {
+  return data.map((item) => ({
+    ...item,
+    value: item.id.toString(),
+    label: `${item.gapoktan} - ${item.namaKelompok}`,
+  }));
+};
+
+const loadOptions = (
+  inputValue: string,
+  callback: (
+    options: (TKelompokTani & {
+      value: string;
+      label: string;
+    })[]
+  ) => void
+) => {
+  setTimeout(async () => {
+    const data = await SearchPoktan(inputValue);
+    callback(filterDataPoktan(data ?? []));
+  }, 1000);
+};
+
 export default function index() {
   const [dataTable, setDataTable] = React.useState<
-    PaginatedRespApi<TTableDataTanaman> | undefined
+    PaginatedRespApiData<TTableDataTanaman> | undefined
   >();
   const [resp, setResp] = React.useState<
-    PaginatedRespApi<TDataTanaman> | undefined
+    PaginatedRespApiData<TDataTanaman> | undefined
   >();
+  const [poktan, setPoktan] = React.useState<TKelompokTani>();
 
   useEffect(() => {
     GetStatistikTanamanAll().then((res) => {
-      setResp(res);
+      setResp(res?.data);
     });
   }, []);
 
@@ -85,50 +111,57 @@ export default function index() {
     if (resp) {
       setDataTable({
         ...resp,
-        data: {
-          ...resp.data,
-          data: resp.data.data.map((item, index) => ({
-            ...item,
-            no: index + 1,
-            actions: (
-              <div className="flex gap-4">
-                <Link to={`/statistik/${item.id}`}>
-                  <div className="flex h-7 w-7 items-center justify-center bg-green-500">
-                    <IoEyeOutline className="h-6 w-6 text-white" />
-                  </div>
-                </Link>
-                <Link to={`/statistik/${item.id}`}>
-                  <div className="flex h-7 w-7 items-center justify-center bg-yellow-500">
-                    <ImPencil className="h-[18px] w-[18px] text-white" />
-                  </div>
-                </Link>
-                <button
-                  onClick={() => {
-                    DeleteStatistikTanamanById(item.id).then(() => {
-                      GetStatistikTanamanAll().then((res) => {
-                        setResp(res);
-                      });
+        data: resp.data.map((item, index) => ({
+          ...item,
+          no: index + 1,
+          actions: (
+            <div className="flex gap-4">
+              <Link to={`/statistik/${item.id}`}>
+                <div className="flex h-7 w-7 items-center justify-center bg-green-500">
+                  <IoEyeOutline className="h-6 w-6 text-white" />
+                </div>
+              </Link>
+              <Link to={`/statistik/${item.id}`}>
+                <div className="flex h-7 w-7 items-center justify-center bg-yellow-500">
+                  <ImPencil className="h-[18px] w-[18px] text-white" />
+                </div>
+              </Link>
+              <button
+                onClick={() => {
+                  DeleteStatistikTanamanById(item.id).then(() => {
+                    GetStatistikTanamanAll().then((res) => {
+                      setResp(res?.data);
                     });
-                  }}
-                >
-                  <div className="flex h-7 w-7 items-center justify-center bg-red-500">
-                    <MdDeleteOutline className="h-6 w-6 text-white" />
-                  </div>
-                </button>
-              </div>
-            ),
-          })),
-        },
+                  });
+                }}
+              >
+                <div className="flex h-7 w-7 items-center justify-center bg-red-500">
+                  <MdDeleteOutline className="h-6 w-6 text-white" />
+                </div>
+              </button>
+            </div>
+          ),
+        })),
       });
     }
   }, [resp]);
+
   return (
     <div>
       <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
       <h3 className="text-white text-2xl font-bold mt-4">
         TABEL DATA STATISTIK PERTANIAN
       </h3>
-      <SearchInput placeholder="Cari NIK PETANI / POKTAN" />
+      <SearchInput
+        cacheOptions
+        loadOptions={loadOptions}
+        defaultOptions
+        onChange={(value) => {
+          setPoktan(value as TKelompokTani);
+        }}
+        value={poktan}
+        isClearable
+      />
       <div className="relative bg-white bg-opacity-20 mt-6 p-4 flex items-center w-full">
         <h3 className="text-white text-2xl font-bold mx-auto">
           TABEL DATA STATISTIK PERTANIAN

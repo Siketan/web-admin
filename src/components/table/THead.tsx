@@ -1,6 +1,9 @@
 import { RowData, Table, flexRender } from "@tanstack/react-table";
 import React from "react";
-import { PaginatedRespApi } from "../../types/paginatedRespApi";
+import {
+  PaginatedRespApi,
+  PaginatedRespApiData,
+} from "../../types/paginatedRespApi";
 import { clsx } from "@mantine/core";
 import {
   Route,
@@ -14,7 +17,7 @@ import { VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 type THeadProps<T extends RowData> = {
   omitSort: boolean;
   table: Table<T>;
-  data: PaginatedRespApi<T> | undefined;
+  data: PaginatedRespApiData<T> | undefined;
 } & React.ComponentPropsWithoutRef<"div">;
 
 export default function THead<T extends RowData>({
