@@ -14,6 +14,9 @@ import { GetListTanaman, GetTanmanPetani, DeleteTanamanPetani } from "@/infrastr
 import { useParams, Link } from 'react-router-dom';
 import LoadingAnimation from '../../../../components/loading'
 import SearchInput from "../../../../components/uiComponents/inputComponents/searchInput";
+import { ImPencil } from "react-icons/im";
+import { IoEyeOutline } from "react-icons/io5";
+import { MdDeleteOutline } from "react-icons/md";
 
 
 const breadcrumbItems = [
@@ -25,10 +28,25 @@ const breadcrumbItems = [
     {item.title}
   </Anchor>
 ));
+const columns = [
+  {
+    accessorKey: "no",
+    header: "No",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "actions",
+    header: "Aksi",
+    cell: (props) => props.row.original.actions,
+  },
+];
+
 export default function DetailRekapPetani() {
   const [datas, setDatas] = useState([]);
   const [modalDeleteData, setModalDeleteData] = useState(false);
   const [loading, setLoading] = useState(true)
+  const [dataTable, setDataTable] = useState();
+  const [resp, setResp] = useState();
   const [filters, setFilters] = useState({
     janisPanen: "",
     jenis: "",
@@ -46,9 +64,52 @@ export default function DetailRekapPetani() {
     GetListTanaman().then((data)=>{
       // setPetani(data)
       setDatas(data.data)
+      setResp(data)
       setLoading(false)
     });
   }, []);
+  useEffect(()=> {
+    console.log(dataTable)
+  }, [dataTable])
+  useEffect(() => {
+    if (resp) {
+      setDataTable({
+        ...resp,
+        
+          data: resp.data.map((item, index) => ({
+            ...item,
+            no: index + 1,
+            actions: (
+              <div className="flex gap-4">
+                <Tooltip label="Detail">
+                  <a href={`/data-tani/detail/${item.id}`} >
+                    <FontAwesomeIcon
+                      icon={faBullseye}
+                      className="cursor-pointer text-black hover:text-black"
+                    />
+                  </a>
+                </Tooltip>
+                <Tooltip label="Edit">
+                  <a href={`/rekap-data-tani/edit/${item.id}`}>
+                    <FontAwesomeIcon
+                      icon={faEdit}
+                      className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
+                    />
+                  </a>
+                </Tooltip>
+                <Tooltip label="Delete">
+                  <FontAwesomeIcon
+                    onClick={() => setModalDeleteData(item?.id)}
+                    icon={faTrash}
+                    className="cursor-pointer text-red-500 hover:text-red-600"
+                  />
+                </Tooltip>
+              </div>
+            ),
+          })),
+      });
+    }
+  }, [resp]);
   const handleFilterChange = (e, column) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -194,6 +255,8 @@ export default function DetailRekapPetani() {
             </div>
           </div>
         </div>
+        <Table data={dataTable} columns={columns} />
       </div>
+      
   );
 }
