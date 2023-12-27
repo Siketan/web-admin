@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
   TambahDataTani,
   RekapDataPetani,
+  ViewDetailDataPetani,
   LaporanPetani,
   InfoTani,
   TambahInfoTani,
@@ -36,6 +37,7 @@ import {
   TambahLaporanTanam,
   TambahLaporanAhir,
   EditPenyuluhan,
+  VerifikasiUser,
 } from "./page";
 
 import Footer from "./components/footer";
@@ -55,7 +57,10 @@ import { FaRegBell } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./infrastucture/redux/state/stateSlice";
 import { RootState } from "./infrastucture/redux/store";
-import { GetProfile } from "./infrastucture";
+import { GetProfile, Logout } from "./infrastucture";
+import Statistik from "./page/statistik";
+import TambahStatistik from "./page/statistik/tambah";
+import EditStatistik from "./page/statistik/edit";
 
 const menu = [
   {
@@ -66,12 +71,12 @@ const menu = [
       {
         name: "Tambah Data Statistik",
         icon: "/icons/users.svg",
-        path: "#",
+        path: "/statistik/tambah",
       },
       {
         name: "Lihat Tabel Statistik",
         icon: "/icons/users.svg",
-        path: "#",
+        path: "/statistik",
       },
     ],
   },
@@ -88,7 +93,7 @@ const menu = [
       {
         name: "Lihat Tabel Tanam",
         icon: "/icons/users.svg",
-        path: "#",
+        path: "/tanaman-petani",
       },
       {
         name: "Daftar User Petani",
@@ -174,9 +179,9 @@ const menu = [
     icon: "/icons/hak-akses.svg",
     sub: [
       {
-        name: "Tambah Hak Akses",
+        name: "Verifikasi User",
         icon: "/icons/globe.svg",
-        path: "/hak-akses/tambah",
+        path: "/verifikasi",
       },
       {
         name: "Ubah Akses User",
@@ -219,11 +224,6 @@ const dropdownMenu = [
     name: "Pengaturan",
     icon: "/icons/pengaturan.svg",
     path: "/pengaturan",
-  },
-  {
-    name: "Keluar",
-    icon: "/icons/keluar.svg",
-    path: "/keluar",
   },
 ];
 const Path = () => {
@@ -415,6 +415,22 @@ const Path = () => {
                       </div>
                     </Menu.Item>
                   ))}
+                  <Menu.Item
+                    component="b"
+                    onClick={() => {
+                      Logout();
+                    }}
+                  >
+                    <div className="flex gap-2 items-center">
+                      <Image
+                        src="/icons/keluar.svg"
+                        alt="Keluar"
+                        className="inline-block"
+                        width={24}
+                      />
+                      Keluar
+                    </div>
+                  </Menu.Item>
                 </Menu.Dropdown>
               </Menu>
             </div>
@@ -441,6 +457,13 @@ const RoutesPath = () => {
         <Route path="/loginAdminSiketan" element={<Login />} />
         <Route path="/registerAdminSiketan" element={<Register />} />
         <Route element={<ProtectedRoute />}>
+          <Route path="/verifikasi" element={<VerifikasiUser />} />
+          {/* <Route index element={<Dashboard />}></Route> */}
+          {/* Statistik */}
+          <Route path="/statistik" element={<Statistik />} />
+          <Route path="/statistik/tambah" element={<TambahStatistik />} />
+          <Route path="/statistik/:id" element={<EditStatistik />} />
+          {/* ENd of Statistik */}
           <Route path="/" element={<EventTani />} />
           <Route path="/notification" element={<Notification />} />
           {/* Data Tani */}
@@ -451,7 +474,8 @@ const RoutesPath = () => {
           <Route path="/data-tani/tambah" element={<TambahDataTani />} />
           <Route path="/data-tani/laporan-tanam" element={<LaporanPetani />} />
           <Route path="/data-tani/rekap-petani" element={<RekapDataPetani />} />
-          <Route path="/data-tani/detail/:id" element={<DetailRekapPetani />} />
+          <Route path="/data-tani/detail/:id" element={<ViewDetailDataPetani/>} />
+          <Route path="/tanaman-petani" element={<DetailRekapPetani/>} />
           <Route path="/tanaman-petani/add" element={<TambahTanamanPetani />} />
           <Route
             path="/tanaman-petani/edit/:id"

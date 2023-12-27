@@ -3,13 +3,15 @@ import { useState, useEffect } from "react";
 import { faPlus, faSearch, faClose, faSave } from "@fortawesome/free-solid-svg-icons";
 import InputImage from "@/components/inputImage";
 import MainCard from "@/components/MainCard";
-import { GetDaftarTaniById, editDaftarTani, select,selectPenyuluh } from "@/infrastruture";
+import { GetDaftarTaniById, editDaftarTani, select,selectPenyuluh, getDaftarPenyuluh} from "@/infrastruture";
 import { fecthKecamatan, fecthDesa } from "../../../infrastucture/daerah";
 import { useParams,Link } from "react-router-dom";
 import Loading from "../../../components/loading"
 const EditRekapPetani = () => {
   const [NIK, setNIK] = useState("");
+  const [nokk, setNokk] = useState("");
   const [NoWa, setNoWa] = useState("");
+  const [email, setEmail] = useState("");
   const [nama, setNama] = useState("");
   const [password, setPassword] = useState("");
   const [kecamatan, setKecamatan] = useState("");
@@ -24,7 +26,7 @@ const EditRekapPetani = () => {
   const [kecamatanActive, setKecamatanActive] = useState("");
   const [dafatarDesa, setDafatarDesa] = useState([]);
   const [daftarNamaKelompok, setDaftarNamaKelompok] = useState([]);
-  const [daftarPenyuluh, setDaftarPenyuluh] = useState([])
+  const [daftarPenyuluh, setDaftarPenyuluh] = useState([]);
   const [idKecamatan, setIdKecamanan] = useState("")
   const [loading, setLoading] = useState(true)
   const { id } = useParams()
@@ -32,16 +34,30 @@ const EditRekapPetani = () => {
     fecthKecamatan().then((data) => {
       setDaftarKecamatan(data.kecamatan);
     });
+    getDaftarPenyuluh().then((data) => {
+      const filterData = data.map(obj => {
+        return Object.keys(obj).reduce((result, key) => {
+          if (key === 'dataPenyuluh') {
+            result = { ...result, ...obj[key] };
+          } else {
+            result[key] = obj[key];
+          }
+          return result;
+        }, {});
+      });
+      setDaftarPenyuluh(filterData)});
     GetDaftarTaniById(id).then((data)=>{
-        setNIK(data?.NIK);
-        setNoWa(data?.NoWa);
+        setNIK(data?.nik);
+        setNokk(data?.nkk);
+        setNoWa(data?.noTelp);
+        setEmail(data?.email);
         setNama(data?.nama);
         setPassword(data?.password);
         setKecamatan(data?.kecamatan);
         setDesa(data?.desa);
         setFoto(data?.foto);
         setNamaKelompok(data?.kelompok?.namaKelompok);
-        setPenyuluh(data?.kelompok?.penyuluh);
+        setPenyuluh(data?.dataPenyuluh?.id);
         setAlamat(data?.alamat);
         setGapoktan(data?.kelompok?.gapoktan);
         setLoading(false)
@@ -57,9 +73,9 @@ const EditRekapPetani = () => {
         setIdKecamanan(filteredData[0]?.id)
       setKecamatanActive(kecamatanActivate)
     }
-    if(kecamatan){
-      selectPenyuluh(kecamatan).then((data)=> setDaftarPenyuluh(data.penyuluh))
-    }
+    // if(kecamatan){
+    //   selectPenyuluh(kecamatan).then((data)=> setDaftarPenyuluh(data.penyuluh))
+    // }
   }, [daftarKecamatan, kecamatan]);
   useEffect(() => {
       fecthDesa(idKecamatan).then((data) => setDafatarDesa(data.kelurahan));
@@ -81,7 +97,9 @@ const EditRekapPetani = () => {
     e.preventDefault();
     const data = {
       NIK,
+      nokk,
       NoWa,
+      email,
       nama,
       password,
       kecamatan,
@@ -105,13 +123,12 @@ const EditRekapPetani = () => {
     setKecamatanActive(e);
     setKecamatan(nama);
   };
-console.log(dafatarDesa)
   return (
     <div className="px-10 md:px-40 py-10 z-1">
       <form onSubmit={(e) => handleSubmit(e)}>
+        {loading &&
+          <Loading />}
         <MainCard className="mb-10">
-          {loading &&
-            <Loading/>}
           <div className="flex items-center justify-center">
             <InputImage
               imageActive={foto}
@@ -125,7 +142,6 @@ console.log(dafatarDesa)
                 type="number"
                 name="NIK"
                 id="NIK"
-                disabled={disable}
                 value={NIK}
                 onChange={(e) => setNIK(e.target.value)}
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -142,6 +158,26 @@ console.log(dafatarDesa)
             <div className="relative z-0 w-full mb-6 group">
               <input
                 type="number"
+                name="nokk"
+                id="nokk"
+                value={nokk}
+                onChange={(e) => setNokk(e.target.value)}
+                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" "
+                required
+              />
+              <label
+                htmlFor="nokk"
+                className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >
+                <strong>No. KK</strong> (Contoh: 3514002000000001)
+              </label>
+            </div>
+          </div>
+          <div className="grid md:grid-cols-2 md:gap-6">
+            <div className="relative z-0 w-full mb-6 group">
+              <input
+                type="number"
                 name="NoWa"
                 id="NoWa"
                 value={NoWa}
@@ -155,6 +191,24 @@ console.log(dafatarDesa)
                 className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 <strong>No. HP/WA</strong> (Contoh: 0812 3456 7890)
+              </label>
+            </div>
+            <div className="relative z-0 w-full mb-6 group">
+              <input
+                type="email"
+                name="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" "
+                required
+              />
+              <label
+                htmlFor="email"
+                className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >
+                <strong>Email</strong> (Contoh: bejo@petani.com)
               </label>
             </div>
           </div>
@@ -295,10 +349,10 @@ console.log(dafatarDesa)
                   ))}
                 </select>
                 <label
-                  htmlFor="desa"
+                  htmlFor="namaKelompok"
                   className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  <strong>Nama Kelompok </strong>(Contoh: Ranger Merah)
+                  <strong>Nama Kelompok</strong> (Contoh: Karanganyar)
                 </label>
               </div>
             ) : (
@@ -332,8 +386,8 @@ console.log(dafatarDesa)
               >
                 <option value="">--Silahkan Pilih Nama Penyuluh--</option>
                 {daftarPenyuluh?.map((item, i) => (
-                  <option value={item?.nama} key={i}>
-                    {item?.nama}
+                  <option value={item?.id} key={i}>
+                    {item?.nama} - {item?.kecamatanBinaan}
                   </option>
                 ))}
               </select>
@@ -344,7 +398,7 @@ console.log(dafatarDesa)
                 <strong>Nama Kelompok</strong> (Contoh: Karanganyar)
               </label>
             </div>
-          :
+            :
             <div className="relative z-0 w-full mb-6 group">
               <input
                 type="text"

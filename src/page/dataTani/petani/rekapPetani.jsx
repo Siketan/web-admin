@@ -8,55 +8,48 @@ import {
   faBullseye,
   faPlus
 } from "@fortawesome/free-solid-svg-icons";
-import { getDaftarPenyuluh, DeleteDaftarPenyuluh } from "@/infrastruture";
+import { GetDaftarTani, DeleteDaftarTani } from "@/infrastruture";
 import ExcelComponent from "../../../components/exelComponent";
-import { Text, Button, Modal,Tooltip, Anchor, Breadcrumbs, TextInput  } from "@mantine/core";
-import LoadingAnimation from '../../../components/loadingSession'
+import { Text, Button, Modal,Tooltip, Anchor, Breadcrumbs, TextInput } from "@mantine/core";
 import { Link } from 'react-router-dom';
+import LoadingAnimation from '../../../components/loadingSession'
 import SearchInput from "../../../components/uiComponents/inputComponents/searchInput";
 
 const breadcrumbItems = [
   { title: "Dashboard", href: "/" },
-  { title: "Data Penyuluh" },
-  { title: "Tabel Penyuluh" },
+  { title: "Data Petani" },
+  { title: "Tabel Petani" },
 ].map((item, index) => (
   <Anchor href={item.href} key={index} className="text-white opacity-50">
     {item.title}
   </Anchor>
 ));
-const RekapDataPenyuluh = () => {
+const RekapPetani = () => {
   const [datas, setDatas] = useState([]);
   const [loading, setLoading] = useState(true)
   const [modalDeleteData, setModalDeleteData] = useState(false);
   useEffect(() => {
-    getDaftarPenyuluh().then((data) => {
-      const filterData = data.map(obj => {
-        return Object.keys(obj).reduce((result, key) => {
-          if (key === 'dataPenyuluh') {
-            result = { ...result, ...obj[key] };
-          } else {
-            result[key] = obj[key];
-          }
-          return result;
-        }, {});
-      });
-      setDatas(filterData)
+    GetDaftarTani().then((data) => {
+    const combinedData = data.map(item => {
+      const petani = { ...item }; // Duplicating the petani data
+      petani.namaKelompok = item.kelompok?.namaKelompok || ""; // Adding kelompok data to petani object
+      petani.gapoktan = item.kelompok?.gapoktan || ""; // Adding kelompok data to petani object
+      petani.penyuluh = item.dataPenyuluh?.nama || ""; // Adding kelompok data to petani object
+      return petani;
+    });
+      setDatas(combinedData)
       setLoading(false)
     });
   }, []);
-  // console.log(datas)
   const [filters, setFilters] = useState({
     kecamatan: "",
     desa: "",
-    namaPenyuluh: "",
-    NIP: "",
+    nik: "",
     nama: "",
-    NoWa: "",
-    kecamatanBinaan: "",
-    desaBinaan: "",
-    namaProduct: "",
+    namaKelompok: "",
+    gapoktan: "",
+    penyuluh: "",
   });
-
   const handleFilterChange = (e, column) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -64,33 +57,33 @@ const RekapDataPenyuluh = () => {
     }));
   };
   const handleDeleteUser = (ids) => {
-    DeleteDaftarPenyuluh(ids);
+    DeleteDaftarTani(ids);
   };
   const filteredData = datas.filter((item) => {
     return Object.keys(filters).every((key) => {
       if (filters[key] !== "") {
-        if (typeof item[key] === "number") {
-          return item[key] === Number(filters[key]);
-        } else {
-          return item[key].toLowerCase().includes(filters[key].toLowerCase());
+          if (typeof item[key] === "number") {
+            return item[key] === Number(filters[key]);
+          } else if(typeof item[key] === "string"){
+            return item[key].toLowerCase().includes(filters[key].toLowerCase());
+          }
         }
-      }
       return true;
     });
   });
   const handleDownlod = () => {
     const dataExel = filteredData.map((item) => {
       return {
-        NIP: item.NIP,
+        NIK: item.NIK,
         ["No Wa"]: item.NoWa,
         Alamat: item.alamat,
         Kecamatan: item.kecamatan,
         Desa: item.desa,
         nama: item.nama,
-        foto: item.foto,
         password: item.password,
-        ["Kecamatan Binaan"]: item?.dataPenyuluh?.kecamatanBinaan,
-        ["Desa Binaan"]: item?.dataPenyuluh?.desaBinaan
+        namaKelompok: item?.kelompok?.namaKelompok,
+        gapoktan: item?.kelompok?.gapoktan,
+        penyuluh: item?.dataPenyuluh?.nama
       };
     });
     ExcelComponent(dataExel, "data.xlsx", "Sheet1");
@@ -100,11 +93,11 @@ const RekapDataPenyuluh = () => {
     <div>
       <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
       <h3 className="text-white text-2xl font-bold mt-4">
-        TABEL DATA PENYULUH
+        TABEL DATA PETANI
       </h3>
-      <SearchInput placeholder="Cari NIK PENYULUH" />
+      <SearchInput placeholder="Cari NIK PETANI / POKTAN" />
       <div className="relativemt-6 mt-4 flex items-center w-full">
-      <Modal
+        <Modal
           opened={modalDeleteData}
           onClose={() => setModalDeleteData(false)}
           withCloseButton={false}
@@ -138,60 +131,60 @@ const RekapDataPenyuluh = () => {
             </Button>
           </div>
         </Modal>
-        {/* ... (previous code) */}
         <div className="bg-[#D9D9D9] rounded-lg w-full">
-          <div className="relative bg-[#136B09] p-4 flex w-full justify-between rounded-t-lg shadow-lg">
-            <h3 className="text-white text-2xl font-bold px-3">
-              DATA TABEL PENYULUH
-            </h3>
-            <Link to={`/data-penyuluh/tambah`}>
+        <div className="relative bg-[#136B09] p-4 flex w-full justify-between rounded-t-lg shadow-lg">
+          <h3 className="text-white text-2xl font-bold px-3">
+            DATA TABEL PETANI
+          </h3>
+          <Link to={`/data-tani/tambah`}>
               <button className="ms-5 rounded-md bg-[#86BA34] text-white p-1 px-5 w-30 h-10"> 
                 <FontAwesomeIcon className="text-xl"
                   icon={faPlus}
                 /></button>
             </Link>
-            {/* ... (previous code) */}
-          </div>
+        </div>
           <div className="pt-0">
             <div className="h-[calc(100vh-200px) p-6 flex justify-between items-center">
               <table className="min-w-full shadow-md">
                 <thead className="bg-[#079073] text-white">
                   <tr>
-                    <th className="sticky top-0  px-4 py-2">
+                    <th  className="sticky top-0 px-4 py-2 truncate">
                       NO
                     </th>
-                    <th className="sticky top-0  px-4 py-2">
-                      NIP PENYULUH
-                    </th>
-                    <th className="sticky top-0  px-4 py-2">
-                      NAMA PEYULUH
+                    <th className="sticky top-0 px-4 py-2 truncate ">
+                      NIK PETANI
                     </th>
                     <th className="sticky top-0 px-4 py-2 truncate ">
-                      KONTAK PENYULUH
+                      NAMA PETANI
                     </th>
-                    <th className="sticky top-0  px-4 py-2">
-                      KECAMATAN BINAAN
+                    <th className="sticky top-0 px-4 py-2 truncate ">
+                      KONTAK PETANI
                     </th>
-                    <th className="sticky top-0  px-4 py-2">
-                      DESA BINAAN 
+                    <th className="sticky top-0 px-4 py-2 truncate ">
+                      KECAMATAN
                     </th>
-                    <th className="sticky top-0  px-4 py-2">
-                      TINDAKAN
+                    <th className="sticky top-0 px-4 py-2 truncate ">
+                      DESA
                     </th>
+                    <th className="sticky top-0 px-4 py-2 truncate ">
+                      PEMBINA
+                    </th>
+                    <th className="sticky top-0 px-4 py-2 truncate">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredData.map((item, index) => (
-                    <tr key={index} className={`${index % 2 === 0 ? 'bg-white text-black font-medium' : 'bg-emerald-100 text-emerald-800 font-medium'}`}>
-                      <td className="px-4  py-2 text-center">{index + 1}</td>
-                      <td className="px-4  py-2 text-center">{item.nik}</td>
-                      <td className="px-4  py-2 text-center">{item.nama}</td>
-                      <td className="px-4  py-2 text-center">{item.noTelp}</td>
-                      <td className="px-4  py-2 text-center">{item.kecamatanBinaan}</td>
-                      <td className="px-4  py-2 text-center">{item.desaBinaan}</td>
+                  {filteredData?.map((item, index) => (
+                    <tr key={item.id} className={`${index % 2 === 0 ? 'bg-white text-black font-medium' : 'bg-[#D1D9D3] text-emerald-800 font-medium'}`}>
+                      <td className="px-4 py-2 text-center ">{index + 1}</td>
+                      <td className="px-4 py-2 text-center ">{item?.nik}</td>
+                      <td className="px-4 py-2 text-center ">{item?.nama}</td>
+                      <td className="px-4 py-2 text-center ">{item?.noTelp}</td>
+                      <td className="px-4 py-2 text-center ">{item?.kecamatan}</td>
+                      <td className="px-4 py-2 text-center ">{item?.desa}</td>
+                      <td className="px-4 py-2 text-center ">{item?.penyuluh}</td>
                       <td className="px-2 py-2 text-center">
-                      <Tooltip label="Detail">
-                          <a href={`/data-penyuluh/detail/${item.id}`} >
+                        <Tooltip label="Detail">
+                          <a href={`/data-tani/detail/${item.id}`} >
                             <FontAwesomeIcon
                               icon={faBullseye}
                               className="cursor-pointer text-black hover:text-black"
@@ -199,7 +192,7 @@ const RekapDataPenyuluh = () => {
                           </a>
                         </Tooltip>
                         <Tooltip label="Edit">
-                          <a href={`/data-penyuluh/${item.id}`}>
+                          <a href={`/rekap-data-tani/edit/${item.id}`}>
                             <FontAwesomeIcon
                               icon={faEdit}
                               className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
@@ -213,12 +206,13 @@ const RekapDataPenyuluh = () => {
                             className="cursor-pointer text-red-500 hover:text-red-600"
                           />
                         </Tooltip>
-                    </td>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              {loading && <LoadingAnimation />}
+              {loading &&
+              <LoadingAnimation/>}
             </div>
           </div>
         </div>
@@ -227,4 +221,4 @@ const RekapDataPenyuluh = () => {
   );
 };
 
-export default RekapDataPenyuluh;
+export default RekapPetani;
