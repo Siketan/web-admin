@@ -19,8 +19,8 @@ import { VerifyingUser } from "../../infrastucture";
 
 const breadcrumbItems = [
   { title: "Dashboard", href: "/" },
-  { title: "Data Petani" },
-  { title: "Tabel Petani" },
+  { title: "Akses User" },
+  { title: "List User" },
 ].map((item, index) => (
   <Anchor href={item.href} key={index} className="text-white opacity-50">
     {item.title}
@@ -95,9 +95,9 @@ const VerifikasiUser = () => {
     <div>
       <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
       <h3 className="text-white text-2xl font-bold mt-4">
-        TABEL DATA PETANI
+        AKSES USER
       </h3>
-      <SearchInput placeholder="Cari NIK PETANI / POKTAN" />
+      {/* <SearchInput placeholder="Cari NIK PETANI / POKTAN" /> */}
       <div className="relativemt-6 mt-4 flex items-center w-full">
         <Modal
           opened={modalDeleteData}
@@ -136,14 +136,15 @@ const VerifikasiUser = () => {
         <div className="bg-[#D9D9D9] rounded-lg w-full">
         <div className="relative bg-[#136B09] p-4 flex w-full justify-between rounded-t-lg shadow-lg">
           <h3 className="text-white text-2xl font-bold px-3">
-            DATA TABEL PETANI
+            {/* DATA TABEL PETANI */}
+            TABEL LIST USER
           </h3>
-          <Link to={`/data-tani/tambah`}>
+          {/* <Link to={`/data-tani/tambah`}>
               <button className="ms-5 rounded-md bg-[#86BA34] text-white p-1 px-5 w-30 h-10"> 
                 <FontAwesomeIcon className="text-xl"
                   icon={faPlus}
                 /></button>
-            </Link>
+            </Link> */}
         </div>
           <div className="pt-0">
             <div className="h-[calc(100vh-200px) p-6 flex justify-between items-center">
