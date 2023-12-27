@@ -7,6 +7,8 @@ import {
   faTrash,
   faBullseye,
   faPlus,
+  faArrowRight,
+  faArrowLeft
 } from "@fortawesome/free-solid-svg-icons";
 import Table from "@/components/table/Table";
 import { Image, Modal,Text,Button, Tooltip, Breadcrumbs, Anchor } from '@mantine/core';
@@ -17,6 +19,8 @@ import SearchInput from "../../../../components/uiComponents/inputComponents/sea
 import { ImPencil } from "react-icons/im";
 import { IoEyeOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
+// import { TPetani } from "../../../../types/petani";
+import { SearchPetani } from "../../../../infrastucture/searchApi";
 
 
 const breadcrumbItems = [
@@ -28,10 +32,32 @@ const breadcrumbItems = [
     {item.title}
   </Anchor>
 ));
+
+const filterDataPetani = (data) => {
+  return data.map((item) => ({
+    ...item,
+    value: item.id.toString(),
+    label: `${item.nik} - ${item.nama}`,
+  }));
+};
+
+const loadOptions = (inputValue, callback) => {
+  setTimeout(async () => {
+    const data = await SearchPetani(inputValue);
+    callback(filterDataPetani(data || []));
+  }, 1000);
+};
+
+
 const columns = [
   {
     accessorKey: "no",
     header: "No",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "kategori",
+    header: "Kategori Tanaman",
     cell: (props) => <span>{`${props.getValue()}`}</span>,
   },
   {
@@ -47,6 +73,8 @@ export default function DetailRekapPetani() {
   const [loading, setLoading] = useState(true)
   const [dataTable, setDataTable] = useState();
   const [resp, setResp] = useState();
+  const [petani, setPetani] = useState([]);
+  const [selectedPetani, setSelectedPetani] = useState(null);
   const [filters, setFilters] = useState({
     janisPanen: "",
     jenis: "",
@@ -60,17 +88,28 @@ export default function DetailRekapPetani() {
     statusLahan: "",
     tanggalTanam: "",
   });
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+
   useEffect(() => {
-    GetListTanaman().then((data)=>{
-      // setPetani(data)
-      setDatas(data.data)
-      setResp(data)
-      setLoading(false)
+    GetListTanaman(page, limit, petani?.id).then((data) => {
+      setDatas(data.data);
+      setResp(data);
+      setLoading(false);
     });
-  }, []);
-  useEffect(()=> {
-    console.log(dataTable)
-  }, [dataTable])
+  }, [page, limit, petani]);
+  const handleNextPage = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+  
+  const handlePrevPage = () => {
+    setPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+  
+  const handleDeleteTanaman = (ids) => {
+    DeleteTanamanPetani(ids);
+  };
+
   useEffect(() => {
     if (resp) {
       setDataTable({
@@ -90,7 +129,7 @@ export default function DetailRekapPetani() {
                   </a>
                 </Tooltip>
                 <Tooltip label="Edit">
-                  <a href={`/rekap-data-tani/edit/${item.id}`}>
+                  <a href={`/tanaman-petani/edit/${item.id}`}>
                     <FontAwesomeIcon
                       icon={faEdit}
                       className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
@@ -110,28 +149,12 @@ export default function DetailRekapPetani() {
       });
     }
   }, [resp]);
+  
   const handleFilterChange = (e, column) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       [column]: e.target.value,
     }));
-  };
-  //   const filteredData = datas.filter((item) => {
-  //   return Object.keys(filters).every((key) => {
-  //     if (filters[key] !== "") {
-  //         if (typeof item[key] == "number") {
-  //           return item[key].toString().includes(filters[key].toLowerCase());
-  //         } else if(typeof item[key] == "string"){
-  //           return item[key]
-  //             .toLowerCase()
-  //             .includes(filters[key].toLowerCase());
-  //         }
-  //     }
-  //     return true;
-  //   });
-  // });
-  const handleTanaman = (ids) => {
-    DeleteTanamanPetani(ids);
   };
   return (
     <div>
@@ -139,7 +162,19 @@ export default function DetailRekapPetani() {
       <h3 className="text-white text-2xl font-bold mt-4">
         TABEL DATA PETANI
       </h3>
-      <SearchInput placeholder="Cari NIK PETANI / POKTAN" />
+      <SearchInput 
+      cacheOptions
+      loadOptions={loadOptions}
+      defaultOptions
+      // onChange={(value) => {
+      //   setSelectedPetani(value)
+      // }}
+      onChange={(value) => {
+        setPetani(value);
+      }}
+      value={petani}
+      isClearable
+      placeholder="Cari NIK PETANI" />
      <Modal
         opened={modalDeleteData}
         onClose={() => setModalDeleteData(false)}
@@ -166,7 +201,7 @@ export default function DetailRekapPetani() {
             style={{ color: "white", backgroundColor: "red" }}
             type="submit"
             onClick={() => {
-              handleTanaman(modalDeleteData);
+              handleDeleteTanaman(modalDeleteData);
               setModalDeleteData(false);
             }}
           >
@@ -174,7 +209,7 @@ export default function DetailRekapPetani() {
           </Button>
         </div>
       </Modal>
-      <div className="bg-[#D9D9D9] rounded-lg w-full">
+      <div className="bg-[#D9D9D9] rounded-lg w-full mt-5">
         <div className="relative bg-[#136B09] p-4 flex w-full justify-between rounded-t-lg shadow-lg">
           <h3 className="text-white text-2xl font-bold px-3">
             DATA TABEL PETANI
@@ -188,6 +223,7 @@ export default function DetailRekapPetani() {
         </div>
           <div className="pt-0">
             <div className="h-[calc(100vh-200px) p-6 flex justify-between items-center">
+              {/* <Table className="min-w-full shadow-md" data={dataTable} columns={columns} /> */}
               <table className="min-w-full shadow-md">
                 <thead className="bg-[#079073] text-white">
                   <tr>
@@ -215,7 +251,7 @@ export default function DetailRekapPetani() {
                 <tbody>
                   {datas?.map((item, index) => (
                     <tr key={item.id} className={`${index % 2 === 0 ? 'bg-white text-black font-medium' : 'bg-[#D1D9D3] text-emerald-800 font-medium'}`}>
-                      <td className="px-4 py-2 text-center ">{index + 1}</td>
+                      <td className="px-4 py-2 text-center ">{index + 1 + (page - 1) * 10}</td>
                       <td className="px-4 py-2 text-center ">{item?.kategori}</td>
                       <td className="px-4 py-2 text-center ">{item?.komoditas}</td>
                       <td className="px-4 py-2 text-center ">{item?.statusKepemilikanLahan}</td>
@@ -231,7 +267,7 @@ export default function DetailRekapPetani() {
                           </a>
                         </Tooltip>
                         <Tooltip label="Edit">
-                          <a href={`/rekap-data-tani/edit/${item.id}`}>
+                          <a href={`/tanaman-petani/edit/${item.id}`}>
                             <FontAwesomeIcon
                               icon={faEdit}
                               className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
@@ -249,13 +285,21 @@ export default function DetailRekapPetani() {
                     </tr>
                   ))}
                 </tbody>
+                <div className="flex justify-end items-center mt-4">
+                  <p className="text-black font-bold">Page: {page}</p>
+                  <button className="ml-2" onClick={handlePrevPage}>
+                    <FontAwesomeIcon icon={faArrowLeft} />
+                  </button>
+                  <button className="ml-2" onClick={handleNextPage}>
+                    <FontAwesomeIcon icon={faArrowRight} />
+                  </button>
+                </div>
               </table>
               {loading &&
               <LoadingAnimation/>}
             </div>
           </div>
         </div>
-        <Table data={dataTable} columns={columns} />
       </div>
       
   );

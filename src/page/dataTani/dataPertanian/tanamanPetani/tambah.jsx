@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   Anchor,
   Breadcrumbs,
@@ -10,12 +11,30 @@ import {
   Tabs,
   TextInput,
 } from "@mantine/core";
-import React, { useEffect } from "react";
+import {
+  faFilter,
+  faEdit,
+  faTrash,
+  faBullseye,
+  faPlus,
+  faArrowRight,
+  faArrowLeft
+} from "@fortawesome/free-solid-svg-icons";
+// import React, { useEffect } from "react";
 // import SearchInput from "../../../../components/uiComponents/inputComponents/SearchInput";
 import SearchInput from "../../../../components/uiComponents/inputComponents/searchInput";
 import { FaRegRectangleList, FaUpload } from "react-icons/fa6";
 // import { GetStatistikTanamanAll } from "../../infrastucture";
 import { IoImageOutline } from "react-icons/io5";
+import { SearchPetani } from "../../../../infrastucture/searchApi";
+import {
+  AddTanamanPetani,
+  GetListTanaman
+} from "../../../../infrastucture/index"
+//import tooltip, fontAwesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Tooltip } from "@mantine/core";
+import Loading from "../../../../components/loading";
 
 const breadcrumbItems = [
   { title: "Dashboard", href: "/" },
@@ -27,14 +46,150 @@ const breadcrumbItems = [
   </Anchor>
 ));
 
-export default function TambahStatistik() {
+const filterDataPetani = (data) => {
+  return data.map((item) => ({
+    ...item,
+    value: item.id.toString(),
+    label: `${item.nik} - ${item.nama}`,
+  }));
+};
+
+const loadOptions = (inputValue, callback) => {
+  setTimeout(async () => {
+    const data = await SearchPetani(inputValue);
+    callback(filterDataPetani(data || []));
+  }, 1000);
+};
+
+
+export default function TambahTanamanPetani() {
+  const [petani, setPetani] = useState([]);
+  const [datas, setDatas] = useState([]);
+  const [statusKepemilikanLahan, setStatusKepemilikanLahan] = useState("");
+  const [luasLahan, setLuasLahan] = useState(0);
+  const [kategori, setKategori] = useState("");
+  const [jenis, setJenis] = useState("");
+  const [komoditas, setKomoditas] = useState("");
+  const [periodeMusimTanam, setPeriodeMusimTanam] = useState("");
+  const [periodeBulanTanam, setPeriodeBulanTanam] = useState("");
+  const [prakiraanLuasPanen, setPrakiraanLuasPanen] = useState(0);
+  const [prakiraanProduksiPanen, setPrakiraanProduksiPanen] = useState(0);
+  const [prakiraanBulanPanen, setPrakiraanBulanPanen] = useState("");
+  const [filters, setFilters] = useState({});
+  const [modalDeleteData, setModalDeleteData] = useState(false);
+  const [loading, setLoading] = useState(true)
+  const [dataTable, setDataTable] = useState();
+  const [resp, setResp] = useState();
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+
+  useEffect(() => {
+    GetListTanaman(page, limit).then((data) => {
+      setDatas(data.data);
+      setResp(data);
+      setLoading(false);
+    });
+  }, [page, limit]);
+  const handleNextPage = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+  
+  const handlePrevPage = () => {
+    setPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+  useEffect(()=> {
+    // console.log(dataTable)
+  }, [dataTable])
+  useEffect(() => {
+    if (resp) {
+      setDataTable({
+        ...resp,
+        
+          data: resp.data.map((item, index) => ({
+            ...item,
+            no: index + 1,
+            actions: (
+              <div className="flex gap-4">
+                <Tooltip label="Detail">
+                  <a href={`/data-tani/detail/${item.id}`} >
+                    <FontAwesomeIcon
+                      icon={faBullseye}
+                      className="cursor-pointer text-black hover:text-black"
+                    />
+                  </a>
+                </Tooltip>
+                <Tooltip label="Edit">
+                  <a href={`/rekap-data-tani/edit/${item.id}`}>
+                    <FontAwesomeIcon
+                      icon={faEdit}
+                      className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
+                    />
+                  </a>
+                </Tooltip>
+                <Tooltip label="Delete">
+                  <FontAwesomeIcon
+                    onClick={() => setModalDeleteData(item?.id)}
+                    icon={faTrash}
+                    className="cursor-pointer text-red-500 hover:text-red-600"
+                  />
+                </Tooltip>
+              </div>
+            ),
+          })),
+      });
+    }
+  }, [resp]);
+  const handleFilterChange = (e, column) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [column]: e.target.value,
+    }));
+  };
+  const handleTanaman = (ids) => {
+    DeleteTanamanPetani(ids);
+  };
+  const handleSubmit=(e) => {
+    setLoading(true)
+    e.preventDefault()
+    const data = {
+      statusKepemilikanLahan
+      , luasLahan
+      , kategori
+      , jenis
+      , komoditas
+      , periodeMusimTanam
+      , periodeBulanTanam
+      , prakiraanLuasPanen
+      , prakiraanProduksiPanen
+      , prakiraanBulanPanen
+      , fk_petaniId: petani?.id
+    };
+    // console.log(data)
+    const formData = new FormData();
+    for (const key in data){
+      formData.append(key, data[key]);
+    }
+    // console.log({formData})
+    AddTanamanPetani(data).then(()=> setLoading(false))
+    // history.push('/tanaman-petani');
+  };
+
   return (
     <div>
       <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
       <h3 className="text-white text-2xl font-bold mt-4">
         TABEL DATA STATISTIK PERTANIAN
       </h3>
-      <SearchInput placeholder="Cari NIK PETANI / POKTAN" />
+      <SearchInput 
+      cacheOptions
+      loadOptions={loadOptions}
+      defaultOptions
+      onChange={(value) => {
+        setPetani(value);
+      }}
+      value={petani}
+      isClearable
+      placeholder="Cari NIK PETANI / POKTAN" />
       <div className="bg-[#D9D9D9] rounded-lg">
         <div className="relative bg-[#136B09] mt-6 p-4 flex w-full justify-between rounded-t-lg shadow-lg">
           <h3 className="text-white text-2xl font-bold">
@@ -47,211 +202,284 @@ export default function TambahStatistik() {
               <IoImageOutline /> Menampilkan Gambar
             </span>
             <Image
-              radius="md"
-              src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-7.png"
+              radius= "md"
+              rounded= "md"
+              width={300} // Set the width of the image
+              height={200} // Set the height of the image
+              src={ petani?.foto ??"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-7.png"}
             />
           </div>
           <div className="col-span-3 grid grid-cols-2 gap-4">
-            <TextInput label="NIK" />
-            <TextInput label="Desa Domisili" />
-            <TextInput label="Nama Kelompok" />
-            <TextInput label="Nama Gapoktan" />
-            <TextInput label="Nama Petani" />
-            <TextInput label="Nama Poktan" />
+            <TextInput label="NIK" disabled value={petani?.nik}/>
+            <TextInput label="Nama Petani" disabled value={petani?.nama}/>
+            <TextInput label="Desa Domisili" disabled value={petani?.desa}/>
+            <TextInput label="Nama Gapoktan" disabled value={petani.kelompok?.gapoktan}/>
+            <TextInput label="Nama Kelompok" disabled value={petani.kelompok?.namaKelompok}/>
+            <TextInput label="Nama Penyuluh" disabled value={petani.dataPenyuluh?.nama} />
           </div>
         </div>
       </div>
-      <div className="bg-[#D9D9D9] rounded-lg">
-        <div className="relative bg-[#136B09] mt-6 p-4 flex w-full justify-between rounded-t-lg shadow-lg items-center">
-          <h3 className="text-white text-2xl font-bold">
-            MASUKKAN DATA TANAMAN
-          </h3>
-          <button className="flex px-4 py-2 gap-4 bg-[#F29D0E] rounded-lg items-center justify-center text-xl text-white active:bg-[#F29D0E] active:shadow-md active:translate-y-1">
-            <FaUpload />
-            <span>UPLOAD FILE </span>
-          </button>
-        </div>
-        <div className="grid grid-cols-2 gap-8 p-6">
-          <div className="flex flex-col gap-4 justify-between">
-            <div div className="bg-white rounded-lg p-4">
-              <p>STATUS KEPEMILIKAN LAHAN</p>
-              <Select
-                className="mt-2"
-                placeholder="-Tanaman Holtikultura Sayur-"
-                data={[
-                  "MILIK SENDIRI",
-                  "TANAH SEWA",
-                ]}
-              />
+      {petani?.id ? (
+        <form className=
+          "bg-[#D9D9D9] rounded-lg" onSubmit={(e)=>handleSubmit(e)} method="POST">
+            {loading &&
+          <Loading />}
+          {/* <div className="bg-[#D9D9D9] rounded-lg"> */}
+          <div className="relative bg-[#136B09] mt-6 p-4 flex w-full justify-between rounded-t-lg shadow-lg items-center">
+              <h3 className="text-white text-2xl font-bold">
+                MASUKKAN DATA TANAMAN
+              </h3>
+              <button className="flex px-4 py-2 gap-4 bg-[#F29D0E] rounded-lg items-center justify-center text-xl text-white active:bg-[#F29D0E] active:shadow-md active:translate-y-1">
+                <FaUpload />
+                <span>UPLOAD FILE </span>
+              </button>
             </div>
-            <div className="bg-white rounded-lg p-4">
-              <p>
-                Luas Lahan Tanam (M<sup>2</sup>)
-              </p>
-              <NumberInput placeholder="Luas Lahan Tanaman" min={0} />
-            </div>
-            <div className="bg-white rounded-lg p-4">
-              <p>Kategori Tanaman</p>
-              <div className="rounded-lg shadow-lg p-4">
-                <Radio.Group className="[&>*]:mt-1 first:mt-0">
-                  <Radio label="Tanaman Pangan" value="pangan" />
-                  <Radio label="Tanaman Perkebunan" value="perkebunan" />
-                  <Radio label="Tanaman Holtikultura" value="holtikultura" />
-                  <Radio.Group className="ml-8 [&>*]:mt-1">
-                    <Radio label="Jenis Buah" value="buah" />
-                    <Radio label="Jenis Sayur" value="sayur" />
-                  </Radio.Group>
-                </Radio.Group>
-              </div>
-              <p className="mt-4">Komoditas Tanaman</p>
-              <Tabs defaultValue="semusim">
-                <Tabs.List>
-                  <Tabs.Tab value="semusim">Semusim</Tabs.Tab>
-                  <Tabs.Tab value="tahunan">Tahunan</Tabs.Tab>
-                </Tabs.List>
+              <div className="grid grid-cols-2 gap-8 p-6">
+                <div className="flex flex-col gap-4 justify-between flex-1">
+                  <div div className="bg-white rounded-lg p-4">
+                    <p>STATUS KEPEMILIKAN LAHAN</p>
+                    <Select
+                      className="mt-2"
+                      placeholder="Status Tanah"
+                      value={statusKepemilikanLahan}
+                      data={[
+                        "MILIK SENDIRI",
+                        "TANAH SEWA",
+                      ]}
+                      onChange={(value) => setStatusKepemilikanLahan(value)}
+                    />
+                  </div>
+                  <div className="bg-white rounded-lg p-4">
+                    <p>
+                      Luas Lahan Tanam (M<sup>2</sup>)
+                    </p>
+                    <NumberInput 
+                    placeholder="Luas Lahan Tanaman" 
+                    min={0}
+                    value={Number(luasLahan)}
+                    onChange={(value) => setLuasLahan(value)} />
+                  </div>
+                  <div className="bg-white rounded-lg p-4">
+                    <p>Kategori Tanaman</p>
+                    <div className="rounded-lg shadow-lg p-4">
+                      <Radio.Group className="[&>*]:mt-1 first:mt-0" value={kategori} onChange={(value) => setKategori(value)}>
+                        <Radio label="Tanaman Pangan" value="TANAMAN PANGAN" />
+                        <Radio label="Tanaman Perkebunan" value="TANAMAN PERKEBUNAN" />
+                        <Radio label="Tanaman Holtikultura" value="TANAMAN HOLTIKULTURA" />
+                        {kategori && kategori.toLowerCase() === 'tanaman holtikultura' && (
+                          <Radio.Group className="ml-8 [&>*]:mt-1" value={jenis} onChange={(value) => setJenis(value)}>
+                            <Radio label="Jenis Buah" value="BUAH" />
+                            <Radio label="Jenis Sayur" value="SAYUR" />
+                          </Radio.Group>
+                        )}
+                      </Radio.Group>
+                    </div>
+                    <p className="mt-4">Komoditas Tanaman</p>
+                    <Tabs defaultValue="semusim">
+                      <Tabs.List>
+                        <Tabs.Tab value="semusim">Semusim</Tabs.Tab>
+                        <Tabs.Tab value="tahunan">Tahunan</Tabs.Tab>
+                      </Tabs.List>
 
-                <Tabs.Panel value="semusim">
-                  <Select
-                    className="mt-2"
-                    placeholder="-Tanaman Holtikultura Buah-"
-                    data={[
-                      "Melon",
-                      "Semangka",
-                      "Pisang",
-                      "Blewah",
-                      "Mangga",
-                      "Durian",
-                      "Manggis",
-                      "Alpukat",
-                      "Rambutan",
-                      "Jeruk Lemon",
-                      "Jeruk Nipis",
-                      "Jeruk Keprok",
-                      "Jeruk Besar",
-                      "Nangka",
-                      "Jambu Biji",
-                      "Jambu Air",
-                      "Sukun",
-                      "Sirsak",
-                      "Sawo",
-                      "Duku",
-                    ].map((buah) => `Buah ${buah}`)}
-                  />
-                </Tabs.Panel>
-                <Tabs.Panel value="tahunan">
-                  <Select
-                    className="mt-2"
-                    placeholder="-Tanaman Holtikultura Sayur-"
-                    data={[
-                      "Cabe Kecil",
-                      "Cabe Besar",
-                      "Bawang Merah",
-                      "Tomat",
-                      "Terong",
-                      "Pare",
-                      "Gambas",
-                      "Bayam",
-                      "Kangkung",
-                      "Sawi",
-                      "Kacang Panjang",
-                    ].map((sayur) => `Sayur ${sayur}`)}
-                  />
-                </Tabs.Panel>
-              </Tabs>
-            </div>
-            {/* <div className="bg-white rounded-lg p-4">
-              <p>Periode Tanam</p>
-              <Select
-                className="mt-2"
-                placeholder="-Tanaman Holtikultura Sayur-"
-                data={[
-                  "Januari",
-                  "Februari",
-                  "Maret",
-                  "April",
-                  "Mei",
-                  "Juni",
-                  "Juli",
-                  "Agustus",
-                  "September",
-                  "Oktober",
-                  "November",
-                  "Desember",
-                ]}
-              />
-            </div> */}
+                      {/* {periodeMusimTanam?.toLowerCase === 'tanaman semusim' ? ( */}
+                        <Tabs.Panel value="semusim">
+                          <Select
+                            className="mt-2"
+                            placeholder="Jenis Hasil Panen"
+                            data={
+                              kategori?.toUpperCase() === 'TANAMAN PANGAN'
+                                ? [
+                                    'Padi Konvensional',
+                                    'Padi Ramah Lingkungan',
+                                    'Padi Organik',
+                                    'Jagung',
+                                    'Kedelai',
+                                    'Ubi Jalar',
+                                    'Ubi Kayu',
+                                    'Kacang Tanah',
+                                    'Kacang Hijau',
+                                  ].map((buah) => `${buah}`)
+                                : kategori?.toUpperCase() === 'TANAMAN PERKEBUNAN'
+                                ? [
+                                    'Perkebunan Kopi',
+                                    'Perkebunan Kakao',
+                                    'Perkebunan Cengkeh',
+                                    'Perkebunan Teh',
+                                    'Perkebunan Karet',
+                                    'Perkebunan Kelapa',
+                                  ].map((buah) => `${buah}`)
+                                : [
+                                    'Melon',
+                                    'Semangka',
+                                    'Pisang',
+                                    'Blewah',
+                                    'Mangga',
+                                    'Durian',
+                                    'Manggis',
+                                    'Alpukat',
+                                    'Rambutan',
+                                    'Jeruk Lemon',
+                                    'Jeruk Nipis',
+                                    'Jeruk Keprok',
+                                    'Jeruk Besar',
+                                    'Nangka',
+                                    'Jambu Biji',
+                                    'Jambu Air',
+                                    'Sukun',
+                                    'Sirsak',
+                                    'Sawo',
+                                    'Duku',
+                                  ].map((buah) => `${buah}`)
+                            }
+                            value={komoditas}
+                            onChange={(value) => setKomoditas(value)}
+                          />
+                        </Tabs.Panel>
+                      {/* ) : ( */}
+                        <Tabs.Panel value="tahunan">
+                          <Select
+                            className="mt-2"
+                            placeholder="Jenis Hasil Panen"
+                            data={
+                              kategori?.toUpperCase() === 'TANAMAN PANGAN'
+                                ? [
+                                    'Padi Konvensional',
+                                    'Padi Ramah Lingkungan',
+                                    'Padi Organik',
+                                    'Jagung',
+                                    'Kedelai',
+                                    'Ubi Jalar',
+                                    'Ubi Kayu',
+                                    'Kacang Tanah',
+                                    'Kacang Hijau',
+                                  ].map((buah) => `${buah}`)
+                                : kategori?.toUpperCase() === 'TANAMAN PERKEBUNAN'
+                                ? [
+                                    'Perkebunan Tembakau',
+                                    'Perkebunan Tebu',
+                                  ].map((buah) => `${buah}`)
+                                : [
+                                  "Cabe Kecil",
+                                  "Cabe Besar",
+                                  "Bawang Merah",
+                                  "Tomat",
+                                  "Terong",
+                                  "Pare",
+                                  "Gambas",
+                                  "Bayam",
+                                  "Kangkung",
+                                  "Sawi",
+                                  "Kacang Panjang",
+                                  ].map((buah) => `${buah}`)
+                            }
+                            value={komoditas}
+                            onChange={(value) => setKomoditas(value)}
+                          />
+                        </Tabs.Panel>
+                      {/* )} */}
+                    </Tabs>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-4 justify-between flex-1">
+                  <div className="relative">
+                  <div className="relative">
+                    {/* <div className="absolute w-full h-full bg-[#545454] z-50 rounded-lg bg-opacity-75 flex items-center justify-center text-[#888888] font-bold text-4xl cursor-default">
+                      DISABLED
+                    </div> */}
+                    <div className="bg-[#136B09] text-xl text-white font-bold py-2 px-6 flex w-fit justify-between rounded-t-lg shadow-lg items-center">
+                      DATA TANAMAN
+                    </div>
+                    <div className="bg-white rounded-lg p-4 rounded-tl-none flex gap-1 flex-col">
+                      <p>PERIODE MUSIM TANAM</p>
+                      <Select
+                        value={periodeMusimTanam}
+                        placeholder="-Periode Musim Tanam-"
+                        data={[
+                          "Tanaman Semusim",
+                          "Tanaman Tahunan"
+                        ]}
+                        onChange={(value) => setPeriodeMusimTanam(value)}
+                      />
+                      <p>PERIODE BULAN TANAM</p>
+                      <Select
+                        placeholder="-Periode Bulan Tanam-"
+                        data={[
+                          "Januari",
+                          "Februari",
+                          "Maret",
+                          "April",
+                          "Mei",
+                          "Juni",
+                          "Juli",
+                          "Agustus",
+                          "September",
+                          "Oktober",
+                          "November",
+                          "Desember",
+                        ]}
+                        value={periodeBulanTanam}
+                        onChange={(value) => setPeriodeBulanTanam(value)}
+                      />
+                    </div>
+                  </div>
+                    <div className="bg-[#136B09] mt-4 text-xl text-white font-bold py-2 px-6 flex w-fit justify-between rounded-t-lg shadow-lg items-center">
+                      Prakiraan Panen
+                    </div>
+                    <div className="bg-white rounded-lg p-4 rounded-tl-none flex gap-1 flex-col ">
+                      <p>PRAKIRAAN LUAS PANEN (HA)</p>
+                      <NumberInput 
+                        placeholder="Prakiraan Luas Panen" 
+                        // min={0}
+                        value={Number(prakiraanLuasPanen)}
+                        onChange={(value) => setPrakiraanLuasPanen(value)} />
+                      <p>PRAKIRAAN HASIL PANEN (TON)</p>
+                      <NumberInput
+                       placeholder="Prakiraan Hasil Panen" 
+                       min={0}
+                       value={Number(prakiraanProduksiPanen)}
+                       onChange={(value) => setPrakiraanProduksiPanen(value)}  />
+                      <p>PRAKIRAAN BULAN PANEN</p>
+                      <Select
+                        placeholder="-Periode Bulan Panen-"
+                        data={[
+                          "Januari",
+                          "Februari",
+                          "Maret",
+                          "April",
+                          "Mei",
+                          "Juni",
+                          "Juli",
+                          "Agustus",
+                          "September",
+                          "Oktober",
+                          "November",
+                          "Desember",
+                        ]}
+                        value={prakiraanBulanPanen}
+                        onChange={(value) => setPrakiraanBulanPanen(value)} 
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+          {/* </div> */}
+          <div className="flex px-6 pb-6 justify-end">
+            <Button className="bg-[#307B28]" type="submit">Simpan Data</Button>
           </div>
-          <div className="flex flex-col gap-4 justify-between">
-            <div className="relative">
-              <div className="bg-[#136B09] text-xl text-white font-bold py-2 px-6 flex w-fit justify-between rounded-t-lg shadow-lg items-center">
-                Prakiraan Panen
-              </div>
-              <div className="bg-white rounded-lg p-4 rounded-tl-none flex gap-1 flex-col">
-                <p>PRAKIRAAN LUAS PANEN (HA)</p>
-                <NumberInput placeholder="Prakiraan Luas Panen" min={0} />
-                <p>PRAKIRAAN HASIL PANEN (TON)</p>
-                <NumberInput placeholder="Prakiraan Hasil Panen" min={0} />
-                <p>PRAKIRAAN BULAN PANEN</p>
-                <Select
-                  placeholder="-Periode Bulan Panen-"
-                  data={[
-                    "Januari",
-                    "Februari",
-                    "Maret",
-                    "April",
-                    "Mei",
-                    "Juni",
-                    "Juli",
-                    "Agustus",
-                    "September",
-                    "Oktober",
-                    "November",
-                    "Desember",
-                  ]}
-                />
-              </div>
-            </div>
-            <div className="relative">
-              {/* <div className="absolute w-full h-full bg-[#545454] z-50 rounded-lg bg-opacity-75 flex items-center justify-center text-[#888888] font-bold text-4xl cursor-default">
-                DISABLED
-              </div> */}
-              <div className="bg-[#136B09] text-xl text-white font-bold py-2 px-6 flex w-fit justify-between rounded-t-lg shadow-lg items-center">
-                Realisasi Panen
-              </div>
-              <div className="bg-white rounded-lg p-4 rounded-tl-none flex gap-1 flex-col">
-                <p>LUAS PANEN (HA)</p>
-                <NumberInput placeholder="Luas Panen" min={0} />
-                <p>HASIL PANEN (TON)</p>
-                <NumberInput placeholder="Hasil Panen" min={0} />
-                <p>BULAN PANEN</p>
-                <Select
-                  placeholder="-Periode Bulan Panen-"
-                  data={[
-                    "Januari",
-                    "Februari",
-                    "Maret",
-                    "April",
-                    "Mei",
-                    "Juni",
-                    "Juli",
-                    "Agustus",
-                    "September",
-                    "Oktober",
-                    "November",
-                    "Desember",
-                  ]}
-                />
-              </div>
-            </div>
-          </div>
+          {loading &&
+              <LoadingAnimation/>}
+        </form>
+        
+      ): (
+        <div className="relative bg-yellow-500 mt-6 p-4 flex w-full justify-center rounded-lg shadow-lg items-center">
+          <h3 className="text-white text-2xl font-bold text-center">
+            CARI PETANI TERLEBIH DAHULU
+          </h3>
         </div>
-        <div className="flex px-6 pb-6 justify-end">
-          <Button className="bg-[#307B28]">Simpan Data</Button>
-        </div>
-      </div>
+      )}
       <div className="relative bg-white bg-opacity-20 mt-6 p-4 flex items-center w-full">
         <h3 className="text-white text-2xl font-bold mx-auto">
-          TABEL DATA STATISTIK PERTANIAN
+          TABEL DATA TANAMAN PERTANIAN
         </h3>
         <button className="absolute right-4 text-[#0FA958] text-xl">
           <FaRegRectangleList />

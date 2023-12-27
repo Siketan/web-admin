@@ -37,6 +37,7 @@ import {
   TambahLaporanTanam,
   TambahLaporanAhir,
   EditPenyuluhan,
+  VerifikasiUser,
 } from "./page";
 
 import Footer from "./components/footer";
@@ -178,9 +179,9 @@ const menu = [
     icon: "/icons/hak-akses.svg",
     sub: [
       {
-        name: "Tambah Hak Akses",
+        name: "Verifikasi User",
         icon: "/icons/globe.svg",
-        path: "/hak-akses/tambah",
+        path: "/verifikasi",
       },
       {
         name: "Ubah Akses User",
@@ -456,6 +457,8 @@ const RoutesPath = () => {
         <Route path="/loginAdminSiketan" element={<Login />} />
         <Route path="/registerAdminSiketan" element={<Register />} />
         <Route element={<ProtectedRoute />}>
+          <Route path="/verifikasi" element={<VerifikasiUser />} />
+          {/* <Route index element={<Dashboard />}></Route> */}
           {/* Statistik */}
           <Route path="/statistik" element={<Statistik />} />
           <Route path="/statistik/tambah" element={<TambahStatistik />} />

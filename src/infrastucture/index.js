@@ -29,6 +29,24 @@ export const Login = async (data) => {
     SweatAlert(String(error.response.data.message), "error");
   }
 };
+export const ListUser = async () => {
+  try {
+    const response = await Api.get("/verify");
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), "error");
+  }
+}
+
+export const VerifyingUser = async(id) => {
+  try {
+    const response = await Api.put(`/verify/${id}`);
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), "error");
+  }
+}
+
 export const GetProfile = async () => {
   const response = await Api.get("/auth/profile");
   return response;
@@ -113,14 +131,56 @@ export const GetLaporanTani = async () => {
     SweatAlert(String(error.response.data.message), "error");
   }
 };
-export const GetListTanaman = async () => {
+export const GetListTanaman = async (page, limit, petaniId) => {
   try {
-    const response = await Api.get("/list-tanaman");
-    return response.data.data; // Access 'tanaman' property
+    // Include petaniId in the API call if it's provided
+    const url = petaniId
+      ? `/list-tanaman?page=${page}&limit=${limit}&petaniId=${petaniId}`
+      : `/list-tanaman?page=${page}&limit=${limit}`;
+
+    const response = await Api.get(url);
+    return response.data; // Access 'tanaman' property
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
   }
 };
+export const AddTanamanPetani = async (data) => {
+  try {
+    const response = await Api.post("/list-tanaman", data);
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), "error");
+  }
+}
+
+export const DeleteTanamanPetani = async (id) => {
+  try{
+    const response = await Api.delete(`/list-tanaman/${id}`);
+    SweatAlert(String(response.data.message), "success");
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), "error");
+  }
+};
+
+export const GetTanamanPetaniById = async (id) => {
+  try {
+    const response = await Api.get(`/list-tanaman/${id}`);
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), "error");
+  }
+};
+
+export const UpdateTanamanPetani = async (id, data) => {
+  try {
+    const response = await Api.put(`/list-tanaman/${id}`, data);
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), "error");
+  }
+};
+
 export const GetDaftarTani = async () => {
   try {
     const response = await Api.get(`/daftar-tani`);
@@ -173,14 +233,14 @@ export const editTanmanPetani = async (id, data) => {
     SweatAlert(String(error.response.data.message), "error");
   }
 };
-export const DeleteTanamanPetani = async (id) => {
-  try {
-    const response = await Api.delete(`/tanaman-petani/${id}`);
-    SweatAlert(String(response.data.message), "success", "reload");
-  } catch (error) {
-    SweatAlert(String(error.response.data.message), "error");
-  }
-};
+// export const DeleteTanamanPetani = async (id) => {
+//   try {
+//     const response = await Api.delete(`/tanaman-petani/${id}`);
+//     SweatAlert(String(response.data.message), "success", "reload");
+//   } catch (error) {
+//     SweatAlert(String(error.response.data.message), "error");
+//   }
+// };
 // info tani
 export const AddInfoTani = async (data) => {
   try {
