@@ -65,6 +65,7 @@ import Dashboard from "./page/dashboard";
 import Homepage from "./page/user/homepage";
 import TokoPertanian from "./page/user/tokoPertanian";
 import InfoPertanian from "./page/user/infoPertanian";
+import Berita from "./page/user/berita";
 
 const menu = [
   {
@@ -475,6 +476,7 @@ const RoutesPath = () => {
         <Route path="/" element={<Homepage />} />
         <Route path="/toko-pertanian" element={<TokoPertanian />} />
         <Route path="/info-pertanian" element={<InfoPertanian />} />
+        <Route path="/info-pertanian/:id" element={<Berita />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/verifikasi" element={<VerifikasiUser />} />
           {/* <Route index element={<Dashboard />}></Route> */}
