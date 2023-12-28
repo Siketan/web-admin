@@ -5,8 +5,13 @@ import InputCrud from "@/components/page/infoTani/IconCrud";
 import { IconEdit, IconEye, IconTrash, IconPlus } from "@tabler/icons-react";
 import { Image } from "@mantine/core";
 import { GetInfoTani, DeleteInfoTani } from "@/infrastruture";
-import { Text, Button, Modal } from '@mantine/core';
+import { Text, Button, Modal, Card } from '@mantine/core';
 import LoadingAnimation from '../../components/loading'
+import { FaClock } from "react-icons/fa6";
+import { BsPersonCircle } from "react-icons/bs";
+import { IoMdListBox } from "react-icons/io";
+import { BiCategoryAlt } from "react-icons/bi";
+
 const InfoTani = () => {
   const [datas, setDatas] = useState([]);
   const [checekd, setChecekd] = useState([false]);
@@ -52,24 +57,26 @@ const InfoTani = () => {
   };
   return (
     <>
-    <div className="pt-16">
+    <div className="pt-16 min-h-[55vh] flex flex-col justify-center">
     {loading && <LoadingAnimation/>}
-      <div className="flex justify-center gap-3">
-        <div className="flex justify-center">
-          <div className="self-center h-[20px] w-[20px] border border-black me-1 flex justify-center">
-            <input
-              type="checkbox"
-              onChange={(e) => handleCheckd(e.target.checked)}
-            />
+      <div className="w-[100%] flex justify-center">
+        <div className="flex justify-between w-[80%] p-[20px]">
+          <div
+            className="flex justify-center gap-2 cursor-pointer bg-yellow-500 hover:bg-green-primary hover:text-white hover:fill-white rounded-md p-3"
+            onClick={() => (window.location.href = "/info-tani/tambah")}
+          >
+            <IconPlus className="m-auto rounded-full h-[20px] w-[20px] border border-black me-1" />
+            <span className="text-base md:text-xl">Tambah Baru</span>
           </div>
-          <span className="underline ">Pilih Semua</span>
-        </div>
-        <div
-          className="flex justify-center cursor-pointer"
-          onClick={() => (window.location.href = "/info-tani/tambah")}
-        >
-          <IconPlus className="m-auto rounded-full h-[20px] w-[20px] border border-black me-1" />
-          <span className="underline">Tambah Baru</span>
+          <div className="flex justify-center gap-2 cursor-pointer bg-yellow-500 hover:bg-green-primary hover:text-white hover:fill-white rounded-md p-3">
+            <div className="self-center h-[20px] w-[20px] me-1 flex justify-center">
+              <input
+                type="checkbox"
+                onChange={(e) => handleCheckd(e.target.checked)}
+              />
+            </div>
+            <span className="text-base md:text-xl ">Pilih Semua</span>
+          </div>
         </div>
       </div>
         <Modal
@@ -102,57 +109,56 @@ const InfoTani = () => {
         </Modal>
         
       {datas?.map((item, i) => (
-        <MainCard row transparent center gap="0" key={i}>
-          <div className="self-center h-[20px] w-[20px] border border-black me-2 flex justify-center">
-            <input
-              type="checkbox"
-              checked={checekd == true ? true : id == item.id ? true : false}
-              onChange={(e) => handleCheckdOne(item.id)}
-            />
-          </div>
-          <MainCard
-            width="60%"
-            radius="0"
-            gap="0"
-            style={{ border: "solid 1px black" }}
-          >
-            <h1 className="font-bold">{item.judul}</h1>
-            <MainCard transparent row>
-              <Image
-                width={200}
-                height={120}
-                src={item?.fotoBerita}
-                alt="With default placeholder"
-                withPlaceholder
-              />
-              <MainCard transparent noPadding>
-                <MainCard row transparent noPadding>
-                  <p>
-                    <span className="font-medium">Dibuat Oleh : </span>
-                    {item.createdBy}
-                  </p>
-                  <p>
-                    <span className="font-medium">Tanggal : </span>
-                    {item.tanggal?.split("T")[0]}
-                  </p>
-                  <p>
-                    <span className="font-medium">Status : </span>
-                    {item.status}
-                  </p>
-                  <p>
-                    <span className="font-medium">Kategori : </span>
-                    {item.kategori}
-                  </p>
+        <MainCard row transparent center gap="0" key={i} >
+            <Card shadow="sm" padding="lg" radius="md" withBorder className="w-[80%]">
+              <MainCard transparent row>
+                <img className="h-min rounded-lg w-52"
+                  src={item?.fotoBerita}
+                  alt="With default placeholder"
+                  withPlaceholder
+                />
+                <MainCard transparent noPadding className="w-[100%]">
+                  <h1 className="font-bold text-base md:text-lg text-justify tracking-[1px] text-green-primary max-w-[95%]">
+                      {item?.judul}
+                  </h1>
+                  <div className="flex flex-row justify-between">
+                    <div className="max-w-[95%] flex flex-col space-y-3">
+                      <div className="flex flex-row space-x-5">
+                        <div className="flex flex-row space-x-2 items-center justify-center">
+                          <BsPersonCircle size={17} className="fill-grey-primary"/>
+                          <p className="text-xs sm:text-sm text-grey-primary">{item?.createdBy}</p>
+                        </div>
+                        <div className="flex flex-row space-x-2 items-center justify-center">
+                          <FaClock size={17} className="fill-grey-primary"/>
+                          <p className="text-xs sm:text-sm text-grey-primary">{item?.tanggal?.split("T")[0]}</p>
+                        </div>
+                        <div className="flex flex-row space-x-2 items-center justify-center">
+                          <IoMdListBox size={17} className="fill-grey-primary"/>
+                          <p className="text-xs sm:text-sm text-grey-primary">{item?.status}</p>
+                        </div>
+                        <div className="flex flex-row space-x-2 items-center justify-center">
+                          <BiCategoryAlt size={17} className="fill-grey-primary"/>
+                          <p className="text-xs sm:text-sm text-grey-primary">{item?.kategori}</p>
+                        </div>
+                      </div>
+                      <div dangerouslySetInnerHTML={{ __html: item.isi }} className="text-justify text-sm sm:text-base"/>
+                    </div>
+                  </div>
                 </MainCard>
-                <span dangerouslySetInnerHTML={{ __html: item.isi }} />
+                <div className="flex flex-col items-end justify-between">
+                  <input className="h-[20px] w-[20px] cursor-pointer" 
+                    type="checkbox"
+                    checked={checekd == true ? true : id == item.id ? true : false}
+                    onChange={(e) => handleCheckdOne(item.id)}
+                  />
+                  <div className="flex flex-col space-y-1 max-h-fit">
+                    <InputCrud onClick={() => navigateToDetail(item.id)} icon={<IconEye/>}>Lihat</InputCrud>
+                    <InputCrud onClick={() => navigateToEdit(item.id)} icon={<IconEdit/>}>Edit</InputCrud>
+                    <InputCrud onClick={()=>setModalDeleteData(item.id)} icon={<IconTrash/>}>Hapus</InputCrud>
+                  </div>
+                </div>
               </MainCard>
-            </MainCard>
-          </MainCard>
-          <MainCard width="3%" noPadding gap="0" transparent>
-            <InputCrud onClick={() => navigateToDetail(item.id)} icon={<IconEye />}>Liat</InputCrud>
-            <InputCrud onClick={() => navigateToEdit(item.id)} icon={<IconEdit />}>Edit</InputCrud>
-            <InputCrud onClick={()=>setModalDeleteData(item.id)} icon={<IconTrash />}>Hapus</InputCrud>
-          </MainCard>
+            </Card>
         </MainCard>
       ))}
     </div>

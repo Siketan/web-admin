@@ -60,37 +60,36 @@ function DetailInfoTani() {
         kembali
       </Button>
       <MainCard width="50%" transparent>
-      <Card shadow="sm" padding="lg" radius="md" withBorder>
-        <Card.Section>
-          <Image
-            src={data?.fotoBerita}
-            height={"35vh"}
-            alt={data?.judul}
-            withPlaceholder 
-          />
-        </Card.Section>
+        <Card shadow="sm" padding="lg" radius="md" withBorder>
+          <Card.Section>
+            <Image
+              src={data?.fotoBerita}
+              alt={data?.judul}
+              withPlaceholder 
+            />
+          </Card.Section>
 
-        <Group position="apart" mt="md" mb="xs">
-          <Text weight={500}>{data?.judul}</Text>
-          {data?.kategori && 
-          <Badge color="pink" variant="light">
-            {data?.kategori}
-          </Badge>
-}
-        </Group>
+          <Group position="apart" mt="md" mb="xs">
+            <Text weight={500}>{data?.judul}</Text>
+            {data?.kategori && 
+              <Badge color="pink" variant="light">
+                {data?.kategori}
+              </Badge>
+            }
+          </Group>
 
-        <Text size="sm" color="black">
-          <span dangerouslySetInnerHTML={{ __html: data?.isi }} />
-        </Text>
-        <Group position="right" sx={{marginTop:"19px"}}>
-          <Button variant='outline' color="cyan" onClick={() => navigateToEdit(data?.id)}>
-            Edit
-          </Button>
-          <Button variant='outline' color="cyan" onClick={()=>setModalDeleteData(data?.id)}>
-            Delete
-          </Button>
-        </Group>
-      </Card>
+          <Text size="sm" color="black">
+            <span dangerouslySetInnerHTML={{ __html: data?.isi }} className='text-sm text-justify' />
+          </Text>
+          <Group position="right" sx={{marginTop:"19px"}}>
+            <Button variant='outline' color="cyan" onClick={() => navigateToEdit(data?.id)}>
+              Edit
+            </Button>
+            <Button variant='outline' color="cyan" onClick={()=>setModalDeleteData(data?.id)}>
+              Delete
+            </Button>
+          </Group>
+        </Card>
       </MainCard>
     </MainCard>
   );

@@ -236,7 +236,7 @@ const Path = () => {
     "flex items-center p-2 w-full bg-white-primary text-green-primary hover:bg-green-sidebar-hover transition-all duration-200 ease-in-out";
   const activeClasses = "bg-green-primary bg-opacity-50";
   const textMenuClasses =
-    "ml-3 transition-all duration-200 text-left whitespace-nowrap font-bold text-lg uppercase underline";
+    "ml-3 transition-all duration-200 text-left whitespace-nowrap font-bold text-lg capitalize";
   const stackedMenuClasses = clsx(
     "w-full transition duration-75 group",
     mainMenuClasses
@@ -390,7 +390,7 @@ const Path = () => {
                   <UnstyledButton className="text-white">
                     <Group>
                       <div style={{ flex: 1 }}>
-                        <Text fw={700} underline>
+                        <Text fw={700}>
                           {user?.nama}
                         </Text>
 
