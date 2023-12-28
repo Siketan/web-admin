@@ -1,4 +1,5 @@
-import { clsx, Image } from "@mantine/core";
+import { Image } from "@mantine/core";
+import clsx from "clsx";
 import PropTypes from "prop-types";
 
 const socialMedia = [

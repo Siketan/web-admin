@@ -4,7 +4,7 @@ import {
   PaginatedRespApi,
   PaginatedRespApiData,
 } from "../../types/paginatedRespApi";
-import { clsx } from "@mantine/core";
+import clsx from "clsx";
 import {
   Route,
   Link,

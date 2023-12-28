@@ -1,4 +1,4 @@
-import { clsx } from "@mantine/core";
+import clsx from "clsx";
 import { RowData, Table, flexRender } from "@tanstack/react-table";
 import React from "react";
 

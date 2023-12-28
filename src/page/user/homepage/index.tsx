@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import MainCard from "../../components/MainCard";
-import UserLayout from "../../components/UserLayout";
+import MainCard from "../../../components/MainCard";
+import UserLayout from "../../../components/UserLayout";
 import LineChart from "./components/LineChart";
 import PieChart from "./components/PieChart";
 import Tabel from "./components/Tabel";

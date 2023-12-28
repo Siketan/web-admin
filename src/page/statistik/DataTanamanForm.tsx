@@ -9,8 +9,8 @@ import {
   Stack,
   Tabs,
   TextInput,
-  clsx,
 } from "@mantine/core";
+import clsx from "clsx";
 import React, { useEffect } from "react";
 import SearchInput from "../../components/uiComponents/inputComponents/searchInput";
 import { FaRegRectangleList, FaUpload } from "react-icons/fa6";

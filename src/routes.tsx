@@ -39,13 +39,13 @@ import {
   EditPenyuluhan,
   VerifikasiUser,
 } from "./page";
+import { clsx } from "clsx";
 
 import Footer from "./components/footer";
 import ProtectedRoute from "./page/protectedRoute";
 import {
   Image,
   Menu,
-  clsx,
   Group,
   Avatar,
   Text,
@@ -62,7 +62,8 @@ import Statistik from "./page/statistik";
 import TambahStatistik from "./page/statistik/tambah";
 import EditStatistik from "./page/statistik/edit";
 import Dashboard from "./page/dashboard";
-import Homepage from "./page/homepage";
+import Homepage from "./page/user/homepage";
+import TokoPertanian from "./page/user/tokoPertanian";
 
 const menu = [
   {
@@ -387,10 +388,6 @@ const Path = () => {
                   item: {
                     color: "white",
                     textTransform: "uppercase",
-                    ":hover": {
-                      background:
-                        "linear-gradient(180deg, #86BA34 0%, rgba(111, 163, 29, 0.50) 100%)",
-                    },
                   },
                 }}
               >
@@ -398,7 +395,7 @@ const Path = () => {
                   <UnstyledButton className="text-white">
                     <Group>
                       <div style={{ flex: 1 }}>
-                        <Text fw={700} underline>
+                        <Text fw={700} td="underline">
                           {user?.nama}
                         </Text>
 
@@ -411,7 +408,17 @@ const Path = () => {
                 </Menu.Target>
                 <Menu.Dropdown>
                   {dropdownMenu.map((item, index) => (
-                    <Menu.Item component="a" key={index} href={item.path}>
+                    <Menu.Item
+                      component="a"
+                      key={index}
+                      href={item.path}
+                      style={{
+                        ":hover": {
+                          background:
+                            "linear-gradient(180deg, #86BA34 0%, rgba(111, 163, 29, 0.50) 100%)",
+                        },
+                      }}
+                    >
                       <div className="flex gap-2 items-center">
                         <Image
                           src={item.icon}
@@ -465,6 +472,7 @@ const RoutesPath = () => {
         <Route path="/loginAdminSiketan" element={<Login />} />
         <Route path="/registerAdminSiketan" element={<Register />} />
         <Route path="/" element={<Homepage />} />
+        <Route path="/toko-pertanian" element={<TokoPertanian />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/verifikasi" element={<VerifikasiUser />} />
           {/* <Route index element={<Dashboard />}></Route> */}
