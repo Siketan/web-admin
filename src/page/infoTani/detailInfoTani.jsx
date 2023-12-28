@@ -56,9 +56,9 @@ function DetailInfoTani() {
             </Button>
           </div>
         </Modal>
-      <Button variant='outline' color="cyan" sx={{marginTop:"19px"}} onClick={()=>navigate(-1)}>
+      <button className='bg-white h-fit px-4 py-2 border border-green-primary text-green-primary rounded-md hover:bg-green-primary hover:text-white'  onClick={()=>navigate(-1)}>
         kembali
-      </Button>
+      </button>
       <MainCard width="50%" transparent>
         <Card shadow="sm" padding="lg" radius="md" withBorder>
           <Card.Section>
@@ -82,12 +82,12 @@ function DetailInfoTani() {
             <span dangerouslySetInnerHTML={{ __html: data?.isi }} className='text-sm text-justify' />
           </Text>
           <Group position="right" sx={{marginTop:"19px"}}>
-            <Button variant='outline' color="cyan" onClick={() => navigateToEdit(data?.id)}>
+            <button button className='bg-white h-fit px-4 py-2 border border-green-primary text-green-primary rounded-md hover:bg-green-primary hover:text-white' onClick={() => navigateToEdit(data?.id)}>
               Edit
-            </Button>
-            <Button variant='outline' color="cyan" onClick={()=>setModalDeleteData(data?.id)}>
+            </button>
+            <button button className='bg-white h-fit px-4 py-2 border border-green-primary text-green-primary rounded-md hover:bg-green-primary hover:text-white' onClick={()=>setModalDeleteData(data?.id)}>
               Delete
-            </Button>
+            </button>
           </Group>
         </Card>
       </MainCard>

@@ -287,16 +287,12 @@ const Path = () => {
           >
             <Image
               src="/image/logo-navbar.png"
+              height={80}
               alt="Logo Siketan"
               className={sidebarOpen ? "block" : "hidden"}
             />
-            <Image
-              src="/image/logo.png"
-              alt="Logo Siketan"
-              className={sidebarOpen ? "hidden" : "block"}
-            />
           </div>
-          <div className="h-full px-3 py-2 overflow-y-auto">
+          <div className="h-full px-6 py-2 overflow-y-auto">
             <ul className="space-y-1.5 font-medium">
               {menu.map((item, index) => (
                 <li key={index} className="divide-y divide-gray-500">

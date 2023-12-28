@@ -43,6 +43,7 @@ const InfoTani = () => {
     GetInfoTani().then((data) => {
       setDatas(data.infotani)
       setLoading(false)
+      console.log(data)
     });
   }, []);
 
