@@ -21,14 +21,14 @@ export default function MainCard({
   center?: boolean;
   transparent?: boolean;
   noPadding?: boolean;
-  gap?: number;
+  gap?: number | string;
   fullWidth?: boolean;
   width?: number | string;
   style?: any;
   thinShadow?: boolean;
   forceRow?: boolean;
   className?: string;
-  radius?: number;
+  radius?: number | string;
 }) {
   const isMobile = useMediaQuery("(max-width: 768px)");
   return (
