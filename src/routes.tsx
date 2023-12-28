@@ -62,6 +62,7 @@ import Statistik from "./page/statistik";
 import TambahStatistik from "./page/statistik/tambah";
 import EditStatistik from "./page/statistik/edit";
 import Dashboard from "./page/dashboard";
+import Homepage from "./page/homepage";
 
 const menu = [
   {
@@ -270,7 +271,8 @@ const Path = () => {
           window.localStorage.removeItem("token");
           window.location.href = "/loginAdminSiketan";
         });
-    } else if (!isAuthPage) window.location.href = "/loginAdminSiketan";
+    } else if (!isAuthPage && !isWebVidePage)
+      window.location.href = "/loginAdminSiketan";
   }, [token, isAuthPage]);
 
   if (isAuthPage || isWebVidePage) return <RoutesPath />;
@@ -462,6 +464,7 @@ const RoutesPath = () => {
       <Routes>
         <Route path="/loginAdminSiketan" element={<Login />} />
         <Route path="/registerAdminSiketan" element={<Register />} />
+        <Route path="/" element={<Homepage />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/verifikasi" element={<VerifikasiUser />} />
           {/* <Route index element={<Dashboard />}></Route> */}
