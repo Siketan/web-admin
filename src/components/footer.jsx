@@ -1,5 +1,9 @@
 import { clsx, Image } from "@mantine/core";
 import PropTypes from "prop-types";
+import { MdWhatsapp, MdAttachEmail, MdOutlineFax } from "react-icons/md";
+import { GiRotaryPhone } from "react-icons/gi";
+import { FaInstagram, FaFacebook, FaYoutube, FaTiktok } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 const socialMedia = [
   {
@@ -118,98 +122,59 @@ const GetFeatures = () => {
 
 const Footer = ({ sidebarOpen }) => {
   return (
-    <footer className="relative left-0 right-0 z-[999999999] w-full flex">
-      <div
-        className={clsx(sidebarOpen ? "block" : "hidden",
-          "bg-green-secondary bg-opacity-50 p-4 w-80"
+    <footer className="relative left-0 right-0 z-[999999999] w-full flex justify-end">
+      <div className={clsx(sidebarOpen ? "w-[78%]" : "w-[94%]","bg-green-primary px-2 py-8"
         )}
       >
-        <div
-        >
-          <Image
-            src="/image/logo-navbar.png"
-            alt="Logo Siketan"
-            className={sidebarOpen ? "block" : "hidden"}
-          />
-          <Image
-            src="/image/logo.png"
-            alt="Logo Siketan"
-            className={sidebarOpen ? "hidden" : "block"}
-          />
-        </div>
-        <div className="flex gap-2 items-center justify-center">
-          {
-            socialMedia.map((item, index) => {
-              return (
-                <a
-                  key={index}
-                  href={item.url}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Image
-                    src={item.icon}
-                    alt={item.name}
-                    width={32}
-                    height={32}
-                  />
-                </a>
-              )
-            })
-          }
-        </div>
-        <div className="flex flex-wrap gap-1 items-center justify-center mt-4 uppercase text-white">
-          {
-            menuPage.map((item, index) => {
-              return (
-                <div key={index} className="inline-block">
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-sm font-bold"
-                  >
-                    {item.name}
-                  </a>
-                  {index !== menuPage.length - 1 && (
-                    <span className="text-sm font-bold">|</span>
-                  )}
-                </div>
-              )
-            })
-          }
-        </div>
-        <div className="text-white text-xs text-center mt-2">
-          Copyright@
-          {new Date().getFullYear()}
-          .SIKETAN.All Right Reserved
-        </div>
-      </div>
-      <div className={clsx("bg-green-primary text-white p-6 flex-1 flex gap-8", !sidebarOpen && "ml-20")}>
-        <div className="w-2/5">
-          <h3 className="uppercase font-bold text-xl">Siketan Apps</h3>
-          <p>Sebuah inovasi website penyuluhan pertanian. Berbagi wawasan terbaru, praktik terbaik, dan solusi agraris. Antarmuka intuitif untuk akses mudah dan pembaruan informasi yang akurat. Mendorong pertumbuhan sektor pertanian melalui pendekatan digital yang terjangkau.</p>
-        </div>
-        <div>
-          <h3 className="uppercase font-bold text-xl">Daftar Menu</h3>
-          <GetFeatures />
-        </div>
-        <div >
-          <h3 className="uppercase font-bold text-xl">Kontak</h3>
-          <p>Email : &nbsp;
-            <a
-              href="mailto:pertanian@ngawikab.go.id">
-              pertanian@ngawikab.go.id
-            </a>
-          </p>
-          <p>Telephone : (0351) 749026</p>
-          <p>Fax : (0351) 749026</p>
-          <p>WA : &nbsp;
-            <a
-              href="https://wa.me/6281252232644">
-              +62 812-5223-2644
-            </a>
-          </p>
+        <div className="flex flex-row justify-between text-white">
+          <div className="flex flex-col w-[30%] justify-between mr-15">
+            <Image
+              src="/image/logo-navbar.png"
+              alt="Logo Siketan"
+              width={250}
+            />
+            <p className="text-[10px] text-justify">Sebuah inovasi website penyuluhan pertanian. Berbagi wawasan terbaru, praktik terbaik, dan solusi agraris. Antarmuka intuitif untuk akses mudah dan pembaruan informasi yang akurat. Mendorong pertumbuhan sektor pertanian melalui pendekatan digital yang terjangkau.</p>
+          </div>
+          <div className="flex flex-col w-[10%] space-y-3">
+            <div className="text-sm font-bold">Bantuan</div>
+            <ul className="text-xs">
+              <li>FAQ</li>
+              <li>Term of Use</li>
+              <li>Privacy Policy</li>
+              <li>About Us</li>
+            </ul>
+          </div>
+          <div className="flex flex-col w-[32%] space-y-3">
+            <div className="text-sm font-bold">Hubungan Kami</div>
+            <div className="grid grid-rows-2 grid-flow-col gap-5">
+              <div className="flex flex-row gap-3 items-center">
+                <div className="w-8 h-8 bg-white rounded-md content-center flex items-center justify-center"><MdWhatsapp size={25} className="fill-green-primary"/></div>
+                <div className="text-white text-xs">081252232644</div>
+              </div>
+              <div className="flex flex-row gap-3 items-center">
+                <div className="w-8 h-8 bg-white rounded-md content-center flex items-center justify-center"><GiRotaryPhone size={25} className="fill-green-primary"/></div>
+                <div className="text-white text-xs">(0351) 749026</div>
+              </div>
+              <div className="flex flex-row gap-3 items-center">
+                <div className="w-8 h-8 bg-white rounded-md content-center flex items-center justify-center"><MdAttachEmail size={25} className="fill-green-primary"/></div>
+                <div className="text-white text-xs">Pertanian@ngawikab.go.id</div>
+              </div>
+              <div className="flex flex-row gap-3 items-center">
+                <div className="w-8 h-8 bg-white rounded-md content-center flex items-center justify-center"><MdOutlineFax size={25} className="fill-green-primary"/></div>
+                <div className="text-white text-xs">(0351) 749026</div>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col w-[15%] space-y-3">
+            <div className="text-sm">Kunjungi Kami</div>
+            <div className="grid grid-rows-2 grid-flow-col w-fit gap-3">
+              <div className="w-8 h-8 bg-white rounded-md content-center flex items-center justify-center"><FaInstagram size={25} className="fill-green-primary"/></div>
+              <div className="w-8 h-8 bg-white rounded-md content-center flex items-center justify-center"><FaFacebook size={25} className="fill-green-primary"/></div>
+              <div className="w-8 h-8 bg-white rounded-md content-center flex items-center justify-center"><FaYoutube size={25} className="fill-green-primary"/></div>
+              <div className="w-8 h-8 bg-white rounded-md content-center flex items-center justify-center"><FaXTwitter size={25} className="fill-green-primary"/></div>
+              <div className="w-8 h-8 bg-white rounded-md content-center flex items-center justify-center"><FaTiktok size={25} className="fill-green-primary"/></div>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

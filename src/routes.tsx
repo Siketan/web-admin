@@ -276,7 +276,7 @@ const Path = () => {
           ref={sidebar}
           className={clsx(
             "fixed left-0 top-0 z-20 flex h-screen flex-col justify-between bg-green-primary pb-8 shadow-lg duration-300 lg:translate-x-0 text-white",
-            sidebarOpen ? "w-80" : "w-20"
+            sidebarOpen ? "w-[22%]" : "w-[6%]"
           )}
         >
           <div
