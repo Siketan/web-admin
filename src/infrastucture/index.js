@@ -22,7 +22,7 @@ export const Login = async (data) => {
     console.log(response);
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("nama", response?.data?.user?.nama);
-    window.location.href = "data-tani/rekap-petani";
+    window.location.href = "/";
     SweatAlert(String(response.data.message), "success");
     // <LoadingAnimation/>
   } catch (error) {
@@ -36,16 +36,16 @@ export const ListUser = async () => {
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
   }
-}
+};
 
-export const VerifyingUser = async(id) => {
+export const VerifyingUser = async (id) => {
   try {
     const response = await Api.put(`/verify/${id}`);
     return response.data;
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
   }
-}
+};
 
 export const GetProfile = async () => {
   const response = await Api.get("/auth/profile");
@@ -151,10 +151,10 @@ export const AddTanamanPetani = async (data) => {
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
   }
-}
+};
 
 export const DeleteTanamanPetani = async (id) => {
-  try{
+  try {
     const response = await Api.delete(`/list-tanaman/${id}`);
     SweatAlert(String(response.data.message), "success");
     return response.data;

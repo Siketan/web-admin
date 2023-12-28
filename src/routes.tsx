@@ -61,6 +61,7 @@ import { GetProfile, Logout } from "./infrastucture";
 import Statistik from "./page/statistik";
 import TambahStatistik from "./page/statistik/tambah";
 import EditStatistik from "./page/statistik/edit";
+import Homepage from "./page/homepage";
 
 const menu = [
   {
@@ -464,7 +465,7 @@ const RoutesPath = () => {
           <Route path="/statistik/tambah" element={<TambahStatistik />} />
           <Route path="/statistik/:id" element={<EditStatistik />} />
           {/* ENd of Statistik */}
-          <Route path="/" element={<EventTani />} />
+          <Route path="/" element={<Homepage />} />
           <Route path="/notification" element={<Notification />} />
           {/* Data Tani */}
           <Route
@@ -474,8 +475,11 @@ const RoutesPath = () => {
           <Route path="/data-tani/tambah" element={<TambahDataTani />} />
           <Route path="/data-tani/laporan-tanam" element={<LaporanPetani />} />
           <Route path="/data-tani/rekap-petani" element={<RekapDataPetani />} />
-          <Route path="/data-tani/detail/:id" element={<ViewDetailDataPetani/>} />
-          <Route path="/tanaman-petani" element={<DetailRekapPetani/>} />
+          <Route
+            path="/data-tani/detail/:id"
+            element={<ViewDetailDataPetani />}
+          />
+          <Route path="/tanaman-petani" element={<DetailRekapPetani />} />
           <Route path="/tanaman-petani/add" element={<TambahTanamanPetani />} />
           <Route
             path="/tanaman-petani/edit/:id"

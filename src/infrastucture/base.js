@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:3001/";
-// const baseURL = "https://siketan-api.cyclic.app/"
+const baseURL = import.meta.env.VITE_BACKEND_API_URL;
+
 const API = axios.create({
   baseURL,
   headers: {

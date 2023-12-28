@@ -1,4 +1,4 @@
-import { Anchor, Breadcrumbs, TextInput } from "@mantine/core";
+import { Anchor, Breadcrumbs } from "@mantine/core";
 import React, { useEffect } from "react";
 import SearchInput from "../../components/uiComponents/inputComponents/searchInput";
 import { FaPlus } from "react-icons/fa";
@@ -166,12 +166,12 @@ export default function index() {
         <h3 className="text-white text-2xl font-bold mx-auto">
           TABEL DATA STATISTIK PERTANIAN
         </h3>
-        <a
-          href="/statistik/tambah"
+        <Link
+          to="/statistik/tambah"
           className="absolute right-4 text-[#0FA958] text-xl"
         >
           <FaPlus />
-        </a>
+        </Link>
       </div>
       <Table data={dataTable} columns={columns} />
     </div>
