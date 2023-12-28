@@ -5,7 +5,7 @@ function App() {
 
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
-      <Routes/>
+      <Routes />
     </MantineProvider>
   )
 }
