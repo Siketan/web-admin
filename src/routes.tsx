@@ -61,7 +61,7 @@ import { GetProfile, Logout } from "./infrastucture";
 import Statistik from "./page/statistik";
 import TambahStatistik from "./page/statistik/tambah";
 import EditStatistik from "./page/statistik/edit";
-import Homepage from "./page/homepage";
+import Dashboard from "./page/dashboard";
 
 const menu = [
   {
@@ -252,6 +252,11 @@ const Path = () => {
     window.location.pathname === "/loginAdminSiketan" ||
     window.location.pathname === "/registerAdminSiketan";
 
+  const isWebVidePage =
+    window.location.pathname === "/" ||
+    window.location.pathname === "/info-pertanian" ||
+    window.location.pathname === "/toko-pertanian";
+
   useEffect(() => {
     if (token) {
       GetProfile()
@@ -268,7 +273,7 @@ const Path = () => {
     } else if (!isAuthPage) window.location.href = "/loginAdminSiketan";
   }, [token, isAuthPage]);
 
-  if (isAuthPage) return <RoutesPath />;
+  if (isAuthPage || isWebVidePage) return <RoutesPath />;
 
   return (
     <div className="bg-green-primary bg-opacity-70">
@@ -465,7 +470,7 @@ const RoutesPath = () => {
           <Route path="/statistik/tambah" element={<TambahStatistik />} />
           <Route path="/statistik/:id" element={<EditStatistik />} />
           {/* ENd of Statistik */}
-          <Route path="/" element={<Homepage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/notification" element={<Notification />} />
           {/* Data Tani */}
           <Route
