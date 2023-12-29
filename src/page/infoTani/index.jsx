@@ -116,7 +116,6 @@ const InfoTani = () => {
                 <img className="h-min rounded-lg w-52"
                   src={item?.fotoBerita}
                   alt="With default placeholder"
-                  withPlaceholder
                 />
                 <MainCard transparent noPadding className="w-[100%]">
                   <h1 className="font-bold text-base md:text-lg text-justify tracking-[1px] text-green-primary max-w-[95%]">
