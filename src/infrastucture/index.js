@@ -182,7 +182,8 @@ export const GetTanamanPetaniById = async (id) => {
 export const UpdateTanamanPetani = async (id, data) => {
   try {
     const response = await Api.put(`/list-tanaman/${id}`, data);
-    return response.data;
+    SweatAlert(String(response.data.message), "success", "/tanaman-petani");
+    // return response.data;
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
   }

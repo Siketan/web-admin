@@ -37,7 +37,7 @@ import {
 } from "../../../../infrastucture/index"
 //import tooltip, fontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Tooltip } from "@mantine/core";
+import { Tooltip, Modal } from "@mantine/core";
 import Loading from "../../../../components/loading";
 import LoadingAnimation from "../../../../components/loading";
 
@@ -181,6 +181,10 @@ export default function EditTanamanPetani() {
   };
   const handleDeleteTanaman = (ids) => {
     DeleteTanamanPetani(ids);
+    // delay 6 seconds
+    setTimeout(() => {
+      window.location.reload();
+    }, 4000);
   };
   const handleSubmit=(e) => {
     setLoading(true)
@@ -206,14 +210,14 @@ export default function EditTanamanPetani() {
     // console.log({formData})
     console.log(data);
     UpdateTanamanPetani(id, data).then(()=> setLoading(false))
-    // history.push('/tanaman-petani');
+    window.history.push('/tanaman-petani');
   };
 
   return (
     <div>
       <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
       <h3 className="text-white text-2xl font-bold mt-4">
-        TABEL DATA STATISTIK PERTANIAN
+        TABEL DATA TANAMAN PERTANIAN
       </h3>
       <SearchInput 
       cacheOptions
@@ -223,6 +227,40 @@ export default function EditTanamanPetani() {
       value={tanaman.dataPetani?.nik}
       isClearable
       placeholder="Cari NIK PETANI" />
+      <Modal
+        opened={modalDeleteData}
+        onClose={() => setModalDeleteData(false)}
+        withCloseButton={false}
+        centered
+      >
+        <Text>Apakah Kamu Yakin Akan Menghapus Data Ini ?</Text>
+        <div
+          style={{ display: "flex", justifyContent: "flex-end", marginTop: 20 }}
+        >
+          <Button
+            color="cyan"
+            style={{
+              color: "white",
+              backgroundColor: "#303A47",
+              marginRight: 8,
+            }}
+            onClick={() => setModalDeleteData(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="cyan"
+            style={{ color: "white", backgroundColor: "red" }}
+            type="submit"
+            onClick={() => {
+              handleDeleteTanaman(modalDeleteData);
+              setModalDeleteData(false);
+            }}
+          >
+            Delete
+          </Button>
+        </div>
+      </Modal>
       <div className="bg-[#D9D9D9] rounded-lg">
         <div className="relative bg-[#136B09] mt-6 p-4 flex w-full justify-between rounded-t-lg shadow-lg">
           <h3 className="text-white text-2xl font-bold">
@@ -542,7 +580,7 @@ export default function EditTanamanPetani() {
                     <th className="sticky top-0 px-4 py-2 truncate ">
                       REALISASI PANEN
                     </th>
-                    <th className="sticky top-0 px-4 py-2 truncate">Action</th>
+                    {/* <th className="sticky top-0 px-4 py-2 truncate">Action</th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -554,7 +592,7 @@ export default function EditTanamanPetani() {
                       <td className="px-4 py-2 text-center ">{item?.statusKepemilikanLahan}</td>
                       <td className="px-4 py-2 text-center ">{item?.periodeBulanTanam}</td>
                       <td className="px-4 py-2 text-center ">{item?.prakiraanBulanPanen}</td>
-                      <td className="px-2 py-2 text-center">
+                      {/* <td className="px-2 py-2 text-center">
                         <Tooltip label="Detail">
                           <a href={`/data-tani/detail/${item.id}`} >
                             <FontAwesomeIcon
@@ -578,7 +616,7 @@ export default function EditTanamanPetani() {
                             className="cursor-pointer text-red-500 hover:text-red-600"
                           />
                         </Tooltip>
-                      </td>
+                      </td> */}
                     </tr>
                   ))}
                 </tbody>
