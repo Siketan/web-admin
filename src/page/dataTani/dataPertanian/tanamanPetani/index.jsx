@@ -108,6 +108,12 @@ export default function DetailRekapPetani() {
   
   const handleDeleteTanaman = (ids) => {
     DeleteTanamanPetani(ids);
+    // delay 6 seconds
+    setTimeout(() => {
+      window.location.reload();
+    }, 4000);
+    // window.location.reload();
+    
   };
 
   useEffect(() => {
@@ -214,12 +220,12 @@ export default function DetailRekapPetani() {
           <h3 className="text-white text-2xl font-bold px-3">
             DATA TABEL PETANI
           </h3>
-          <Link to={``}>
+          {/* <Link to={``}>
               <button className="ms-5 rounded-md bg-[#86BA34] text-white p-1 px-5 w-30 h-10"> 
                 <FontAwesomeIcon className="text-xl"
                   icon={faPlus}
                 /></button>
-            </Link>
+            </Link> */}
         </div>
           <div className="pt-0">
             <div className="h-[calc(100vh-200px) p-6 flex justify-between items-center">
