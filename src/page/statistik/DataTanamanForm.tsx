@@ -176,7 +176,6 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
   useEffect(() => {
     if (type === "edit") {
       GetStatistikTanamanById(id).then((e) => {
-        console.log(e);
         const dataResult = e.data as TDataTanaman;
         if (e) setNewData(dataResult);
         if (dataResult.kategori === "buah" || dataResult.kategori === "sayur")

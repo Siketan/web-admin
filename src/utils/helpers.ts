@@ -9,9 +9,7 @@ export const ResponseApiToDataChart = (
   const filteredData = data.filter(
     (item) => item.komoditas === EKomoditas[komoditas]
   );
-  filteredData.forEach((item) => {
-    console.log(new Date(item.date).getDay());
-  });
+
   const numberOfDays = new Date(year, month, 0).getDate();
   const result = Array.from({ length: numberOfDays }, (_, i) => {
     return (
