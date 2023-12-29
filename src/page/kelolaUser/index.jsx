@@ -6,7 +6,9 @@ import {
   faTrash,
   faDownload,
   faBullseye,
-  faPlus
+  faPlus,
+  faCheck,
+  faXmark
 } from "@fortawesome/free-solid-svg-icons";
 import { GetDaftarTani, DeleteDaftarTani, ListUser } from "@/infrastruture";
 // import ExcelComponent from "../../../components/exelComponent";
@@ -15,7 +17,7 @@ import { Text, Button, Modal,Tooltip, Anchor, Breadcrumbs, TextInput } from "@ma
 import { Link } from 'react-router-dom';
 import LoadingAnimation from '../../components/loadingSession'
 import SearchInput from "../../components/uiComponents/inputComponents/searchInput";
-import { VerifyingUser } from "../../infrastucture";
+import { VerifyingUser, DeleteUser } from "../../infrastucture";
 
 const breadcrumbItems = [
   { title: "Dashboard", href: "/" },
@@ -30,6 +32,7 @@ const VerifikasiUser = () => {
   const [datas, setDatas] = useState([]);
   const [loading, setLoading] = useState(true)
   const [modalDeleteData, setModalDeleteData] = useState(false);
+  const [modalVerifikasiUser, setVerifikasiUser] = useState(false);
   useEffect(() => {
     ListUser().then((data) => {
       setDatas(data.data)
@@ -37,7 +40,12 @@ const VerifikasiUser = () => {
       setLoading(false)
     });
   }, []);
+  console.log(datas)
 
+  const handleDeleteUser = (ids) => {
+    console.log(ids)
+    DeleteUser(ids);
+  };
   const handleVerify = (ids) => {
     VerifyingUser(ids)
     // refresh page
@@ -58,21 +66,6 @@ const VerifikasiUser = () => {
       [column]: e.target.value,
     }));
   };
-  const handleDeleteUser = (ids) => {
-    DeleteDaftarTani(ids);
-  };
-  const filteredData = datas.filter((item) => {
-    return Object.keys(filters).every((key) => {
-      if (filters[key] !== "") {
-          if (typeof item[key] === "number") {
-            return item[key] === Number(filters[key]);
-          } else if(typeof item[key] === "string"){
-            return item[key].toLowerCase().includes(filters[key].toLowerCase());
-          }
-        }
-      return true;
-    });
-  });
   const handleDownlod = () => {
     const dataExel = filteredData.map((item) => {
       return {
@@ -90,7 +83,7 @@ const VerifikasiUser = () => {
     });
     ExcelComponent(dataExel, "data.xlsx", "Sheet1");
   };
-  const totalData = filteredData.length;
+  // const totalData = filteredData.length;
   return (
     <div>
       <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
@@ -105,7 +98,7 @@ const VerifikasiUser = () => {
           withCloseButton={false}
           centered
         >
-          <Text>Apakah Kamu Yakin Akan Menghapus Data Ini ?</Text>
+          <Text>Apakah Anda Yakin Akan Menolak User Ini ?</Text>
           <div
             style={{ display: "flex", justifyContent: "flex-end", marginTop: 20 }}
           >
@@ -129,7 +122,41 @@ const VerifikasiUser = () => {
                 setModalDeleteData(false);
               }}
             >
-              Delete
+              Tolak
+            </Button>
+          </div>
+        </Modal>
+        <Modal
+          opened={modalVerifikasiUser}
+          onClose={() => setVerifikasiUser(false)}
+          withCloseButton={false}
+          centered
+        >
+          <Text>Apakah Anda Yakin Ingin Memverifikasi Akun Ini ?</Text>
+          <div
+            style={{ display: "flex", justifyContent: "flex-end", marginTop: 20 }}
+          >
+            <Button
+              color="cyan"
+              style={{
+                color: "white",
+                backgroundColor: "#303A47",
+                marginRight: 8,
+              }}
+              onClick={() => setVerifikasiUser(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              color="cyan"
+              style={{ color: "white", backgroundColor: "green" }}
+              type="submit"
+              onClick={() => {
+                handleVerify(modalVerifikasiUser);
+                setVerifikasiUser(false);
+              }}
+            >
+              Verifikasi
             </Button>
           </div>
         </Modal>
@@ -139,12 +166,6 @@ const VerifikasiUser = () => {
             {/* DATA TABEL PETANI */}
             TABEL LIST USER
           </h3>
-          {/* <Link to={`/data-tani/tambah`}>
-              <button className="ms-5 rounded-md bg-[#86BA34] text-white p-1 px-5 w-30 h-10"> 
-                <FontAwesomeIcon className="text-xl"
-                  icon={faPlus}
-                /></button>
-            </Link> */}
         </div>
           <div className="pt-0">
             <div className="h-[calc(100vh-200px) p-6 flex justify-between items-center">
@@ -156,7 +177,10 @@ const VerifikasiUser = () => {
                     </th>
                     <th className="sticky top-0 px-4 py-2 truncate ">
                       NAMA
-                    </th>
+                    </th> 
+                    <th className="sticky top-0 px-4 py-2 truncate ">
+                      NIK
+                    </th> 
                     <th className="sticky top-0 px-4 py-2 truncate ">
                       PROFESI
                     </th>
@@ -176,34 +200,41 @@ const VerifikasiUser = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredData?.map((item, index) => (
-                    <tr key={item.id} className={`${index % 2 === 0 ? 'bg-white text-black font-medium' : 'bg-[#D1D9D3] text-emerald-800 font-medium'}`}>
+                  {datas?.map((item, index) => (
+                    <tr key={item?.id} className={`${index % 2 === 0 ? 'bg-white text-black font-medium' : 'bg-[#D1D9D3] text-emerald-800 font-medium'}`}>
                       <td className="px-4 py-2 text-center ">{index + 1}</td>
                       <td className="px-4 py-2 text-center ">{item?.nama}</td>
+                      <td className="px-4 py-2 text-center ">{item?.NIK}</td>
                       <td className="px-4 py-2 text-center ">{item?.peran}</td>
                       <td className="px-4 py-2 text-center ">{item?.no_wa}</td>
-                      <td className="px-4 py-2 text-center ">{item?.email}</td>
-                      <td className="px-4 py-2 text-center ">{item?.isVerified === true ? 'Verified' : 'Not Verified'}</td>
+                      <td className="px-4 py-2 text-center ">{item.email}</td>
+                      <td className="px-4 py-2 text-center ">{item?.isVerified == true ? 'Verified' : 'Not Verified'}</td>
                       {/* <td className="px-4 py-2 text-center ">{item?.penyuluh}</td> */}
                       <td className="px-2 py-2 text-center">
                       {item?.isVerified ? (
-                            <Tooltip label="Sudah Terverifikasi">
-                            <button
-                                className="disabled cursor-pointer text-green-800"
-                            >
-                                Sudah Terverifikasi
-                            </button>
-                            </Tooltip>
-                        ) : (
-                            <Tooltip label="Verifikasi">
-                            <button
-                                className="cursor-pointer text-blue-500 hover:text-blue-600"
-                                onClick={() => handleVerify(item?.id)}
-                            >
-                                Verifikasi
-                            </button>
-                            </Tooltip>
-                        )}
+                        <Tooltip label="Sudah Terverifikasi">
+                          <button className="disabled cursor-pointer text-green-800">
+                            Sudah Terverifikasi
+                          </button>
+                        </Tooltip>
+                      ) : (
+                        <>
+                          <Tooltip label="Terima">
+                            <FontAwesomeIcon
+                              onClick={() => setVerifikasiUser(item?.id)}
+                              icon={faCheck}
+                              className="cursor-pointer text-green-500 hover:text-green-600 mr-2"
+                            />
+                          </Tooltip>
+                          <Tooltip label="Tolak">
+                            <FontAwesomeIcon
+                              onClick={() => setModalDeleteData(item?.id)}
+                              icon={faXmark}
+                              className="cursor-pointer text-red-500 hover:text-red-600"
+                            />
+                          </Tooltip>
+                        </>
+                      )}
                       </td>
                     </tr>
                   ))}
