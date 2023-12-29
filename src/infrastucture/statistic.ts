@@ -73,7 +73,7 @@ export const GetStatistikTanamanPetani = async (
     );
 
     return response.data as RespApiData<{
-      latest: TTanamanPetani;
+      latest: TTanamanPetani[];
       statistik: TKomoditasResponse[];
       summary: TSummaryKategoriResponse[];
     }>;

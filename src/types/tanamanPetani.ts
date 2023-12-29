@@ -14,3 +14,7 @@ export type TTanamanPetani = {
   statusKepemilikanLahan: string;
   updatedAt: string;
 };
+
+export type TTableTanamanPetani = {
+  no: number;
+} & TTanamanPetani;

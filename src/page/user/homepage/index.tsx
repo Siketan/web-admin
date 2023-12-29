@@ -17,7 +17,7 @@ export default function Homepage() {
   const [year, setYear] = useState(new Date().getFullYear());
   const [respData, setRespData] = useState<
     | {
-        latest: TTanamanPetani;
+        latest: TTanamanPetani[];
         statistik: TKomoditasResponse[];
         summary: TSummaryKategoriResponse[];
       }
@@ -66,7 +66,7 @@ export default function Homepage() {
             </MainCard>
           </MainCard>
           <MainCard transparent noPadding row center>
-            <Tabel />
+            <Tabel apiData={respData?.latest ?? []} />
           </MainCard>
         </MainCard>
       </section>
