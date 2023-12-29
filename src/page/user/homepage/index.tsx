@@ -7,6 +7,8 @@ import Tabel from "./components/Tabel";
 
 export default function Homepage() {
   const [time, setTime] = useState(new Date());
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [year, setYear] = useState(new Date().getFullYear());
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -26,11 +28,19 @@ export default function Homepage() {
               <PieChart />
             </MainCard>
             <MainCard transparent width="60%">
-              <h2 className="text-center">
-                STATISTIK PERTUMBUHAN PERTANIAN DALAM 1 TAHUN
-              </h2>
-              <h5>{time.toLocaleString()}</h5>
-              <LineChart />
+              <h2 className="text-center">STATISTIK PERTUMBUHAN PERTANIAN</h2>
+              <h5>
+                {time.toLocaleString("id-ID", {
+                  weekday: "long",
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  second: "numeric",
+                })}
+              </h5>
+              <LineChart month={month} year={year} />
             </MainCard>
           </MainCard>
           <MainCard transparent noPadding row center>
