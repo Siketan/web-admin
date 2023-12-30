@@ -126,7 +126,7 @@ export default function index() {
                   <IoEyeOutline className="h-6 w-6 text-white" />
                 </div>
               </Link>
-              <Link to={`/statistik/${item.id}`}>
+              <Link to={`/statistik/edit/${item.id}`}>
                 <div className="flex h-7 w-7 items-center justify-center bg-yellow-500">
                   <ImPencil className="h-[18px] w-[18px] text-white" />
                 </div>
