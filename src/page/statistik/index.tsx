@@ -16,6 +16,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 import { TKelompokTani } from "../../types/kelompokTani";
 import { SearchPoktan } from "../../infrastucture/searchApi";
+import { FaCheckDouble } from "react-icons/fa6";
 
 const breadcrumbItems = [
   { title: "Dashboard", href: "/" },
@@ -124,6 +125,11 @@ export default function index() {
               <Link to={`/statistik/${item.id}`}>
                 <div className="flex h-7 w-7 items-center justify-center bg-yellow-500">
                   <ImPencil className="h-[18px] w-[18px] text-white" />
+                </div>
+              </Link>
+              <Link to={`/statistik/${item.id}/realisasi`}>
+                <div className="flex h-7 w-7 items-center justify-center bg-gray-500">
+                  <FaCheckDouble className="h-[18px] w-[18px] text-white" />
                 </div>
               </Link>
               <button

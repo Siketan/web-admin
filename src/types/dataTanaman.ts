@@ -9,6 +9,7 @@ export type TDataTanaman = {
   prakiraanBulanPanen: string;
   realisasiLuasPanen: number;
   realisasiHasilPanen: number;
+  realisasiBulanPanen: string;
   fk_kelompokId: number;
   createdAt: string;
   updatedAt: string;
@@ -29,6 +30,7 @@ export const dataTanamanDefault: TDataTanamanInput = {
   prakiraanBulanPanen: "",
   realisasiLuasPanen: 0,
   realisasiHasilPanen: 0,
+  realisasiBulanPanen: "",
   fk_kelompokId: 0,
 };
 

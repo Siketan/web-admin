@@ -523,7 +523,7 @@ export const getByIdLaporanTanam = async (id) => {
 
 export const select = async (desa) => {
   try {
-    const response = await Api.get(`/kelompok-tani/${desa}`);
+    const response = await Api.get(`/kelompok-tani/desa/${desa}`);
     return response.data;
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");

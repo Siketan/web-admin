@@ -40,8 +40,7 @@ import { ImPencil } from "react-icons/im";
 import { MdDeleteOutline } from "react-icons/md";
 import { TKelompokTani } from "../../types/kelompokTani";
 import { SearchPoktan } from "../../infrastucture/searchApi";
-import AsyncSelect from "react-select/async";
-import { StylesConfig } from "react-select";
+import { GetKelompokTaniById } from "../../infrastucture/kelompokTani";
 
 const breadcrumbItems = [
   { title: "Dashboard", href: "/" },
@@ -113,7 +112,11 @@ const columns: ColumnDef<TTableDataTanaman>[] = [
   },
 ];
 
-export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
+export default function DataTanamanForm({
+  type,
+}: {
+  type: "add" | "edit" | "realisasi";
+}) {
   const params = useParams();
   const id = Number(params.id);
   const user = useSelector((state: RootState) => state.state.user);
@@ -174,9 +177,14 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
   }, [resp]);
 
   useEffect(() => {
-    if (type === "edit") {
+    if (type !== "add") {
       GetStatistikTanamanById(id).then((e) => {
         const dataResult = e.data as TDataTanaman;
+        console.log(dataResult);
+        GetKelompokTaniById(dataResult.fk_kelompokId).then((e) => {
+          setPoktan(e?.kelompokTani);
+          console.log(e.kelompokTani);
+        });
         if (e) setNewData(dataResult);
         if (dataResult.kategori === "buah" || dataResult.kategori === "sayur")
           setIsHoltikultura(true);
@@ -195,6 +203,7 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
         }
       );
     else {
+      console.log(newData);
       UpdateStatistikTanamanById(id, newData).then((e) => {
         if (e) navigate("/statistik");
       });
@@ -216,6 +225,7 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
         }}
         value={poktan}
         isClearable
+        isDisabled={type === "realisasi"}
       />
       <div className="bg-[#D9D9D9] rounded-lg">
         <div className="relative bg-[#136B09] mt-6 p-4 flex w-full justify-between rounded-t-lg shadow-lg">
@@ -259,7 +269,8 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
             </button>
           </div>
           <div className="grid grid-cols-2 gap-8 p-6">
-            <div className="flex flex-col gap-4 justify-between">
+            <div className="flex flex-col gap-4 justify-between relative">
+              {type === "realisasi" ? <DisabledMessage /> : null}
               <div className="bg-white rounded-lg p-4">
                 <p>Kategori Tanaman</p>
                 <div className="rounded-lg shadow-lg p-4">
@@ -267,6 +278,7 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
                     <Radio
                       label="Tanaman Pangan"
                       value="pangan"
+                      disabled={type === "realisasi"}
                       onClick={(event) => {
                         setIsHoltikultura(false);
                         setNewData({
@@ -279,6 +291,7 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
                     <Radio
                       label="Tanaman Perkebunan"
                       value="perkebunan"
+                      disabled={type === "realisasi"}
                       onClick={(event) => {
                         setIsHoltikultura(false);
                         setNewData({
@@ -295,12 +308,13 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
                         setIsHoltikultura(true);
                       }}
                       checked={isHoltikultura}
+                      disabled={type === "realisasi"}
                     />
                     <Radio.Group className="ml-8 [&>*]:mt-1">
                       <Radio
                         label="Jenis Buah"
                         value="buah"
-                        disabled={!isHoltikultura}
+                        disabled={!isHoltikultura || type === "realisasi"}
                         onClick={(event) => {
                           if (isHoltikultura)
                             setNewData({
@@ -313,7 +327,7 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
                       <Radio
                         label="Jenis Sayur"
                         value="sayur"
-                        disabled={!isHoltikultura}
+                        disabled={!isHoltikultura || type === "realisasi"}
                         onClick={(event) => {
                           if (isHoltikultura)
                             setNewData({
@@ -329,8 +343,12 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
                 <p className="mt-4">Komoditas Tanaman</p>
                 <Tabs defaultValue="semusim">
                   <Tabs.List>
-                    <Tabs.Tab value="semusim">Semusim</Tabs.Tab>
-                    <Tabs.Tab value="tahunan">Tahunan</Tabs.Tab>
+                    <Tabs.Tab value="semusim" disabled={type === "realisasi"}>
+                      Semusim
+                    </Tabs.Tab>
+                    <Tabs.Tab value="tahunan" disabled={type === "realisasi"}>
+                      Tahunan
+                    </Tabs.Tab>
                   </Tabs.List>
 
                   <Tabs.Panel value="semusim">
@@ -344,6 +362,7 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
                           komoditas: e ?? "",
                         }))
                       }
+                      disabled={type === "realisasi"}
                       data={[
                         "Melon",
                         "Semangka",
@@ -379,6 +398,7 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
                           komoditas: e ?? "",
                         }))
                       }
+                      disabled={type === "realisasi"}
                       data={[
                         "Cabe Kecil",
                         "Cabe Besar",
@@ -408,6 +428,7 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
                       periodeTanam: e ?? "",
                     }))
                   }
+                  disabled={type === "realisasi"}
                   data={[
                     "Januari",
                     "Februari",
@@ -432,6 +453,7 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
                   placeholder="Luas Lahan Tanaman"
                   min={0}
                   value={newData.luasLahan}
+                  disabled={type === "realisasi"}
                   onChange={(e) =>
                     setNewData((prev) => ({
                       ...prev,
@@ -443,6 +465,7 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
             </div>
             <div className="flex flex-col gap-4 justify-between">
               <div className="relative">
+                {type === "realisasi" ? <DisabledMessage /> : null}
                 <div className="bg-[#136B09] text-xl text-white font-bold py-2 px-6 flex w-fit justify-between rounded-t-lg shadow-lg items-center">
                   Prakiraan Panen
                 </div>
@@ -458,6 +481,7 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
                         prakiraanLuasPanen: Number(e),
                       }))
                     }
+                    disabled={type === "realisasi"}
                   />
                   <p>PRAKIRAAN HASIL PANEN (TON)</p>
                   <NumberInput
@@ -470,6 +494,7 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
                         prakiraanHasilPanen: Number(e),
                       }))
                     }
+                    disabled={type === "realisasi"}
                   />
                   <p>PRAKIRAAN BULAN PANEN</p>
                   <Select
@@ -481,6 +506,7 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
                         prakiraanBulanPanen: e ?? "",
                       }))
                     }
+                    disabled={type === "realisasi"}
                     data={[
                       "Januari",
                       "Februari",
@@ -499,21 +525,42 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
                 </div>
               </div>
               <div className="relative">
-                <div className="absolute w-full h-full bg-[#545454] z-50 rounded-lg bg-opacity-75 flex items-center justify-center text-[#888888] font-bold text-4xl cursor-default">
-                  DISABLED
-                </div>
+                {type !== "realisasi" ? <DisabledMessage /> : null}
                 <div className="bg-[#136B09] text-xl text-white font-bold py-2 px-6 flex w-fit justify-between rounded-t-lg shadow-lg items-center">
                   Realisasi Panen
                 </div>
                 <div className="bg-white rounded-lg p-4 rounded-tl-none flex gap-1 flex-col">
                   <p>LUAS PANEN (HA)</p>
-                  <NumberInput placeholder="Luas Panen" min={0} disabled />
+                  <NumberInput
+                    placeholder="Luas Panen"
+                    min={0}
+                    disabled={type !== "realisasi"}
+                    value={newData.realisasiLuasPanen}
+                    onChange={(e) => {
+                      setNewData((prev) => ({
+                        ...prev,
+                        realisasiLuasPanen: Number(e),
+                      }));
+                    }}
+                  />
                   <p>HASIL PANEN (TON)</p>
-                  <NumberInput placeholder="Hasil Panen" min={0} disabled />
+                  <NumberInput
+                    placeholder="Hasil Panen"
+                    min={0}
+                    disabled={type !== "realisasi"}
+                    value={newData.realisasiHasilPanen}
+                    onChange={(e) =>
+                      setNewData((prev) => ({
+                        ...prev,
+                        realisasiHasilPanen: Number(e),
+                      }))
+                    }
+                  />
                   <p>BULAN PANEN</p>
                   <Select
-                    disabled
+                    disabled={type !== "realisasi"}
                     placeholder="-Periode Bulan Panen-"
+                    value={newData.realisasiBulanPanen}
                     data={[
                       "Januari",
                       "Februari",
@@ -528,6 +575,12 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
                       "November",
                       "Desember",
                     ]}
+                    onChange={(e) =>
+                      setNewData((prev) => ({
+                        ...prev,
+                        realisasiBulanPanen: e ?? "",
+                      }))
+                    }
                   />
                 </div>
               </div>
@@ -558,6 +611,14 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
         </Link>
       </div>
       <Table data={dataTable} columns={columns} />
+    </div>
+  );
+}
+
+function DisabledMessage() {
+  return (
+    <div className="absolute w-full h-full bg-[#545454] z-50 rounded-lg bg-opacity-75 flex items-center justify-center text-[#888888] font-bold text-4xl cursor-default">
+      DISABLED
     </div>
   );
 }

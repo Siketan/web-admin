@@ -66,6 +66,7 @@ import Homepage from "./page/user/homepage";
 import TokoPertanian from "./page/user/tokoPertanian";
 import InfoPertanian from "./page/user/infoPertanian";
 import Berita from "./page/user/berita";
+import RealisasiStatistik from "./page/statistik/realisasi";
 
 const menu = [
   {
@@ -483,6 +484,10 @@ const RoutesPath = () => {
           <Route path="/statistik" element={<Statistik />} />
           <Route path="/statistik/tambah" element={<TambahStatistik />} />
           <Route path="/statistik/:id" element={<EditStatistik />} />
+          <Route
+            path="/statistik/:id/realisasi"
+            element={<RealisasiStatistik />}
+          />
           {/* ENd of Statistik */}
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/notification" element={<Notification />} />
