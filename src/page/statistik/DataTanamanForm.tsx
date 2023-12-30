@@ -9,8 +9,8 @@ import {
   Stack,
   Tabs,
   TextInput,
-  clsx,
 } from "@mantine/core";
+import clsx from "clsx";
 import React, { useEffect } from "react";
 import SearchInput from "../../components/uiComponents/inputComponents/searchInput";
 import { FaRegRectangleList, FaUpload } from "react-icons/fa6";
@@ -176,7 +176,6 @@ export default function DataTanamanForm({ type }: { type: "add" | "edit" }) {
   useEffect(() => {
     if (type === "edit") {
       GetStatistikTanamanById(id).then((e) => {
-        console.log(e);
         const dataResult = e.data as TDataTanaman;
         if (e) setNewData(dataResult);
         if (dataResult.kategori === "buah" || dataResult.kategori === "sayur")

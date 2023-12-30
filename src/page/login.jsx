@@ -10,13 +10,13 @@ const LoginPage = () => {
   const navigate = useNavigate()
   useEffect(() => {
     document.body.style.overflow = "hidden";
-    if(window.localStorage.getItem("token")){
-      navigate("/")
+    if (window.localStorage.getItem("token")) {
+      navigate("/dashboard")
     }
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, []);
+  }, [navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,7 +36,7 @@ const LoginPage = () => {
         email,
         password,
       };
-      Login(data).then(()=>setLoading(false));
+      Login(data).then(() => setLoading(false));
     }
   };
 
@@ -45,7 +45,7 @@ const LoginPage = () => {
       <div className="hidden md:flex py-3 justify-center items-center bg-gradient-to-t from-green-primary to-green-secondary">
         <div>
           {loading &&
-          <LoadingAnimation/>}
+            <LoadingAnimation />}
           <img src="/image/logo-navbar.png" alt="Icon Navbar" />
           <p className="text-base md:text-3xl font-bold py-10 text-white">
             Melesat Lebih Cepat <br /> Bertumbuh Lebih Baik
@@ -79,9 +79,8 @@ const LoginPage = () => {
             <input
               type="email"
               id="email"
-              className={`border text-green-secondary rounded-md px-3 py-2 w-full ${
-                errors.email ? "border-red-500" : "border-gray-300"
-              }`}
+              className={`border text-green-secondary rounded-md px-3 py-2 w-full ${errors.email ? "border-red-500" : "border-gray-300"
+                }`}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
@@ -100,9 +99,8 @@ const LoginPage = () => {
             <input
               type="password"
               id="password"
-              className={`border text-green-secondary rounded-md px-3 py-2 w-full ${
-                errors.password ? "border-red-500" : "border-gray-300"
-              }`}
+              className={`border text-green-secondary rounded-md px-3 py-2 w-full ${errors.password ? "border-red-500" : "border-gray-300"
+                }`}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"

@@ -91,7 +91,7 @@ const columns: ColumnDef<TTableDataTanaman>[] = [
   },
 ];
 
-export default function Homepage() {
+export default function Dashboard() {
   const [dataTable, setDataTable] = React.useState<
     PaginatedRespApiData<TTableDataTanaman> | undefined
   >();

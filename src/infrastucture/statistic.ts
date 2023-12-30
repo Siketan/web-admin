@@ -1,6 +1,13 @@
 import SweatAlert from "../components/uiComponents/swetAlert";
 import { TDataTanaman, TDataTanamanInput } from "../types/dataTanaman";
-import { PaginatedRespApi } from "../types/paginatedRespApi";
+import { PaginatedRespApi, RespApiData } from "../types/paginatedRespApi";
+import {
+  TKategoriResponse,
+  TKomoditasResponse,
+  TSummaryKategoriResponse,
+  TSummaryKomoditasResponse,
+} from "../types/statistik";
+import { TTanamanPetani } from "../types/tanamanPetani";
 import Api from "./base";
 
 export const AddNewDataTanaman = async (data: TDataTanamanInput) => {
@@ -49,6 +56,27 @@ export const DeleteStatistikTanamanById = async (id: number) => {
     const response = await Api.delete(`/statistik/${id}`);
     SweatAlert(String(response.data.message), "success");
     return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), "error");
+  }
+};
+
+export const GetStatistikTanamanPetani = async (
+  month: number,
+  year: number,
+  lineType = "komoditas",
+  pieType = "kategori"
+) => {
+  try {
+    const response = await Api.get(
+      `/tanaman-petani/statistik?month=${month}&year=${year}&lineType=${lineType}&pieType=${pieType}`
+    );
+
+    return response.data as RespApiData<{
+      latest: TTanamanPetani[];
+      statistik: TKomoditasResponse[];
+      summary: TSummaryKategoriResponse[];
+    }>;
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
   }
