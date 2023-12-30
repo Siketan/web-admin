@@ -7,7 +7,7 @@ const ProtectedRoute = ({ ...props }) => {
 
   return (
     <>
-      {isLoggedIn ? <Outlet /> : <Navigate to='/loginAdminSiketan' />}
+      {isLoggedIn ? <Outlet /> : <Navigate to='/login' />}
     </>
   )
 }

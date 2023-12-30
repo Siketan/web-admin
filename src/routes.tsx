@@ -253,8 +253,8 @@ const Path = () => {
 
   const token = window.localStorage.getItem("token");
   const isAuthPage =
-    window.location.pathname === "/loginAdminSiketan" ||
-    window.location.pathname === "/registerAdminSiketan";
+    window.location.pathname === "/login" ||
+    window.location.pathname === "/register";
 
   const isWebVidePage =
     window.location.pathname === "/" ||
@@ -272,10 +272,9 @@ const Path = () => {
         .catch((err) => {
           console.log({ err });
           window.localStorage.removeItem("token");
-          window.location.href = "/loginAdminSiketan";
+          window.location.href = "/login";
         });
-    } else if (!isAuthPage && !isWebVidePage)
-      window.location.href = "/loginAdminSiketan";
+    } else if (!isAuthPage && !isWebVidePage) window.location.href = "/login";
   }, [token, isAuthPage]);
 
   if (isAuthPage || isWebVidePage) return <RoutesPath />;
@@ -471,8 +470,8 @@ const RoutesPath = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/loginAdminSiketan" element={<Login />} />
-        <Route path="/registerAdminSiketan" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/" element={<Homepage />} />
         <Route path="/toko-pertanian" element={<TokoPertanian />} />
         <Route path="/info-pertanian" element={<InfoPertanian />} />

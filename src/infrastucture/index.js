@@ -11,7 +11,7 @@ export const Register = async (data) => {
     const response = await Api.post("/auth/register", data);
     SweatAlert(String(response.data.message), "success");
     // redirect to login page
-    window.location.href = "/loginAdminSiketan";
+    window.location.href = "/login";
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
   }
@@ -37,14 +37,14 @@ export const ListUser = async () => {
     SweatAlert(String(error.response.data.message), "error");
   }
 };
-export const DeleteUser = async(id) => {
+export const DeleteUser = async (id) => {
   try {
     const response = await Api.delete(`/delete-user/${id}`);
     SweatAlert(String(response.data.message), "success", "reload");
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
   }
-}
+};
 export const VerifyingUser = async (id) => {
   try {
     const response = await Api.put(`/verify/${id}`);
@@ -60,7 +60,7 @@ export const GetProfile = async () => {
 };
 export const Logout = () => {
   localStorage.clear();
-  window.location = "/loginAdminSiketan";
+  window.location = "/login";
 };
 
 // cekNik
@@ -154,7 +154,7 @@ export const GetListTanaman = async (page, limit, petaniId) => {
 export const AddTanamanPetani = async (data) => {
   try {
     const response = await Api.post("/list-tanaman", data);
-    SweatAlert(String(response.data.message), "success", "reload"); 
+    SweatAlert(String(response.data.message), "success", "reload");
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
   }
@@ -377,8 +377,11 @@ export const ProductsPetani = async () => {
 export const AddPenyuluh = async (data) => {
   try {
     const response = await Api.post("/penyuluh/add", data, headers);
-    SweatAlert(String(response.data.message), "success", 
-    "/data-penyuluh/rekap-penyuluh");
+    SweatAlert(
+      String(response.data.message),
+      "success",
+      "/data-penyuluh/rekap-penyuluh"
+    );
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
   }

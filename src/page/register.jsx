@@ -81,9 +81,8 @@ const RegisterPage = () => {
               <input
                 type="text"
                 id="NoWa"
-                className={`border rounded-md px-3 py-2 w-full ${
-                  errors.NoWa ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`border rounded-md px-3 py-2 w-full ${errors.NoWa ? "border-red-500" : "border-gray-300"
+                  }`}
                 value={no_wa}
                 onChange={(e) => StNoWa(e.target.value)}
               />
@@ -101,9 +100,8 @@ const RegisterPage = () => {
               <input
                 type="text"
                 id="name"
-                className={`border rounded-md px-3 py-2 w-full ${
-                  errors.nama ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`border rounded-md px-3 py-2 w-full ${errors.nama ? "border-red-500" : "border-gray-300"
+                  }`}
                 value={nama}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -121,9 +119,8 @@ const RegisterPage = () => {
               <input
                 type="email"
                 id="email"
-                className={`border rounded-md px-3 py-2 w-full ${
-                  errors.email ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`border rounded-md px-3 py-2 w-full ${errors.email ? "border-red-500" : "border-gray-300"
+                  }`}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -141,9 +138,8 @@ const RegisterPage = () => {
               <input
                 type="password"
                 id="password"
-                className={`border rounded-md px-3 py-2 w-full ${
-                  errors.password ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`border rounded-md px-3 py-2 w-full ${errors.password ? "border-red-500" : "border-gray-300"
+                  }`}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -161,9 +157,8 @@ const RegisterPage = () => {
               <input
                 type="password"
                 id="confirmPassword"
-                className={`border rounded-md px-3 py-2 w-full ${
-                  errors.confirmPassword ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`border rounded-md px-3 py-2 w-full ${errors.confirmPassword ? "border-red-500" : "border-gray-300"
+                  }`}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
@@ -182,7 +177,7 @@ const RegisterPage = () => {
             <p className="text-black text-sm mt-4">
               Sudah punya akun?{" "}
               <a
-                href="loginAdminSiketan"
+                href="login"
                 className="text-blue-500 hover:text-blue-600 font-medium"
               >
                 Masuk di sini

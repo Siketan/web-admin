@@ -117,7 +117,7 @@ const LoginPage = () => {
           </button>
           <div className="flex justify-between">
             <p className="text-gray-700 text-base mt-4 cursor-pointer">
-              <a href="/registerAdminSiketan">Buat Akun Baru</a>
+              <a href="/register">Buat Akun Baru</a>
             </p>
             <p className="text-red-500 hover:text-red-600 text-base mt-4 cursor-pointer">
               Lupa Password?
