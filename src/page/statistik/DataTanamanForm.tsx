@@ -14,7 +14,7 @@ import clsx from "clsx";
 import React, { useEffect } from "react";
 import SearchInput from "../../components/uiComponents/inputComponents/searchInput";
 import { FaRegRectangleList, FaUpload } from "react-icons/fa6";
-import { IoEyeOutline, IoImageOutline } from "react-icons/io5";
+import { IoEyeOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { RootState } from "../../infrastucture/redux/store";
 import {
@@ -44,7 +44,7 @@ import { GetKelompokTaniById } from "../../infrastucture/kelompokTani";
 
 const breadcrumbItems = [
   { title: "Dashboard", href: "/" },
-  { title: "Statistik" },
+  { title: "Statistik", href: "/statistik" },
   { title: "Tambah Data" },
 ].map((item, index) => (
   <Anchor href={item.href} key={index} className="text-white opacity-50">
@@ -119,7 +119,6 @@ export default function DataTanamanForm({
 }) {
   const params = useParams();
   const id = Number(params.id);
-  const user = useSelector((state: RootState) => state.state.user);
   const [newData, setNewData] = React.useState(dataTanamanDefault);
   const [isHoltikultura, setIsHoltikultura] = React.useState(false);
   const [poktan, setPoktan] = React.useState<TKelompokTani>();
@@ -132,10 +131,11 @@ export default function DataTanamanForm({
   >();
 
   useEffect(() => {
-    GetStatistikTanamanAll().then((res) => {
+    GetStatistikTanamanAll(poktan?.id).then((res) => {
+      console.log(res);
       setResp(res?.data);
     });
-  }, []);
+  }, [poktan]);
 
   useEffect(() => {
     if (resp) {
@@ -180,7 +180,7 @@ export default function DataTanamanForm({
     if (type !== "add") {
       GetStatistikTanamanById(id).then((e) => {
         const dataResult = e.data as TDataTanaman;
-        console.log(dataResult);
+
         GetKelompokTaniById(dataResult.fk_kelompokId).then((e) => {
           setPoktan(e?.kelompokTani);
           console.log(e.kelompokTani);

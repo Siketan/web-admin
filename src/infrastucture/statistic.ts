@@ -20,9 +20,9 @@ export const AddNewDataTanaman = async (data: TDataTanamanInput) => {
   }
 };
 
-export const GetStatistikTanamanAll = async () => {
+export const GetStatistikTanamanAll = async (poktan_id?: number) => {
   try {
-    const response = await Api.get(`/statistik`);
+    const response = await Api.get(`/statistik?poktan_id=${poktan_id}`);
     return response.data as PaginatedRespApi<TDataTanaman>;
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");

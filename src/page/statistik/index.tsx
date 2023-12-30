@@ -1,4 +1,4 @@
-import { Anchor, Breadcrumbs } from "@mantine/core";
+import { Anchor, Breadcrumbs, Button, Modal } from "@mantine/core";
 import React, { useEffect } from "react";
 import SearchInput from "../../components/uiComponents/inputComponents/searchInput";
 import { FaPlus } from "react-icons/fa";
@@ -101,12 +101,16 @@ export default function index() {
     PaginatedRespApiData<TDataTanaman> | undefined
   >();
   const [poktan, setPoktan] = React.useState<TKelompokTani>();
+  const [showModalDelete, setShowModalDelete] = React.useState(false);
+  const [selectedData, setSelectedData] = React.useState<
+    TDataTanaman | undefined
+  >();
 
   useEffect(() => {
-    GetStatistikTanamanAll().then((res) => {
+    GetStatistikTanamanAll(poktan?.id).then((res) => {
       setResp(res?.data);
     });
-  }, []);
+  }, [poktan]);
 
   useEffect(() => {
     if (resp) {
@@ -134,11 +138,8 @@ export default function index() {
               </Link>
               <button
                 onClick={() => {
-                  DeleteStatistikTanamanById(item.id).then(() => {
-                    GetStatistikTanamanAll().then((res) => {
-                      setResp(res?.data);
-                    });
-                  });
+                  setShowModalDelete(true);
+                  setSelectedData(item);
                 }}
               >
                 <div className="flex h-7 w-7 items-center justify-center bg-red-500">
@@ -180,6 +181,45 @@ export default function index() {
         </Link>
       </div>
       <Table data={dataTable} columns={columns} />
+      <Modal
+        opened={showModalDelete}
+        onClose={() => setShowModalDelete(false)}
+        centered
+      >
+        Apakah Kamu Yakin Akan Menghapus Data Statistik Pertanian ini (ID:{" "}
+        {selectedData?.id})?
+        <div
+          style={{ display: "flex", justifyContent: "flex-end", marginTop: 20 }}
+        >
+          <Button
+            color="cyan"
+            style={{
+              color: "white",
+              backgroundColor: "#303A47",
+              marginRight: 8,
+            }}
+            onClick={() => setShowModalDelete(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="cyan"
+            style={{ color: "white", backgroundColor: "blue" }}
+            type="submit"
+            onClick={() => {
+              if (!selectedData) return;
+              setShowModalDelete(false);
+              DeleteStatistikTanamanById(selectedData.id).then(() => {
+                GetStatistikTanamanAll().then((res) => {
+                  setResp(res?.data);
+                });
+              });
+            }}
+          >
+            Hapus
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 }
