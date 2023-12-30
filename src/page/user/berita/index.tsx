@@ -5,6 +5,7 @@ import { BsPersonCircle } from "react-icons/bs";
 import { IoCaretBackCircle } from "react-icons/io5";
 import { Image } from "@mantine/core";
 import MainCard from "../../../components/MainCard";
+import UserLayout from "../../../components/UserLayout";
 
 export default function Berita() {
   const [datas, setDatas] = useState({
@@ -17,7 +18,7 @@ export default function Berita() {
   });
 
   return (
-    <>
+    <UserLayout>
       <MainCard row transparent center gap="0">
         <MainCard width="80%" radius="0" gap="0">
           <Link to="/info-pertanian">
@@ -55,6 +56,6 @@ export default function Berita() {
           </MainCard>
         </MainCard>
       </MainCard>
-    </>
+    </UserLayout>
   );
 }

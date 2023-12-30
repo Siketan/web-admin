@@ -258,7 +258,7 @@ const Path = () => {
 
   const isWebVidePage =
     window.location.pathname === "/" ||
-    window.location.pathname === "/info-pertanian" ||
+    window.location.pathname.includes("info-pertanian") ||
     window.location.pathname === "/toko-pertanian";
 
   useEffect(() => {
