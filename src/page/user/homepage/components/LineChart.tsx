@@ -11,7 +11,7 @@ import {
   ChartOptions,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { EKomoditas, TKomoditasResponse } from "../../../../types/statistik";
+import { TKomoditasResponse } from "../../../../types/statistik";
 import { ResponseApiToDataChart } from "../../../../utils/helpers";
 
 ChartJS.register(
@@ -49,7 +49,6 @@ export default function LineChart({
   month: number;
   year: number;
 }) {
-  // data from api
   const [padiKonvensional, setPadiKonvensional] = React.useState<number[]>([]);
   const [padiRamahLingkungan, setPadiRamahLingkungan] = React.useState<
     number[]
@@ -74,7 +73,6 @@ export default function LineChart({
       (_, i) => (i + 1).toString()
     )
   );
-  // end of data from api
 
   const [data, setData] = React.useState<{
     labels: string[];
@@ -92,61 +90,30 @@ export default function LineChart({
 
   useEffect(() => {
     setPadiKonvensional(
-      ResponseApiToDataChart(
-        apiData ?? [],
-        EKomoditas["PADI KONVENSIONAL"],
-        year,
-        month
-      )
+      ResponseApiToDataChart(apiData ?? [], "PADI KONVENSIONAL", year, month)
     );
     setPadiRamahLingkungan(
       ResponseApiToDataChart(
         apiData ?? [],
-        EKomoditas["PADI RAMAH LINGKUNGAN"],
+        "PADI RAMAH LINGKUNGAN",
         year,
         month
       )
     );
     setPadiOrganik(
-      ResponseApiToDataChart(
-        apiData ?? [],
-        EKomoditas["PADI ORGANIK"],
-        year,
-        month
-      )
+      ResponseApiToDataChart(apiData ?? [], "PADI ORGANIK", year, month)
     );
-    setJagung(
-      ResponseApiToDataChart(apiData ?? [], EKomoditas["JAGUNG"], year, month)
-    );
-    setKedelai(
-      ResponseApiToDataChart(apiData ?? [], EKomoditas["KEDELAI"], year, month)
-    );
+    setJagung(ResponseApiToDataChart(apiData ?? [], "JAGUNG", year, month));
+    setKedelai(ResponseApiToDataChart(apiData ?? [], "KEDELAI", year, month));
     setUbiJalar(
-      ResponseApiToDataChart(
-        apiData ?? [],
-        EKomoditas["UBI JALAR"],
-        year,
-        month
-      )
+      ResponseApiToDataChart(apiData ?? [], "UBI JALAR", year, month)
     );
-    setUbiKayu(
-      ResponseApiToDataChart(apiData ?? [], EKomoditas["UBI KAYU"], year, month)
-    );
+    setUbiKayu(ResponseApiToDataChart(apiData ?? [], "UBI KAYU", year, month));
     setKacangTanah(
-      ResponseApiToDataChart(
-        apiData ?? [],
-        EKomoditas["KACANG TANAH"],
-        year,
-        month
-      )
+      ResponseApiToDataChart(apiData ?? [], "KACANG TANAH", year, month)
     );
     setKacangHijau(
-      ResponseApiToDataChart(
-        apiData ?? [],
-        EKomoditas["KACANG HIJAU"],
-        year,
-        month
-      )
+      ResponseApiToDataChart(apiData ?? [], "KACANG HIJAU", year, month)
     );
   }, [apiData]);
 

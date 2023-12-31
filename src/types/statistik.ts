@@ -11,22 +11,13 @@ export enum EKomoditas {
 }
 export type TKomoditasResponse = {
   date: string;
-  komoditas:
-    | "PADI KONVENSIONAL"
-    | "PADI RAMAH LINGKUNGAN"
-    | "PADI ORGANIK"
-    | "JAGUNG"
-    | "KEDELAI"
-    | "UBI JALAR"
-    | "UBI KAYU"
-    | "KACANG TANAH"
-    | "KACANG HIJAU";
+  komoditas: string;
   count: number;
 };
 
 export type TKategoriResponse = {
   date: string;
-  kategori: "HOLTIKULTURA" | "TANAMAN PANGAN" | "TANAMAN PERKEBUNAN";
+  kategori: string;
   count: number;
 };
 
