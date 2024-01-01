@@ -10,7 +10,7 @@ import Table from "../../components/table/Table";
 import { PaginatedRespApiData } from "../../types/paginatedRespApi";
 import { TDataTanaman, TTableDataTanaman } from "../../types/dataTanaman";
 import { ColumnDef } from "@tanstack/react-table";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ImPencil } from "react-icons/im";
 import { IoEyeOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
@@ -106,11 +106,27 @@ export default function index() {
     TDataTanaman | undefined
   >();
 
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
+  const page = searchParams.get("page") ?? 1;
+  const limit = searchParams.get("limit") ?? 10;
+
+  const searchQuery = searchParams.get("search_query") ?? "";
+  const sortKey = searchParams.get("sort_key") ?? "";
+  const sortType = searchParams.get("sort_type") ?? "";
+
   useEffect(() => {
-    GetStatistikTanamanAll(poktan?.id).then((res) => {
+    GetStatistikTanamanAll(poktan?.id, {
+      page: Number(page),
+      limit: Number(limit),
+      search: searchQuery,
+      sortBy: sortKey,
+      sortType: sortType as "" | "ASC" | "DESC",
+    }).then((res) => {
       setResp(res?.data);
     });
-  }, [poktan]);
+  }, [poktan, page, limit, searchQuery, sortKey, sortType]);
 
   useEffect(() => {
     if (resp) {
@@ -180,7 +196,12 @@ export default function index() {
           <FaPlus />
         </Link>
       </div>
-      <Table data={dataTable} columns={columns} />
+      <Table
+        data={dataTable}
+        columns={columns}
+        withPaginationCount
+        withPaginationControl
+      />
       <Modal
         opened={showModalDelete}
         onClose={() => setShowModalDelete(false)}

@@ -1,6 +1,7 @@
 import SweatAlert from "../components/uiComponents/swetAlert";
 import { TDataTanaman, TDataTanamanInput } from "../types/dataTanaman";
 import { PaginatedRespApi, RespApiData } from "../types/paginatedRespApi";
+import { TRequestQuery } from "../types/query";
 import {
   TKategoriResponse,
   TKomoditasResponse,
@@ -20,9 +21,14 @@ export const AddNewDataTanaman = async (data: TDataTanamanInput) => {
   }
 };
 
-export const GetStatistikTanamanAll = async (poktan_id?: number) => {
+export const GetStatistikTanamanAll = async (
+  poktan_id?: number,
+  query?: TRequestQuery
+) => {
   try {
-    const response = await Api.get(`/statistik?poktan_id=${poktan_id}`);
+    const response = await Api.get(
+      `/statistik?poktan_id=${poktan_id}&limit=${query?.limit}&page=${query?.page}&sortBy=${query?.sortBy}&sortType=${query?.sortType}&search=${query?.search}`
+    );
     return response.data as PaginatedRespApi<TDataTanaman>;
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
