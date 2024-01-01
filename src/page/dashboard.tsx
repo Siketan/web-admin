@@ -101,10 +101,16 @@ export default function Dashboard() {
   const [poktan, setPoktan] = React.useState<TKelompokTani>();
 
   useEffect(() => {
-    GetStatistikTanamanAll().then((res) => {
+    GetStatistikTanamanAll(poktan?.id, {
+      page: 1,
+      limit: 10,
+      search: "",
+      sortType: "ASC",
+      sortBy: "",
+    }).then((res) => {
       setResp(res?.data);
     });
-  }, []);
+  }, [poktan]);
 
   useEffect(() => {
     if (resp) {

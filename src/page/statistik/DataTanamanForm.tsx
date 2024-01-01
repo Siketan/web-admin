@@ -167,8 +167,13 @@ export default function DataTanamanForm({
   >();
 
   useEffect(() => {
-    GetStatistikTanamanAll(poktan?.id).then((res) => {
-      console.log(res);
+    GetStatistikTanamanAll(poktan?.id, {
+      page: 1,
+      limit: 10,
+      search: "",
+      sortType: "ASC",
+      sortBy: "",
+    }).then((res) => {
       setResp(res?.data);
     });
   }, [poktan]);
@@ -552,7 +557,9 @@ export default function DataTanamanForm({
                 </div>
               </div>
               <div className="relative">
-                {type !== "realisasi" ? <DisabledMessage /> : null}
+                {type !== "realisasi" && type !== "detail" ? (
+                  <DisabledMessage />
+                ) : null}
                 <div className="bg-[#136B09] text-xl text-white font-bold py-2 px-6 flex w-fit justify-between rounded-t-lg shadow-lg items-center">
                   Realisasi Panen
                 </div>
