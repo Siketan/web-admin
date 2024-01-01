@@ -61,18 +61,24 @@ export default function LineChart({
   const [kacangTanah, setKacangTanah] = React.useState<number[]>([]);
   const [kacangHijau, setKacangHijau] = React.useState<number[]>([]);
 
-  const [labels] = React.useState<string[]>(
-    Array.from(
-      {
-        length:
-          month === new Date().getMonth() + 1 &&
-          year === new Date().getFullYear()
-            ? new Date().getDate()
-            : new Date(year, month, 0).getDate(),
-      },
-      (_, i) => (i + 1).toString()
-    )
-  );
+  const [labels, setLabels] = React.useState<string[]>([]);
+
+  useEffect(() => {
+    const currentDate = new Date();
+    const selectedDate = new Date(year, month, 0);
+
+    setLabels(
+      Array.from(
+        {
+          length:
+            currentDate > selectedDate
+              ? new Date(year, month, 0).getDate()
+              : new Date().getDate(),
+        },
+        (_, i) => (i + 1).toString()
+      )
+    );
+  }, [year, month]);
 
   const [data, setData] = React.useState<{
     labels: string[];
@@ -87,6 +93,13 @@ export default function LineChart({
     labels: labels,
     datasets: [],
   });
+
+  useEffect(() => {
+    setData((prev) => ({
+      ...prev,
+      labels: labels,
+    }));
+  }, [labels]);
 
   useEffect(() => {
     setPadiKonvensional(
