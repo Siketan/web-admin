@@ -67,7 +67,7 @@ export default function THead<T extends RowData>({
                     if (["no", "actions"].includes(header.column.id)) return;
                     navigate(
                       `${
-                        location.search
+                        location.pathname
                       }?page=${1}&limit=${perPage}&search=${searchQuery}&sortBy=${
                         header.column.id
                       }&sortType=${
