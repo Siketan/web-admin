@@ -33,7 +33,7 @@ import {
 } from "../../../../infrastucture/index"
 //import tooltip, fontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Tooltip } from "@mantine/core";
+import { Tooltip, Modal } from "@mantine/core";
 import Loading from "../../../../components/loading";
 
 const breadcrumbItems = [
@@ -170,8 +170,9 @@ export default function TambahTanamanPetani() {
       formData.append(key, data[key]);
     }
     // console.log({formData})
-    AddTanamanPetani(data).then(()=> setLoading(false))
-    // history.push('/tanaman-petani');
+    // add window.history.push('/tanaman-petani')
+    // AddTanamanPetani(formData).then(()=>{window.history.push('/tanaman-petani'), setLoading(false)});
+    AddTanamanPetani(data).then(()=> setLoading(false));
   };
 
   return (
@@ -190,6 +191,40 @@ export default function TambahTanamanPetani() {
       value={petani}
       isClearable
       placeholder="Cari NIK PETANI / POKTAN" />
+      <Modal
+        opened={modalDeleteData}
+        onClose={() => setModalDeleteData(false)}
+        withCloseButton={false}
+        centered
+      >
+        <Text>Apakah Kamu Yakin Akan Menghapus Data Ini ?</Text>
+        <div
+          style={{ display: "flex", justifyContent: "flex-end", marginTop: 20 }}
+        >
+          <Button
+            color="cyan"
+            style={{
+              color: "white",
+              backgroundColor: "#303A47",
+              marginRight: 8,
+            }}
+            onClick={() => setModalDeleteData(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="cyan"
+            style={{ color: "white", backgroundColor: "red" }}
+            type="submit"
+            onClick={() => {
+              handleTanaman(modalDeleteData);
+              setModalDeleteData(false);
+            }}
+          >
+            Delete
+          </Button>
+        </div>
+      </Modal>
       <div className="bg-[#D9D9D9] rounded-lg">
         <div className="relative bg-[#136B09] mt-6 p-4 flex w-full justify-between rounded-t-lg shadow-lg">
           <h3 className="text-white text-2xl font-bold">
@@ -466,8 +501,7 @@ export default function TambahTanamanPetani() {
           <div className="flex px-6 pb-6 justify-end">
             <Button className="bg-[#307B28]" type="submit">Simpan Data</Button>
           </div>
-          {loading &&
-              <LoadingAnimation/>}
+          {loading && <Loading />}
         </form>
         
       ): (
@@ -485,6 +519,43 @@ export default function TambahTanamanPetani() {
           <FaRegRectangleList />
         </button>
       </div>
+      <table className="min-w-full shadow-md">
+                <thead className="bg-[#079073] text-white">
+                  <tr>
+                    <th  className="sticky top-0 px-4 py-2 truncate">
+                      NO
+                    </th>
+                    <th className="sticky top-0 px-4 py-2 truncate ">
+                      KATEGORI TANAMAN
+                    </th>
+                    <th className="sticky top-0 px-4 py-2 truncate ">
+                      JENIS KOMODITAS
+                    </th>
+                    <th className="sticky top-0 px-4 py-2 truncate ">
+                      STATUS LAHAN
+                    </th>
+                    <th className="sticky top-0 px-4 py-2 truncate ">
+                      PRAKIRAAN PANEN
+                    </th>
+                    <th className="sticky top-0 px-4 py-2 truncate ">
+                      REALISASI PANEN
+                    </th>
+                    {/* <th className="sticky top-0 px-4 py-2 truncate">Action</th> */}
+                  </tr>
+                </thead>
+                <tbody>
+                  {datas?.map((item, index) => (
+                    <tr key={item.id} className={`${index % 2 === 0 ? 'bg-white text-black font-medium' : 'bg-[#D1D9D3] text-emerald-800 font-medium'}`}>
+                      <td className="px-4 py-2 text-center ">{index + 1 + (page - 1) * 10}</td>
+                      <td className="px-4 py-2 text-center ">{item?.kategori}</td>
+                      <td className="px-4 py-2 text-center ">{item?.komoditas}</td>
+                      <td className="px-4 py-2 text-center ">{item?.statusKepemilikanLahan}</td>
+                      <td className="px-4 py-2 text-center ">{item?.periodeBulanTanam}</td>
+                      <td className="px-4 py-2 text-center ">{item?.prakiraanBulanPanen}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
     </div>
   );
 }

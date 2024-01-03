@@ -1,3 +1,4 @@
+import React from "react";
 import { useMediaQuery } from "@mantine/hooks";
 
 export default function MainCard({
@@ -13,7 +14,21 @@ export default function MainCard({
   thinShadow,
   forceRow,
   className,
-  radius
+  radius,
+}: {
+  children: React.ReactNode;
+  row?: boolean;
+  center?: boolean;
+  transparent?: boolean;
+  noPadding?: boolean;
+  gap?: number | string;
+  fullWidth?: boolean;
+  width?: number | string;
+  style?: any;
+  thinShadow?: boolean;
+  forceRow?: boolean;
+  className?: string;
+  radius?: number | string;
 }) {
   const isMobile = useMediaQuery("(max-width: 768px)");
   return (
@@ -26,7 +41,7 @@ export default function MainCard({
         padding: noPadding ? 0 : isMobile ? 10 : 20,
         width: fullWidth || isMobile ? "100%" : width,
         alignItems: !row && center ? "center" : "normal",
-        flexDirection: row && !isMobile || forceRow ? "row" : "column",
+        flexDirection: (row && !isMobile) || forceRow ? "row" : "column",
         justifyContent: row && center ? "center" : "normal",
         backgroundColor: transparent ? "transparent" : "white",
         boxShadow: transparent

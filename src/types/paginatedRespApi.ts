@@ -14,3 +14,8 @@ export interface PaginatedRespApiData<T> {
   sortBy: string;
   sortType: "ASC" | "DESC";
 }
+
+export interface RespApiData<T> {
+  message: string;
+  data: T;
+}
