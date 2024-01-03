@@ -87,3 +87,19 @@ export const GetStatistikTanamanPetani = async (
     SweatAlert(String(error.response.data.message), "error");
   }
 };
+
+export const UploadStatistikTanaman = async (file: File) => {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await Api.post("/statistik/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    SweatAlert(String(response.data.message), "success");
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), "error");
+  }
+};

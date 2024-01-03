@@ -1,16 +1,17 @@
-import { Anchor, Breadcrumbs, Button, Modal } from "@mantine/core";
+import { Anchor, Breadcrumbs, Button, FileInput, Modal } from "@mantine/core";
 import React, { useEffect } from "react";
 import SearchInput from "../../components/uiComponents/inputComponents/searchInput";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaUpload } from "react-icons/fa";
 import {
   DeleteStatistikTanamanById,
   GetStatistikTanamanAll,
+  UploadStatistikTanaman,
 } from "../../infrastucture/statistic";
 import Table from "../../components/table/Table";
 import { PaginatedRespApiData } from "../../types/paginatedRespApi";
 import { TDataTanaman, TTableDataTanaman } from "../../types/dataTanaman";
 import { ColumnDef } from "@tanstack/react-table";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ImPencil } from "react-icons/im";
 import { IoEyeOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
@@ -106,6 +107,9 @@ export default function index() {
     TDataTanaman | undefined
   >();
 
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
@@ -169,6 +173,15 @@ export default function index() {
     }
   }, [resp]);
 
+  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    if (!event.target.files) return;
+
+    const file = event.target.files[0];
+    UploadStatistikTanaman(file).then(() => {
+      window.location.reload();
+    });
+  }
+
   return (
     <div>
       <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
@@ -189,12 +202,29 @@ export default function index() {
         <h3 className="text-white text-2xl font-bold mx-auto">
           TABEL DATA STATISTIK PERTANIAN
         </h3>
-        <Link
-          to="/statistik/tambah"
-          className="absolute right-4 text-[#0FA958] text-xl"
-        >
-          <FaPlus />
-        </Link>
+        <div className="absolute right-4 flex gap-4 items-center justify-center">
+          <input
+            type="file"
+            className="hidden"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            accept=".xlsx,.xls,.csv"
+          />
+          <Button
+            className="bg-[#F29D0E]"
+            onClick={() => {
+              if (fileInputRef.current) {
+                fileInputRef.current.click();
+              }
+            }}
+          >
+            <FaUpload />
+            <span className="ml-2">Upload File</span>
+          </Button>
+          <Link to="/statistik/tambah" className="text-[#0FA958] text-xl">
+            <FaPlus />
+          </Link>
+        </div>
       </div>
       <Table
         data={dataTable}

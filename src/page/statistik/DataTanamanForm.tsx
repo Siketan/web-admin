@@ -452,7 +452,7 @@ export default function DataTanamanForm({
                 <p>Periode Tanam</p>
                 <Select
                   className="mt-2"
-                  placeholder="-Tanaman Holtikultura Sayur-"
+                  placeholder="-Periode Tanam-"
                   value={newData.periodeTanam}
                   onChange={(e) =>
                     setNewData((prev) => ({
