@@ -304,10 +304,10 @@ export default function DataTanamanForm({
             <h3 className="text-white text-2xl font-bold">
               MASUKKAN DATA TANAMAN
             </h3>
-            <button className="flex px-4 py-2 gap-4 bg-[#F29D0E] rounded-lg items-center justify-center text-xl text-white active:bg-[#F29D0E] active:shadow-md active:translate-y-1">
+            {/* <button className="flex px-4 py-2 gap-4 bg-[#F29D0E] rounded-lg items-center justify-center text-xl text-white active:bg-[#F29D0E] active:shadow-md active:translate-y-1">
               <FaUpload />
               <span>UPLOAD FILE </span>
-            </button>
+            </button> */}
           </div>
           <div className="grid grid-cols-2 gap-8 p-6">
             <div className="flex flex-col gap-4 justify-between relative">
