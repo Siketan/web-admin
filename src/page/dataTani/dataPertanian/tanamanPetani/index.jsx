@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import MainCard from "@/components/MainCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,11 +8,12 @@ import {
   faBullseye,
   faPlus,
   faArrowRight,
-  faArrowLeft
+  faArrowLeft,
+  faUpload
 } from "@fortawesome/free-solid-svg-icons";
 import Table from "@/components/table/Table";
 import { Image, Modal,Text,Button, Tooltip, Breadcrumbs, Anchor } from '@mantine/core';
-import { GetListTanaman, GetTanmanPetani, DeleteTanamanPetani } from "@/infrastruture";
+import { GetListTanaman, GetTanmanPetani, DeleteTanamanPetani, UploadTanamanPetani } from "@/infrastruture";
 import { useParams, Link } from 'react-router-dom';
 import LoadingAnimation from '../../../../components/loading'
 import SearchInput from "../../../../components/uiComponents/inputComponents/searchInput";
@@ -88,6 +89,7 @@ export default function DetailRekapPetani() {
     statusLahan: "",
     tanggalTanam: "",
   });
+  const fileInputRef = useRef();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
@@ -127,7 +129,7 @@ export default function DetailRekapPetani() {
             actions: (
               <div className="flex gap-4">
                 <Tooltip label="Detail">
-                  <a href={`/data-tani/detail/${item.id}`} >
+                  <a href={`/tanaman-petani/edit/${item.id}`} >
                     <FontAwesomeIcon
                       icon={faBullseye}
                       className="cursor-pointer text-black hover:text-black"
@@ -162,11 +164,22 @@ export default function DetailRekapPetani() {
       [column]: e.target.value,
     }));
   };
+
+  function handleFileChange(event) {
+    if (!event.target.files) return;
+  
+    const file = event.target.files[0];
+    console.log(file);
+    UploadTanamanPetani(file).then(() => {
+      window.location.reload();
+    });
+  }
+    
   return (
     <div>
       <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
       <h3 className="text-white text-2xl font-bold mt-4">
-        TABEL DATA PETANI
+        TABEL DATA TANAMAN PETANI
       </h3>
       <SearchInput 
       cacheOptions
@@ -218,14 +231,37 @@ export default function DetailRekapPetani() {
       <div className="bg-[#D9D9D9] rounded-lg w-full mt-5">
         <div className="relative bg-[#136B09] p-4 flex w-full justify-between rounded-t-lg shadow-lg">
           <h3 className="text-white text-2xl font-bold px-3">
-            DATA TABEL PETANI
+            DATA TABEL TANAMAN PETANI
           </h3>
-          {/* <Link to={``}>
+          <div className="flex gap-4 items-center">
+            <input
+              type="file"
+              className="hidden"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              accept=".xlsx,.xls"
+            />
+            <Link to={`/tanaman-petani/add`}>
               <button className="ms-5 rounded-md bg-[#86BA34] text-white p-1 px-5 w-30 h-10"> 
                 <FontAwesomeIcon className="text-xl"
                   icon={faPlus}
                 /></button>
-            </Link> */}
+            </Link>
+            <Button
+            className="bg-[#F29D0E]"
+            onClick={() => {
+              if (fileInputRef.current) {
+                  fileInputRef.current.click();
+                }
+              }}
+            >
+              <FontAwesomeIcon className="text-xl"
+                  icon={faUpload}
+                />
+              {/* <faUpload /> */}
+              <span className="ml-2">Upload File</span>
+            </Button> 
+          </div>
         </div>
           <div className="pt-0">
             <div className="h-[calc(100vh-200px) p-6 flex justify-between items-center">
@@ -265,7 +301,7 @@ export default function DetailRekapPetani() {
                       <td className="px-4 py-2 text-center ">{item?.prakiraanBulanPanen}</td>
                       <td className="px-2 py-2 text-center">
                         <Tooltip label="Detail">
-                          <a href={`/data-tani/detail/${item.id}`} >
+                          <a href={`/tanaman-petani/edit/${item.id}`} >
                             <FontAwesomeIcon
                               icon={faBullseye}
                               className="cursor-pointer text-black hover:text-black"

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFilter,
@@ -6,9 +6,10 @@ import {
   faTrash,
   faDownload,
   faBullseye,
-  faPlus
+  faPlus,
+  faUpload
 } from "@fortawesome/free-solid-svg-icons";
-import { getDaftarPenyuluh, DeleteDaftarPenyuluh } from "@/infrastruture";
+import { getDaftarPenyuluh, DeleteDaftarPenyuluh, UploadDataPenyuluh } from "@/infrastruture";
 import ExcelComponent from "../../../components/exelComponent";
 import { Text, Button, Modal,Tooltip, Anchor, Breadcrumbs, TextInput  } from "@mantine/core";
 import LoadingAnimation from '../../../components/loadingSession'
@@ -28,6 +29,7 @@ const RekapDataPenyuluh = () => {
   const [datas, setDatas] = useState([]);
   const [loading, setLoading] = useState(true)
   const [modalDeleteData, setModalDeleteData] = useState(false);
+  const fileInputRef = useRef();
   useEffect(() => {
     getDaftarPenyuluh().then((data) => {
       const filterData = data.map(obj => {
@@ -96,6 +98,15 @@ const RekapDataPenyuluh = () => {
     ExcelComponent(dataExel, "data.xlsx", "Sheet1");
   };
   const totalData = filteredData.length;
+  function handleFileChange(event) {
+    if (!event.target.files) return;
+  
+    const file = event.target.files[0];
+    console.log(file);
+    UploadDataPenyuluh(file).then(() => {
+      window.location.reload();
+    });
+  }
   return (
     <div>
       <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
@@ -144,13 +155,35 @@ const RekapDataPenyuluh = () => {
             <h3 className="text-white text-2xl font-bold px-3">
               DATA TABEL PENYULUH
             </h3>
-            <Link to={`/data-penyuluh/tambah`}>
-              <button className="ms-5 rounded-md bg-[#86BA34] text-white p-1 px-5 w-30 h-10"> 
-                <FontAwesomeIcon className="text-xl"
-                  icon={faPlus}
-                /></button>
-            </Link>
-            {/* ... (previous code) */}
+            <div className="flex gap-4 items-center">
+              <input
+                type="file"
+                className="hidden"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                accept=".xlsx,.xls"
+              />
+              <Link to={`/data-penyuluh/tambah`}>
+                <button className="ms-5 rounded-md bg-[#86BA34] text-white p-1 px-5 w-30 h-10"> 
+                  <FontAwesomeIcon className="text-xl"
+                    icon={faPlus}
+                  /></button>
+              </Link>
+              <Button
+                className="bg-[#F29D0E]"
+                onClick={() => {
+                  if (fileInputRef.current) {
+                      fileInputRef.current.click();
+                    }
+                  }}
+                >
+                  <FontAwesomeIcon className="text-xl"
+                      icon={faUpload}
+                    />
+                  {/* <faUpload /> */}
+                  <span className="ml-2">Upload File</span>
+              </Button> 
+            </div>
           </div>
           <div className="pt-0">
             <div className="h-[calc(100vh-200px) p-6 flex justify-between items-center">

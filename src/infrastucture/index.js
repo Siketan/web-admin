@@ -94,6 +94,20 @@ export const DaftarTaniAdd = async (data) => {
 		SweatAlert(String(error.response.data.message), "error");
 	}
 };
+export const UploadDataPetani = async (file) => {
+	try {
+		const formData = new FormData();
+		formData.append("file", file);
+		const response = await Api.post("/upload-data-petani", formData, {
+			headers: {
+			  "Content-Type": "multipart/form-data",
+			},
+		  });
+		SweatAlert(String(response.data.message), "success");
+	} catch (error) {
+		SweatAlert(String(error.response.data.message), "error");
+	}
+}
 export const DeleteDaftarTani = async (id) => {
 	try {
 		const response = await Api.delete(`/daftar-tani/${id}`);
@@ -188,6 +202,21 @@ export const UpdateTanamanPetani = async (id, data) => {
 		SweatAlert(String(error.response.data.message), "error");
 	}
 };
+
+export const UploadTanamanPetani = async (file) => {
+	try {
+		const formData = new FormData();
+		formData.append("file", file);
+		const response = await Api.post("/upload-tanaman", formData, {
+			headers: {
+			  "Content-Type": "multipart/form-data",
+			},
+		  });
+		SweatAlert(String(response.data.message), "success");
+	} catch (error) {
+		SweatAlert(String(error.response.data.message), "error");
+	}
+}
 
 export const GetDaftarTani = async () => {
 	try {
@@ -392,6 +421,20 @@ export const AddPenyuluh = async (data) => {
 		SweatAlert(String(error.response.data.message), "error");
 	}
 };
+export const UploadDataPenyuluh = async(file) => {
+	try {
+		const formData = new FormData();
+		formData.append("file", file);
+		const response = await Api.post("/upload-data-penyuluh", formData, {
+			headers: {
+			  "Content-Type": "multipart/form-data",
+			},
+		  });
+		SweatAlert(String(response.data.message), "success");
+	} catch (error) {
+		SweatAlert(String(error.response.data.message), "error");
+	}
+}
 export const AddPresesiKehadiran = async (data) => {
 	try {
 		const response = await Api.post("/presesi-kehadiran/add", data);

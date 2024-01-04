@@ -231,12 +231,12 @@ export default function TambahTanamanPetani() {
             MENAMPILKAN DATA PETANI
           </h3>
         </div>
-        <div className="grid grid-cols-5 gap-8 p-6">
-          <div className="col-span-2">
-            <span className="flex items-center gap-2">
+        <div className="grid grid-cols-5 gap-0 p-6">
+          <div className="">
+            {/* <span className="flex items-center gap-2">
               <IoImageOutline /> Menampilkan Gambar
-            </span>
-            <Image
+            </span> */}
+            <Image className="w-52 h-52"
               radius= "md"
               rounded= "md"
               width={300} // Set the width of the image
@@ -244,7 +244,7 @@ export default function TambahTanamanPetani() {
               src={ petani?.foto ??"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-7.png"}
             />
           </div>
-          <div className="col-span-3 grid grid-cols-2 gap-4">
+          <div className="col-span-4 grid grid-cols-2 gap-4">
             <TextInput label="NIK" disabled value={petani?.nik}/>
             <TextInput label="Nama Petani" disabled value={petani?.nama}/>
             <TextInput label="Desa Domisili" disabled value={petani?.desa}/>

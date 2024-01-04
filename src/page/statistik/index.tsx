@@ -208,8 +208,11 @@ export default function index() {
             className="hidden"
             ref={fileInputRef}
             onChange={handleFileChange}
-            accept=".xlsx,.xls,.csv"
+            accept=".xlsx,.xls"
           />
+          <Link to="/statistik/tambah" className="rounded-md bg-[#86BA34] text-white p-1 px-5 w-30 h-10 flex items-center">
+            <FaPlus />
+          </Link>
           <Button
             className="bg-[#F29D0E]"
             onClick={() => {
@@ -221,9 +224,6 @@ export default function index() {
             <FaUpload />
             <span className="ml-2">Upload File</span>
           </Button>
-          <Link to="/statistik/tambah" className="text-[#0FA958] text-xl">
-            <FaPlus />
-          </Link>
         </div>
       </div>
       <Table
