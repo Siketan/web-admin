@@ -62,11 +62,15 @@ export function PaginationControl<T extends RowData>({
   const sortKey = searchParams.get("sort_key") ?? "";
   const sortType = searchParams.get("sort_type") ?? "";
 
+  const arrowBtn =
+    "flex justify-center items-center bg-color-3 disabled:text-gray-600 text-gray-400 disabled:hover:bg-color-0 h-[40px] w-[40px] border-[1px] border-[#E4E7EB] drop-shadow hover:text-white active:border-[#E4E7EB] disabled:brightness-100 disabled:cursor-not-allowed rounded-md";
   const getButtonClass = (buttonIndex: number) => {
     let baseClass =
-      "bg-white border-[1px] border-[#E4E7EB] w-10 h-10 rounded-md drop-shadow active:border-[#E4E7EB] hover:bg-success-40 hover:text-white active:bg-success-40 disabled:brightness-100";
+      "border-[1px] border-[#E4E7EB] w-10 h-10 rounded-md drop-shadow active:border-[#E4E7EB] hover:bg-green-secondary hover:text-white active:bg-green-primary disabled:brightness-100";
     if (pageIndex === buttonIndex) {
-      baseClass += " bg-success-40 text-white ";
+      baseClass += " bg-green-primary text-white ";
+    } else {
+      baseClass += " bg-[#ffffff] ";
     }
     if (buttonIndex >= pageCount) {
       baseClass +=
@@ -86,7 +90,7 @@ export function PaginationControl<T extends RowData>({
           );
         }}
         disabled={pageIndex === 1}
-        className="hover:bg-color-0 active:bg-color-3 flex justify-center items-center bg-color-3 disabled:bg-color-3 disabled:hover:bg-color-0 h-[40px] w-[40px] border-[1px] border-[#E4E7EB] drop-shadow hover:text-white active:border-[#E4E7EB] disabled:text-[#D1D5DC] disabled:brightness-100 disabled:cursor-not-allowed"
+        className={arrowBtn}
       >
         <FaChevronLeft />
       </button>
@@ -102,7 +106,7 @@ export function PaginationControl<T extends RowData>({
           }}
           disabled={index >= pageCount}
           className={clsx(
-            getButtonClass(index),
+            getButtonClass(index + 1),
             "text-neutral-800 hover:text-neutral-800"
           )}
         >
@@ -118,7 +122,7 @@ export function PaginationControl<T extends RowData>({
           );
         }}
         disabled={pageIndex >= pageCount}
-        className="hover:bg-color-0 active:bg-color-3 bg-color-3 flex justify-center items-center disabled:bg-color-3 disabled:hover:bg-color-0 h-[40px] w-[40px] border-[1px] border-[#E4E7EB] drop-shadow hover:text-white active:border-[#E4E7EB] disabled:text-[#D1D5DC] disabled:brightness-100 disabled:cursor-not-allowed"
+        className={arrowBtn}
       >
         <FaChevronRight />
       </button>

@@ -69,7 +69,7 @@ export default function Table<T extends object>({
   });
 
   React.useEffect(() => {
-    table.setPageSize(Number(searchParams.get("page_size") ?? 10));
+    table.setPageSize(Number(searchParams.get("limit") ?? 10));
   }, [searchParams, table]);
 
   return (

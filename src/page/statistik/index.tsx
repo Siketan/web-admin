@@ -138,7 +138,7 @@ export default function index() {
         ...resp,
         data: resp.data.map((item, index) => ({
           ...item,
-          no: index + 1,
+          no: resp.from + index,
           actions: (
             <div className="flex gap-4">
               <Link to={`/statistik/${item.id}`}>
@@ -210,7 +210,10 @@ export default function index() {
             onChange={handleFileChange}
             accept=".xlsx,.xls"
           />
-          <Link to="/statistik/tambah" className="rounded-md bg-[#86BA34] text-white p-1 px-5 w-30 h-10 flex items-center">
+          <Link
+            to="/statistik/tambah"
+            className="rounded-md bg-[#86BA34] text-white p-1 px-5 w-30 h-10 flex items-center"
+          >
             <FaPlus />
           </Link>
           <Button
