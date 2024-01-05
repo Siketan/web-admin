@@ -199,24 +199,6 @@ const Navbar = () => {
                       </ul>
                     )}
                   </li>
-                  {/* <li className="text-green-primary">
-                    <button
-                      onClick={() => toggleDropdown("live-chat")}
-                      className="hover:underline underline-offset-auto"
-                    >
-                      Live Chat
-                    </button>
-                    {activeDropdown === "live-chat" && (
-                      <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
-                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
-                          <a href="/live-chat">Live Semua Chat</a>
-                        </li>
-                        <li className="text-green-primary hover:text-green-primary hover:font-bold">
-                          <a href="/live-chat/rating-petugas">Rating Petugas</a>
-                        </li>
-                      </ul>
-                    )}
-                  </li> */}
 
                   <li className="text-white0 px-5 py-2 rounded-md box-shadow">
                     <a href="/notification">
@@ -243,21 +225,6 @@ const Navbar = () => {
                   <a href="/login">Login</a>
                 </li>
               )}
-              {/* <li>
-                            <div className="text-black">
-                            <button onClick={() => toggleDropdown("profile")} className="hover:underline underline-offset-auto">
-                                <FontAwesomeIcon icon={faUser} />
-                            </button>
-                            {activeDropdown === "profile" && (
-                                <ul className="absolute mt-2 py-2 w-35 bg-white border rounded-md shadow-lg px-2">
-                                <li className="text-green-primary hover:text-black hover:font-bold">
-                                    <FontAwesomeIcon icon={faArrowRightFromBracket} />
-                                    <a href="/" className="pl-3">Logout</a>
-                                </li>
-                                </ul>
-                            )}
-                            </div>
-                        </li> */}
             </ul>
           </div>
         </div>

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
+import MainCard from "@/components/MainCard"
 import { AddPenjual, CekNik, CekNiP } from "@/infrastruture";
 import Loading from "../../components/loading"
 const TambahTokoTani = () => {
@@ -69,8 +70,8 @@ const TambahTokoTani = () => {
   };
 
   return (
-    <div className="px-10 md:px-40 py-10">
-      <div className="shadow-xl rounded-xl px-5 py-5">
+    <MainCard transparent row center className="px-10 md:px-40 py-10">
+      <MainCard className="shadow-xl rounded-xl px-5 py-5 w-[80%]">
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="w-max lg:w-full py-5 flex justify-end">
             <button
@@ -355,8 +356,8 @@ const TambahTokoTani = () => {
             </button>
           </div>
         </form>
-      </div>
-    </div>
+      </MainCard>
+    </MainCard>
   );
 };
 

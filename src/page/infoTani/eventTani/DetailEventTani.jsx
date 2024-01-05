@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Card, Image, Text, Badge, Button, Group, Modal } from "@mantine/core";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GetEventTaniById } from "@/infrastruture";
 import MainCard from "@/components/MainCard";
 import LoadingAnimation from "../../../components/loading";
+import { DeleteInfoTani } from "@/infrastruture";
+
 function DetailEventTani() {
 	const [data, setData] = useState(null);
 	const location = useLocation();
@@ -21,19 +23,13 @@ function DetailEventTani() {
 	}, [id]);
 
 	const handleDeleteUser = (ids) => {
-		DeleteInfoTani(ids);
-	};
+		DeleteInfoTani(ids)
+	}
 	const navigateToEdit = (itemId) => {
 		navigate(`/event-tani/edit/${itemId}`, { state: { id: itemId } });
 	};
 	return (
-		<MainCard
-			noPadding
-			transparent
-			row
-			center
-			style={{ marginTop: "100px" }}
-		>
+		<MainCard noPadding transparent row center style={{ marginTop: "100px" }}>
 			{loading && <LoadingAnimation />}
 			<Modal
 				opened={modalDeleteData}
@@ -42,27 +38,17 @@ function DetailEventTani() {
 				centered
 			>
 				<Text>Apakah Kamu Yakin Akan Menghapus Data Ini ?</Text>
-				<div
-					style={{
-						display: "flex",
-						justifyContent: "flex-end",
-						marginTop: 20,
-					}}
-				>
+				<div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}>
 					<Button
 						color="cyan"
-						style={{
-							color: "white",
-							backgroundColor: "#303A47",
-							marginRight: 8,
-						}}
+						style={{ color: 'white', backgroundColor: '#303A47', marginRight: 8 }}
 						onClick={() => setModalDeleteData(false)}
 					>
 						Cancel
 					</Button>
 					<Button
 						color="cyan"
-						style={{ color: "white", backgroundColor: "red" }}
+						style={{ color: 'white', backgroundColor: 'red' }}
 						type="submit"
 						onClick={() => {
 							handleDeleteUser(modalDeleteData);
@@ -73,20 +59,14 @@ function DetailEventTani() {
 					</Button>
 				</div>
 			</Modal>
-			<Button
-				variant="outline"
-				color="cyan"
-				sx={{ marginTop: "19px" }}
-				onClick={() => navigate(-1)}
-			>
+			<button className='bg-white h-fit px-4 py-2 border-2 border-green-primary text-green-primary rounded-md hover:bg-green-primary hover:text-white' onClick={() => navigate(-1)}>
 				kembali
-			</Button>
+			</button>
 			<MainCard width="50%" transparent>
 				<Card shadow="sm" padding="lg" radius="md" withBorder>
 					<Card.Section>
 						<Image
 							src={data?.fotoKegiatan}
-							height={"35vh"}
 							alt={data?.namaKegiatan}
 							withPlaceholder
 						/>
@@ -103,7 +83,7 @@ function DetailEventTani() {
 								</Badge>
 							) : (
 								<Badge color="pink" variant="light">
-									"Akan Datang
+									Akan Datang
 								</Badge>
 							)
 						) : (
@@ -112,31 +92,18 @@ function DetailEventTani() {
 					</Group>
 
 					<Text size="sm" color="black">
-						<p>
-							<span className="font-medium">Dibuat Oleh : </span>
-							{data?.createdBy}
-						</p>
-						<p>
-							Waktu Pelaksanaan: {data?.createdAt?.split("T")[0]}
-						</p>
+						<p><span className="font-medium">Dibuat Oleh : </span>{data?.createdBy}</p>
+						<p>Waktu Pelaksanaan: {data?.createdAt?.split("T")[0]}</p>
 						<p>Tempat: {data?.tempat}</p>
 						<p>Peserta: {data?.peserta}</p>
 					</Text>
 					<Group position="right" sx={{ marginTop: "19px" }}>
-						<Button
-							variant="outline"
-							color="cyan"
-							onClick={() => navigateToEdit(data?.id)}
-						>
+						<button className='bg-white h-fit px-4 py-2 border border-green-primary text-green-primary rounded-md hover:bg-green-primary hover:text-white' onClick={() => navigateToEdit(data?.id)}>
 							Edit
-						</Button>
-						<Button
-							variant="outline"
-							color="cyan"
-							onClick={() => setModalDeleteData(data?.id)}
-						>
+						</button>
+						<button className='bg-white h-fit px-4 py-2 border border-green-primary text-green-primary rounded-md hover:bg-green-primary hover:text-white' onClick={() => setModalDeleteData(data?.id)}>
 							Delete
-						</Button>
+						</button>
 					</Group>
 				</Card>
 			</MainCard>

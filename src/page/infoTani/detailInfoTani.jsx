@@ -56,41 +56,40 @@ function DetailInfoTani() {
             </Button>
           </div>
         </Modal>
-      <Button variant='outline' color="cyan" sx={{marginTop:"19px"}} onClick={()=>navigate(-1)}>
+      <button className='bg-white h-fit px-4 py-2 border border-green-primary text-green-primary rounded-md hover:bg-green-primary hover:text-white'  onClick={()=>navigate(-1)}>
         kembali
-      </Button>
+      </button>
       <MainCard width="50%" transparent>
-      <Card shadow="sm" padding="lg" radius="md" withBorder>
-        <Card.Section>
-          <Image
-            src={data?.fotoBerita}
-            height={"35vh"}
-            alt={data?.judul}
-            withPlaceholder 
-          />
-        </Card.Section>
+        <Card shadow="sm" padding="lg" radius="md" withBorder>
+          <Card.Section>
+            <Image
+              src={data?.fotoBerita}
+              alt={data?.judul}
+              withPlaceholder 
+            />
+          </Card.Section>
 
-        <Group position="apart" mt="md" mb="xs">
-          <Text weight={500}>{data?.judul}</Text>
-          {data?.kategori && 
-          <Badge color="pink" variant="light">
-            {data?.kategori}
-          </Badge>
-}
-        </Group>
+          <Group position="apart" mt="md" mb="xs">
+            <Text weight={500}>{data?.judul}</Text>
+            {data?.kategori && 
+              <Badge color="pink" variant="light">
+                {data?.kategori}
+              </Badge>
+            }
+          </Group>
 
-        <Text size="sm" color="black">
-          <span dangerouslySetInnerHTML={{ __html: data?.isi }} />
-        </Text>
-        <Group position="right" sx={{marginTop:"19px"}}>
-          <Button variant='outline' color="cyan" onClick={() => navigateToEdit(data?.id)}>
-            Edit
-          </Button>
-          <Button variant='outline' color="cyan" onClick={()=>setModalDeleteData(data?.id)}>
-            Delete
-          </Button>
-        </Group>
-      </Card>
+          <Text size="sm" color="black">
+            <span dangerouslySetInnerHTML={{ __html: data?.isi }} className='text-sm text-justify' />
+          </Text>
+          <Group position="right" sx={{marginTop:"19px"}}>
+            <button button className='bg-white h-fit px-4 py-2 border border-green-primary text-green-primary rounded-md hover:bg-green-primary hover:text-white' onClick={() => navigateToEdit(data?.id)}>
+              Edit
+            </button>
+            <button button className='bg-white h-fit px-4 py-2 border border-green-primary text-green-primary rounded-md hover:bg-green-primary hover:text-white' onClick={()=>setModalDeleteData(data?.id)}>
+              Delete
+            </button>
+          </Group>
+        </Card>
       </MainCard>
     </MainCard>
   );

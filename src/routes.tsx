@@ -243,7 +243,7 @@ const Path = () => {
     "flex items-center p-2 w-full bg-white-primary text-green-primary hover:bg-green-sidebar-hover transition-all duration-200 ease-in-out";
   const activeClasses = "bg-green-primary bg-opacity-50";
   const textMenuClasses =
-    "ml-3 transition-all duration-200 text-left whitespace-nowrap font-bold text-lg uppercase underline";
+    "ml-3 transition-all duration-200 text-left whitespace-nowrap font-bold text-lg capitalize";
   const stackedMenuClasses = clsx(
     "w-full transition duration-75 group",
     mainMenuClasses
@@ -288,7 +288,7 @@ const Path = () => {
           ref={sidebar}
           className={clsx(
             "fixed left-0 top-0 z-20 flex h-screen flex-col justify-between bg-green-primary pb-8 shadow-lg duration-300 lg:translate-x-0 text-white",
-            sidebarOpen ? "w-80" : "w-20"
+            sidebarOpen ? "w-[22%]" : "w-[6%]"
           )}
         >
           <div
@@ -299,16 +299,12 @@ const Path = () => {
           >
             <Image
               src="/image/logo-navbar.png"
+              height={80}
               alt="Logo Siketan"
               className={sidebarOpen ? "block" : "hidden"}
             />
-            <Image
-              src="/image/logo.png"
-              alt="Logo Siketan"
-              className={sidebarOpen ? "hidden" : "block"}
-            />
           </div>
-          <div className="h-full px-3 py-2 overflow-y-auto">
+          <div className="h-full px-6 py-2 overflow-y-auto">
             <ul className="space-y-1.5 font-medium">
               {menu.map((item, index) => (
                 <li key={index} className="divide-y divide-gray-500">
@@ -398,9 +394,7 @@ const Path = () => {
                   <UnstyledButton className="text-white">
                     <Group>
                       <div style={{ flex: 1 }}>
-                        <Text fw={700} td="underline">
-                          {user?.nama}
-                        </Text>
+                        <Text fw={700}>{user?.nama}</Text>
 
                         <Text size="xs">{user?.peran}</Text>
                       </div>
