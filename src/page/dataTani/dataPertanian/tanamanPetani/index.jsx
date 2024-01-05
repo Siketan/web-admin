@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef} from "react";
 import MainCard from "@/components/MainCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,7 +14,7 @@ import {
 import Table from "@/components/table/Table";
 import { Image, Modal,Text,Button, Tooltip, Breadcrumbs, Anchor } from '@mantine/core';
 import { GetListTanaman, GetTanmanPetani, DeleteTanamanPetani, UploadTanamanPetani } from "@/infrastruture";
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation, useNavigate  } from 'react-router-dom';
 import LoadingAnimation from '../../../../components/loading'
 import SearchInput from "../../../../components/uiComponents/inputComponents/searchInput";
 import { ImPencil } from "react-icons/im";
@@ -62,6 +62,21 @@ const columns = [
     cell: (props) => <span>{`${props.getValue()}`}</span>,
   },
   {
+    accessorKey: "komoditas",
+    header: "Jenis Komoditas",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "statusKepemilikanLahan",
+    header: "Status Lahan",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "prakiraanBulanPanen",
+    header: "Prakiraan Panen",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
     accessorKey: "actions",
     header: "Aksi",
     cell: (props) => props.row.original.actions,
@@ -90,16 +105,41 @@ export default function DetailRekapPetani() {
     tanggalTanam: "",
   });
   const fileInputRef = useRef();
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  // const [page, setPage] = useState(1);
+  // const [limit, setLimit] = useState(10);
+  const location = useLocation();
+  // const history = useHistory();
 
+  // useEffect(() => {
+  const searchParams = new URLSearchParams(location.search);
+
+  const page = searchParams.get("page") ?? 1;
+  const limit = searchParams.get("limit") ?? 10;
+
+  const searchQuery = searchParams.get("search_query") ?? "";
+  const sortKey = searchParams.get("sort_key") ?? "";
+  const sortType = searchParams.get("sort_type") ?? "";
+
+    // Do something with the extracted parameters if needed
+
+  // }, [location.search]);
   useEffect(() => {
-    GetListTanaman(page, limit, petani?.id).then((data) => {
-      setDatas(data.data);
-      setResp(data);
-      setLoading(false);
-    });
+    GetListTanaman(page, 
+      limit, 
+      petani?.id, 
+      // search,
+      // sortKey,
+      // sortType
+      ).
+      then((data) => {
+        setDatas(data.data);
+        setResp(data);
+        setLoading(false);
+        console.log(data);
+      }
+      );
   }, [page, limit, petani]);
+
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
   };
@@ -125,32 +165,28 @@ export default function DetailRekapPetani() {
         
           data: resp.data.map((item, index) => ({
             ...item,
-            no: index + 1,
+            no: resp.from + index,
             actions: (
               <div className="flex gap-4">
-                <Tooltip label="Detail">
-                  <a href={`/tanaman-petani/edit/${item.id}`} >
-                    <FontAwesomeIcon
-                      icon={faBullseye}
-                      className="cursor-pointer text-black hover:text-black"
-                    />
-                  </a>
-                </Tooltip>
-                <Tooltip label="Edit">
-                  <a href={`/tanaman-petani/edit/${item.id}`}>
-                    <FontAwesomeIcon
-                      icon={faEdit}
-                      className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
-                    />
-                  </a>
-                </Tooltip>
-                <Tooltip label="Delete">
-                  <FontAwesomeIcon
-                    onClick={() => setModalDeleteData(item?.id)}
-                    icon={faTrash}
-                    className="cursor-pointer text-red-500 hover:text-red-600"
-                  />
-                </Tooltip>
+                <Link to={`/tanaman-petani/edit/${item.id}`}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-green-500">
+                    <IoEyeOutline className="h-6 w-6 text-white" />
+                  </div>
+                </Link>
+                <Link to={`/tanaman-petani/edit/${item.id}`}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-yellow-500">
+                    <ImPencil className="h-[18px] w-[18px] text-white" />
+                  </div>
+                </Link>
+                <button
+                  onClick={() => {
+                    setModalDeleteData(item?.id);
+                  }}
+                >
+                  <div className="flex h-7 w-7 items-center justify-center bg-red-500">
+                    <MdDeleteOutline className="h-6 w-6 text-white" />
+                  </div>
+                </button>
               </div>
             ),
           })),
@@ -169,7 +205,7 @@ export default function DetailRekapPetani() {
     if (!event.target.files) return;
   
     const file = event.target.files[0];
-    console.log(file);
+    // console.log(file);
     UploadTanamanPetani(file).then(() => {
       window.location.reload();
     });
@@ -185,9 +221,6 @@ export default function DetailRekapPetani() {
       cacheOptions
       loadOptions={loadOptions}
       defaultOptions
-      // onChange={(value) => {
-      //   setSelectedPetani(value)
-      // }}
       onChange={(value) => {
         setPetani(value);
       }}
@@ -227,122 +260,48 @@ export default function DetailRekapPetani() {
             Delete
           </Button>
         </div>
-      </Modal>
-      <div className="bg-[#D9D9D9] rounded-lg w-full mt-5">
-        <div className="relative bg-[#136B09] p-4 flex w-full justify-between rounded-t-lg shadow-lg">
-          <h3 className="text-white text-2xl font-bold px-3">
-            DATA TABEL TANAMAN PETANI
-          </h3>
-          <div className="flex gap-4 items-center">
-            <input
-              type="file"
-              className="hidden"
-              ref={fileInputRef}
-              onChange={handleFileChange}
-              accept=".xlsx,.xls"
-            />
-            <Link to={`/tanaman-petani/add`}>
-              <button className="ms-5 rounded-md bg-[#86BA34] text-white p-1 px-5 w-30 h-10"> 
-                <FontAwesomeIcon className="text-xl"
-                  icon={faPlus}
-                /></button>
-            </Link>
-            <Button
-            className="bg-[#F29D0E]"
-            onClick={() => {
-              if (fileInputRef.current) {
-                  fileInputRef.current.click();
-                }
-              }}
-            >
+     </Modal>
+    <div className="rounded-lg w-full mt-5">
+      <div className="relative bg-[#136B09] p-4 flex w-full justify-between rounded-t-lg shadow-lg">
+        <h3 className="text-white text-2xl font-bold px-3">
+          DATA TABEL TANAMAN PETANI
+        </h3>
+        <div className="flex gap-4 items-center">
+          <input
+            type="file"
+            className="hidden"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            accept=".xlsx,.xls"
+          />
+          <Link to={`/tanaman-petani/add`}>
+            <button className="ms-5 rounded-md bg-[#86BA34] text-white p-1 px-5 w-30 h-10"> 
               <FontAwesomeIcon className="text-xl"
-                  icon={faUpload}
-                />
-              {/* <faUpload /> */}
-              <span className="ml-2">Upload File</span>
-            </Button> 
-          </div>
-        </div>
-          <div className="pt-0">
-            <div className="h-[calc(100vh-200px) p-6 flex justify-between items-center">
-              {/* <Table className="min-w-full shadow-md" data={dataTable} columns={columns} /> */}
-              <table className="min-w-full shadow-md">
-                <thead className="bg-[#079073] text-white">
-                  <tr>
-                    <th  className="sticky top-0 px-4 py-2 truncate">
-                      NO
-                    </th>
-                    <th className="sticky top-0 px-4 py-2 truncate ">
-                      KATEGORI TANAMAN
-                    </th>
-                    <th className="sticky top-0 px-4 py-2 truncate ">
-                      JENIS KOMODITAS
-                    </th>
-                    <th className="sticky top-0 px-4 py-2 truncate ">
-                      STATUS LAHAN
-                    </th>
-                    <th className="sticky top-0 px-4 py-2 truncate ">
-                      PRAKIRAAN PANEN
-                    </th>
-                    <th className="sticky top-0 px-4 py-2 truncate ">
-                      REALISASI PANEN
-                    </th>
-                    <th className="sticky top-0 px-4 py-2 truncate">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {datas?.map((item, index) => (
-                    <tr key={item.id} className={`${index % 2 === 0 ? 'bg-white text-black font-medium' : 'bg-[#D1D9D3] text-emerald-800 font-medium'}`}>
-                      <td className="px-4 py-2 text-center ">{index + 1 + (page - 1) * 10}</td>
-                      <td className="px-4 py-2 text-center ">{item?.kategori}</td>
-                      <td className="px-4 py-2 text-center ">{item?.komoditas}</td>
-                      <td className="px-4 py-2 text-center ">{item?.statusKepemilikanLahan}</td>
-                      <td className="px-4 py-2 text-center ">{item?.periodeBulanTanam}</td>
-                      <td className="px-4 py-2 text-center ">{item?.prakiraanBulanPanen}</td>
-                      <td className="px-2 py-2 text-center">
-                        <Tooltip label="Detail">
-                          <a href={`/tanaman-petani/edit/${item.id}`} >
-                            <FontAwesomeIcon
-                              icon={faBullseye}
-                              className="cursor-pointer text-black hover:text-black"
-                            />
-                          </a>
-                        </Tooltip>
-                        <Tooltip label="Edit">
-                          <a href={`/tanaman-petani/edit/${item.id}`}>
-                            <FontAwesomeIcon
-                              icon={faEdit}
-                              className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
-                            />
-                          </a>
-                        </Tooltip>
-                        <Tooltip label="Delete">
-                          <FontAwesomeIcon
-                            onClick={() => setModalDeleteData(item?.id)}
-                            icon={faTrash}
-                            className="cursor-pointer text-red-500 hover:text-red-600"
-                          />
-                        </Tooltip>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-                <div className="flex justify-end items-center mt-4">
-                  <p className="text-black font-bold">Page: {page}</p>
-                  <button className="ml-2" onClick={handlePrevPage}>
-                    <FontAwesomeIcon icon={faArrowLeft} />
-                  </button>
-                  <button className="ml-2" onClick={handleNextPage}>
-                    <FontAwesomeIcon icon={faArrowRight} />
-                  </button>
-                </div>
-              </table>
-              {loading &&
-              <LoadingAnimation/>}
-            </div>
-          </div>
+                icon={faPlus}
+              /></button>
+          </Link>
+          <Button
+          className="bg-[#F29D0E]"
+          onClick={() => {
+            if (fileInputRef.current) {
+                fileInputRef.current.click();
+              }
+            }}
+          >
+            <FontAwesomeIcon className="text-xl"
+                icon={faUpload}
+              />
+            <span className="ml-2">Upload File</span>
+          </Button> 
         </div>
       </div>
-      
+      <Table
+        data={dataTable}
+        columns={columns}
+        withPaginationCount
+        withPaginationControl
+      />
+      </div>
+    </div>  
   );
 }

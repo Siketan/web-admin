@@ -217,11 +217,20 @@ export const UploadTanamanPetani = async (file) => {
 		SweatAlert(String(error.response.data.message), "error");
 	}
 }
-
-export const GetDaftarTani = async () => {
+// opsi penyuluh untuk pendaftaran petani
+export const GetOpsiPenyuluh = async () => {
 	try {
-		const response = await Api.get(`/daftar-tani`);
-		return response.data.tani;
+		const response = await Api.get("/opsi-penyuluh");
+		return response.data.dataDaftarPenyuluh;
+	} catch (error) {
+		SweatAlert(String(error.response.data.message), "error");
+	}
+}
+
+export const GetDaftarTani = async (page, limit) => {
+	try {
+		const response = await Api.get(`/daftar-tani?page=${page}&limit=${limit}`);
+		return response.data;
 	} catch (error) {
 		SweatAlert(String(error.response.data.message), "error");
 	}
@@ -475,10 +484,10 @@ export const GetRiwayatChat = async () => {
 		SweatAlert(String(error.response.data.message), "error");
 	}
 };
-export const getDaftarPenyuluh = async () => {
+export const getDaftarPenyuluh = async (page, limit) => {
 	try {
-		const response = await Api.get("/daftar-penyuluh");
-		return response.data.dataDaftarPenyuluh;
+		const response = await Api.get(`/daftar-penyuluh?page=${page}&limit=${limit}`);
+		return response.data;
 	} catch (error) {
 		SweatAlert(String(error.response.data.message), "error");
 	}
