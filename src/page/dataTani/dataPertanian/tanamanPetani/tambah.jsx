@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Anchor,
   Breadcrumbs,
@@ -20,20 +20,21 @@ import {
   faArrowRight,
   faArrowLeft
 } from "@fortawesome/free-solid-svg-icons";
-// import React, { useEffect } from "react";
-// import SearchInput from "../../../../components/uiComponents/inputComponents/SearchInput";
+import Table from "@/components/table/Table";
+import { ImPencil } from "react-icons/im";
+import { IoEyeOutline } from "react-icons/io5";
+import { MdDeleteOutline } from "react-icons/md";
+import { useParams, Link, useLocation, useNavigate  } from 'react-router-dom';
 import SearchInput from "../../../../components/uiComponents/inputComponents/searchInput";
 import { FaRegRectangleList, FaUpload } from "react-icons/fa6";
-// import { GetStatistikTanamanAll } from "../../infrastucture";
 import { IoImageOutline } from "react-icons/io5";
 import { SearchPetani } from "../../../../infrastucture/searchApi";
 import {
   AddTanamanPetani,
   GetListTanaman
 } from "../../../../infrastucture/index"
-//import tooltip, fontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Tooltip } from "@mantine/core";
+import { Tooltip, Modal } from "@mantine/core";
 import Loading from "../../../../components/loading";
 
 const breadcrumbItems = [
@@ -61,6 +62,38 @@ const loadOptions = (inputValue, callback) => {
   }, 1000);
 };
 
+const columns = [
+  {
+    accessorKey: "no",
+    header: "No",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "kategori",
+    header: "Kategori Tanaman",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "komoditas",
+    header: "Jenis Komoditas",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "statusKepemilikanLahan",
+    header: "Status Lahan",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "prakiraanBulanPanen",
+    header: "Prakiraan Panen",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "actions",
+    header: "Aksi",
+    cell: (props) => props.row.original.actions,
+  },
+];
 
 export default function TambahTanamanPetani() {
   const [petani, setPetani] = useState([]);
@@ -80,16 +113,33 @@ export default function TambahTanamanPetani() {
   const [loading, setLoading] = useState(true)
   const [dataTable, setDataTable] = useState();
   const [resp, setResp] = useState();
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const fileInputRef = useRef();
+  // const [page, setPage] = useState(1);
+  // const [limit, setLimit] = useState(10);
+  const location = useLocation();
+  // const history = useHistory();
+
+  // useEffect(() => {
+  const searchParams = new URLSearchParams(location.search);
+
+  const page = searchParams.get("page") ?? 1;
+  const limit = searchParams.get("limit") ?? 10;
+
+  const searchQuery = searchParams.get("search_query") ?? "";
+  const sortKey = searchParams.get("sort_key") ?? "";
+  const sortType = searchParams.get("sort_type") ?? "";
 
   useEffect(() => {
-    GetListTanaman(page, limit).then((data) => {
-      setDatas(data.data);
-      setResp(data);
-      setLoading(false);
+    GetListTanaman(page, 
+      limit, 
+      petani, 
+      ).
+      then((data) => {
+        setDatas(data.data);
+        setResp(data);
+        setLoading(false);
     });
-  }, [page, limit]);
+  }, [page, limit, petani]);
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
   };
@@ -107,32 +157,28 @@ export default function TambahTanamanPetani() {
         
           data: resp.data.map((item, index) => ({
             ...item,
-            no: index + 1,
+            no: resp.from + index,
             actions: (
               <div className="flex gap-4">
-                <Tooltip label="Detail">
-                  <a href={`/data-tani/detail/${item.id}`} >
-                    <FontAwesomeIcon
-                      icon={faBullseye}
-                      className="cursor-pointer text-black hover:text-black"
-                    />
-                  </a>
-                </Tooltip>
-                <Tooltip label="Edit">
-                  <a href={`/rekap-data-tani/edit/${item.id}`}>
-                    <FontAwesomeIcon
-                      icon={faEdit}
-                      className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
-                    />
-                  </a>
-                </Tooltip>
-                <Tooltip label="Delete">
-                  <FontAwesomeIcon
-                    onClick={() => setModalDeleteData(item?.id)}
-                    icon={faTrash}
-                    className="cursor-pointer text-red-500 hover:text-red-600"
-                  />
-                </Tooltip>
+                <Link to={`/tanaman-petani/edit/${item.id}`}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-green-500">
+                    <IoEyeOutline className="h-6 w-6 text-white" />
+                  </div>
+                </Link>
+                <Link to={`/tanaman-petani/edit/${item.id}`}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-yellow-500">
+                    <ImPencil className="h-[18px] w-[18px] text-white" />
+                  </div>
+                </Link>
+                <button
+                  onClick={() => {
+                    setModalDeleteData(item?.id);
+                  }}
+                >
+                  <div className="flex h-7 w-7 items-center justify-center bg-red-500">
+                    <MdDeleteOutline className="h-6 w-6 text-white" />
+                  </div>
+                </button>
               </div>
             ),
           })),
@@ -170,8 +216,9 @@ export default function TambahTanamanPetani() {
       formData.append(key, data[key]);
     }
     // console.log({formData})
-    AddTanamanPetani(data).then(()=> setLoading(false))
-    // history.push('/tanaman-petani');
+    // add window.history.push('/tanaman-petani')
+    // AddTanamanPetani(formData).then(()=>{window.history.push('/tanaman-petani'), setLoading(false)});
+    AddTanamanPetani(data).then(()=> setLoading(false));
   };
 
   return (
@@ -190,18 +237,52 @@ export default function TambahTanamanPetani() {
       value={petani}
       isClearable
       placeholder="Cari NIK PETANI / POKTAN" />
+      <Modal
+        opened={modalDeleteData}
+        onClose={() => setModalDeleteData(false)}
+        withCloseButton={false}
+        centered
+      >
+        <Text>Apakah Kamu Yakin Akan Menghapus Data Ini ?</Text>
+        <div
+          style={{ display: "flex", justifyContent: "flex-end", marginTop: 20 }}
+        >
+          <Button
+            color="cyan"
+            style={{
+              color: "white",
+              backgroundColor: "#303A47",
+              marginRight: 8,
+            }}
+            onClick={() => setModalDeleteData(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="cyan"
+            style={{ color: "white", backgroundColor: "red" }}
+            type="submit"
+            onClick={() => {
+              handleTanaman(modalDeleteData);
+              setModalDeleteData(false);
+            }}
+          >
+            Delete
+          </Button>
+        </div>
+      </Modal>
       <div className="bg-[#D9D9D9] rounded-lg">
         <div className="relative bg-[#136B09] mt-6 p-4 flex w-full justify-between rounded-t-lg shadow-lg">
           <h3 className="text-white text-2xl font-bold">
             MENAMPILKAN DATA PETANI
           </h3>
         </div>
-        <div className="grid grid-cols-5 gap-8 p-6">
-          <div className="col-span-2">
-            <span className="flex items-center gap-2">
+        <div className="grid grid-cols-5 gap-0 p-6">
+          <div className="">
+            {/* <span className="flex items-center gap-2">
               <IoImageOutline /> Menampilkan Gambar
-            </span>
-            <Image
+            </span> */}
+            <Image className="w-52 h-52"
               radius= "md"
               rounded= "md"
               width={300} // Set the width of the image
@@ -209,7 +290,7 @@ export default function TambahTanamanPetani() {
               src={ petani?.foto ??"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-7.png"}
             />
           </div>
-          <div className="col-span-3 grid grid-cols-2 gap-4">
+          <div className="col-span-4 grid grid-cols-2 gap-4">
             <TextInput label="NIK" disabled value={petani?.nik}/>
             <TextInput label="Nama Petani" disabled value={petani?.nama}/>
             <TextInput label="Desa Domisili" disabled value={petani?.desa}/>
@@ -229,10 +310,10 @@ export default function TambahTanamanPetani() {
               <h3 className="text-white text-2xl font-bold">
                 MASUKKAN DATA TANAMAN
               </h3>
-              <button className="flex px-4 py-2 gap-4 bg-[#F29D0E] rounded-lg items-center justify-center text-xl text-white active:bg-[#F29D0E] active:shadow-md active:translate-y-1">
+              {/* <button className="flex px-4 py-2 gap-4 bg-[#F29D0E] rounded-lg items-center justify-center text-xl text-white active:bg-[#F29D0E] active:shadow-md active:translate-y-1">
                 <FaUpload />
                 <span>UPLOAD FILE </span>
-              </button>
+              </button> */}
             </div>
               <div className="grid grid-cols-2 gap-8 p-6">
                 <div className="flex flex-col gap-4 justify-between flex-1">
@@ -466,8 +547,7 @@ export default function TambahTanamanPetani() {
           <div className="flex px-6 pb-6 justify-end">
             <Button className="bg-[#307B28]" type="submit">Simpan Data</Button>
           </div>
-          {loading &&
-              <LoadingAnimation/>}
+          {loading && <Loading />}
         </form>
         
       ): (
@@ -485,6 +565,12 @@ export default function TambahTanamanPetani() {
           <FaRegRectangleList />
         </button>
       </div>
+      <Table
+        data={dataTable}
+        columns={columns}
+        withPaginationCount
+        withPaginationControl
+      />
     </div>
   );
 }

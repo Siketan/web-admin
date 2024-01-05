@@ -39,13 +39,13 @@ import {
   EditPenyuluhan,
   VerifikasiUser,
 } from "./page";
+import { clsx } from "clsx";
 
 import Footer from "./components/footer";
 import ProtectedRoute from "./page/protectedRoute";
 import {
   Image,
   Menu,
-  clsx,
   Group,
   Avatar,
   Text,
@@ -61,6 +61,13 @@ import { GetProfile, Logout } from "./infrastucture";
 import Statistik from "./page/statistik";
 import TambahStatistik from "./page/statistik/tambah";
 import EditStatistik from "./page/statistik/edit";
+import Dashboard from "./page/dashboard";
+import Homepage from "./page/user/homepage";
+import TokoPertanian from "./page/user/tokoPertanian";
+import InfoPertanian from "./page/user/infoPertanian";
+import Berita from "./page/user/berita";
+import RealisasiStatistik from "./page/statistik/realisasi";
+import DetailStatistik from "./page/statistik/detail";
 
 const menu = [
   {
@@ -248,8 +255,13 @@ const Path = () => {
 
   const token = window.localStorage.getItem("token");
   const isAuthPage =
-    window.location.pathname === "/loginAdminSiketan" ||
-    window.location.pathname === "/registerAdminSiketan";
+    window.location.pathname === "/login" ||
+    window.location.pathname === "/register";
+
+  const isWebVidePage =
+    window.location.pathname === "/" ||
+    window.location.pathname.includes("info-pertanian") ||
+    window.location.pathname === "/toko-pertanian";
 
   useEffect(() => {
     if (token) {
@@ -262,12 +274,12 @@ const Path = () => {
         .catch((err) => {
           console.log({ err });
           window.localStorage.removeItem("token");
-          window.location.href = "/loginAdminSiketan";
+          window.location.href = "/login";
         });
-    } else if (!isAuthPage) window.location.href = "/loginAdminSiketan";
+    } else if (!isAuthPage && !isWebVidePage) window.location.href = "/login";
   }, [token, isAuthPage]);
 
-  if (isAuthPage) return <RoutesPath />;
+  if (isAuthPage || isWebVidePage) return <RoutesPath />;
 
   return (
     <div className="bg-green-primary bg-opacity-70">
@@ -375,10 +387,6 @@ const Path = () => {
                   item: {
                     color: "white",
                     textTransform: "uppercase",
-                    ":hover": {
-                      background:
-                        "linear-gradient(180deg, #86BA34 0%, rgba(111, 163, 29, 0.50) 100%)",
-                    },
                   },
                 }}
               >
@@ -386,9 +394,7 @@ const Path = () => {
                   <UnstyledButton className="text-white">
                     <Group>
                       <div style={{ flex: 1 }}>
-                        <Text fw={700}>
-                          {user?.nama}
-                        </Text>
+                        <Text fw={700}>{user?.nama}</Text>
 
                         <Text size="xs">{user?.peran}</Text>
                       </div>
@@ -399,7 +405,17 @@ const Path = () => {
                 </Menu.Target>
                 <Menu.Dropdown>
                   {dropdownMenu.map((item, index) => (
-                    <Menu.Item component="a" key={index} href={item.path}>
+                    <Menu.Item
+                      component="a"
+                      key={index}
+                      href={item.path}
+                      style={{
+                        ":hover": {
+                          background:
+                            "linear-gradient(180deg, #86BA34 0%, rgba(111, 163, 29, 0.50) 100%)",
+                        },
+                      }}
+                    >
                       <div className="flex gap-2 items-center">
                         <Image
                           src={item.icon}
@@ -450,17 +466,26 @@ const RoutesPath = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/loginAdminSiketan" element={<Login />} />
-        <Route path="/registerAdminSiketan" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Homepage />} />
+        <Route path="/toko-pertanian" element={<TokoPertanian />} />
+        <Route path="/info-pertanian" element={<InfoPertanian />} />
+        <Route path="/info-pertanian/:id" element={<Berita />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/verifikasi" element={<VerifikasiUser />} />
           {/* <Route index element={<Dashboard />}></Route> */}
           {/* Statistik */}
           <Route path="/statistik" element={<Statistik />} />
           <Route path="/statistik/tambah" element={<TambahStatistik />} />
-          <Route path="/statistik/:id" element={<EditStatistik />} />
+          <Route path="/statistik/edit/:id" element={<EditStatistik />} />
+          <Route path="/statistik/:id" element={<DetailStatistik />} />
+          <Route
+            path="/statistik/:id/realisasi"
+            element={<RealisasiStatistik />}
+          />
           {/* ENd of Statistik */}
-          <Route path="/" element={<EventTani />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/notification" element={<Notification />} />
           {/* Data Tani */}
           <Route
@@ -470,8 +495,11 @@ const RoutesPath = () => {
           <Route path="/data-tani/tambah" element={<TambahDataTani />} />
           <Route path="/data-tani/laporan-tanam" element={<LaporanPetani />} />
           <Route path="/data-tani/rekap-petani" element={<RekapDataPetani />} />
-          <Route path="/data-tani/detail/:id" element={<ViewDetailDataPetani/>} />
-          <Route path="/tanaman-petani" element={<DetailRekapPetani/>} />
+          <Route
+            path="/data-tani/detail/:id"
+            element={<ViewDetailDataPetani />}
+          />
+          <Route path="/tanaman-petani" element={<DetailRekapPetani />} />
           <Route path="/tanaman-petani/add" element={<TambahTanamanPetani />} />
           <Route
             path="/tanaman-petani/edit/:id"

@@ -28,16 +28,15 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
   const handleClik = () => {
     Logout();
   };
 
   return (
     <nav
-      className={`w-full shadow fixed top-0 left-0 right-0 z-[99] px-6 md:px-0 ${
-        isScrolled ? "bg-white" : ""
-      }`}
+      className={`w-full shadow fixed top-0 left-0 right-0 z-[99] px-6 md:px-0 ${isScrolled ? "bg-white" : ""
+        }`}
     >
       <div className="justify-between bg-white mx-auto lg:max-w-7xl md:items-center md:flex">
         <div className="bg-white">
@@ -96,22 +95,21 @@ const Navbar = () => {
         </div>
         <div>
           <div
-            className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
-              navbar ? "block" : "hidden"
-            }`}
+            className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${navbar ? "block" : "hidden"
+              }`}
           >
             <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
               {token && (
                 <>
                   <li className="text-green-primary">
                     <a href="/data-tani/rekap-petani">
-                    <button
-                      onClick={() => toggleDropdown("data-tani")}
-                      className="hover:underline underline-offset-auto"
+                      <button
+                        onClick={() => toggleDropdown("data-tani")}
+                        className="hover:underline underline-offset-auto"
                       >
-                      Data Tani
-                    </button>
-                      </a>
+                        Data Tani
+                      </button>
+                    </a>
                   </li>
                   <li className="text-green-primary">
                     <button
@@ -217,14 +215,14 @@ const Navbar = () => {
                   className="text-white bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-md box-shadow"
                   onClick={handleClik}
                 >
-                  <a href="/loginAdminSiketan" className="pr-3">
+                  <a href="/login" className="pr-3">
                     Logout
                   </a>
                   <FontAwesomeIcon icon={faArrowRightFromBracket} />
                 </li>
               ) : (
                 <li className="text-white bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-md box-shadow">
-                  <a href="/loginAdminSiketan">Login</a>
+                  <a href="/login">Login</a>
                 </li>
               )}
             </ul>

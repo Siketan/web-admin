@@ -4,7 +4,7 @@ import {
   PaginatedRespApi,
   PaginatedRespApiData,
 } from "../../types/paginatedRespApi";
-import { clsx } from "@mantine/core";
+import clsx from "clsx";
 import {
   Route,
   Link,
@@ -67,7 +67,7 @@ export default function THead<T extends RowData>({
                     if (["no", "actions"].includes(header.column.id)) return;
                     navigate(
                       `${
-                        location.search
+                        location.pathname
                       }?page=${1}&limit=${perPage}&search=${searchQuery}&sortBy=${
                         header.column.id
                       }&sortType=${

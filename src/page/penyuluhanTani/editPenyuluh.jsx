@@ -57,10 +57,11 @@ const TambahPenyuluhanTani = ()=>{
                 setNoWa(data?.noTelp) 
                 setEmail(data?.email)
                 setNama(data?.nama)
-                setPassword(data?.password)
+                // un-bcrypt password
+                // setPassword(data?.password)
                 setKecamatan(data?.kecamatan)
                 setKecamatanBinaan(data?.kecamatanBinaan)
-                setDesa(data?.desa)
+                // setDesa(data?.desa)
                 setAlamat(data?.alamat)
                 setNamaProduct(data?.namaProduct)
                 setDesaBinaan(data?.desaBinaan?.split(", "))
@@ -128,13 +129,13 @@ const TambahPenyuluhanTani = ()=>{
   }
     return(
         <div className="px-10 md:px-40 py-10">
-            <div className="shadow-xl rounded-xl px-5 py-5">
-                    {loading && <LoadingAnimation/>}
+            <div className="shadow-xl rounded-xl px-5 py-5 bg-white">
+                {loading && <LoadingAnimation/>}
                 <form onSubmit={(e)=>handleSubmit(e)}>
                     <div className="flex items-center justify-center">
                         <InputImage id="foto" name="foto" value={foto}  onChange={(e) => setFoto(e.target.value)} title="Foto Profil"/>
                     </div>
-                    <div className="grid md:grid-cols-2 md:gap-6">
+                    <div className="grid md:grid-cols-2 md:gap-6 mt-3">
                         <div className="relative z-0 w-full mb-6 group">
                             <input type="text" name="NIP" id="NIP" value={NIP}  onChange={(e) => setNIP(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                             <label htmlFor="NIP" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>NIP Penyuluh</strong> (Contoh: 3514002000000001)</label>
@@ -162,10 +163,9 @@ const TambahPenyuluhanTani = ()=>{
                             onChange={(e) => handleSelectKecamatan(e.target.value)}
                             className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                         >
-                            <option value="">--Silahkan Pilih Kecamatan--</option>
-                            {daftarKecamatan?.map((item, i)=>(
-                                    <option value={`${item.nama}-${item.id}`} key={i}>{item.nama}</option>
-                            ))}
+                        {daftarKecamatan?.map((item, i)=>(
+                            <option value={`${item.nama}-${item.id}`} key={i}>{item.nama}</option>
+                        ))}
                         </select>
                         <label htmlFor="kecamatan" className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>Kecamatan</strong> (Contoh:  Karanganyar)</label>
                     </div>
@@ -176,9 +176,8 @@ const TambahPenyuluhanTani = ()=>{
                         onChange={(e) =>  setDesa(e.target.value)}
                         className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                     >
-                         <option value="">--Silahkan Pilih Desa--</option>
                         {dafatarDesa?.map((item, i)=>(
-                                <option value={item.nama} key={i}>{item.nama}</option>
+                            <option value={item.nama} key={i}>{item.nama}</option>
                         ))}
                     </select>
                         <label htmlFor="desa" className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><strong>Desa</strong> (Contoh:  Karanganyar)</label>
@@ -218,10 +217,10 @@ const TambahPenyuluhanTani = ()=>{
                                 onChange={(e) => handleSelectKecamatanBinaan(e.target.value)}
                                 className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                             >
-                                <option value="">--Silahkan Pilih Kecamatan--</option>
+                                {/* <option value="">--Silahkan Pilih Kecamatan--</option> */}
                                 {daftarKecamatan?.map((item, i)=>(
                                     <option value={`${item.nama}-${item.id}`} key={i}>{item.nama}</option>
-                            ))}
+                                ))}
                             </select>
                         </div>
                         <div className="relative z-0 w-full mb-6 group">
