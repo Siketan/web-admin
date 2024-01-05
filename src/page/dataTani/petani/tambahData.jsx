@@ -4,7 +4,7 @@ import { faClose, faSave } from "@fortawesome/free-solid-svg-icons";
 import InputImage from "@/components/inputImage";
 import MainCard from "@/components/MainCard";
 import { Link } from "react-router-dom";
-import { DaftarTaniAdd, select, getDaftarPenyuluh, } from "@/infrastruture";
+import { DaftarTaniAdd, select, GetOpsiPenyuluh, } from "@/infrastruture";
 import { fecthKecamatan, fecthDesa } from "../../../infrastucture/daerah";
 import Loading from "../../../components/loading"
 const TambahDataTani = () => {
@@ -31,7 +31,7 @@ const TambahDataTani = () => {
     fecthKecamatan().then((data) => {
       setDaftarKecamatan(data.kecamatan);
     });
-    getDaftarPenyuluh().then((data) => {
+    GetOpsiPenyuluh().then((data) => {
       const filterData = data.map(obj => {
         return Object.keys(obj).reduce((result, key) => {
           if (key === 'dataPenyuluh') {

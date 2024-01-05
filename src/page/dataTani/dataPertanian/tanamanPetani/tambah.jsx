@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Anchor,
   Breadcrumbs,
@@ -20,18 +20,19 @@ import {
   faArrowRight,
   faArrowLeft
 } from "@fortawesome/free-solid-svg-icons";
-// import React, { useEffect } from "react";
-// import SearchInput from "../../../../components/uiComponents/inputComponents/SearchInput";
+import Table from "@/components/table/Table";
+import { ImPencil } from "react-icons/im";
+import { IoEyeOutline } from "react-icons/io5";
+import { MdDeleteOutline } from "react-icons/md";
+import { useParams, Link, useLocation, useNavigate  } from 'react-router-dom';
 import SearchInput from "../../../../components/uiComponents/inputComponents/searchInput";
 import { FaRegRectangleList, FaUpload } from "react-icons/fa6";
-// import { GetStatistikTanamanAll } from "../../infrastucture";
 import { IoImageOutline } from "react-icons/io5";
 import { SearchPetani } from "../../../../infrastucture/searchApi";
 import {
   AddTanamanPetani,
   GetListTanaman
 } from "../../../../infrastucture/index"
-//import tooltip, fontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tooltip, Modal } from "@mantine/core";
 import Loading from "../../../../components/loading";
@@ -61,6 +62,38 @@ const loadOptions = (inputValue, callback) => {
   }, 1000);
 };
 
+const columns = [
+  {
+    accessorKey: "no",
+    header: "No",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "kategori",
+    header: "Kategori Tanaman",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "komoditas",
+    header: "Jenis Komoditas",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "statusKepemilikanLahan",
+    header: "Status Lahan",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "prakiraanBulanPanen",
+    header: "Prakiraan Panen",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "actions",
+    header: "Aksi",
+    cell: (props) => props.row.original.actions,
+  },
+];
 
 export default function TambahTanamanPetani() {
   const [petani, setPetani] = useState([]);
@@ -80,16 +113,33 @@ export default function TambahTanamanPetani() {
   const [loading, setLoading] = useState(true)
   const [dataTable, setDataTable] = useState();
   const [resp, setResp] = useState();
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const fileInputRef = useRef();
+  // const [page, setPage] = useState(1);
+  // const [limit, setLimit] = useState(10);
+  const location = useLocation();
+  // const history = useHistory();
+
+  // useEffect(() => {
+  const searchParams = new URLSearchParams(location.search);
+
+  const page = searchParams.get("page") ?? 1;
+  const limit = searchParams.get("limit") ?? 10;
+
+  const searchQuery = searchParams.get("search_query") ?? "";
+  const sortKey = searchParams.get("sort_key") ?? "";
+  const sortType = searchParams.get("sort_type") ?? "";
 
   useEffect(() => {
-    GetListTanaman(page, limit).then((data) => {
-      setDatas(data.data);
-      setResp(data);
-      setLoading(false);
+    GetListTanaman(page, 
+      limit, 
+      petani, 
+      ).
+      then((data) => {
+        setDatas(data.data);
+        setResp(data);
+        setLoading(false);
     });
-  }, [page, limit]);
+  }, [page, limit, petani]);
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
   };
@@ -107,32 +157,28 @@ export default function TambahTanamanPetani() {
         
           data: resp.data.map((item, index) => ({
             ...item,
-            no: index + 1,
+            no: resp.from + index,
             actions: (
               <div className="flex gap-4">
-                <Tooltip label="Detail">
-                  <a href={`/data-tani/detail/${item.id}`} >
-                    <FontAwesomeIcon
-                      icon={faBullseye}
-                      className="cursor-pointer text-black hover:text-black"
-                    />
-                  </a>
-                </Tooltip>
-                <Tooltip label="Edit">
-                  <a href={`/rekap-data-tani/edit/${item.id}`}>
-                    <FontAwesomeIcon
-                      icon={faEdit}
-                      className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
-                    />
-                  </a>
-                </Tooltip>
-                <Tooltip label="Delete">
-                  <FontAwesomeIcon
-                    onClick={() => setModalDeleteData(item?.id)}
-                    icon={faTrash}
-                    className="cursor-pointer text-red-500 hover:text-red-600"
-                  />
-                </Tooltip>
+                <Link to={`/tanaman-petani/edit/${item.id}`}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-green-500">
+                    <IoEyeOutline className="h-6 w-6 text-white" />
+                  </div>
+                </Link>
+                <Link to={`/tanaman-petani/edit/${item.id}`}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-yellow-500">
+                    <ImPencil className="h-[18px] w-[18px] text-white" />
+                  </div>
+                </Link>
+                <button
+                  onClick={() => {
+                    setModalDeleteData(item?.id);
+                  }}
+                >
+                  <div className="flex h-7 w-7 items-center justify-center bg-red-500">
+                    <MdDeleteOutline className="h-6 w-6 text-white" />
+                  </div>
+                </button>
               </div>
             ),
           })),
@@ -519,43 +565,12 @@ export default function TambahTanamanPetani() {
           <FaRegRectangleList />
         </button>
       </div>
-      <table className="min-w-full shadow-md">
-                <thead className="bg-[#079073] text-white">
-                  <tr>
-                    <th  className="sticky top-0 px-4 py-2 truncate">
-                      NO
-                    </th>
-                    <th className="sticky top-0 px-4 py-2 truncate ">
-                      KATEGORI TANAMAN
-                    </th>
-                    <th className="sticky top-0 px-4 py-2 truncate ">
-                      JENIS KOMODITAS
-                    </th>
-                    <th className="sticky top-0 px-4 py-2 truncate ">
-                      STATUS LAHAN
-                    </th>
-                    <th className="sticky top-0 px-4 py-2 truncate ">
-                      PRAKIRAAN PANEN
-                    </th>
-                    <th className="sticky top-0 px-4 py-2 truncate ">
-                      REALISASI PANEN
-                    </th>
-                    {/* <th className="sticky top-0 px-4 py-2 truncate">Action</th> */}
-                  </tr>
-                </thead>
-                <tbody>
-                  {datas?.map((item, index) => (
-                    <tr key={item.id} className={`${index % 2 === 0 ? 'bg-white text-black font-medium' : 'bg-[#D1D9D3] text-emerald-800 font-medium'}`}>
-                      <td className="px-4 py-2 text-center ">{index + 1 + (page - 1) * 10}</td>
-                      <td className="px-4 py-2 text-center ">{item?.kategori}</td>
-                      <td className="px-4 py-2 text-center ">{item?.komoditas}</td>
-                      <td className="px-4 py-2 text-center ">{item?.statusKepemilikanLahan}</td>
-                      <td className="px-4 py-2 text-center ">{item?.periodeBulanTanam}</td>
-                      <td className="px-4 py-2 text-center ">{item?.prakiraanBulanPanen}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+      <Table
+        data={dataTable}
+        columns={columns}
+        withPaginationCount
+        withPaginationControl
+      />
     </div>
   );
 }

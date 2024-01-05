@@ -9,12 +9,16 @@ import {
   faPlus,
   faUpload
 } from "@fortawesome/free-solid-svg-icons";
+import Table from "@/components/table/Table";
 import { getDaftarPenyuluh, DeleteDaftarPenyuluh, UploadDataPenyuluh } from "@/infrastruture";
 import ExcelComponent from "../../../components/exelComponent";
 import { Text, Button, Modal,Tooltip, Anchor, Breadcrumbs, TextInput  } from "@mantine/core";
 import LoadingAnimation from '../../../components/loadingSession'
-import { Link } from 'react-router-dom';
+import { useParams, Link, useLocation, useNavigate  } from 'react-router-dom';
 import SearchInput from "../../../components/uiComponents/inputComponents/searchInput";
+import { ImPencil } from "react-icons/im";
+import { IoEyeOutline } from "react-icons/io5";
+import { MdDeleteOutline } from "react-icons/md";
 
 const breadcrumbItems = [
   { title: "Dashboard", href: "/" },
@@ -25,27 +29,80 @@ const breadcrumbItems = [
     {item.title}
   </Anchor>
 ));
+
+const columns = [
+  {
+    accessorKey: "no",
+    header: "No",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "nik",
+    header: "Nip Penyuluh",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "nama",
+    header: "Nama Penyuluh",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "noTelp",
+    header: "Kontak Penyuluh",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "kecamatanBinaan",
+    header: "Kecamatan Binaan",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "desaBinaan",
+    header: "Desa Binaan",
+    cell: (props) => <span>{`${props.getValue()}`}</span>,
+  },
+  {
+    accessorKey: "actions",
+    header: "Aksi",
+    cell: (props) => props.row.original.actions,
+  },
+];
+
 const RekapDataPenyuluh = () => {
   const [datas, setDatas] = useState([]);
   const [loading, setLoading] = useState(true)
   const [modalDeleteData, setModalDeleteData] = useState(false);
+  const [resp, setResp] = useState();
+  const [dataTable, setDataTable] = useState();
   const fileInputRef = useRef();
+  // const [page, setPage] = useState(1);
+  // const [limit, setLimit] = useState(10);
+  const location = useLocation();
+  // const history = useHistory();
+
+  // useEffect(() => {
+  const searchParams = new URLSearchParams(location.search);
+
+  const page = searchParams.get("page") ?? 1;
+  const limit = searchParams.get("limit") ?? 10;
+
+  const searchQuery = searchParams.get("search_query") ?? "";
+  const sortKey = searchParams.get("sort_key") ?? "";
+  const sortType = searchParams.get("sort_type") ?? "";
+
   useEffect(() => {
-    getDaftarPenyuluh().then((data) => {
-      const filterData = data.map(obj => {
-        return Object.keys(obj).reduce((result, key) => {
-          if (key === 'dataPenyuluh') {
-            result = { ...result, ...obj[key] };
-          } else {
-            result[key] = obj[key];
-          }
-          return result;
-        }, {});
-      });
-      setDatas(filterData)
-      setLoading(false)
+    getDaftarPenyuluh(page,
+      limit,
+      ).
+      then((data) => {
+        console.log(data);
+      // setDatas(data.data);
+      setResp(data);
+      setLoading(false);
     });
   }, []);
+
+  
   // console.log(datas)
   const [filters, setFilters] = useState({
     kecamatan: "",
@@ -68,6 +125,43 @@ const RekapDataPenyuluh = () => {
   const handleDeleteUser = (ids) => {
     DeleteDaftarPenyuluh(ids);
   };
+
+  useEffect(() => {
+    if (resp) {
+      setDataTable({
+        ...resp,
+        
+          data: resp.data.map((item, index) => ({
+            ...item,
+            no: resp.from + index,
+            actions: (
+              <div className="flex gap-4">
+                <Link to={`/data-penyuluh/${item.id}`}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-green-500">
+                    <IoEyeOutline className="h-6 w-6 text-white" />
+                  </div>
+                </Link>
+                <Link to={`/data-penyuluh/${item.id}`}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-yellow-500">
+                    <ImPencil className="h-[18px] w-[18px] text-white" />
+                  </div>
+                </Link>
+                <button
+                  onClick={() => {
+                    setModalDeleteData(item?.id);
+                  }}
+                >
+                  <div className="flex h-7 w-7 items-center justify-center bg-red-500">
+                    <MdDeleteOutline className="h-6 w-6 text-white" />
+                  </div>
+                </button>
+              </div>
+            ),
+          })),
+      });
+    }
+  }, [resp]);
+
   const filteredData = datas.filter((item) => {
     return Object.keys(filters).every((key) => {
       if (filters[key] !== "") {
@@ -150,7 +244,7 @@ const RekapDataPenyuluh = () => {
           </div>
         </Modal>
         {/* ... (previous code) */}
-        <div className="bg-[#D9D9D9] rounded-lg w-full">
+        <div className="rounded-lg w-full">
           <div className="relative bg-[#136B09] p-4 flex w-full justify-between rounded-t-lg shadow-lg">
             <h3 className="text-white text-2xl font-bold px-3">
               DATA TABEL PENYULUH
@@ -185,75 +279,12 @@ const RekapDataPenyuluh = () => {
               </Button> 
             </div>
           </div>
-          <div className="pt-0">
-            <div className="h-[calc(100vh-200px) p-6 flex justify-between items-center">
-              <table className="min-w-full shadow-md">
-                <thead className="bg-[#079073] text-white">
-                  <tr>
-                    <th className="sticky top-0  px-4 py-2">
-                      NO
-                    </th>
-                    <th className="sticky top-0  px-4 py-2">
-                      NIP PENYULUH
-                    </th>
-                    <th className="sticky top-0  px-4 py-2">
-                      NAMA PEYULUH
-                    </th>
-                    <th className="sticky top-0 px-4 py-2 truncate ">
-                      KONTAK PENYULUH
-                    </th>
-                    <th className="sticky top-0  px-4 py-2">
-                      KECAMATAN BINAAN
-                    </th>
-                    <th className="sticky top-0  px-4 py-2">
-                      DESA BINAAN 
-                    </th>
-                    <th className="sticky top-0  px-4 py-2">
-                      TINDAKAN
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredData.map((item, index) => (
-                    <tr key={index} className={`${index % 2 === 0 ? 'bg-white text-black font-medium' : 'bg-emerald-100 text-emerald-800 font-medium'}`}>
-                      <td className="px-4  py-2 text-center">{index + 1}</td>
-                      <td className="px-4  py-2 text-center">{item.nik}</td>
-                      <td className="px-4  py-2 text-center">{item.nama}</td>
-                      <td className="px-4  py-2 text-center">{item.noTelp}</td>
-                      <td className="px-4  py-2 text-center">{item.kecamatanBinaan}</td>
-                      <td className="px-4  py-2 text-center">{item.desaBinaan}</td>
-                      <td className="px-2 py-2 text-center">
-                      <Tooltip label="Detail">
-                          <a href={`/data-penyuluh/detail/${item.id}`} >
-                            <FontAwesomeIcon
-                              icon={faBullseye}
-                              className="cursor-pointer text-black hover:text-black"
-                            />
-                          </a>
-                        </Tooltip>
-                        <Tooltip label="Edit">
-                          <a href={`/data-penyuluh/${item.id}`}>
-                            <FontAwesomeIcon
-                              icon={faEdit}
-                              className="mr-2 ml-2 cursor-pointer text-blue-500 hover:text-blue-600"
-                            />
-                          </a>
-                        </Tooltip>
-                        <Tooltip label="Delete">
-                          <FontAwesomeIcon
-                            onClick={() => setModalDeleteData(item?.id)}
-                            icon={faTrash}
-                            className="cursor-pointer text-red-500 hover:text-red-600"
-                          />
-                        </Tooltip>
-                    </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              {loading && <LoadingAnimation />}
-            </div>
-          </div>
+          <Table
+            data={dataTable}
+            columns={columns}
+            withPaginationCount
+            withPaginationControl
+          />
         </div>
       </div>
     </div>

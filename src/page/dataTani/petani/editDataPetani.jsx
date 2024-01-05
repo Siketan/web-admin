@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { faPlus, faSearch, faClose, faSave } from "@fortawesome/free-solid-svg-icons";
 import InputImage from "@/components/inputImage";
 import MainCard from "@/components/MainCard";
-import { GetDaftarTaniById, editDaftarTani, select,selectPenyuluh, getDaftarPenyuluh} from "@/infrastruture";
+import { GetDaftarTaniById, editDaftarTani, select, GetOpsiPenyuluh} from "@/infrastruture";
 import { fecthKecamatan, fecthDesa } from "../../../infrastucture/daerah";
 import { useParams,Link } from "react-router-dom";
 import Loading from "../../../components/loading"
@@ -34,18 +34,6 @@ const EditRekapPetani = () => {
     fecthKecamatan().then((data) => {
       setDaftarKecamatan(data.kecamatan);
     });
-    getDaftarPenyuluh().then((data) => {
-      const filterData = data.map(obj => {
-        return Object.keys(obj).reduce((result, key) => {
-          if (key === 'dataPenyuluh') {
-            result = { ...result, ...obj[key] };
-          } else {
-            result[key] = obj[key];
-          }
-          return result;
-        }, {});
-      });
-      setDaftarPenyuluh(filterData)});
     GetDaftarTaniById(id).then((data)=>{
         setNIK(data?.nik);
         setNokk(data?.nkk);
@@ -63,6 +51,20 @@ const EditRekapPetani = () => {
         setLoading(false)
       })
     }, []);
+  useEffect(() => {
+    GetOpsiPenyuluh().then((data) => {
+      const filterData = data.map(obj => {
+        return Object.keys(obj).reduce((result, key) => {
+          if (key === 'dataPenyuluh') {
+            result = { ...result, ...obj[key] };
+          } else {
+            result[key] = obj[key];
+          }
+          return result;
+        }, {});
+      });
+    setDaftarPenyuluh(filterData)});
+  }, [])
   useEffect(() => {
     if(daftarKecamatan && kecamatan && !kecamatanActive){
       const filteredData = daftarKecamatan?.filter(item => {
@@ -237,7 +239,9 @@ const EditRekapPetani = () => {
                 type="password"
                 name="passwordPetani"
                 id="passwordPetani"
-                value={password}
+                // decrypt password
+                // value={password}
+                // value={}
                 onChange={(e) => setPassword(e.target.value)}
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
