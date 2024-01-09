@@ -82,7 +82,7 @@ const KegiatanTani = () => {
                   {data?.namaKegiatan}
                 </p>
                 <div className="flex">
-                  <Image className="h-28 w-28"
+                  <Image className="h-28 w-28 rounded-md"
                     src={data.fotoKegiatan}
                     alt={data?.namaKegiatan}
                   />
