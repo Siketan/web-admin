@@ -43,8 +43,8 @@ const BeritaTani = () => {
           <MainCard width="80%" radius={0} gap={0}>
             <MainCard transparent row>
               <Image
-                className="h-min"
-                width={200}
+                className="h-min w-60"
+                // width={200}
                 src={data?.fotoBerita}
                 alt="With default placeholder"
               />
