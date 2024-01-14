@@ -274,9 +274,11 @@ const Path = () => {
         .catch((err) => {
           console.log({ err });
           window.localStorage.removeItem("token");
-          window.location.href = "/login";
+          if (!isAuthPage && !isWebVidePage) {
+            window.location.href = "/login";
+          }
         });
-    } else if (!isAuthPage && !isWebVidePage) window.location.href = "/login";
+    }
   }, [token, isAuthPage]);
 
   if (isAuthPage || isWebVidePage) return <RoutesPath />;
