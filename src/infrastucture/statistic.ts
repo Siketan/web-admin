@@ -27,7 +27,11 @@ export const GetStatistikTanamanAll = async (
 ) => {
   try {
     const response = await Api.get(
-      `/statistik?poktan_id=${poktan_id}&limit=${query?.limit}&page=${query?.page}&sortBy=${query?.sortBy}&sortType=${query?.sortType}&search=${query?.search}`
+      `/statistik?poktan_id=${poktan_id}&limit=${query?.limit ?? 10}&page=${
+        query?.page ?? 1
+      }&sortBy=${query?.sortBy ?? "id"}&sortType=${
+        query?.sortType ?? "ASC"
+      }&search=${query?.search ?? ""}`
     );
     return response.data as PaginatedRespApi<TDataTanaman>;
   } catch (error) {
