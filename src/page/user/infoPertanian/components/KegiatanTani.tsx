@@ -65,7 +65,7 @@ const KegiatanTani = () => {
       );
   }, [carousel.current]);
   return (
-    <div className="border-t-2">
+    <div>
       <MainCard row transparent noPadding center className="flex-row">
         <motion.div
           className="carousel overflow-hidden cursor-grab"
@@ -77,15 +77,13 @@ const KegiatanTani = () => {
             className="inner-carousel inline-flex"
           >
             {datas?.map((data, i) => (
-              <div key={i} className="p-5 max-w-none min-w-fit">
+              <div key={i} className="p-5 max-w-none min-w-fit border-t-2">
                 <p className="text-md md:text-xl font-bold text-green-primary mb-3">
                   {data?.namaKegiatan}
                 </p>
                 <div className="flex">
-                  <Image
+                  <Image className="h-28 w-28 rounded-md"
                     src={data.fotoKegiatan}
-                    width={100}
-                    height={100}
                     alt={data?.namaKegiatan}
                   />
                   <div className="pl-3 flex flex-col space-y-1">
