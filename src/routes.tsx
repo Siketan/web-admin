@@ -71,6 +71,12 @@ import DetailStatistik from "./page/statistik/detail";
 
 const menu = [
   {
+    id: "dashboard",
+    name: "Dashboard",
+    icon: "/icons/dashboard.svg",
+    path: "/dashboard",
+  },
+  {
     id: "statistik",
     name: "Statistik",
     icon: "/icons/statistik.svg",
@@ -290,7 +296,7 @@ const Path = () => {
           ref={sidebar}
           className={clsx(
             "fixed left-0 top-0 z-20 flex h-screen flex-col justify-between bg-green-primary pb-8 shadow-lg duration-300 lg:translate-x-0 text-white",
-            sidebarOpen ? "w-[22%]" : "w-[6%]"
+            sidebarOpen ? "w-80" : "w-[6%]"
           )}
         >
           <div
@@ -310,26 +316,47 @@ const Path = () => {
             <ul className="space-y-1.5 font-medium">
               {menu.map((item, index) => (
                 <li key={index} className="divide-y divide-gray-500">
-                  <button
-                    className={clsx(
-                      mainMenuClasses,
-                      activePage === item.id && activeClasses
-                    )}
-                    onClick={() => {
-                      if (activeMenu === item.id) setActiveMenu("");
-                      else setActiveMenu(item.id);
-                    }}
-                  >
-                    <Image src={item.icon} alt={item.name} width={24} />
-                    <span
+                  {item.path ? (
+                    <a
+                      href={item.path}
                       className={clsx(
-                        textMenuClasses,
-                        sidebarOpen ? "block" : "hidden"
+                        mainMenuClasses,
+                        activePage === item.id && activeClasses
                       )}
                     >
-                      {item.name}
-                    </span>
-                  </button>
+                      <Image src={item.icon} alt={item.name} w={24} />
+                      <span
+                        className={clsx(
+                          textMenuClasses,
+                          sidebarOpen ? "block" : "hidden"
+                        )}
+                      >
+                        {item.name}
+                      </span>
+                    </a>
+                  ) : (
+                    <button
+                      className={clsx(
+                        mainMenuClasses,
+                        activePage === item.id && activeClasses
+                      )}
+                      onClick={() => {
+                        if (activeMenu === item.id) setActiveMenu("");
+                        else setActiveMenu(item.id);
+                      }}
+                    >
+                      <Image src={item.icon} alt={item.name} w={24} />
+                      <span
+                        className={clsx(
+                          textMenuClasses,
+                          sidebarOpen ? "block" : "hidden"
+                        )}
+                      >
+                        {item.name}
+                      </span>
+                    </button>
+                  )}
+
                   {activeMenu === item.id && (
                     <ul className="divide-y divide-gray-500">
                       {item.sub?.map((sub, index) => (
