@@ -240,14 +240,11 @@ export default function DataTanamanForm({
     if (type === "add")
       AddNewDataTanaman({ ...newData, fk_kelompokId: poktan?.id ?? 1 }).then(
         (e) => {
-          if (e) navigate("/statistik");
+          navigate(`/statistik/edit/${e.data.id}`);
         }
       );
     else {
-      console.log(newData);
-      UpdateStatistikTanamanById(id, newData).then((e) => {
-        if (e) navigate("/statistik");
-      });
+      UpdateStatistikTanamanById(id, newData);
     }
   }
 
@@ -620,7 +617,16 @@ export default function DataTanamanForm({
               </div>
             </div>
           </div>
-          <div className="flex px-6 pb-6 justify-end">
+          <div className="flex px-6 pb-6 justify-end gap-4">
+            <Button
+              type="button"
+              className="bg-blue-500"
+              onClick={() => {
+                navigate("/statistik");
+              }}
+            >
+              Kembali
+            </Button>
             <Button type="submit" className="bg-[#307B28]">
               Simpan Data
             </Button>
