@@ -71,6 +71,7 @@ import RealisasiStatistik from "./page/statistik/realisasi";
 import DetailStatistik from "./page/statistik/detail";
 import DetailDataTanaman from "./page/dataTani/dataPertanian/tanamanPetani/detail";
 import ExportTable from "./page/statistik/export";
+import ExportTableDataPertanian from "./page/dataTani/dataPertanian/tanamanPetani/export";
 
 const menu = [
   {
@@ -533,6 +534,10 @@ const RoutesPath = () => {
             element={<ViewDetailDataPetani />}
           />
           <Route path="/tanaman-petani" element={<DetailRekapPetani />} />
+          <Route
+            path="/tanaman-petani/export"
+            element={<ExportTableDataPertanian />}
+          />
           <Route path="/tanaman-petani/add" element={<TambahTanamanPetani />} />
           <Route
             path="/tanaman-petani/edit/:id"

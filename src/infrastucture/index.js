@@ -152,12 +152,20 @@ export const GetLaporanTani = async () => {
     SweatAlert(String(error.response.data.message), "error");
   }
 };
-export const GetListTanaman = async (page, limit, petaniId) => {
+export const GetListTanaman = async (
+  page,
+  limit,
+  petaniId,
+  isExport = false
+) => {
   try {
     // Include petaniId in the API call if it's provided
-    const url = petaniId
-      ? `/list-tanaman?page=${page}&limit=${limit}&petaniId=${petaniId}`
-      : `/list-tanaman?page=${page}&limit=${limit}`;
+
+    const url =
+      (petaniId
+        ? `/list-tanaman?page=${page}&limit=${limit}&petaniId=${petaniId}`
+        : `/list-tanaman?page=${page}&limit=${limit}`) +
+      (isExport ? "&isExport=true" : "");
 
     const response = await Api.get(url);
     return response.data; // Access 'tanaman' property

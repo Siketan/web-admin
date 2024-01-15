@@ -1,10 +1,12 @@
 import { Anchor, Breadcrumbs, Button } from "@mantine/core";
 import React, { useEffect } from "react";
-import { GetStatistikTanamanAll } from "../../infrastucture/statistic";
-import { PaginatedRespApiData } from "../../types/paginatedRespApi";
-import { TDataTanaman } from "../../types/dataTanaman";
-import { komoditasSemusim, komoditasTahunan } from "../../types/const";
 import { utils, writeFileXLSX } from "xlsx";
+import { PaginatedRespApiData } from "../../../../types/paginatedRespApi";
+import { TDataTanaman } from "../../../../types/dataTanaman";
+import { GetStatistikTanamanAll } from "../../../../infrastucture/statistic";
+import { komoditasSemusim, komoditasTahunan } from "../../../../types/const";
+import { GetListTanaman } from "../../../../infrastucture";
+import { TTanamanPetani } from "../../../../types/tanamanPetani";
 
 const breadcrumbItems = [
   { title: "Dashboard", href: "/" },
@@ -16,19 +18,17 @@ const breadcrumbItems = [
   </Anchor>
 ));
 
-export default function ExportTable() {
+export default function ExportTableDataPertanian() {
   const [resp, setResp] = React.useState<
-    PaginatedRespApiData<TDataTanaman> | undefined
+    PaginatedRespApiData<TTanamanPetani> | undefined
   >();
 
   const tbl = React.useRef(null);
 
   useEffect(() => {
-    GetStatistikTanamanAll(undefined, {
-      isExport: true,
-    }).then((res) => {
-      console.log(res.data);
-      setResp(res?.data);
+    GetListTanaman(1, 1, 1, true).then((res) => {
+      setResp(res);
+      console.log(res);
     });
   }, []);
 
@@ -43,7 +43,7 @@ export default function ExportTable() {
             const wb = utils.table_to_book(tbl.current);
             writeFileXLSX(
               wb,
-              `Data Tanaman - ${new Date().toLocaleDateString("id-ID", {
+              `Tanaman Petani - ${new Date().toLocaleDateString("id-ID", {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
@@ -162,72 +162,69 @@ export default function ExportTable() {
             </tr>
           </thead>
           <tbody>
-            {resp?.data.map((item, index) => (
+            {resp?.data.map((item) => (
               <tr key={item.id}>
-                <td className="border p-2">{item.fk_kelompokId}</td>
-                {/* TODO: Kecamatan  */}
-                <td className="border p-2">??</td>
-                <td className="border p-2">{item.kelompok?.desa}</td>
+                <td className="border p-2">{item.dataPetani?.fk_kelompokId}</td>
+                <td className="border p-2">{item.dataPetani?.kecamatan}</td>
+                <td className="border p-2">{item.dataPetani?.desa}</td>
                 {/* TODO: Lahan baku itu apa? */}
                 <td className="border p-2">{item.luasLahan}</td>
-                <td className="border p-2">{item.kelompok?.gapoktan}</td>
-                <td className="border p-2">{item.kelompok?.namaKelompok}</td>
+                <td className="border p-2">
+                  {item.dataPetani?.kelompok?.gapoktan}
+                </td>
+                <td className="border p-2">
+                  {item.dataPetani?.kelompok?.namaKelompok}
+                </td>
                 {/* Tanaman Pangan */}
                 {item.kategori.includes("pangan".toUpperCase()) ? (
                   <>
                     <td className="border p-2 capitalize">{item.komoditas}</td>
                     <td className="border p-2">{item.luasLahan}</td>
-                    <td className="border p-2">{item.periodeTanam}</td>
+                    <td className="border p-2">{item.periodeBulanTanam}</td>
                     <td className="border p-2">{item.prakiraanBulanPanen}</td>
                     <td className="border p-2">{item.prakiraanLuasPanen}</td>
-                    <td className="border p-2">{item.prakiraanHasilPanen}</td>
                     <td className="border p-2">
-                      {item.realisasiLuasPanen ?? "-"}
+                      {item.prakiraanProduksiPanen}
                     </td>
                     <td className="border p-2">
-                      {item.realisasiHasilPanen ?? "-"}
+                      {/* TODO: Realisasi sebelah mana? */}-
                     </td>
+                    <td className="border p-2">-</td>
                   </>
                 ) : (
                   <BlankCell numberOfCol={8} />
                 )}
                 {/* Tanaman Perkebunan Semusim */}
                 {item.kategori.includes("kebun".toUpperCase()) &&
-                komoditasSemusim.includes(
-                  item.komoditas.replace("Buah ", "")
-                ) ? (
+                komoditasSemusim.includes(item.komoditas) ? (
                   <>
                     <td className="border p-2 capitalize">{item.komoditas}</td>
                     <td className="border p-2">{item.luasLahan}</td>
-                    <td className="border p-2">{item.periodeTanam}</td>
+                    <td className="border p-2">{item.periodeBulanTanam}</td>
                     <td className="border p-2">{item.prakiraanBulanPanen}</td>
                     <td className="border p-2">{item.prakiraanLuasPanen}</td>
-                    <td className="border p-2">{item.prakiraanHasilPanen}</td>
                     <td className="border p-2">
-                      {item.realisasiLuasPanen ?? "-"}
+                      {item.prakiraanProduksiPanen}
                     </td>
-                    <td className="border p-2">
-                      {item.realisasiHasilPanen ?? "-"}
-                    </td>
+                    <td className="border p-2">-</td>
+                    <td className="border p-2">-</td>
                   </>
                 ) : (
                   <BlankCell numberOfCol={8} />
                 )}
                 {/* Tanaman Perkebunan Tahunan */}
                 {item.kategori.includes("kebun".toUpperCase()) &&
-                komoditasTahunan.includes(
-                  item.komoditas.replace("Sayur ", "")
-                ) ? (
+                komoditasTahunan.includes(item.komoditas) ? (
                   <>
                     <td className="border p-2 capitalize">{item.komoditas}</td>
                     <td className="border p-2">{item.luasLahan}</td>
                     {/* GAADA PERIODE TANAM? */}
                     <td className="border p-2">{item.prakiraanBulanPanen}</td>
                     <td className="border p-2">{item.prakiraanLuasPanen}</td>
-                    <td className="border p-2">{item.prakiraanHasilPanen}</td>
                     <td className="border p-2">
-                      {item.realisasiLuasPanen ?? "-"}
+                      {item.prakiraanProduksiPanen}
                     </td>
+                    <td className="border p-2">-</td>
                     {/* GAADA REALISASI HASIL PANEN? */}
                   </>
                 ) : (
@@ -235,45 +232,37 @@ export default function ExportTable() {
                 )}
                 {/* Tanaman Hortikurtira Semusim */}
                 {item.kategori.includes("holtikultura".toUpperCase()) &&
-                komoditasSemusim.includes(
-                  item.komoditas.replace("Buah ", "")
-                ) ? (
+                komoditasSemusim.includes(item.komoditas) ? (
                   <>
                     <td className="border p-2 capitalize">{item.komoditas}</td>
                     <td className="border p-2">{item.luasLahan}</td>
-                    <td className="border p-2">{item.periodeTanam}</td>
+                    <td className="border p-2">{item.periodeBulanTanam}</td>
                     <td className="border p-2">{item.prakiraanBulanPanen}</td>
                     <td className="border p-2">{item.prakiraanLuasPanen}</td>
-                    <td className="border p-2">{item.prakiraanHasilPanen}</td>
                     <td className="border p-2">
-                      {item.realisasiBulanPanen ?? "-"}
+                      {item.prakiraanProduksiPanen}
                     </td>
-                    <td className="border p-2">
-                      {item.realisasiLuasPanen ?? "-"}
-                    </td>
-                    <td className="border p-2">
-                      {item.realisasiHasilPanen ?? "-"}
-                    </td>
+                    <td className="border p-2">-</td>
+                    <td className="border p-2">-</td>
+                    <td className="border p-2">-</td>
                   </>
                 ) : (
                   <BlankCell numberOfCol={9} />
                 )}
                 {/* Tanaman Hortikurtira Tahunan */}
                 {item.kategori.includes("holtikultura".toUpperCase()) &&
-                komoditasTahunan.includes(
-                  item.komoditas.replace("Sayur ", "")
-                ) ? (
+                komoditasTahunan.includes(item.komoditas) ? (
                   <>
                     <td className="border p-2 capitalize">{item.komoditas}</td>
                     {/* Jumlah tanaman?? */}
                     <td className="border p-2">??</td>
                     <td className="border p-2">{item.prakiraanBulanPanen}</td>
-                    <td className="border p-2">{item.prakiraanHasilPanen}</td>
+                    <td className="border p-2">
+                      {item.prakiraanProduksiPanen}
+                    </td>
                     {/* Realisasi panen (Pohon)?? */}
                     <td className="border p-2">??</td>
-                    <td className="border p-2">
-                      {item.realisasiHasilPanen ?? "-"}
-                    </td>
+                    <td className="border p-2">-</td>
                   </>
                 ) : (
                   <BlankCell numberOfCol={6} />

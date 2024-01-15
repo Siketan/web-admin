@@ -1,3 +1,5 @@
+import { TPetani } from "./petani";
+
 export type TTanamanPetani = {
   id: number;
   createdAt: string;
@@ -13,6 +15,8 @@ export type TTanamanPetani = {
   prakiraanProduksiPanen: number;
   statusKepemilikanLahan: string;
   updatedAt: string;
+
+  dataPetani?: TPetani;
 };
 
 export type TTableTanamanPetani = {
