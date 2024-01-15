@@ -168,7 +168,7 @@ export default function DetailRekapPetani() {
             no: resp.from + index,
             actions: (
               <div className="flex gap-4">
-                <Link to={`/tanaman-petani/edit/${item.id}`}>
+                <Link to={`/tanaman-petani/detail/${item.id}`}>
                   <div className="flex h-7 w-7 items-center justify-center bg-green-500">
                     <IoEyeOutline className="h-6 w-6 text-white" />
                   </div>

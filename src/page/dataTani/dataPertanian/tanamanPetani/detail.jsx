@@ -92,7 +92,7 @@ const columns = [
   },
 ];
 
-export default function EditTanamanPetani() {
+export default function DetailDataTanaman() {
   const [statusKepemilikanLahan, setStatusKepemilikanLahan] = useState("");
   const [luasLahan, setLuasLahan] = useState();
   const [kategori, setKategori] = useState("");
@@ -336,6 +336,7 @@ export default function EditTanamanPetani() {
                     "MILIK SENDIRI",
                     "TANAH SEWA",
                   ]}
+                  disabled
                   onChange={(value) => setStatusKepemilikanLahan(value)}
                 />
               </div>
@@ -345,6 +346,7 @@ export default function EditTanamanPetani() {
                 </p>
                 <NumberInput
                   placeholder="Luas Lahan Tanaman"
+                  disabled
                   min={0}
                   value={Number(luasLahan)}
                   onChange={(value) => setLuasLahan(value)} />
@@ -353,22 +355,22 @@ export default function EditTanamanPetani() {
                 <p>Kategori Tanaman</p>
                 <div className="rounded-lg shadow-lg p-4">
                   <Radio.Group className="[&>*]:mt-1 first:mt-0" value={kategori} onChange={(value) => setKategori(value)}>
-                    <Radio label="Tanaman Pangan" value="TANAMAN PANGAN" />
-                    <Radio label="Tanaman Perkebunan" value="TANAMAN PERKEBUNAN" />
-                    <Radio label="Tanaman Holtikultura" value="TANAMAN HOLTIKULTURA" />
+                    <Radio disabled label="Tanaman Pangan" value="TANAMAN PANGAN" />
+                    <Radio disabled label="Tanaman Perkebunan" value="TANAMAN PERKEBUNAN" />
+                    <Radio disabled label="Tanaman Holtikultura" value="TANAMAN HOLTIKULTURA" />
                     {kategori && kategori.toLowerCase() === 'tanaman holtikultura' && (
                       <Radio.Group className="ml-8 [&>*]:mt-1" value={jenis} onChange={(value) => setJenis(value)}>
-                        <Radio label="Jenis Buah" value="BUAH" />
-                        <Radio label="Jenis Sayur" value="SAYUR" />
-                      </Radio.Group>
+                        <Radio disabled label="Jenis Buah" value="BUAH" />
+                        <Radio disabled label="Jenis Sayur" value="SAYUR" />
+                      </Radio.Group>    
                     )}
                   </Radio.Group>
                 </div>
                 <p className="mt-4">Komoditas Tanaman</p>
-                <Tabs defaultValue="semusim">
+                <Tabs defaultValue="semusim" disabled>
                   <Tabs.List>
-                    <Tabs.Tab value="semusim">Semusim</Tabs.Tab>
-                    <Tabs.Tab value="tahunan">Tahunan</Tabs.Tab>
+                    <Tabs.Tab disabled value="semusim">Semusim</Tabs.Tab>
+                    <Tabs.Tab disabled value="tahunan">Tahunan</Tabs.Tab>
                   </Tabs.List>
 
                   {/* {periodeMusimTanam?.toLowerCase === 'tanaman semusim' ? ( */}
@@ -384,6 +386,7 @@ export default function EditTanamanPetani() {
                             : komoditasSemusim
                       }
                       value={komoditas}
+                      disabled
                       onChange={(value) => setKomoditas(value)}
                     />
                   </Tabs.Panel>
@@ -423,6 +426,7 @@ export default function EditTanamanPetani() {
                     <p>PERIODE MUSIM TANAM</p>
                     <Select
                       value={periodeMusimTanam}
+                      disabled
                       placeholder="-Periode Musim Tanam-"
                       data={[
                         "Tanaman Semusim",
@@ -433,6 +437,7 @@ export default function EditTanamanPetani() {
                     <p>PERIODE BULAN TANAM</p>
                     <Select
                       placeholder="-Periode Bulan Tanam-"
+                      disabled
                       data={[
                         "Januari",
                         "Februari",
@@ -458,18 +463,21 @@ export default function EditTanamanPetani() {
                 <div className="bg-white rounded-lg p-4 rounded-tl-none flex gap-1 flex-col ">
                   <p>PRAKIRAAN LUAS PANEN (HA)</p>
                   <NumberInput
+                    disabled
                     placeholder="Prakiraan Luas Panen"
                     // min={0}
                     value={Number(prakiraanLuasPanen)}
                     onChange={(value) => setPrakiraanLuasPanen(value)} />
                   <p>PRAKIRAAN HASIL PANEN (TON)</p>
                   <NumberInput
+                    disabled
                     placeholder="Prakiraan Hasil Panen"
                     min={0}
                     value={Number(prakiraanProduksiPanen)}
                     onChange={(value) => setPrakiraanProduksiPanen(value)} />
                   <p>PRAKIRAAN BULAN PANEN</p>
                   <Select
+                    disabled
                     placeholder="-Periode Bulan Panen-"
                     data={[
                       "Januari",
@@ -503,9 +511,6 @@ export default function EditTanamanPetani() {
             >
               Kembali
             </Button>
-            <Button type="submit" className="bg-[#307B28]">
-              Simpan Data
-            </Button>
           </div>
           {loading &&
             <LoadingAnimation />}
@@ -537,5 +542,3 @@ export default function EditTanamanPetani() {
 }
 
 // export default TambahDataTani;
-
-

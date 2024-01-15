@@ -33,6 +33,7 @@ import {
   TambahTanamanPetani,
   EditTanamanPetani,
   DetailTanamanPetani,
+  // DetailDataTanamanPetani,
   EditLaporanTanam,
   TambahLaporanTanam,
   TambahLaporanAhir,
@@ -68,6 +69,7 @@ import InfoPertanian from "./page/user/infoPertanian";
 import Berita from "./page/user/berita";
 import RealisasiStatistik from "./page/statistik/realisasi";
 import DetailStatistik from "./page/statistik/detail";
+import DetailDataTanaman from "./page/dataTani/dataPertanian/tanamanPetani/detail";
 import ExportTable from "./page/statistik/export";
 
 const menu = [
@@ -536,13 +538,17 @@ const RoutesPath = () => {
             path="/tanaman-petani/edit/:id"
             element={<EditTanamanPetani />}
           />
+          <Route
+            path="/tanaman-petani/detail/:id"
+            element={<DetailDataTanaman />}
+          />
           <Route path="/laporan-tanam/add" element={<TambahLaporanTanam />} />
           <Route path="/laporan-akhir/add" element={<TambahLaporanAhir />} />
           <Route
             path="/laporan-tanam/edit/:id"
             element={<EditLaporanTanam />}
           />
-          <Route path="/laporan-tanam/:id" element={<DetailTanamanPetani />} />
+          {/* <Route path="/laporan-tanam/:id" element={<DetailTanamanPetani />} /> */}
           {/* <Route path="/data-tanaman" element={<DataTanaman />} /> */}
           {/* event Tani */}
           <Route path="/event-tani/tambah" element={<TambahEventTani />} />
