@@ -68,6 +68,7 @@ import InfoPertanian from "./page/user/infoPertanian";
 import Berita from "./page/user/berita";
 import RealisasiStatistik from "./page/statistik/realisasi";
 import DetailStatistik from "./page/statistik/detail";
+import ExportTable from "./page/statistik/export";
 
 const menu = [
   {
@@ -83,7 +84,7 @@ const menu = [
     sub: [
       {
         name: "Tambah Data Statistik",
-        icon: "/icons/users.svg",
+        icon: "/icons/tambah.svg",
         path: "/statistik/tambah",
       },
       {
@@ -506,6 +507,7 @@ const RoutesPath = () => {
           {/* <Route index element={<Dashboard />}></Route> */}
           {/* Statistik */}
           <Route path="/statistik" element={<Statistik />} />
+          <Route path="/statistik/export" element={<ExportTable />} />
           <Route path="/statistik/tambah" element={<TambahStatistik />} />
           <Route path="/statistik/edit/:id" element={<EditStatistik />} />
           <Route path="/statistik/:id" element={<DetailStatistik />} />

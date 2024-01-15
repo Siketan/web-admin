@@ -1,3 +1,5 @@
+import { TKelompokTani } from "./kelompokTani";
+
 export type TDataTanaman = {
   id: number;
   kategori: string;
@@ -11,6 +13,8 @@ export type TDataTanaman = {
   realisasiHasilPanen: number;
   realisasiBulanPanen: string;
   fk_kelompokId: number;
+
+  kelompok?: TKelompokTani;
   createdAt: string;
   updatedAt: string;
 };

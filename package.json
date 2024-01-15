@@ -55,7 +55,8 @@
     "react-select": "^5.8.0",
     "regenerator-runtime": "^0.13.11",
     "sweetalert2": "^11.7.12",
-    "sweetalert2-react-content": "^5.0.7"
+    "sweetalert2-react-content": "^5.0.7",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.3.1",

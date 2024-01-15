@@ -4,4 +4,5 @@ export type TRequestQuery = {
   sortBy?: string;
   sortType?: "ASC" | "DESC" | "";
   search?: string;
+  isExport?: boolean;
 };

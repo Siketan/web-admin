@@ -10,13 +10,14 @@ import {
 } from "@tanstack/react-table";
 import React from "react";
 import { PaginatedRespApiData } from "../../types/paginatedRespApi";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import TBody from "./TBody";
 import THead from "./THead";
 import clsx from "clsx";
 import { PaginationControl, PaginationCount } from "./Pagination";
 import { IoMdAdd } from "react-icons/io";
 import { RiTableLine } from "react-icons/ri";
+import { TiExport } from "react-icons/ti";
 
 type TableProps<T extends object> = {
   data: PaginatedRespApiData<T> | undefined;
@@ -30,6 +31,7 @@ type TableProps<T extends object> = {
   buttonText?: string;
   buttonHref?: string;
   filter?: string[];
+  exportUrl?: string;
 } & React.ComponentPropsWithoutRef<"div">;
 
 export default function Table<T extends object>({
@@ -44,6 +46,7 @@ export default function Table<T extends object>({
   withButton = false,
   buttonText = "Tambah",
   buttonHref = "/",
+  exportUrl = "",
 
   filter = [],
   ...rest
@@ -97,24 +100,24 @@ export default function Table<T extends object>({
             {withPaginationCount && (
               <PaginationCount respData={data} className="w-[109px]" />
             )}
-            {withPaginationCount && (
+            {/* {withPaginationCount && (
               <button className="flex w-[109px] justify-center rounded-[10px] bg-neutral-200">
                 <div className="flex items-center gap-1.5 text-neutral-900">
                   <RiTableLine />
                   <p>Column</p>
                 </div>
               </button>
-            )}
-            {/* {withPaginationCount && (
-              <CSVLink data={respData?.data.data ?? []}>
+            )} */}
+            {withPaginationCount && exportUrl !== "" && (
+              <Link to={exportUrl}>
                 <button className="flex w-[109px] justify-center rounded-[10px] bg-neutral-200">
                   <div className="flex items-center gap-1.5 text-neutral-900">
-                    <PiArchiveBoxBold />
+                    <TiExport />
                     <p>Export</p>
                   </div>
                 </button>
-              </CSVLink>
-            )} */}
+              </Link>
+            )}
           </div>
           {/* <div>
             {withFilter && <Filter table={table} className="w-[378px]" />}

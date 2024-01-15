@@ -25,15 +25,21 @@ export const GetStatistikTanamanAll = async (
   poktan_id?: number,
   query?: TRequestQuery
 ) => {
+  const { isExport } = query ?? {};
   try {
-    const response = await Api.get(
-      `/statistik?poktan_id=${poktan_id}&limit=${query?.limit ?? 10}&page=${
-        query?.page ?? 1
-      }&sortBy=${query?.sortBy ?? "id"}&sortType=${
-        query?.sortType ?? "ASC"
-      }&search=${query?.search ?? ""}`
-    );
-    return response.data as PaginatedRespApi<TDataTanaman>;
+    if (!isExport) {
+      const response = await Api.get(
+        `/statistik?poktan_id=${poktan_id}&limit=${query?.limit ?? 10}&page=${
+          query?.page ?? 1
+        }&sortBy=${query?.sortBy ?? "id"}&sortType=${
+          query?.sortType ?? "ASC"
+        }&search=${query?.search ?? ""}`
+      );
+      return response.data as PaginatedRespApi<TDataTanaman>;
+    } else {
+      const response = await Api.get(`/statistik?isExport=${isExport}`);
+      return response.data;
+    }
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
   }
