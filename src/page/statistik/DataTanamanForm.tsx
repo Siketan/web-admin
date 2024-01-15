@@ -41,6 +41,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import { TKelompokTani } from "../../types/kelompokTani";
 import { SearchPoktan } from "../../infrastucture/searchApi";
 import { GetKelompokTaniById } from "../../infrastucture/kelompokTani";
+import { komoditasSemusim, komoditasTahunan } from "../../types/const";
 
 const breadcrumbItems = [
   { title: "Dashboard", href: "/" },
@@ -110,42 +111,6 @@ const columns: ColumnDef<TTableDataTanaman>[] = [
     header: "Prakiraan Bulan Panen",
     cell: (props) => <span>{`${props.getValue()}`}</span>,
   },
-];
-
-const komoditasSemusim = [
-  "Melon",
-  "Semangka",
-  "Pisang",
-  "Blewah",
-  "Mangga",
-  "Durian",
-  "Manggis",
-  "Alpukat",
-  "Rambutan",
-  "Jeruk Lemon",
-  "Jeruk Nipis",
-  "Jeruk Keprok",
-  "Jeruk Besar",
-  "Nangka",
-  "Jambu Biji",
-  "Jambu Air",
-  "Sukun",
-  "Sirsak",
-  "Sawo",
-  "Duku",
-];
-const komoditasTahunan = [
-  "Cabe Kecil",
-  "Cabe Besar",
-  "Bawang Merah",
-  "Tomat",
-  "Terong",
-  "Pare",
-  "Gambas",
-  "Bayam",
-  "Kangkung",
-  "Sawi",
-  "Kacang Panjang",
 ];
 
 export default function DataTanamanForm({

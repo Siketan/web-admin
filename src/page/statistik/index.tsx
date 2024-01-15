@@ -202,7 +202,7 @@ export default function index() {
         <h3 className="text-white text-2xl font-bold mx-auto">
           TABEL DATA STATISTIK PERTANIAN
         </h3>
-        <div className="absolute right-4 flex gap-4 items-center justify-center">
+        <div className="absolute right-4 flex gap-2 items-center justify-center">
           <input
             type="file"
             className="hidden"
@@ -212,7 +212,7 @@ export default function index() {
           />
           <Link
             to="/statistik/tambah"
-            className="rounded-md bg-[#86BA34] text-white p-1 px-5 w-30 h-10 flex items-center"
+            className="rounded-md bg-[#86BA34] text-white py-1.5 px-4 h-9 flex items-center"
           >
             <FaPlus />
           </Link>
@@ -232,6 +232,7 @@ export default function index() {
       <Table
         data={dataTable}
         columns={columns}
+        exportUrl="/statistik/export"
         withPaginationCount
         withPaginationControl
       />

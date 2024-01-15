@@ -5,6 +5,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { AddLaporanTani, CekNik } from "@/infrastruture";
+import { komoditasSemusim, komoditasTahunan, tanamanPangan, tanamanPerkebunan } from "../../../types/const";
 function LaporanTanam() {
   const [NIK, setNIK] = useState("");
   const [komoditas, setKomoditas] = useState("");
@@ -25,65 +26,13 @@ function LaporanTanam() {
   };
   useEffect(() => {
     if (kategori == "Tanaman Pangan") {
-      setDaftarKomoditas([
-        "Padi Konvensional",
-        "Padi Ramah Lingkungan",
-        "Padi Organik",
-        "Jagung",
-        "Kedelai",
-        "Ubi Jalar",
-        "Ubi Kayu",
-        "Kacang Tanah",
-        "Kacang Hijau",
-      ]);
+      setDaftarKomoditas(tanamanPangan);
     } else if (kategori == "Tanaman Perkebunan") {
-      setDaftarKomoditas([
-        "Kopi",
-        "Kakao",
-        "Cengkeh",
-        "The",
-        "Karet",
-        "Kelapa",
-        "Tembakau",
-        "Tebu",
-      ]);
+      setDaftarKomoditas(tanamanPerkebunan);
     } else if (kategori == "Tanaman Holtikultura") {
-      setDaftarKomoditas([
-        "Cabe Kecil",
-        "Cabe Besar",
-        "Bawang Merah",
-        "Tomat",
-        "Terong",
-        "Pare",
-        "Gambas",
-        "Bayam",
-        "Kangkung",
-        "Sawi",
-        "Kacang Panjang ",
-      ]);
+      setDaftarKomoditas(komoditasTahunan);
     } else if (kategori == "lainnya") {
-      setDaftarKomoditas([
-        "Mangga",
-        "Durian",
-        "Manggis",
-        "Alpukat",
-        "Rambutan",
-        "Jeruk Lemon",
-        "Jeruk nipis",
-        "Jeruk Keprok",
-        "Jeruk Besar",
-        "Nangka",
-        "Jambu Biji",
-        "Jambu air",
-        "Sukun",
-        "Sirsat",
-        "Sawo",
-        "Duku",
-        "Melon",
-        "Semangka",
-        "Pisang",
-        "Blewah",
-      ]);
+      setDaftarKomoditas(komoditasSemusim);
     } else {
       setDaftarKomoditas([""]);
     }
