@@ -226,9 +226,14 @@ export default function EditTanamanPetani() {
       formData.append(key, data[key]);
     }
     // console.log({formData})
-    console.log(data);
+    // console.log(data);
     UpdateTanamanPetani(id, data).then(() => setLoading(false))
-    window.history.push('/tanaman-petani');
+    // window.reload()
+    // add window reload
+    // window.history.push(`/tanaman-petani/edit/$id`);
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   };
 
   return (
