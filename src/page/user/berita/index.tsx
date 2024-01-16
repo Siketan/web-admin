@@ -29,7 +29,7 @@ export default function Berita() {
 
   return (
     <UserLayout>
-      <MainCard row transparent center gap="0">
+      <MainCard row transparent center gap="0" className="min-h-screen">
         <MainCard width="80%" radius="0" gap="0">
           <Link to="/info-pertanian">
             <IoCaretBackCircle size={40} className="fill-green-primary" />
