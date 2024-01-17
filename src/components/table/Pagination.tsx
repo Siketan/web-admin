@@ -62,19 +62,23 @@ export function PaginationControl<T extends RowData>({
   const sortKey = searchParams.get("sort_key") ?? "";
   const sortType = searchParams.get("sort_type") ?? "";
 
+  const paginationControl = buildPaginationControl(pageIndex, pageCount);
+
   const arrowBtn =
     "flex justify-center items-center bg-color-3 disabled:text-gray-600 text-gray-400 disabled:hover:bg-color-0 h-[40px] w-[40px] border-[1px] border-[#E4E7EB] drop-shadow hover:text-white active:border-[#E4E7EB] disabled:brightness-100 disabled:cursor-not-allowed rounded-md";
-  const getButtonClass = (buttonIndex: number) => {
+  const getButtonClass = (pageNumber: string | number) => {
     let baseClass =
       "border-[1px] border-[#E4E7EB] w-10 h-10 rounded-md drop-shadow active:border-[#E4E7EB] hover:bg-green-secondary hover:text-white active:bg-green-primary disabled:brightness-100";
-    if (pageIndex === buttonIndex) {
-      baseClass += " bg-green-primary text-white ";
-    } else {
-      baseClass += " bg-[#ffffff] ";
-    }
-    if (buttonIndex >= pageCount) {
-      baseClass +=
+    if (typeof pageNumber == "number") {
+      if (pageIndex === pageNumber) {
+        baseClass += " bg-green-primary text-white ";
+      }else {
+        baseClass += " bg-[#ffffff] ";
+      }
+      if (pageNumber >= pageCount) {
+        baseClass +=
         " disabled:bg-white disabled:hover:bg-white disabled:text-[#D1D5DC] disabled:hover:text-[#D1D5DC]";
+      }
     }
     return baseClass;
   };
@@ -94,23 +98,22 @@ export function PaginationControl<T extends RowData>({
       >
         <FaChevronLeft />
       </button>
-      {Array.from({ length: pageCount }, (_, index) => (
+      {paginationControl.map((page, index) => (
         <button
           key={index}
           onClick={() => {
+            if (page !== "...")
             navigate(
-              `${location.pathname}?page=${
-                index + 1
-              }&limit=${perPage}&search_query=${searchQuery}&sort_key=${sortKey}&sort_type=${sortType}`
-            );
+                `${location.pathname}?page=${page}&limit=${perPage}&search_query=${searchQuery}&sort_key=${sortKey}&sort_type=${sortType}`
+              );
           }}
           disabled={index >= pageCount}
           className={clsx(
-            getButtonClass(index + 1),
+            getButtonClass(page),
             "text-neutral-800 hover:text-neutral-800"
           )}
         >
-          {index + 1}
+          {page}
         </button>
       ))}
       <button
@@ -128,4 +131,38 @@ export function PaginationControl<T extends RowData>({
       </button>
     </div>
   );
+}
+
+export function buildPaginationControl(
+  currentPage: number,
+  pageCount: number,
+  delta = 1
+) {
+  const rangeWithDots: (number | string)[] = [];
+
+  if (isNaN(pageCount) || pageCount === 0) {
+    return []; // Return an empty array when pageCount is NaN or 0
+  }
+
+  const range = [...Array(pageCount)]
+    .map((_, i) => i + 1)
+    .map((page) => {
+      if (
+        Math.abs(page - 1) <= delta ||
+        Math.abs(pageCount - page) <= delta ||
+        Math.abs(currentPage - page) <= delta
+      )
+        return page;
+
+      return -1;
+    })
+    .filter((page) => page !== -1);
+
+  range.forEach((page, i) => {
+    const previousPage = range[i - 1];
+    if (page - previousPage > 1) rangeWithDots.push("...");
+    rangeWithDots.push(page);
+  });
+
+  return rangeWithDots;
 }
