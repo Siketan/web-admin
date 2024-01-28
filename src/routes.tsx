@@ -72,6 +72,7 @@ import DetailStatistik from "./page/statistik/detail";
 import DetailDataTanaman from "./page/dataTani/dataPertanian/tanamanPetani/detail";
 import ExportTable from "./page/statistik/export";
 import ExportTableDataPertanian from "./page/dataTani/dataPertanian/tanamanPetani/export";
+import Profil from "./page/profil/side";
 
 const menu = [
   {
@@ -438,7 +439,7 @@ const Path = () => {
                 </Menu.Target>
                 <Menu.Dropdown>
                   {dropdownMenu.map((item, index) => (
-                    <Menu.Item
+                    <Menu.Item className="hover:bg-green-primary"
                       component="a"
                       key={index}
                       href={item.path}
@@ -449,7 +450,7 @@ const Path = () => {
                         },
                       }}
                     >
-                      <div className="flex gap-2 items-center">
+                      <div className="flex gap-2 items-center text-black hover:text-white">
                         <Image
                           src={item.icon}
                           alt={item.name}
@@ -460,13 +461,13 @@ const Path = () => {
                       </div>
                     </Menu.Item>
                   ))}
-                  <Menu.Item
+                  <Menu.Item className="hover:bg-green-primary"
                     component="b"
                     onClick={() => {
                       Logout();
                     }}
                   >
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 items-center text-black hover:text-white ">
                       <Image
                         src="/icons/keluar.svg"
                         alt="Keluar"
@@ -601,6 +602,8 @@ const RoutesPath = () => {
           {/* LiveChat */}
           <Route path="/live-chat" element={<LiveChat />} />
           <Route path="/live-chat/rating-petugas" element={<RatingPetugas />} />
+          {/* Profil */}
+          <Route path="profil" element={<Profil/>}/>
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
