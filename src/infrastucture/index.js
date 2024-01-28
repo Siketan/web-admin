@@ -54,10 +54,25 @@ export const VerifyingUser = async (id) => {
   }
 };
 
+// all about profile
 export const GetProfile = async () => {
   const response = await Api.get("/auth/profile");
   return response;
 };
+export const GetDetailProfile = async () => {
+  const response = await Api.get("/auth/detailprofile");
+  return response;
+};
+export const UpdateProfile = async (data) => {
+  try {
+    const response = await Api.put("/auth/updateprofile", data, headers);
+    SweatAlert(String(response.data.message), "success");
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), "error");
+  }
+};
+
+
 export const Logout = () => {
   localStorage.clear();
   window.location = "/login";
