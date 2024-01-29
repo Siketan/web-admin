@@ -19,7 +19,7 @@ export const Register = async (data) => {
 export const Login = async (data) => {
   try {
     const response = await Api.post("/auth/login", data);
-    console.log(response);
+    // console.log(response);
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("nama", response?.data?.user?.nama);
     window.location.href = "/dashboard";
@@ -302,15 +302,6 @@ export const editTanmanPetani = async (id, data) => {
     SweatAlert(String(error.response.data.message), "error");
   }
 };
-// export const DeleteTanamanPetani = async (id) => {
-//   try {
-//     const response = await Api.delete(`/tanaman-petani/${id}`);
-//     SweatAlert(String(response.data.message), "success", "reload");
-//   } catch (error) {
-//     SweatAlert(String(error.response.data.message), "error");
-//   }
-// };
-// info tani
 export const AddInfoTani = async (data) => {
   try {
     const response = await Api.post("/info-tani/add", data, headers);
@@ -395,7 +386,6 @@ export const updateEventTani = async (id, data) => {
 export const updateInfoTani = async (id, data) => {
   try {
     const response = await Api.put(`/info-tani/${id}`, data, headers);
-    console.log("res", response);
     // SweatAlert(String(response.data.message), "success", "/info-tani");
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
@@ -658,3 +648,77 @@ export const updatePenyuluhById = async (payload, id) => {
     SweatAlert(String(error.response.data.message), "error");
   }
 };
+
+/**
+ * @Description Router for Operator
+ */
+export const GetDaftarOperator = async (page, limit) => {
+  try {
+    const response = await Api.get(
+      `/daftar-operator?page=${page}&limit=${limit}`
+    );
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), "error");
+  }
+};
+
+export const GetOperatorDetail = async (id) => {
+  try {
+    const response = await Api.get(`/daftar-operator/${id}`);
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), "error");
+  }
+};
+
+export const DeleteOperator = async (id) => {
+  try {
+    const response = await Api.delete(`/daftar-operator/${id}`);
+    SweatAlert(String(response.data.message), "success", "reload");
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), "error");
+  }
+};
+
+export const AddOperator = async (data) => {
+  try {
+    const response = await Api.post("/daftar-operator/add", data, headers);
+    SweatAlert(
+      String(response.data.message),
+      "success",
+      "/list-operator"
+    );
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), "error");
+  }
+};
+
+export const UpdateOperator = async (id, data) => {
+  try {
+    const response = await Api.put(`/daftar-operator/${id}`, data, headers);
+    SweatAlert(
+      String(response.data.message),
+      "success",
+      "/list-operator"
+    );
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), "error");
+  }
+};
+
+export const UploadDataOperator = async (file) => {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await Api.post("/upload-data-operator", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    SweatAlert(String(response.data.message), "success");
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), "error");
+  }
+};
+/** @description End of Operator Routes*/

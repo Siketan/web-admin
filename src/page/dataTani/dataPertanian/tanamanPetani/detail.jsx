@@ -143,7 +143,6 @@ export default function DetailDataTanaman() {
     setPrakiraanBulanPanen(tanaman?.prakiraanBulanPanen)
   }, [tanaman])
 
-  console.log(jenis);
 
   useEffect(() => {
     GetListTanaman(page,
@@ -226,7 +225,6 @@ export default function DetailDataTanaman() {
       formData.append(key, data[key]);
     }
     // console.log({formData})
-    console.log(data);
     UpdateTanamanPetani(id, data).then(() => setLoading(false))
     window.history.push('/tanaman-petani');
   };

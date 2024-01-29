@@ -36,6 +36,7 @@ import TambahLaporanTanam from "./dataTani/dataPertanian/laporanTanaman/tambah";
 import TambahLaporanAhir from "./dataTani/dataPertanian/laporanTanaman/laporanAkhir";
 import VerifikasiUser from "./kelolaUser";
 import DataSampah from "./logAktivitas/dataSampah";
+import TambahOperator from "./operator/tambah";
 
 const NotFoundPage = () => {
 	return (
@@ -92,4 +93,5 @@ export {
 	EditPenyuluhan,
 	VerifikasiUser,
 	DataSampah,
+	TambahOperator,
 };

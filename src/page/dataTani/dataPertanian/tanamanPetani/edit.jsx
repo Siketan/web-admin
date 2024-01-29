@@ -143,7 +143,6 @@ export default function EditTanamanPetani() {
     setPrakiraanBulanPanen(tanaman?.prakiraanBulanPanen)
   }, [tanaman])
 
-  console.log(jenis);
 
   useEffect(() => {
     GetListTanaman(page,
