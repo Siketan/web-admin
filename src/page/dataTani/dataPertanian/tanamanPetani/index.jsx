@@ -135,7 +135,6 @@ export default function DetailRekapPetani() {
         setDatas(data.data);
         setResp(data);
         setLoading(false);
-        console.log(data);
       }
       );
   }, [page, limit, petani]);

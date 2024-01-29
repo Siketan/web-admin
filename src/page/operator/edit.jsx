@@ -19,6 +19,7 @@ import {
   } from "@mantine/core";
 
 const EditOperator = () => {
+    const [datas, setDatas] = useState([]);
     const [nik, setNIK] = useState('');
     const [nkk, setNKK] = useState('');
     const [nama, setNama] = useState('');
@@ -29,23 +30,32 @@ const EditOperator = () => {
     const [foto, setFoto] = useState('');
     const [peran, setPeran] = useState('');
     const [loading, setLoading] = useState(false)
-    const { id } = useParams()
+    const { id } = useParams();
     
-  useEffect(() => {
-    GetOperatorDetail(id).then((data)=>{
-        console.log(data.nik);
-        setNIK(data.data.nik);
-        setNKK(data.data.nkk);
-        setNama(data.nama);
-        setEmail(data.data.email);
-        setNoTelp(data.data.noTelp);
-        setAlamat(data.data.alamat);
-        setFoto(data.data.foto);
-        setPeran(data.data.peran);
-    })
-    // console.log(nama);
-}, []);
+    
+    useEffect(() => {
+      GetOperatorDetail(id).then((data)=>{
+        // console.log(data)
+        // console.log(data.data_1)
+        if (data.data) {
+          const { nik, nkk, nama, email, password, noTelp, alamat, foto, peran } = data.data;
+          setNIK(data.data[0].nik);
+          setNKK(data.data[0].nkk);
+          setNama(data.data[0].nama);
+          setEmail(data.data[0].email);
+          // setPassword(data.data[0].password);
+          setNoTelp(data.data[0].noTelp);
+          setAlamat(data.data[0].alamat);
+          setFoto(data.data[0].foto);
+          setPeran(data.data[0].peran);
+          // setDatas(data.data[0].data);
+        }
+      });
+    }, []);
 
+    // useEffect(() => {
+    //   // console.log(datas); // This will reflect the updated value of datas
+    // }, [datas]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -61,7 +71,7 @@ const EditOperator = () => {
         peran,
         foto
         };
-        console.log(data)
+        // console.log(data)
         const formData = new FormData();
         for (const key in data) {
           formData.append(key, data[key]);

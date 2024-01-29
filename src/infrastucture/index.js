@@ -386,7 +386,6 @@ export const updateEventTani = async (id, data) => {
 export const updateInfoTani = async (id, data) => {
   try {
     const response = await Api.put(`/info-tani/${id}`, data, headers);
-    console.log("res", response);
     // SweatAlert(String(response.data.message), "success", "/info-tani");
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
@@ -688,7 +687,7 @@ export const AddOperator = async (data) => {
     SweatAlert(
       String(response.data.message),
       "success",
-      "/data-operator/rekap-operator"
+      "/list-operator"
     );
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
@@ -701,7 +700,7 @@ export const UpdateOperator = async (id, data) => {
     SweatAlert(
       String(response.data.message),
       "success",
-      "/data-operator/rekap-operator"
+      "/list-operator"
     );
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");

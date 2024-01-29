@@ -113,7 +113,6 @@ const IndexOperator = () => {
     if (!event.target.files) return;
   
     const file = event.target.files[0];
-    console.log(file);
     UploadDataPetani(file).then(() => {
       window.location.reload();
     });
