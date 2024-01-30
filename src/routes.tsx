@@ -73,6 +73,7 @@ import DetailStatistik from "./page/statistik/detail";
 import DetailDataTanaman from "./page/dataTani/dataPertanian/tanamanPetani/detail";
 import ExportTable from "./page/statistik/export";
 import ExportTableDataPertanian from "./page/dataTani/dataPertanian/tanamanPetani/export";
+import LogActivity from "./page/logAktivitas";
 
 const menu = [
 	{
@@ -212,7 +213,18 @@ const menu = [
 		id: "log-aktivitas",
 		name: "Log Aktivitas",
 		icon: "/icons/log-aktivitas.svg",
-		path: "/log-aktivitas/data-sampah",
+		sub: [
+			{
+				name: "Aktivitas User",
+				icon: "/icons/log-aktivitas.svg",
+				path: "/log-aktivitas",
+			},
+			{
+				name: "Data Sampah",
+				icon: "/icons/log-aktivitas.svg",
+				path: "/log-aktivitas/data-sampah",
+			},
+		],
 	},
 	{
 		id: "list-operator",
@@ -694,6 +706,7 @@ const RoutesPath = () => {
 						element={<RekapDataPenyuluh />}
 					/>
 					{/* Log Aktivitas */}
+					<Route path="/log-aktivitas/" element={<LogActivity />} />
 					<Route
 						path="/log-aktivitas/data-sampah"
 						element={<DataSampah />}

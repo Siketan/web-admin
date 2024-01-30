@@ -24,7 +24,7 @@ function ProdukPetani() {
 					return result;
 				}, {});
 			});
-			console.log(filterData);
+			// console.log(filterData);
 			setDatas(filterData as FilteredTokoTani[]);
 			setLoading(false);
 		});
