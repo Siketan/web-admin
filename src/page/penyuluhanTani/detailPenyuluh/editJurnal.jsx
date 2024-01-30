@@ -1,21 +1,27 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import EditorText from "@/components/textAreaEditor";
-import { Button } from "@mantine/core";
+import { Card, Image, Badge, Group, Button, Text, Modal } from "@mantine/core";
 import MainCard from "@/components/MainCard";
 import TextInput from "@/components/uiComponents/inputComponents/textInput";
 import { IconPlus, IconX, IconDeviceFloppy } from "@tabler/icons-react";
-import { AddJurnalKegiatan } from "@/infrastruture";
+import { GetJurnalKegiatanById, UpdateJurnalKegiatan } from "@/infrastruture";
 import InputImage from "@/components/inputImage";
 import LoadingAnimation from '../../../components/loading'
-const FormJurnalKegiatan = () => {
+import { useParams, useNavigate } from "react-router-dom"
+const EditFormJurnalKegiatan = () => {
   const [NIK, setNIK] = useState("");
   const [judul, setJudul] = useState("");
   const [statusJurnal, setStatusJurnal] = useState("");
   const [isi, setIsi] = useState("");
+  const [isiBaru, setIsiBaru] = useState("");
   const [gambar, setGambar] = useState("");
+  const [modalDeleteData, setModalDeleteData] = useState(false);
   const [createdBy, setCreatedBy] = useState("");
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const {id} = useParams();
+  
+//   const id = location.state?.id;
   const currentDate = new Date();
   const tanggalDibuat = currentDate.toISOString().split("T")[0];
   const tanggalFormatted =
@@ -41,8 +47,20 @@ const FormJurnalKegiatan = () => {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    AddJurnalKegiatan(formData).then(()=>setLoading(false));
+    UpdateJurnalKegiatan(id, formData).then(()=>setLoading(false));
   };
+
+  useEffect(() => {
+    GetJurnalKegiatanById(id).then((data) => {
+      console.log(data.newData.uraian)
+      setNIK(data.newData.dataPenyuluh.nik);
+      setJudul(data.newData.judul);
+      setIsi(data.newData.uraian);
+      setGambar(data.newData.gambar);
+      setCreatedBy(data.newData.dataPenyuluh.nama);
+      setStatusJurnal(data.newData.statusJurnal);
+    });
+  }, []);
   return (
     <MainCard transparent row center style={{ paddingTop: "50px" }}>
           {loading && <LoadingAnimation/>}
@@ -101,15 +119,13 @@ const FormJurnalKegiatan = () => {
             />
           </MainCard>
         </MainCard>
-        <EditorText setValue={setIsi} />
+        <EditorText setValue={setIsiBaru} isi={isi} />
         <MainCard
-          transparent
-          id="isi"
-          name="isi"
-          value={isi}
-          onChange={(e) => setIsi(e.target.value)}
-          row
-          style={{ justifyContent: "end" }}
+            transparent
+            id="isi"
+            name="isi"
+            row
+            style={{ justifyContent: "end" }}
         >
           <Button
             leftIcon={<IconDeviceFloppy size="1rem" />}
@@ -127,4 +143,4 @@ const FormJurnalKegiatan = () => {
   );
 };
 
-export default FormJurnalKegiatan;
+export default EditFormJurnalKegiatan;

@@ -205,7 +205,7 @@ const TambahOperator = () => {
                 <p>Peran</p>
                 <Select
                   className="mt-2"
-                  placeholder="Status Tanah"
+                  placeholder="Pilih peran"
                   value={peran}
                   data={[
                     "operator poktan",

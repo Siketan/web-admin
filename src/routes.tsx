@@ -78,6 +78,8 @@ import LogActivity from "./page/logAktivitas";
 import IndexOperator from "./page/operator";
 import EditOperator from "./page/operator/edit";
 import DetailOperator from "./page/operator/detail";
+import DetailJurnalKegiatan from "./page/penyuluhanTani/detailPenyuluh/detail";
+import EditFormJurnalKegiatan from "./page/penyuluhanTani/detailPenyuluh/editJurnal";
 
 const menu = [
 	{
@@ -700,6 +702,14 @@ const RoutesPath = () => {
 					<Route
 						path="/data-penyuluh/jurnal-kegiatan/form"
 						element={<FormJurnalKegiatan />}
+					/>
+					<Route
+						path="/data-penyuluh/jurnal-kegiatan/detail/:id"
+						element={<DetailJurnalKegiatan />}
+					/>
+					<Route
+						path="/data-penyuluh/jurnal-kegiatan/edit/:id"
+						element={<EditFormJurnalKegiatan />}
 					/>
 					<Route
 						path="/data-penyuluh/riwayat-chat"

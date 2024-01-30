@@ -475,18 +475,43 @@ export const AddJurnalKegiatan = async (data) => {
 		SweatAlert(String(error.response.data.message), "error");
 	}
 };
-export const GetPreseiKehadiran = async () => {
-	try {
-		const response = await Api.get("/presensi-kehadiran/web");
-		return response.data?.DataPresesiKehadiran;
-	} catch (error) {
-		SweatAlert(String(error.response.data.message), "error");
-	}
-};
 export const GatJurnalKegiatan = async () => {
 	try {
 		const response = await Api.get("/jurnal-kegiatan");
 		return response.data;
+	} catch (error) {
+		SweatAlert(String(error.response.data.message), "error");
+	}
+};
+export const GetJurnalKegiatanById = async (id) => {
+	try {
+		const response = await Api.get(`/jurnal-kegiatan/${id}`);
+		return response.data;
+	} catch (error) {
+		SweatAlert(String(error.response.data.message), "error");
+	}
+};
+export const DeleteJurnalKegiatan = async (id) => {
+	try {
+		const response = await Api.delete(`/jurnal-kegiatan/${id}`);
+		SweatAlert(String(response.data.message), "success", "reload");
+	} catch (error) {
+		SweatAlert(String(error.response.data.message), "error");
+	}
+};
+export const UpdateJurnalKegiatan = async (id, data) => {
+	try {
+		const response = await Api.put(`/jurnal-kegiatan/${id}`, data, headers);
+		SweatAlert(String(response.data.message), "success", "/jurnal-kegiatan");
+	} catch (error) {
+		SweatAlert(String(error.response.data.message), "error");
+	}
+};
+
+export const GetPreseiKehadiran = async () => {
+	try {
+		const response = await Api.get("/presensi-kehadiran/web");
+		return response.data?.DataPresesiKehadiran;
 	} catch (error) {
 		SweatAlert(String(error.response.data.message), "error");
 	}
