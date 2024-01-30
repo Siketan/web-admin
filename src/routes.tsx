@@ -33,6 +33,7 @@ import {
 	TambahTanamanPetani,
 	EditTanamanPetani,
 	DetailTanamanPetani,
+	TambahOperator,
 	// DetailDataTanamanPetani,
 	EditLaporanTanam,
 	TambahLaporanTanam,
@@ -74,6 +75,9 @@ import DetailDataTanaman from "./page/dataTani/dataPertanian/tanamanPetani/detai
 import ExportTable from "./page/statistik/export";
 import ExportTableDataPertanian from "./page/dataTani/dataPertanian/tanamanPetani/export";
 import LogActivity from "./page/logAktivitas";
+import IndexOperator from "./page/operator";
+import EditOperator from "./page/operator/edit";
+import DetailOperator from "./page/operator/detail";
 
 const menu = [
 	{
@@ -228,7 +232,7 @@ const menu = [
 	},
 	{
 		id: "list-operator",
-		name: "List Operator",
+		name: "Info Operator",
 		icon: "/icons/users.svg",
 		sub: [
 			{
@@ -237,9 +241,9 @@ const menu = [
 				path: "/list-operator/tambah",
 			},
 			{
-				name: "Ubah Operator",
+				name: "Data Operator",
 				icon: "/icons/edit-menu.svg",
-				path: "/list-operator/ubah",
+				path: "/list-operator",
 			},
 		],
 	},
@@ -700,6 +704,20 @@ const RoutesPath = () => {
 					<Route
 						path="/data-penyuluh/riwayat-chat"
 						element={<DataRiwayatChat />}
+					/>
+					{/*All about Operator*/}
+					<Route
+						path="/list-operator/tambah"
+						element={<TambahOperator />}
+					/>
+					<Route path="/list-operator" element={<IndexOperator />} />
+					<Route
+						path="/data-operator/edit/:id"
+						element={<EditOperator />}
+					/>
+					<Route
+						path="/data-operator/detail/:id"
+						element={<DetailOperator />}
 					/>
 					<Route
 						path="/data-penyuluh/rekap-penyuluh"

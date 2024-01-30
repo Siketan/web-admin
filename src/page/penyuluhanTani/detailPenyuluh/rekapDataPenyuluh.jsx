@@ -95,7 +95,6 @@ const RekapDataPenyuluh = () => {
       limit,
       ).
       then((data) => {
-        console.log(data);
       // setDatas(data.data);
       setResp(data);
       setLoading(false);

@@ -28,7 +28,6 @@ export default function ExportTableDataPertanian() {
   useEffect(() => {
     GetListTanaman(1, 1, 1, true).then((res) => {
       setResp(res);
-      console.log(res);
     });
   }, []);
 
