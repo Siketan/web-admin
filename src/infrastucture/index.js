@@ -393,22 +393,22 @@ export const updateInfoTani = async (id, data) => {
 };
 
 // toko tani
-export const AddPenjual = async (data, log) => {
+export const AddPenjual = async (data) => {
   try {
     const response = await Api.post("/daftar-penjual/add", data, headers);
-    if (log == "petani") {
-      SweatAlert(
-        String(response.data.message),
-        "success",
-        "/toko-tani/produk-petani"
-      );
-    } else if (log == "penyuluh") {
-      SweatAlert(
-        String(response.data.message),
-        "success",
-        "/toko-tani/produk-penyuluh"
-      );
-    }
+    SweatAlert(
+      String(response.data.message),
+      "success",
+      "/toko-tani/produk-petani"
+    );
+    // if (log == "petani") {
+    // } else if (log == "penyuluh") {
+    //   SweatAlert(
+    //     String(response.data.message),
+    //     "success",
+    //     "/toko-tani/produk-penyuluh"
+    //   );
+    // }
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error", "reload");
   }

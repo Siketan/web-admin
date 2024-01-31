@@ -64,7 +64,7 @@ const TambahTokoTani = () => {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    AddPenjual(formData, profesiPenjual).then(() => setLoading(false));
+    AddPenjual(formData).then(() => setLoading(false));
   };
 
   return (
