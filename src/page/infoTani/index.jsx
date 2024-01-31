@@ -1,15 +1,19 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MainCard from "@/components/MainCard";
 import InputCrud from "@/components/page/infoTani/IconCrud";
 import { IconEdit, IconEye, IconTrash, IconPlus } from "@tabler/icons-react";
 import { GetInfoTani, DeleteInfoTani } from "@/infrastruture";
 import { Text, Button, Modal, Card } from "@mantine/core";
 import LoadingAnimation from "../../components/loading";
+import { Text, Button, Modal, Card } from "@mantine/core";
+import LoadingAnimation from "../../components/loading";
 import { FaClock } from "react-icons/fa6";
 import { BsPersonCircle } from "react-icons/bs";
 import { IoMdListBox } from "react-icons/io";
 import { BiCategoryAlt } from "react-icons/bi";
+import { postLogActivity } from "../../infrastucture/logActivity";
 import { postLogActivity } from "../../infrastucture/logActivity";
 
 const InfoTani = () => {
