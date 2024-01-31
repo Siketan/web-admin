@@ -5,6 +5,7 @@ import { FaClock } from "react-icons/fa6";
 import { FaBuilding } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import MainCard from "../../../../components/MainCard";
+import { GetEventTani } from "../../../../infrastucture";
 const KegiatanTani = () => {
   const [width, setWidth] = useState(0);
   const carousel = useRef(null);
@@ -50,6 +51,12 @@ const KegiatanTani = () => {
       tempat: "ruang tak terbatas",
     },
   ]);
+  useEffect(() => {
+    GetEventTani().then((data) => {
+        setDatas(data.infotani)
+    }
+    )
+}, [])
   // useEffect(() => {
   //   getEventTani().then((data)=>setDatas(data))
   // }, [])
@@ -89,7 +96,7 @@ const KegiatanTani = () => {
                   <div className="pl-3 flex flex-col space-y-1">
                     <div className="flex flex-row space-x-2">
                       <IoCalendar size={18} className="fill-green-secondary" />
-                      <p className="text-sm">{data.tanggalAcara}</p>
+                      <p className="text-sm">{data.tanggalAcara?.split("T")[0]}</p>
                     </div>
                     <div className="flex flex-row space-x-2">
                       <FaClock size={18} className="fill-green-secondary" />
@@ -99,17 +106,6 @@ const KegiatanTani = () => {
                       <FaBuilding size={18} className="fill-green-secondary" />
                       <p className="text-sm">{data.tempat}</p>
                     </div>
-
-                    {/* <p className="font-bold text-gray-primary">{data?.tanggalAcara ? formatedDate(data?.tanggalAcara.split("T")):''}</p>
-                    <p className="font-bold text-orange-primary">
-                      Waktu Mulai : {data?.waktuAcara.split("-")[0].trim() !== '' ? `${data?.waktuAcara.split("-")[0]} WIB` : "-"}
-                    </p>
-                    <p className="font-bold text-orange-primary">
-                      Waktu Pulang : {data?.waktuAcara.split("-")[1].trim() !== '' ? `${data?.waktuAcara.split("-")[1]} WIB` : "-"}
-                    </p>
-                    <p className="underline font-bold text-green-secondary">
-                      Tempat : {data?.tempat}
-                    </p> */}
                   </div>
                 </div>
               </div>

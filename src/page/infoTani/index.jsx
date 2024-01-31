@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import MainCard from "@/components/MainCard";
 import InputCrud from "@/components/page/infoTani/IconCrud";
 import { IconEdit, IconEye, IconTrash, IconPlus } from "@tabler/icons-react";
-import { Image } from "@mantine/core";
 import { GetInfoTani, DeleteInfoTani } from "@/infrastruture";
-import { Text, Button, Modal, Card } from "@mantine/core";
-import LoadingAnimation from "../../components/loading";
+import { Text, Button, Modal, Card } from '@mantine/core';
+import LoadingAnimation from '../../components/loading'
 import { FaClock } from "react-icons/fa6";
 import { BsPersonCircle } from "react-icons/bs";
 import { IoMdListBox } from "react-icons/io";
@@ -15,47 +14,26 @@ import { postLogActivity } from "../../infrastucture/logActivity";
 
 const InfoTani = () => {
 	const [datas, setDatas] = useState([]);
-	const [checekd, setChecekd] = useState([false]);
-	const [id, setId] = useState();
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(true)
 	const [modalDeleteData, setModalDeleteData] = useState(false);
 	const history = useNavigate();
-	const handleCheckd = (e) => {
-		if (e == true) {
-			setChecekd(true);
-		} else {
-			setChecekd(false);
-		}
-		setId();
-	};
-	const handleCheckdOne = (ids) => {
-		if (id) {
-			if (id != ids) {
-				setId(ids);
-			} else {
-				setId();
-			}
-		} else {
-			setId(ids);
-		}
-	};
 	useEffect(() => {
 		GetInfoTani().then((data) => {
-			setDatas(data.infotani);
-			setLoading(false);
-			console.log(data);
+			setDatas(data.infotani)
+			setLoading(false)
+			console.log(data)
 		});
 	}, []);
 
 	const handleDeleteUser = (ids) => {
-		DeleteInfoTani(ids);
+		DeleteInfoTani(ids)
 		postLogActivity({
 			user_id: localStorage.getItem("user_id"),
 			activity: "DELETE",
 			type: "INFO",
 			detail_id: ids,
 		});
-	};
+	}
 	const navigateToEdit = (itemId) => {
 		history(`/info-tani/edit/${itemId}`, { state: { id: itemId } });
 	};
@@ -70,27 +48,10 @@ const InfoTani = () => {
 					<div className="flex justify-between w-[80%] p-[20px]">
 						<div
 							className="flex justify-center gap-2 cursor-pointer bg-yellow-500 hover:bg-green-primary hover:text-white hover:fill-white rounded-md p-3"
-							onClick={() =>
-								(window.location.href = "/info-tani/tambah")
-							}
+							onClick={() => (window.location.href = "/info-tani/tambah")}
 						>
 							<IconPlus className="m-auto rounded-full h-[20px] w-[20px] border border-black me-1" />
-							<span className="text-base md:text-xl">
-								Tambah Baru
-							</span>
-						</div>
-						<div className="flex justify-center gap-2 cursor-pointer bg-yellow-500 hover:bg-green-primary hover:text-white hover:fill-white rounded-md p-3">
-							<div className="self-center h-[20px] w-[20px] me-1 flex justify-center">
-								<input
-									type="checkbox"
-									onChange={(e) =>
-										handleCheckd(e.target.checked)
-									}
-								/>
-							</div>
-							<span className="text-base md:text-xl ">
-								Pilih Semua
-							</span>
+							<span className="text-base md:text-xl">Tambah Baru</span>
 						</div>
 					</div>
 				</div>
@@ -101,27 +62,17 @@ const InfoTani = () => {
 					centered
 				>
 					<Text>Apakah Kamu Yakin Akan Menghapus Data Ini ?</Text>
-					<div
-						style={{
-							display: "flex",
-							justifyContent: "flex-end",
-							marginTop: 20,
-						}}
-					>
+					<div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}>
 						<Button
 							color="cyan"
-							style={{
-								color: "white",
-								backgroundColor: "#303A47",
-								marginRight: 8,
-							}}
+							style={{ color: 'white', backgroundColor: '#303A47', marginRight: 8 }}
 							onClick={() => setModalDeleteData(false)}
 						>
 							Cancel
 						</Button>
 						<Button
 							color="cyan"
-							style={{ color: "white", backgroundColor: "red" }}
+							style={{ color: 'white', backgroundColor: 'red' }}
 							type="submit"
 							onClick={() => {
 								handleDeleteUser(modalDeleteData);
@@ -134,25 +85,14 @@ const InfoTani = () => {
 				</Modal>
 
 				{datas?.map((item, i) => (
-					<MainCard row transparent center gap="0" key={i}>
-						<Card
-							shadow="sm"
-							padding="lg"
-							radius="md"
-							withBorder
-							className="w-[80%]"
-						>
+					<MainCard row transparent center gap="0" key={i} >
+						<Card shadow="sm" padding="lg" radius="md" withBorder className="w-[80%]">
 							<MainCard transparent row>
-								<img
-									className="h-min rounded-lg w-52"
+								<img className="h-min rounded-lg w-52"
 									src={item?.fotoBerita}
 									alt="With default placeholder"
 								/>
-								<MainCard
-									transparent
-									noPadding
-									className="w-[100%]"
-								>
+								<MainCard transparent noPadding className="w-[100%]">
 									<h1 className="font-bold text-base md:text-lg text-justify tracking-[1px] text-green-primary max-w-[95%]">
 										{item?.judul}
 									</h1>
@@ -160,96 +100,30 @@ const InfoTani = () => {
 										<div className="max-w-[95%] flex flex-col space-y-3">
 											<div className="flex flex-row space-x-5">
 												<div className="flex flex-row space-x-2 items-center justify-center">
-													<BsPersonCircle
-														size={17}
-														className="fill-grey-primary"
-													/>
-													<p className="text-xs sm:text-sm text-grey-primary">
-														{item?.createdBy}
-													</p>
+													<BsPersonCircle size={17} className="fill-grey-primary" />
+													<p className="text-xs sm:text-sm text-grey-primary">{item?.createdBy}</p>
 												</div>
 												<div className="flex flex-row space-x-2 items-center justify-center">
-													<FaClock
-														size={17}
-														className="fill-grey-primary"
-													/>
-													<p className="text-xs sm:text-sm text-grey-primary">
-														{
-															item?.tanggal?.split(
-																"T"
-															)[0]
-														}
-													</p>
+													<FaClock size={17} className="fill-grey-primary" />
+													<p className="text-xs sm:text-sm text-grey-primary">{item?.tanggal?.split("T")[0]}</p>
 												</div>
 												<div className="flex flex-row space-x-2 items-center justify-center">
-													<IoMdListBox
-														size={17}
-														className="fill-grey-primary"
-													/>
-													<p className="text-xs sm:text-sm text-grey-primary">
-														{item?.status}
-													</p>
+													<IoMdListBox size={17} className="fill-grey-primary" />
+													<p className="text-xs sm:text-sm text-grey-primary">{item?.status}</p>
 												</div>
 												<div className="flex flex-row space-x-2 items-center justify-center">
-													<BiCategoryAlt
-														size={17}
-														className="fill-grey-primary"
-													/>
-													<p className="text-xs sm:text-sm text-grey-primary">
-														{item?.kategori}
-													</p>
+													<BiCategoryAlt size={17} className="fill-grey-primary" />
+													<p className="text-xs sm:text-sm text-grey-primary">{item?.kategori}</p>
 												</div>
 											</div>
-											<div
-												dangerouslySetInnerHTML={{
-													__html: item.isi,
-												}}
-												className="text-justify text-sm sm:text-base"
-											/>
+											<div dangerouslySetInnerHTML={{ __html: item.isi }} className="text-justify text-sm sm:text-base" />
 										</div>
 									</div>
 								</MainCard>
-								<div className="flex flex-col items-end justify-between">
-									<input
-										className="h-[20px] w-[20px] cursor-pointer"
-										type="checkbox"
-										checked={
-											checekd == true
-												? true
-												: id == item.id
-												? true
-												: false
-										}
-										onChange={(e) =>
-											handleCheckdOne(item.id)
-										}
-									/>
-									<div className="flex flex-col space-y-1 max-h-fit">
-										<InputCrud
-											onClick={() =>
-												navigateToDetail(item.id)
-											}
-											icon={<IconEye />}
-										>
-											Lihat
-										</InputCrud>
-										<InputCrud
-											onClick={() =>
-												navigateToEdit(item.id)
-											}
-											icon={<IconEdit />}
-										>
-											Edit
-										</InputCrud>
-										<InputCrud
-											onClick={() =>
-												setModalDeleteData(item.id)
-											}
-											icon={<IconTrash />}
-										>
-											Hapus
-										</InputCrud>
-									</div>
+								<div className="flex flex-col space-y-1 max-h-fit justify-end">
+									<InputCrud onClick={() => navigateToDetail(item.id)} icon={<IconEye />}>Lihat</InputCrud>
+									<InputCrud onClick={() => navigateToEdit(item.id)} icon={<IconEdit />}>Edit</InputCrud>
+									<InputCrud onClick={() => setModalDeleteData(item.id)} icon={<IconTrash />}>Hapus</InputCrud>
 								</div>
 							</MainCard>
 						</Card>
