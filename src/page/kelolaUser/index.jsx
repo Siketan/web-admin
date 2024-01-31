@@ -36,14 +36,11 @@ const VerifikasiUser = () => {
   useEffect(() => {
     ListUser().then((data) => {
       setDatas(data.data)
-      console.log(data)
       setLoading(false)
     });
   }, []);
-  console.log(datas)
 
   const handleDeleteUser = (ids) => {
-    console.log(ids)
     DeleteUser(ids);
   };
   const handleVerify = (ids) => {
