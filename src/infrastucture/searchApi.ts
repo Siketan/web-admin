@@ -1,7 +1,7 @@
-import SweatAlert from "../components/uiComponents/swetAlert";
-import { TKelompokTani } from "../types/kelompokTani";
-import {TPetani} from "../types/petani";
-import Api from "./base";
+import SweatAlert from '../components/uiComponents/swetAlert';
+import { TKelompokTani } from '../types/kelompokTani';
+import { TPetani } from '../types/petani';
+import Api from './base';
 
 export const SearchPoktan = async (search: string) => {
   try {
@@ -9,7 +9,7 @@ export const SearchPoktan = async (search: string) => {
 
     return response.data.data as TKelompokTani[];
   } catch (error) {
-    SweatAlert(String(error.response.data.message), "error");
+    SweatAlert(String(error.response.data.message), 'error');
   }
 };
 
@@ -19,6 +19,6 @@ export const SearchPetani = async (search: string) => {
 
     return response.data.data as TPetani[];
   } catch (error) {
-    SweatAlert(String(error.response.data.message), "error");
+    SweatAlert(String(error.response.data.message), 'error');
   }
-}
+};

@@ -1,13 +1,13 @@
-import axios from "axios";
+import axios from 'axios';
 
 const baseURL = import.meta.env.VITE_BACKEND_API_URL;
 
 const API = axios.create({
   baseURL,
   headers: {
-    Accept: "application/json",
-    Authorization: `${localStorage.getItem("token") || ""}`,
-  },
+    Accept: 'application/json',
+    Authorization: `${localStorage.getItem('token') || ''}`
+  }
 });
 
 API.interceptors.response.use(
@@ -19,8 +19,8 @@ API.interceptors.response.use(
       throw err;
     }
 
-    if (typeof err.response.data.error.name !== "undefined") {
-      if (err.response.data.error.name === "TokenExpiredError") {
+    if (typeof err.response.data.error.name !== 'undefined') {
+      if (err.response.data.error.name === 'TokenExpiredError') {
         localStorage.clear();
         throw err;
       }

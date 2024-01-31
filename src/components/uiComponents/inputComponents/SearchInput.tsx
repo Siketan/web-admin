@@ -1,69 +1,53 @@
-import React from "react";
+import React from 'react';
 import {
   GroupBase,
   Props,
   StylesConfig,
   ActionMeta,
-  components as ReactSelectComponents,
-} from "react-select";
-import AsyncSelect from "react-select/async";
-import type { AsyncProps } from "react-select/async";
+  components as ReactSelectComponents
+} from 'react-select';
+import AsyncSelect from 'react-select/async';
+import type { AsyncProps } from 'react-select/async';
 
-const dot = (color = "transparent") => ({
-  alignItems: "center",
-  display: "flex",
+const dot = (color = 'transparent') => ({
+  alignItems: 'center',
+  display: 'flex',
 
-  ":before": {
+  ':before': {
     backgroundColor: color,
     borderRadius: 10,
     content: '" "',
-    display: "block",
+    display: 'block',
     marginRight: 8,
     height: 10,
-    width: 10,
-  },
+    width: 10
+  }
 });
 
 const customStyle: StylesConfig = {
   control: (styles) => ({
     ...styles,
-    backgroundColor: "#C9C9C9",
+    backgroundColor: '#C9C9C9',
     borderRadius: 8,
-    padding: "8px",
+    padding: '8px'
   }),
   option: (styles, { isDisabled, isFocused, isSelected }) => {
-    const color = "#ccc";
+    const color = '#ccc';
     return {
       ...styles,
-      backgroundColor: isDisabled
-        ? undefined
-        : isSelected
-        ? color
-        : isFocused
-        ? color
-        : undefined,
-      color: isDisabled
-        ? "#ccc"
-        : isSelected
-        ? "white"
-        : isFocused
-        ? "white"
-        : "black",
-      cursor: isDisabled ? "not-allowed" : "default",
+      backgroundColor: isDisabled ? undefined : isSelected ? color : isFocused ? color : undefined,
+      color: isDisabled ? '#ccc' : isSelected ? 'white' : isFocused ? 'white' : 'black',
+      cursor: isDisabled ? 'not-allowed' : 'default',
 
-      ":active": {
-        ...styles[":active"],
-        backgroundColor: !isDisabled
-          ? isSelected
-            ? color
-            : "#ccc"
-          : undefined,
-      },
+      ':active': {
+        ...styles[':active'],
+        backgroundColor: !isDisabled ? (isSelected ? color : '#ccc') : undefined
+      }
     };
   },
   input: (styles) => ({ ...styles, ...dot() }),
-  placeholder: (styles) => ({ ...styles, ...dot("#ccc") }),
-  singleValue: (styles, { data }) => ({ ...styles, ...dot("#ccc") }),
+  placeholder: (styles) => ({ ...styles, ...dot('#ccc') }),
+  singleValue: (styles, { data }) => ({ ...styles, ...dot('#ccc') })
 };
 
 export interface AsyncSelectProps<

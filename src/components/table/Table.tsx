@@ -6,18 +6,18 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   SortingState,
-  useReactTable,
-} from "@tanstack/react-table";
-import React from "react";
-import { PaginatedRespApiData } from "../../types/paginatedRespApi";
-import { Link, useSearchParams } from "react-router-dom";
-import TBody from "./TBody";
-import THead from "./THead";
-import clsx from "clsx";
-import { PaginationControl, PaginationCount } from "./Pagination";
-import { IoMdAdd } from "react-icons/io";
-import { RiTableLine } from "react-icons/ri";
-import { TiExport } from "react-icons/ti";
+  useReactTable
+} from '@tanstack/react-table';
+import React from 'react';
+import { PaginatedRespApiData } from '../../types/paginatedRespApi';
+import { Link, useSearchParams } from 'react-router-dom';
+import TBody from './TBody';
+import THead from './THead';
+import clsx from 'clsx';
+import { PaginationControl, PaginationCount } from './Pagination';
+import { IoMdAdd } from 'react-icons/io';
+import { RiTableLine } from 'react-icons/ri';
+import { TiExport } from 'react-icons/ti';
 
 type TableProps<T extends object> = {
   data: PaginatedRespApiData<T> | undefined;
@@ -32,7 +32,7 @@ type TableProps<T extends object> = {
   buttonHref?: string;
   filter?: string[];
   exportUrl?: string;
-} & React.ComponentPropsWithoutRef<"div">;
+} & React.ComponentPropsWithoutRef<'div'>;
 
 export default function Table<T extends object>({
   className,
@@ -44,14 +44,14 @@ export default function Table<T extends object>({
   withPaginationCount = false,
   withPaginationControl = false,
   withButton = false,
-  buttonText = "Tambah",
-  buttonHref = "/",
-  exportUrl = "",
+  buttonText = 'Tambah',
+  buttonHref = '/',
+  exportUrl = '',
 
   filter = [],
   ...rest
 }: TableProps<T>) {
-  const [globalFilter, setGlobalFilter] = React.useState("");
+  const [globalFilter, setGlobalFilter] = React.useState('');
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [searchParams] = useSearchParams();
 
@@ -60,7 +60,7 @@ export default function Table<T extends object>({
     columns,
     state: {
       globalFilter,
-      sorting,
+      sorting
     },
     onGlobalFilterChange: setGlobalFilter,
     onSortingChange: setSorting,
@@ -68,15 +68,15 @@ export default function Table<T extends object>({
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
-    getPaginationRowModel: getPaginationRowModel(),
+    getPaginationRowModel: getPaginationRowModel()
   });
 
   React.useEffect(() => {
-    table.setPageSize(Number(searchParams.get("limit") ?? 10));
+    table.setPageSize(Number(searchParams.get('limit') ?? 10));
   }, [searchParams, table]);
 
   return (
-    <div className={clsx("flex flex-col mt-6", className)} {...rest}>
+    <div className={clsx('flex flex-col mt-6', className)} {...rest}>
       <div className="flex flex-col items-end gap-y-3 sm:flex-row sm:justify-between">
         <span className="text-cwhite flex items-center gap-1 whitespace-nowrap text-white">
           <div>Showing</div>
@@ -97,9 +97,7 @@ export default function Table<T extends object>({
           })} */}
         <div className="flex flex-col gap-4">
           <div className="flex justify-between gap-4">
-            {withPaginationCount && (
-              <PaginationCount respData={data} className="w-[109px]" />
-            )}
+            {withPaginationCount && <PaginationCount respData={data} className="w-[109px]" />}
             {/* {withPaginationCount && (
               <button className="flex w-[109px] justify-center rounded-[10px] bg-neutral-200">
                 <div className="flex items-center gap-1.5 text-neutral-900">
@@ -108,7 +106,7 @@ export default function Table<T extends object>({
                 </div>
               </button>
             )} */}
-            {withPaginationCount && exportUrl !== "" && (
+            {withPaginationCount && exportUrl !== '' && (
               <Link to={exportUrl}>
                 <button className="flex w-[109px] justify-center rounded-[10px] bg-neutral-200">
                   <div className="flex items-center gap-1.5 text-neutral-900">
@@ -126,10 +124,7 @@ export default function Table<T extends object>({
       </div>
       {withButton && (
         <div>
-          <a
-            href={buttonHref}
-            className="bg-color-3 rounded-[10px] px-6 py-2.5"
-          >
+          <a href={buttonHref} className="bg-color-3 rounded-[10px] px-6 py-2.5">
             <div className="flex items-center justify-center gap-1 text-white">
               <IoMdAdd className="h-6 w-6" />
               <p className="text-sm">{buttonText}</p>

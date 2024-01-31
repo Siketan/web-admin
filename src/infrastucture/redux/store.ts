@@ -1,10 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
-import stateReducer from "./state/stateSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import stateReducer from './state/stateSlice';
 
 const store = configureStore({
   reducer: {
-    state: stateReducer,
-  },
+    state: stateReducer
+  }
 });
 
 export default store;

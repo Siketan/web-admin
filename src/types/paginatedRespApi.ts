@@ -12,7 +12,7 @@ export interface PaginatedRespApiData<T> {
   from: number;
   to: number;
   sortBy: string;
-  sortType: "ASC" | "DESC";
+  sortType: 'ASC' | 'DESC';
 }
 
 export interface RespApiData<T> {

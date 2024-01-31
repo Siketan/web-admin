@@ -1,51 +1,51 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from "react";
-import EditorText from "@/components/textAreaEditor";
-import { Button } from "@mantine/core";
-import MainCard from "@/components/MainCard";
-import TextInput from "@/components/uiComponents/inputComponents/textInput";
-import { IconPlus, IconX, IconDeviceFloppy } from "@tabler/icons-react";
-import { AddJurnalKegiatan } from "@/infrastruture";
-import InputImage from "@/components/inputImage";
-import LoadingAnimation from '../../../components/loading'
+import { useState, useEffect } from 'react';
+import EditorText from '@/components/textAreaEditor';
+import { Button } from '@mantine/core';
+import MainCard from '@/components/MainCard';
+import TextInput from '@/components/uiComponents/inputComponents/textInput';
+import { IconPlus, IconX, IconDeviceFloppy } from '@tabler/icons-react';
+import { AddJurnalKegiatan } from '@/infrastruture';
+import InputImage from '@/components/inputImage';
+import LoadingAnimation from '../../../components/loading';
 const FormJurnalKegiatan = () => {
-  const [NIP, setNIP] = useState("");
-  const [judul, setJudul] = useState("");
-  const [statusJurnal, setStatusJurnal] = useState("");
-  const [isi, setIsi] = useState("");
-  const [gambar, setGambar] = useState("");
-  const [createdBy, setCreatedBy] = useState("");
-  const [loading, setLoading] = useState(false)
+  const [NIP, setNIP] = useState('');
+  const [judul, setJudul] = useState('');
+  const [statusJurnal, setStatusJurnal] = useState('');
+  const [isi, setIsi] = useState('');
+  const [gambar, setGambar] = useState('');
+  const [createdBy, setCreatedBy] = useState('');
+  const [loading, setLoading] = useState(false);
   const currentDate = new Date();
-  const tanggalDibuat = currentDate.toISOString().split("T")[0];
+  const tanggalDibuat = currentDate.toISOString().split('T')[0];
   const tanggalFormatted =
     currentDate.getDate() +
-    " " +
-    currentDate.toLocaleString("id", { month: "long" }) +
-    " " +
+    ' ' +
+    currentDate.toLocaleString('id', { month: 'long' }) +
+    ' ' +
     currentDate.getFullYear();
 
   const handleSubmit = (e) => {
-    setLoading(true)
+    setLoading(true);
     e.preventDefault();
     const data = {
       NIP,
       judul,
-      uraian:isi,
+      uraian: isi,
       gambar,
       createdBy,
       tanggalDibuat,
-      statusJurnal,
+      statusJurnal
     };
     const formData = new FormData();
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    AddJurnalKegiatan(formData).then(()=>setLoading(false));
+    AddJurnalKegiatan(formData).then(() => setLoading(false));
   };
   return (
-    <MainCard transparent row center style={{ paddingTop: "50px" }}>
-          {loading && <LoadingAnimation/>}
+    <MainCard transparent row center style={{ paddingTop: '50px' }}>
+      {loading && <LoadingAnimation />}
       <MainCard width="80%">
         <h1 className="text-center">Tambahkan Jurnal Kegiatan</h1>
         <MainCard transparent gap="10%" row>
@@ -79,10 +79,7 @@ const FormJurnalKegiatan = () => {
               onChange={(e) => setStatusJurnal(e.target.value)}
             /> */}
             <div className="relative z-0 w-full mb-6 group">
-              <label
-                htmlFor="underline_select"
-                className="text-sm dark:text-gray-400 pt-5 md:pt-0"
-              >
+              <label htmlFor="underline_select" className="text-sm dark:text-gray-400 pt-5 md:pt-0">
                 <strong>Satuan</strong>
               </label>
               <select
@@ -90,8 +87,7 @@ const FormJurnalKegiatan = () => {
                 name="statusJurnal"
                 value={statusJurnal}
                 onChange={(e) => setStatusJurnal(e.target.value)}
-                className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
-              >
+                className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown">
                 <option value="publish">Publish</option>
                 <option value="draft">Draft</option>
               </select>
@@ -101,11 +97,7 @@ const FormJurnalKegiatan = () => {
             </span>
           </MainCard>
           <MainCard transparent noPadding>
-            <InputImage
-              imageActive={gambar}
-              onChange={(e) => setGambar(e)}
-              title="Foto kegiatan"
-            />
+            <InputImage imageActive={gambar} onChange={(e) => setGambar(e)} title="Foto kegiatan" />
           </MainCard>
         </MainCard>
         <EditorText setValue={setIsi} />
@@ -116,13 +108,11 @@ const FormJurnalKegiatan = () => {
           value={isi}
           onChange={(e) => setIsi(e.target.value)}
           row
-          style={{ justifyContent: "end" }}
-        >
+          style={{ justifyContent: 'end' }}>
           <Button
             leftIcon={<IconDeviceFloppy size="1rem" />}
             variant="outline"
-            onClick={(e) => handleSubmit(e)}
-          >
+            onClick={(e) => handleSubmit(e)}>
             Simpan
           </Button>
           <Button leftIcon={<IconX size="1rem" />} variant="outline">

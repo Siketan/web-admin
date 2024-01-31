@@ -1,4 +1,4 @@
-import { TPetani } from "./petani";
+import { TPetani } from './petani';
 
 export type TTanamanPetani = {
   id: number;

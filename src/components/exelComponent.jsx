@@ -15,7 +15,7 @@ const convertToExcelAndDownload = async (data, filename, sheetname) => {
     cell.fill = {
       type: 'pattern',
       pattern: 'solid',
-      fgColor: { argb: 'FFFF0000' }, // Contoh latar merah
+      fgColor: { argb: 'FFFF0000' } // Contoh latar merah
     };
   });
 
@@ -32,7 +32,7 @@ const convertToExcelAndDownload = async (data, filename, sheetname) => {
         top: { style: 'thin' },
         left: { style: 'thin' },
         bottom: { style: 'thin' },
-        right: { style: 'thin' },
+        right: { style: 'thin' }
       };
     });
   });
@@ -44,7 +44,9 @@ const convertToExcelAndDownload = async (data, filename, sheetname) => {
 
   // Menghasilkan file Excel
   const buffer = await workbook.xlsx.writeBuffer();
-  const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  const blob = new Blob([buffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  });
   const url = window.URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
@@ -52,6 +54,4 @@ const convertToExcelAndDownload = async (data, filename, sheetname) => {
   link.click();
 };
 
-
-
-export default convertToExcelAndDownload
+export default convertToExcelAndDownload;
