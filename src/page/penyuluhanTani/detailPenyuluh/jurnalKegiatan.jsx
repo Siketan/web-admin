@@ -53,8 +53,9 @@ function JurnalKegiatan() {
     })
   }, []);
   const handleDeleteUser = (ids) => {
-		DeleteJurnalKegiatan(ids);
+    DeleteJurnalKegiatan(ids);
 	};
+  // console.log(datas);
   return (
       <>
         <div className="pt-16 min-h-[55vh] flex flex-col justify-center">
@@ -195,7 +196,7 @@ function JurnalKegiatan() {
                         </div>
                         <div
                           dangerouslySetInnerHTML={{
-                            __html: item.isi,
+                            __html: item?.uraian,
                           }}
                           className="text-justify text-sm sm:text-base"
                         />

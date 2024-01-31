@@ -102,15 +102,13 @@ const FormJurnalKegiatan = () => {
           </MainCard>
         </MainCard>
         <EditorText setValue={setIsi} />
-        <MainCard
-          transparent
-          id="isi"
-          name="isi"
-          value={isi}
-          onChange={(e) => setIsi(e.target.value)}
-          row
-          style={{ justifyContent: "end" }}
-        >
+				<MainCard
+					transparent
+					id="isi"
+					name="isi"
+					row
+					style={{ justifyContent: "end" }}
+				>
           <Button
             leftIcon={<IconDeviceFloppy size="1rem" />}
             variant="outline"

@@ -37,7 +37,7 @@ const EditFormJurnalKegiatan = () => {
     const data = {
       NIK,
       judul,
-      uraian:isi,
+      uraian:isiBaru,
       gambar,
       createdBy,
       tanggalDibuat,
@@ -61,6 +61,7 @@ const EditFormJurnalKegiatan = () => {
       setStatusJurnal(data.newData.statusJurnal);
     });
   }, []);
+  // console.log(isi)
   return (
     <MainCard transparent row center style={{ paddingTop: "50px" }}>
           {loading && <LoadingAnimation/>}
