@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MainCard from "@/components/MainCard";
 import InputCrud from "@/components/page/infoTani/IconCrud";
 import { IconEdit, IconEye, IconTrash, IconPlus } from "@tabler/icons-react";
-import { Image } from "@mantine/core";
 import { GetInfoTani, DeleteInfoTani } from "@/infrastruture";
+import { Text, Button, Modal, Card } from "@mantine/core";
+import LoadingAnimation from "../../components/loading";
 import { Text, Button, Modal, Card } from "@mantine/core";
 import LoadingAnimation from "../../components/loading";
 import { FaClock } from "react-icons/fa6";
@@ -12,40 +14,20 @@ import { BsPersonCircle } from "react-icons/bs";
 import { IoMdListBox } from "react-icons/io";
 import { BiCategoryAlt } from "react-icons/bi";
 import { postLogActivity } from "../../infrastucture/logActivity";
+import { postLogActivity } from "../../infrastucture/logActivity";
 
 const InfoTani = () => {
-	const [datas, setDatas] = useState([]);
-	const [checekd, setChecekd] = useState([false]);
-	const [id, setId] = useState();
-	const [loading, setLoading] = useState(true);
-	const [modalDeleteData, setModalDeleteData] = useState(false);
-	const history = useNavigate();
-	const handleCheckd = (e) => {
-		if (e == true) {
-			setChecekd(true);
-		} else {
-			setChecekd(false);
-		}
-		setId();
-	};
-	const handleCheckdOne = (ids) => {
-		if (id) {
-			if (id != ids) {
-				setId(ids);
-			} else {
-				setId();
-			}
-		} else {
-			setId(ids);
-		}
-	};
-	useEffect(() => {
-		GetInfoTani().then((data) => {
-			setDatas(data.infotani);
-			setLoading(false);
-			console.log(data);
-		});
-	}, []);
+  const [datas, setDatas] = useState([]);
+  const [loading, setLoading] = useState(true)
+  const [modalDeleteData, setModalDeleteData] = useState(false);
+  const history = useNavigate ();
+  useEffect(() => {
+    GetInfoTani().then((data) => {
+      setDatas(data.infotani)
+      setLoading(false)
+      console.log(data)
+    });
+  }, []);
 
 	const handleDeleteUser = (ids) => {
 		DeleteInfoTani(ids);
@@ -67,7 +49,7 @@ const InfoTani = () => {
 			<div className="pt-16 min-h-[55vh] flex flex-col justify-center">
 				{loading && <LoadingAnimation />}
 				<div className="w-[100%] flex justify-center">
-					<div className="flex justify-between w-[80%] p-[20px]">
+					<div className="flex w-[80%] p-[20px]">
 						<div
 							className="flex justify-center gap-2 cursor-pointer bg-yellow-500 hover:bg-green-primary hover:text-white hover:fill-white rounded-md p-3"
 							onClick={() =>
@@ -77,19 +59,6 @@ const InfoTani = () => {
 							<IconPlus className="m-auto rounded-full h-[20px] w-[20px] border border-black me-1" />
 							<span className="text-base md:text-xl">
 								Tambah Baru
-							</span>
-						</div>
-						<div className="flex justify-center gap-2 cursor-pointer bg-yellow-500 hover:bg-green-primary hover:text-white hover:fill-white rounded-md p-3">
-							<div className="self-center h-[20px] w-[20px] me-1 flex justify-center">
-								<input
-									type="checkbox"
-									onChange={(e) =>
-										handleCheckd(e.target.checked)
-									}
-								/>
-							</div>
-							<span className="text-base md:text-xl ">
-								Pilih Semua
 							</span>
 						</div>
 					</div>
@@ -209,21 +178,8 @@ const InfoTani = () => {
 										</div>
 									</div>
 								</MainCard>
-								<div className="flex flex-col items-end justify-between">
-									<input
-										className="h-[20px] w-[20px] cursor-pointer"
-										type="checkbox"
-										checked={
-											checekd == true
-												? true
-												: id == item.id
-												? true
-												: false
-										}
-										onChange={(e) =>
-											handleCheckdOne(item.id)
-										}
-									/>
+								<div className="flex flex-col items-end justify-end">
+									
 									<div className="flex flex-col space-y-1 max-h-fit">
 										<InputCrud
 											onClick={() =>
@@ -258,6 +214,7 @@ const InfoTani = () => {
 			</div>
 		</>
 	);
+
 };
 
 export default InfoTani;

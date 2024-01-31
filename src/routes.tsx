@@ -41,12 +41,58 @@ import {
 	EditPenyuluhan,
 	VerifikasiUser,
 	DataSampah,
+	TambahDataTani,
+	RekapDataPetani,
+	ViewDetailDataPetani,
+	LaporanPetani,
+	InfoTani,
+	TambahInfoTani,
+	EventTani,
+	TambahEventTani,
+	LiveChat,
+	RatingPetugas,
+	TambahPenyuluhanTani,
+	DataRiwayatChat,
+	JurnalKegiatan,
+	PresensiKehadiran,
+	TambahPenjual,
+	FormJurnalKegiatan,
+	ProdukPenyuluh,
+	ProdukPetani,
+	Login,
+	Register,
+	NotFoundPage,
+	Notification,
+	RekapDataPenyuluh,
+	DetailInfoTani,
+	DetailEventTani,
+	EditInfoTani,
+	DetailRekapPetani,
+	EditEventTani,
+	EditRekapPetani,
+	TambahTanamanPetani,
+	EditTanamanPetani,
+	DetailTanamanPetani,
+	TambahOperator,
+	// DetailDataTanamanPetani,
+	EditLaporanTanam,
+	TambahLaporanTanam,
+	TambahLaporanAhir,
+	EditPenyuluhan,
+	VerifikasiUser,
+	DataSampah,
 } from "./page";
 import { clsx } from "clsx";
 
 import Footer from "./components/footer";
 import ProtectedRoute from "./page/protectedRoute";
 import {
+	Image,
+	Menu,
+	Group,
+	Avatar,
+	Text,
+	UnstyledButton,
 	Image,
 	Menu,
 	Group,
@@ -78,8 +124,176 @@ import LogActivity from "./page/logAktivitas";
 import IndexOperator from "./page/operator";
 import EditOperator from "./page/operator/edit";
 import DetailOperator from "./page/operator/detail";
+import Profil from "./page/profil/side";
 
 const menu = [
+	{
+		id: "dashboard",
+		name: "Dashboard",
+		icon: "/icons/dashboard.svg",
+		path: "/dashboard",
+	},
+	{
+		id: "statistik",
+		name: "Statistik",
+		icon: "/icons/statistik.svg",
+		sub: [
+			{
+				name: "Tambah Data Statistik",
+				icon: "/icons/tambah.svg",
+				path: "/statistik/tambah",
+			},
+			{
+				name: "Lihat Tabel Statistik",
+				icon: "/icons/users.svg",
+				path: "/statistik",
+			},
+		],
+	},
+	{
+		id: "data-petani",
+		name: "Data Pertanian",
+		icon: "/icons/data-tani.svg",
+		sub: [
+			{
+				name: "Tambah Data Tanam",
+				icon: "/icons/users.svg",
+				path: "/tanaman-petani/add",
+			},
+			{
+				name: "Lihat Tabel Tanam",
+				icon: "/icons/users.svg",
+				path: "/tanaman-petani",
+			},
+			{
+				name: "Daftar User Petani",
+				icon: "/icons/users.svg",
+				path: "/data-tani/rekap-petani",
+			},
+		],
+	},
+	{
+		id: "info-tani",
+		name: "Info Pertanian",
+		icon: "/icons/info-tani.svg",
+		sub: [
+			{
+				name: "Tambah Berita Tani",
+				icon: "/icons/users.svg",
+				path: "/info-tani/tambah",
+			},
+			{
+				name: "Lihat Berita Tani",
+				icon: "/icons/berita.svg",
+				path: "/info-tani",
+			},
+			{
+				name: "Tambah Acara Tani",
+				icon: "/icons/users.svg",
+				path: "/event-tani/tambah",
+			},
+			{
+				name: "Lihat Acara Tani",
+				icon: "/icons/kalender.svg",
+				path: "/info-tani/event-tani",
+			},
+		],
+	},
+	{
+		id: "toko-tani",
+		name: "Toko Pertanian",
+		icon: "/icons/toko-tani.svg",
+		sub: [
+			{
+				name: "Tambah Toko Tani",
+				icon: "/icons/tambah.svg",
+				path: "/toko-tani/tambah-penjual",
+			},
+			{
+				name: "Lihat Daftar Toko Tani",
+				icon: "/icons/toko.svg",
+				path: "/toko-tani/produk-petani",
+			},
+		],
+	},
+	{
+		id: "info-penyuluh",
+		name: "Info Penyuluh",
+		icon: "/icons/data-penyuluh.svg",
+		sub: [
+			{
+				name: "Tambah Penyuluh",
+				icon: "/icons/tambah.svg",
+				path: "/data-penyuluh/tambah",
+			},
+			{
+				name: "Daftar Laporan Harian",
+				icon: "/icons/pensil.svg",
+				path: "/data-penyuluh/jurnal-kegiatan",
+			},
+			{
+				name: "Daftar Jurnal Petugas",
+				icon: "/icons/papan.svg",
+				path: "/data-penyuluh/jurnal-kegiatan/form",
+			},
+			{
+				name: "Rekap Data Penyuluh",
+				icon: "/icons/penyuluh.svg",
+				path: "/data-penyuluh/rekap-penyuluh",
+			},
+		],
+	},
+	{
+		id: "hak-akses",
+		name: "Hak Akses",
+		icon: "/icons/hak-akses.svg",
+		sub: [
+			{
+				name: "Verifikasi User",
+				icon: "/icons/globe.svg",
+				path: "/verifikasi",
+			},
+			{
+				name: "Ubah Akses User",
+				icon: "/icons/edit-menu.svg",
+				path: "/hak-akses/ubah",
+			},
+		],
+	},
+	{
+		id: "log-aktivitas",
+		name: "Log Aktivitas",
+		icon: "/icons/log-aktivitas.svg",
+		sub: [
+			{
+				name: "Aktivitas User",
+				icon: "/icons/log-aktivitas.svg",
+				path: "/log-aktivitas",
+			},
+			{
+				name: "Data Sampah",
+				icon: "/icons/log-aktivitas.svg",
+				path: "/log-aktivitas/data-sampah",
+			},
+		],
+	},
+	{
+		id: "list-operator",
+		name: "Info Operator",
+		icon: "/icons/users.svg",
+		sub: [
+			{
+				name: "Tambah Operator",
+				icon: "/icons/tambah.svg",
+				path: "/list-operator/tambah",
+			},
+			{
+				name: "Data Operator",
+				icon: "/icons/edit-menu.svg",
+				path: "/list-operator",
+			},
+		],
+	},
 	{
 		id: "dashboard",
 		name: "Dashboard",
@@ -260,8 +474,21 @@ const dropdownMenu = [
 		icon: "/icons/pengaturan.svg",
 		path: "/pengaturan",
 	},
+	{
+		name: "Profil",
+		icon: "/icons/profil.svg",
+		path: "/profil",
+	},
+	{
+		name: "Pengaturan",
+		icon: "/icons/pengaturan.svg",
+		path: "/pengaturan",
+	},
 ];
 const Path = () => {
+	const [sidebarOpen, setSidebarOpen] = React.useState(true);
+	const [activeMenu, setActiveMenu] = React.useState("");
+	const activePage = window.location.pathname.split("/")[1];
 	const [sidebarOpen, setSidebarOpen] = React.useState(true);
 	const [activeMenu, setActiveMenu] = React.useState("");
 	const activePage = window.location.pathname.split("/")[1];
@@ -277,7 +504,20 @@ const Path = () => {
 		mainMenuClasses
 	);
 	const subMenuClasses = stackedMenuClasses;
+	const sidebar = React.useRef(null);
+	const mainMenuClasses =
+		"flex items-center p-2 w-full bg-white-primary text-green-primary hover:bg-green-sidebar-hover transition-all duration-200 ease-in-out";
+	const activeClasses = "bg-green-primary bg-opacity-50";
+	const textMenuClasses =
+		"ml-3 transition-all duration-200 text-left whitespace-nowrap font-bold text-lg capitalize";
+	const stackedMenuClasses = clsx(
+		"w-full transition duration-75 group",
+		mainMenuClasses
+	);
+	const subMenuClasses = stackedMenuClasses;
 
+	const user = useSelector((state: RootState) => state.state.user);
+	const dispatch = useDispatch();
 	const user = useSelector((state: RootState) => state.state.user);
 	const dispatch = useDispatch();
 
@@ -285,7 +525,15 @@ const Path = () => {
 	const isAuthPage =
 		window.location.pathname === "/login" ||
 		window.location.pathname === "/register";
+	const token = window.localStorage.getItem("token");
+	const isAuthPage =
+		window.location.pathname === "/login" ||
+		window.location.pathname === "/register";
 
+	const isWebVidePage =
+		window.location.pathname === "/" ||
+		window.location.pathname.includes("info-pertanian") ||
+		window.location.pathname === "/toko-pertanian";
 	const isWebVidePage =
 		window.location.pathname === "/" ||
 		window.location.pathname.includes("info-pertanian") ||
@@ -308,9 +556,112 @@ const Path = () => {
 				});
 		}
 	}, [token, isAuthPage]);
+	useEffect(() => {
+		if (token) {
+			GetProfile()
+				.then((res) => {
+					if (res.status === 200) {
+						dispatch(setUser(res.data.user));
+					}
+				})
+				.catch((err) => {
+					console.log({ err });
+					window.localStorage.removeItem("token");
+					if (!isAuthPage && !isWebVidePage) {
+						window.location.href = "/login";
+					}
+				});
+		}
+	}, [token, isAuthPage]);
 
 	if (isAuthPage || isWebVidePage) return <RoutesPath />;
+	if (isAuthPage || isWebVidePage) return <RoutesPath />;
 
+	return (
+		<div className="bg-green-primary bg-opacity-70">
+			<div className="flex">
+				<aside
+					ref={sidebar}
+					className={clsx(
+						"fixed left-0 top-0 z-20 flex h-screen flex-col justify-between bg-green-primary pb-8 shadow-lg duration-300 lg:translate-x-0 text-white",
+						sidebarOpen ? "w-80" : "w-[6%]"
+					)}
+				>
+					<div
+						className={clsx(
+							"bg-green-secondary bg-opacity-50",
+							!sidebarOpen && "p-4"
+						)}
+					>
+						<Image
+							src="/image/logo-navbar.png"
+							height={80}
+							alt="Logo Siketan"
+							className={sidebarOpen ? "block" : "hidden"}
+						/>
+					</div>
+					<div className="h-full px-6 py-2 overflow-y-auto">
+						<ul className="space-y-1.5 font-medium">
+							{menu.map((item, index) => (
+								<li
+									key={index}
+									className="divide-y divide-gray-500"
+								>
+									{item.path ? (
+										<a
+											href={item.path}
+											className={clsx(
+												mainMenuClasses,
+												activePage === item.id &&
+													activeClasses
+											)}
+										>
+											<Image
+												src={item.icon}
+												alt={item.name}
+												w={24}
+											/>
+											<span
+												className={clsx(
+													textMenuClasses,
+													sidebarOpen
+														? "block"
+														: "hidden"
+												)}
+											>
+												{item.name}
+											</span>
+										</a>
+									) : (
+										<button
+											className={clsx(
+												mainMenuClasses,
+												activePage === item.id &&
+													activeClasses
+											)}
+											onClick={() => {
+												if (activeMenu === item.id)
+													setActiveMenu("");
+												else setActiveMenu(item.id);
+											}}
+										>
+											<Image
+												src={item.icon}
+												alt={item.name}
+												w={24}
+											/>
+											<span
+												className={clsx(
+													textMenuClasses,
+													sidebarOpen
+														? "block"
+														: "hidden"
+												)}
+											>
+												{item.name}
+											</span>
+										</button>
+									)}
 	return (
 		<div className="bg-green-primary bg-opacity-70">
 			<div className="flex">
@@ -474,76 +825,148 @@ const Path = () => {
 												<Text fw={700}>
 													{user?.nama}
 												</Text>
-
-												<Text size="xs">
-													{user?.peran}
-												</Text>
-											</div>
-											<Avatar
-												radius="xl"
-												src={user?.foto}
-											/>
-											<IoCaretDownOutline />
-										</Group>
-									</UnstyledButton>
-								</Menu.Target>
-								<Menu.Dropdown>
-									{dropdownMenu.map((item, index) => (
-										<Menu.Item
-											component="a"
-											key={index}
-											href={item.path}
-											style={{
-												":hover": {
-													background:
-														"linear-gradient(180deg, #86BA34 0%, rgba(111, 163, 29, 0.50) 100%)",
-												},
-											}}
-										>
-											<div className="flex gap-2 items-center">
-												<Image
-													src={item.icon}
-													alt={item.name}
-													className="inline-block"
-													width={24}
-												/>
-												{item.name}
-											</div>
-										</Menu.Item>
-									))}
-									<Menu.Item
-										component="b"
-										onClick={() => {
-											Logout();
-										}}
-									>
-										<div className="flex gap-2 items-center">
-											<Image
-												src="/icons/keluar.svg"
-												alt="Keluar"
-												className="inline-block"
-												width={24}
-											/>
-											Keluar
-										</div>
-									</Menu.Item>
-								</Menu.Dropdown>
-							</Menu>
-						</div>
-					</nav>
-					<div
-						className="p-6 overflow-hidden"
-						// style={{
-						//     width: `calc(100% - ${sidebarOpen ? 18 : 7}rem)`,
-						// }}
-					>
-						<RoutesPath />
+									{activeMenu === item.id && (
+										<ul className="divide-y divide-gray-500">
+											{item.sub?.map((sub, index) => (
+												<li key={index}>
+													<a
+														href={sub.path}
+														className={clsx(
+															subMenuClasses,
+															activePage ===
+																"bpup" &&
+																activeClasses
+														)}
+													>
+														<Image
+															src={sub.icon}
+															alt={sub.name}
+															width={24}
+														/>
+														<span
+															className={clsx(
+																textMenuClasses,
+																sidebarOpen
+																	? "block"
+																	: "hidden"
+															)}
+														>
+															{sub.name}
+														</span>
+													</a>
+												</li>
+											))}
+										</ul>
+									)}
+								</li>
+							))}
+						</ul>
 					</div>
-				</div>
-			</div>
-			<Footer sidebarOpen={sidebarOpen} />
-		</div>
-	);
+				</aside>
+				<div
+					className={clsx(
+						"box-border h-full min-h-screen w-full transition-all duration-300 ease-in-out relative overflow-hidden",
+						sidebarOpen ? "lg:ml-80" : "lg:ml-20"
+					)}
+				>
+					<nav className="p-5 flex justify-between text-white bg-green-primary">
+						<div className="flex gap-4 items-center text-xl">
+							<button
+								onClick={() => {
+									setSidebarOpen(!sidebarOpen);
+								}}
+							>
+								<IconMenu2 />
+							</button>
+							<h2 className="font-bold">All Data</h2>
+						</div>
+						<div className="flex gap-4 items-center">
+							<IoMailUnreadOutline size={24} />
+							<FaRegBell size={24} />
+							<Menu
+								styles={{
+									dropdown: {
+										background:
+											"linear-gradient(180deg, #22571C 0%, #194115 100%);",
+									},
+									item: {
+										color: "white",
+										textTransform: "uppercase",
+									},
+								}}
+							>
+								<Menu.Target>
+									<UnstyledButton className="text-white">
+										<Group>
+											<div style={{ flex: 1 }}>
+												<Text fw={700}>
+													{user?.nama}
+												</Text>
+
+                        <Text size="xs">{user?.peran}</Text>
+                      </div>
+                      <Avatar radius="xl" src={user?.foto} />
+                      <IoCaretDownOutline />
+                    </Group>
+                  </UnstyledButton>
+                </Menu.Target>
+                <Menu.Dropdown>
+                  {dropdownMenu.map((item, index) => (
+                    <Menu.Item className="hover:bg-green-primary"
+                      component="a"
+                      key={index}
+                      href={item.path}
+                      style={{
+                        ":hover": {
+                          background:
+                            "linear-gradient(180deg, #86BA34 0%, rgba(111, 163, 29, 0.50) 100%)",
+                        },
+                      }}
+                    >
+                      <div className="flex gap-2 items-center text-black hover:text-white">
+                        <Image
+                          src={item.icon}
+                          alt={item.name}
+                          className="inline-block"
+                          width={24}
+                        />
+                        {item.name}
+                      </div>
+                    </Menu.Item>
+                  ))}
+                  <Menu.Item className="hover:bg-green-primary"
+                    component="b"
+                    onClick={() => {
+                      Logout();
+                    }}
+                  >
+                    <div className="flex gap-2 items-center text-black hover:text-white ">
+                      <Image
+                        src="/icons/keluar.svg"
+                        alt="Keluar"
+                        className="inline-block"
+                        width={24}
+                      />
+                      Keluar
+                    </div>
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+            </div>
+          </nav>
+          <div
+            className="p-6 overflow-hidden"
+            // style={{
+            //     width: `calc(100% - ${sidebarOpen ? 18 : 7}rem)`,
+            // }}
+          >
+            <RoutesPath />
+          </div>
+        </div>
+      </div>
+      <Footer sidebarOpen={sidebarOpen} />
+    </div>
+  );
 };
 
 const RoutesPath = () => {
@@ -735,6 +1158,8 @@ const RoutesPath = () => {
 						path="/live-chat/rating-petugas"
 						element={<RatingPetugas />}
 					/>
+          {/* Profil */}
+          <Route path="profil" element={<Profil/>}/>
 				</Route>
 				<Route path="*" element={<NotFoundPage />} />
 			</Routes>
