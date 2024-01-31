@@ -22,37 +22,35 @@ const TambahTokoTani = () => {
   const [datas, setDatas] = useState();
   const [disable, setDisable] = useState(true);
   const [loading, setLoading] = useState(false)
-    const handleCLick = ()=>{
-      if(profesiPenjual == "petani"){
-        CekNik({NIK}).then((data)=>{
-            setDatas(data)
-        })
-      }else if(profesiPenjual == "penyuluh"){
-        CekNiP({NIP:NIK}).then((data)=>{
-            setDatas(data)
-        })
-      }
+  const handleCLick = () => {
+    if (profesiPenjual == "petani") {
+      CekNik({ NIK }).then((data) => {
+        setDatas(data)
+      })
+    } else if (profesiPenjual == "penyuluh") {
+      CekNiP({ NIP: NIK }).then((data) => {
+        setDatas(data)
+      })
     }
+  }
   useEffect(() => {
-    if(datas){
+    if (datas) {
       setDisable(false)
-    }else if(!datas){
+    } else if (!datas) {
       setDisable(true)
     }
   }, [datas])
+
   useEffect(() => {
-    if(datas){
-      setDatas()
-      setNIK("")
-    }
+    setDatas()
+    setNIK("")
   }, [profesiPenjual])
 
   const handleSubmit = (e) => {
     setLoading(true)
     e.preventDefault();
     const data = {
-      NIP:NIK,
-      NIK,
+      nik: NIK,
       profesiPenjual,
       namaProducts,
       stok,
@@ -66,24 +64,49 @@ const TambahTokoTani = () => {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    AddPenjual(formData, profesiPenjual).then(()=> setLoading(false));
+    AddPenjual(formData, profesiPenjual).then(() => setLoading(false));
   };
 
   return (
     <MainCard transparent row center className="px-10 md:px-40 py-10">
       <MainCard className="shadow-xl rounded-xl px-5 py-5 w-[80%]">
         <form onSubmit={(e) => handleSubmit(e)}>
-          <div className="w-max lg:w-full py-5 flex justify-end">
-            <button
-              id="NIK"
-              name="NIK"
-              type="button"
-              onClick={() => handleCLick()}
-              className="text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto"
-            >
-              <FontAwesomeIcon icon={faSearch} className="mr-2" />
-              Cek {profesiPenjual == 'penyuluh' ? 'NIP': profesiPenjual == 'petani' ?  'NIK': 'NIK/NIP'}
-            </button>
+          <div className="relative z-0 w-full mb-6 group">
+            <label htmlFor="profesiPenjual" className="text-sm">
+              <strong>Profesi Penjual:</strong>
+            </label>
+            <div className="flex items-center pt-2">
+              <input
+                type="radio"
+                value="petani"
+                id="profesiPetani"
+                name="profesiPenjual"
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
+                onChange={(e) => setProfesiPenjual(e.target.value)}
+              />
+              <label
+                htmlFor="profesiPetani"
+                className='ml-2 text-sm font-medium'
+              >
+                Petani
+              </label>
+            </div>
+            <div className="flex items-center py-2">
+              <input
+                type="radio"
+                value="penyuluh"
+                id="profesiPenyuluh"
+                name="profesiPenjual"
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
+                onChange={(e) => setProfesiPenjual(e.target.value)}
+              />
+              <label
+                htmlFor="profesiPenyuluh"
+                className='ml-2 text-sm font-medium'
+              >
+                Penyuluh
+              </label>
+            </div>
           </div>
           <div className="grid md:grid-cols-2 md:gap-6">
             <div className="relative z-0 w-full mb-6 group">
@@ -102,51 +125,24 @@ const TambahTokoTani = () => {
                 htmlFor="NIK"
                 className="peer-focus:font-medium absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
-                <strong>Cek {profesiPenjual == 'penyuluh' ? 'NIP': profesiPenjual == 'petani' ?  'NIK': 'NIK/NIP'} </strong> (Contoh: 3514002000000001)
+                <strong>Cek {profesiPenjual == 'penyuluh' ? 'NIP' : profesiPenjual == 'petani' ? 'NIK' : 'NIK/NIP'} </strong> (Contoh: 3514002000000001)
               </label>
             </div>
-            <div className="relative z-0 w-full mb-6 group">
-              <label htmlFor="profesiPenjual" className="text-sm">
-                <strong>Profesi Penjual:</strong>
-              </label>
-              <div className="flex items-center pt-2">
-                <input
-                  type="radio"
-                  value="petani"
-                  id="profesiPetani"
-                  name="profesiPenjual"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
-                  onChange={(e) => setProfesiPenjual(e.target.value)}
-                />
-                <label
-                  htmlFor="profesiPetani"
-                  className={`ml-2 text-sm font-medium ${profesiPenjual == 'petani' ? 'text-gray-900': 'text-gray-300'}`}
-                >
-                  Petani
-                </label>
-              </div>
-              <div className="flex items-center py-2">
-                <input
-                  type="radio"
-                  value="penyuluh"
-                  id="profesiPenyuluh"
-                  name="profesiPenjual"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
-                  onChange={(e) => setProfesiPenjual(e.target.value)}
-                />
-                <label
-                  htmlFor="profesiPenyuluh"
-                  className={`ml-2 text-sm font-medium ${profesiPenjual == 'penyuluh' ? 'text-gray-900': 'text-gray-300'}`}
-                >
-                  Penyuluh
-                </label>
-              </div>
-            </div>
+            <button
+              id="NIK"
+              name="NIK"
+              type="button"
+              onClick={() => handleCLick()}
+              className="text-white h-fit bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto"
+            >
+              <FontAwesomeIcon icon={faSearch} className="mr-2" />
+              Cek {profesiPenjual == 'penyuluh' ? 'NIP' : profesiPenjual == 'petani' ? 'NIK' : 'NIK/NIP'}
+            </button>
           </div>
           <div className="grid md:grid-cols-2 md:gap-6">
             <div className="relative z-0 w-full mb-6 gronup">
               <p>
-                <strong>Nama {profesiPenjual == 'penyuluh' ? 'Penyuluh': profesiPenjual == 'petani'?  'Petani': ''}: </strong> {datas?.nama}
+                <strong>Nama {profesiPenjual == 'penyuluh' ? 'Penyuluh' : profesiPenjual == 'petani' ? 'Petani' : ''}: </strong> {datas?.nama}
               </p>
             </div>
             <div className="relative z-0 w-full mb-6 group">
@@ -161,44 +157,44 @@ const TambahTokoTani = () => {
                 <strong>Kecamatan: </strong> {datas?.kecamatan}
               </p>
             </div>
-            {profesiPenjual == 'petani'?  
-            <div className="relative z-0 w-full mb-6 gronup">
-              <p>
-                <strong>Gapoktan: </strong> {datas?.kelompok?.gapoktan}
-              </p>
-            </div>
-            :
-            <div className="relative z-0 w-full mb-6 gronup">
-              <p>
-                <strong>Kecamatan Binaan: </strong> {datas?.dataPenyuluh?.kecamatanBinaan}
-              </p>
-            </div>
+            {profesiPenjual == 'petani' ?
+              <div className="relative z-0 w-full mb-6 gronup">
+                <p>
+                  <strong>Gapoktan: </strong> {datas?.kelompok?.gapoktan}
+                </p>
+              </div>
+              :
+              <div className="relative z-0 w-full mb-6 gronup">
+                <p>
+                  <strong>Kecamatan Binaan: </strong> {datas?.dataPenyuluh?.kecamatanBinaan}
+                </p>
+              </div>
             }
           </div>
           <div className="grid md:grid-cols-2 md:gap-6">
-            {profesiPenjual == 'petani'?  
-            <>
-              <div className="relative z-0 w-full mb-6 group">
-                <p>
-                  <strong>Nama Kelompok: </strong> {datas?.kelompok?.namaKelompok}
-                </p>
-              </div>
+            {profesiPenjual == 'petani' ?
+              <>
+                <div className="relative z-0 w-full mb-6 group">
+                  <p>
+                    <strong>Nama Kelompok: </strong> {datas?.kelompok?.namaKelompok}
+                  </p>
+                </div>
+                <div className="relative z-0 w-full mb-6 gronup">
+                  <p>
+                    <strong>Penyuluh: </strong> {datas?.kelompok?.penyuluh}
+                  </p>
+                </div>
+              </>
+              :
               <div className="relative z-0 w-full mb-6 gronup">
                 <p>
-                  <strong>Penyuluh: </strong> {datas?.kelompok?.penyuluh}
+                  <strong>Desa Binaan: </strong> {datas?.dataPenyuluh?.desaBinaan}
                 </p>
               </div>
-            </>
-            :
-            <div className="relative z-0 w-full mb-6 gronup">
-              <p>
-                <strong>Desa Binaan: </strong> {datas?.dataPenyuluh?.desaBinaan}
-              </p>
-            </div>
             }
           </div>
           {loading &&
-            <Loading/>}
+            <Loading />}
           <div className="grid md:grid-cols-2 md:gap-6">
             <div className="relative z-0 w-full mb-6 group">
               <input
@@ -309,8 +305,6 @@ const TambahTokoTani = () => {
                 accept=".png, .jpg, .jpeg"
                 id="fotoTanaman"
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-                required
               />
               <label
                 htmlFor="fotoTanaman"

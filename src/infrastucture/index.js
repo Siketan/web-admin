@@ -67,7 +67,7 @@ export const Logout = () => {
 export const CekNik = async (data) => {
   try {
     const response = await Api.post("/cek-nik", data);
-    return response.data.users;
+    return response.data.user;
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
   }
@@ -75,7 +75,7 @@ export const CekNik = async (data) => {
 export const CekNiP = async (data) => {
   try {
     const response = await Api.post("/cek-nip", data);
-    return response.data.users;
+    return response.data.user;
   } catch (error) {
     SweatAlert(String(error.response.data.message), "error");
   }
@@ -391,13 +391,13 @@ export const updateInfoTani = async (id, data) => {
 export const AddPenjual = async (data, log) => {
   try {
     const response = await Api.post("/daftar-penjual/add", data, headers);
-    if ((log = "petani")) {
+    if (log == "petani") {
       SweatAlert(
         String(response.data.message),
         "success",
         "/toko-tani/produk-petani"
       );
-    } else if ((log = "penyuluh")) {
+    } else if (log == "penyuluh") {
       SweatAlert(
         String(response.data.message),
         "success",
