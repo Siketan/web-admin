@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import UserLayout from '../../../components/UserLayout';
 import MainCard from '../../../components/MainCard';
 import CarouselPromo from './components/CarouselPromo';
 import CarouselUnggulan from './components/carouselUnggulan';
 import { getTokoTani } from '../../../infrastucture/toko';
 import Card from './components/Card';
+import { TokoTani } from '../../../@types/toko';
 
-export default function index() {
-  useEffect(() => {
+export default function Index() {
+  React.useEffect(() => {
     getTokoTani().then((res) => {
       const response = res.data.data as TokoTani[];
       setTokoTani(response);
@@ -22,8 +23,8 @@ export default function index() {
     });
   }, []);
 
-  const [tokoTani, setTokoTani] = useState<TokoTani[]>([]);
-  const [groupedToko, setGroupedToko] = useState<TokoTani[][]>([]);
+  const [tokoTani, setTokoTani] = React.useState<TokoTani[]>([]);
+  const [groupedToko, setGroupedToko] = React.useState<TokoTani[][]>([]);
 
   return (
     <UserLayout>
@@ -56,7 +57,7 @@ export default function index() {
               </p>
               <div className="hidden md:block">
                 <div className="grid md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7">
-                  {tokoTani.map((item, index) => (
+                  {tokoTani.map((item) => (
                     <Card key={item.id} item={item} />
                   ))}
                 </div>

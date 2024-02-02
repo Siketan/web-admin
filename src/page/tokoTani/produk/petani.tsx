@@ -1,11 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
-// import { ProductsPetani } from "@/infrastruture";
+import React, { useEffect } from 'react';
 import { getTokoTani } from '../../../infrastucture/toko';
-import { Image } from '@mantine/core';
-import LoadingAnimation from '../../../components/loadingSession';
-import { FilteredTokoTani, TableTokoTani, TokoTani } from '../../../@types/toko';
+import { TableTokoTani, TokoTani } from '../../../@types/toko';
 import Table from '../../../components/table/Table';
 import { PaginatedRespApiData } from '../../../types/paginatedRespApi';
 import { ColumnDef } from '@tanstack/react-table';
@@ -69,11 +64,11 @@ function ProdukPetani() {
   >();
   const [resp, setResp] = React.useState<PaginatedRespApiData<TokoTani> | undefined>();
 
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   useEffect(() => {
     getTokoTani().then((res) => {
       setResp(res.data);
-      setLoading(false);
+      // setLoading(false);
     });
   }, []);
 

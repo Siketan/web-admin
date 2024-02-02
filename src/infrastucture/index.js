@@ -364,6 +364,7 @@ export const updateEventTani = async (id, data) => {
 export const updateInfoTani = async (id, data) => {
   try {
     const response = await Api.put(`/info-tani/${id}`, data, headers);
+    return response.data;
     // SweatAlert(String(response.data.message), "success", "/info-tani");
   } catch (error) {
     SweatAlert(String(error.response.data.message), 'error');

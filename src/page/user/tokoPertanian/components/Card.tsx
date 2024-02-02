@@ -1,10 +1,12 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
+import { TokoTani } from '../../../../@types/toko';
 
 export default function Card({ item }: { item: TokoTani }) {
   return (
     <a
       className="cursor-pointer hover:bg-green-primary hover:rounded-md p-2"
-      href={`https://api.whatsapp.com/send?phone=${item.dataPerson.NoWa}`}
+      href={`https://api.whatsapp.com/send?phone=${item.tbl_akun?.no_wa}`}
       target="_blank"
       rel="noreferrer">
       <div className="bg-white rounded-md p-3 flex flex-col gap-1 shadow-2xl h-full">

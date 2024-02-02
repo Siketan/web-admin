@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState, useEffect } from 'react';
 import InputImage from '@/components/inputImage';
 import MainCard from '@/components/MainCard';
 import TimeInput from '@/components/uiComponents/inputComponents/timeInputEdit';
 import TextInput from '@/components/uiComponents/inputComponents/textInput';
 import { GetEventTaniById, updateEventTani } from '@/infrastruture';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { useParams } from 'react-router-dom';
-import { Loader } from '@mantine/core';
 import LoadingAnimation from '../../../components/loading';
 import { postLogActivity } from '../../../infrastucture/logActivity';
 function EditEventTani() {
@@ -31,7 +28,7 @@ function EditEventTani() {
       setFotoKegiatan(data?.fotoKegiatan);
       setisLoading(false);
     });
-  }, []);
+  }, [id]);
   const currentDate = new Date(tanggalAcara.split('T'));
   const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
   const formattedDate = currentDate.toLocaleDateString('id-ID', options);

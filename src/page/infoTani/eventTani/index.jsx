@@ -3,14 +3,12 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InputCrud from '@/components/page/infoTani/IconCrud';
 import { IconEdit, IconEye, IconTrash } from '@tabler/icons-react';
-import { Image } from '@mantine/core';
 import { GetEventTani, DeleteEventTani } from '@/infrastruture';
 import { Text, Button, Modal, Card } from '@mantine/core';
 import LoadingAnimation from '../../../components/loading';
 import { FaClock } from 'react-icons/fa6';
 import { BsPersonCircle } from 'react-icons/bs';
 import { IoMdListBox } from 'react-icons/io';
-import { BiCategoryAlt } from 'react-icons/bi';
 import { FaBuilding } from 'react-icons/fa';
 import { IoMdPerson } from 'react-icons/io';
 import { postLogActivity } from '../../../infrastucture/logActivity';
@@ -90,7 +88,6 @@ function EventTani() {
                 className="h-min rounded-lg w-52"
                 src={d?.fotoKegiatan}
                 alt="With default placeholder"
-                withPlaceholder
               />
               <MainCard transparent noPadding className="w-[100%]">
                 <h1 className="font-bold text-base md:text-lg text-justify tracking-[1px] text-green-primary capitalize max-w-[95%]">

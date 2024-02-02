@@ -1,20 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faFilter,
-  faEdit,
-  faTrash,
-  faDownload,
-  faBullseye,
-  faPlus,
-  faUpload
-} from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
 import Table from '@/components/table/Table';
 import { GetDaftarTani, DeleteDaftarTani, UploadDataPetani } from '@/infrastruture';
-import ExcelComponent from '../../../components/exelComponent';
-import { Text, Button, Modal, Tooltip, Anchor, Breadcrumbs, TextInput } from '@mantine/core';
-import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
-import LoadingAnimation from '../../../components/loadingSession';
+// import ExcelComponent from '../../../components/exelComponent';
+import { Text, Button, Modal, Anchor, Breadcrumbs } from '@mantine/core';
+import { Link, useLocation } from 'react-router-dom';
+// import LoadingAnimation from '../../../components/loadingSession';
 import SearchInput from '../../../components/uiComponents/inputComponents/searchInput';
 import { ImPencil } from 'react-icons/im';
 import { IoEyeOutline } from 'react-icons/io5';
@@ -75,8 +67,8 @@ const columns = [
 ];
 
 const RekapPetani = () => {
-  const [datas, setDatas] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [datas, setDatas] = useState([]);
+  // const [loading, setLoading] = useState(true);
   const [modalDeleteData, setModalDeleteData] = useState(false);
   const [resp, setResp] = useState();
   const [dataTable, setDataTable] = useState();
@@ -92,22 +84,22 @@ const RekapPetani = () => {
   const page = searchParams.get('page') ?? 1;
   const limit = searchParams.get('limit') ?? 10;
 
-  const searchQuery = searchParams.get('search_query') ?? '';
-  const sortKey = searchParams.get('sort_key') ?? '';
-  const sortType = searchParams.get('sort_type') ?? '';
+  // const searchQuery = searchParams.get('search_query') ?? '';
+  // const sortKey = searchParams.get('sort_key') ?? '';
+  // const sortType = searchParams.get('sort_type') ?? '';
 
   useEffect(() => {
     GetDaftarTani(page, limit).then((data) => {
       setResp(data);
-      setLoading(false);
+      // setLoading(false);
     });
-  }, []);
-  const handleFilterChange = (e, column) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [column]: e.target.value
-    }));
-  };
+  }, [limit, page]);
+  // const handleFilterChange = (e, column) => {
+  //   setFilters((prevFilters) => ({
+  //     ...prevFilters,
+  //     [column]: e.target.value
+  //   }));
+  // };
   const handleDeleteUser = (ids) => {
     DeleteDaftarTani(ids);
     postLogActivity({
@@ -117,36 +109,36 @@ const RekapPetani = () => {
       detail_id: ids
     });
   };
-  const filteredData = datas.filter((item) => {
-    return Object.keys(filters).every((key) => {
-      if (filters[key] !== '') {
-        if (typeof item[key] === 'number') {
-          return item[key] === Number(filters[key]);
-        } else if (typeof item[key] === 'string') {
-          return item[key].toLowerCase().includes(filters[key].toLowerCase());
-        }
-      }
-      return true;
-    });
-  });
-  const handleDownlod = () => {
-    const dataExel = filteredData.map((item) => {
-      return {
-        NIK: item.NIK,
-        ['No Wa']: item.NoWa,
-        Alamat: item.alamat,
-        Kecamatan: item.kecamatan,
-        Desa: item.desa,
-        nama: item.nama,
-        password: item.password,
-        namaKelompok: item?.kelompok?.namaKelompok,
-        gapoktan: item?.kelompok?.gapoktan,
-        penyuluh: item?.dataPenyuluh?.nama
-      };
-    });
-    ExcelComponent(dataExel, 'data.xlsx', 'Sheet1');
-  };
-  const totalData = filteredData.length;
+  // const filteredData = datas.filter((item) => {
+  //   return Object.keys(filters).every((key) => {
+  //     if (filters[key] !== '') {
+  //       if (typeof item[key] === 'number') {
+  //         return item[key] === Number(filters[key]);
+  //       } else if (typeof item[key] === 'string') {
+  //         return item[key].toLowerCase().includes(filters[key].toLowerCase());
+  //       }
+  //     }
+  //     return true;
+  //   });
+  // });
+  // const handleDownlod = () => {
+  //   const dataExel = filteredData.map((item) => {
+  //     return {
+  //       NIK: item.NIK,
+  //       ['No Wa']: item.NoWa,
+  //       Alamat: item.alamat,
+  //       Kecamatan: item.kecamatan,
+  //       Desa: item.desa,
+  //       nama: item.nama,
+  //       password: item.password,
+  //       namaKelompok: item?.kelompok?.namaKelompok,
+  //       gapoktan: item?.kelompok?.gapoktan,
+  //       penyuluh: item?.dataPenyuluh?.nama
+  //     };
+  //   });
+  //   ExcelComponent(dataExel, 'data.xlsx', 'Sheet1');
+  // };
+  // const totalData = filteredData.length;
   function handleFileChange(event) {
     if (!event.target.files) return;
 

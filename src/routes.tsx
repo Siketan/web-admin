@@ -32,7 +32,7 @@ import {
   EditRekapPetani,
   TambahTanamanPetani,
   EditTanamanPetani,
-  DetailTanamanPetani,
+  // DetailTanamanPetani,
   TambahOperator,
   // DetailDataTanamanPetani,
   EditLaporanTanam,
@@ -297,7 +297,7 @@ const Path = () => {
           }
         });
     }
-  }, [token, isAuthPage]);
+  }, [token, isAuthPage, dispatch, isWebVidePage]);
 
   if (isAuthPage || isWebVidePage) return <RoutesPath />;
 

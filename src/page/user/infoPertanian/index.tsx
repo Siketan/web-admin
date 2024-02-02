@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 import UserLayout from '../../../components/UserLayout';
 import MainCard from '../../../components/MainCard';

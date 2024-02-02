@@ -154,7 +154,7 @@ export default function ExportTable() {
             </tr>
           </thead>
           <tbody>
-            {resp?.data.map((item, index) => (
+            {resp?.data.map((item) => (
               <tr key={item.id}>
                 <td className="border p-2">{item.fk_kelompokId}</td>
                 {/* TODO: Kecamatan  */}

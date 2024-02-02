@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import EditorText from '@/components/textAreaEditor';
 import { Button } from '@mantine/core';
 import MainCard from '@/components/MainCard';
 import TextInput from '@/components/uiComponents/inputComponents/textInput';
-import { IconPlus, IconX, IconDeviceFloppy } from '@tabler/icons-react';
+import { IconX, IconDeviceFloppy } from '@tabler/icons-react';
 import { AddJurnalKegiatan } from '@/infrastruture';
 import InputImage from '@/components/inputImage';
 import LoadingAnimation from '../../../components/loading';

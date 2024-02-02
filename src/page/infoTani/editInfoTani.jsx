@@ -3,7 +3,7 @@ import EditorText from '@/components/textAreaEditorEdit';
 import { Radio, Group, Button } from '@mantine/core';
 import MainCard from '@/components/MainCard';
 import TextInput from '@/components/uiComponents/inputComponents/textInput';
-import { IconPlus, IconX, IconDeviceFloppy } from '@tabler/icons-react';
+import { IconX, IconDeviceFloppy } from '@tabler/icons-react';
 import { useParams } from 'react-router-dom';
 import InputImage from '@/components/inputImage';
 import { GetInfoTaniById, updateInfoTani } from '@/infrastruture';
@@ -36,7 +36,7 @@ const TambahInfoTani = () => {
         setLoading(false);
       });
     }
-  }, []);
+  }, [id]);
   const handleClick = (e) => {
     const data = {
       judul,

@@ -16,10 +16,10 @@ import THead from './THead';
 import clsx from 'clsx';
 import { PaginationControl, PaginationCount } from './Pagination';
 import { IoMdAdd } from 'react-icons/io';
-import { RiTableLine } from 'react-icons/ri';
 import { TiExport } from 'react-icons/ti';
 
 type TableProps<T extends object> = {
+  className?: string;
   data: PaginatedRespApiData<T> | undefined;
   columns: ColumnDef<T>[];
   isLoading?: boolean;
@@ -40,7 +40,7 @@ export default function Table<T extends object>({
   data,
   isLoading,
   omitSort = false,
-  withFilter = false,
+  // withFilter = false,
   withPaginationCount = false,
   withPaginationControl = false,
   withButton = false,
@@ -48,7 +48,7 @@ export default function Table<T extends object>({
   buttonHref = '/',
   exportUrl = '',
 
-  filter = [],
+  // filter = [],
   ...rest
 }: TableProps<T>) {
   const [globalFilter, setGlobalFilter] = React.useState('');
@@ -138,7 +138,7 @@ export default function Table<T extends object>({
             <table className="min-w-full divide-y divide-gray-300">
               <THead
                 table={table}
-                data={data}
+                // data={data}
                 omitSort={omitSort}
                 className="rounded-xl text-white"
               />
