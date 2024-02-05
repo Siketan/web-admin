@@ -81,13 +81,12 @@ const IndexOperator = () => {
   useEffect(() => {
     // setLoading(true);
     GetDaftarOperator(page, limit)
-      .then((res) => {
-        //   console.log(res.data)
-        setResp(res);
-        // setDatas(res.data);
-        // setLoading(false);
-      })
-      .catch(() => {
+    .then((res) => {
+      setResp(res);
+      setDatas(res.data);
+      setLoading(false)
+    })
+    .catch((err) => {
         //   console.log(err);
         // setLoading(false);
       });

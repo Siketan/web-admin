@@ -9,13 +9,13 @@ import { AddJurnalKegiatan } from '@/infrastruture';
 import InputImage from '@/components/inputImage';
 import LoadingAnimation from '../../../components/loading';
 const FormJurnalKegiatan = () => {
-  const [NIP, setNIP] = useState('');
-  const [judul, setJudul] = useState('');
-  const [statusJurnal, setStatusJurnal] = useState('');
-  const [isi, setIsi] = useState('');
-  const [gambar, setGambar] = useState('');
-  const [createdBy, setCreatedBy] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [NIK, setNIK] = useState("");
+  const [judul, setJudul] = useState("");
+  const [statusJurnal, setStatusJurnal] = useState("");
+  const [isi, setIsi] = useState("");
+  const [gambar, setGambar] = useState("");
+  const [createdBy, setCreatedBy] = useState("");
+  const [loading, setLoading] = useState(false)
   const currentDate = new Date();
   const tanggalDibuat = currentDate.toISOString().split('T')[0];
   const tanggalFormatted =
@@ -29,7 +29,7 @@ const FormJurnalKegiatan = () => {
     setLoading(true);
     e.preventDefault();
     const data = {
-      NIP,
+      NIK,
       judul,
       uraian: isi,
       gambar,
@@ -51,11 +51,11 @@ const FormJurnalKegiatan = () => {
         <MainCard transparent gap="10%" row>
           <MainCard transparent noPadding width="40%">
             <TextInput
-              id="NIP"
-              name="NIP"
+              id="NIK"
+              name="NIK"
               label="NIP"
-              value={NIP}
-              onChange={(e) => setNIP(e.target.value)}
+              value={NIK}
+              onChange={(e) => setNIK(e.target.value)}
             />
             <TextInput
               id="judul"
@@ -71,13 +71,6 @@ const FormJurnalKegiatan = () => {
               value={createdBy}
               onChange={(e) => setCreatedBy(e.target.value)}
             />
-            {/* <TextInput
-              id="statusJurnal"
-              name="statusJurnal"
-              label="Status Jurnal"
-              value={statusJurnal}
-              onChange={(e) => setStatusJurnal(e.target.value)}
-            /> */}
             <div className="relative z-0 w-full mb-6 group">
               <label htmlFor="underline_select" className="text-sm dark:text-gray-400 pt-5 md:pt-0">
                 <strong>Satuan</strong>
@@ -101,14 +94,13 @@ const FormJurnalKegiatan = () => {
           </MainCard>
         </MainCard>
         <EditorText setValue={setIsi} />
-        <MainCard
-          transparent
-          id="isi"
-          name="isi"
-          value={isi}
-          onChange={(e) => setIsi(e.target.value)}
-          row
-          style={{ justifyContent: 'end' }}>
+				<MainCard
+					transparent
+					id="isi"
+					name="isi"
+					row
+					style={{ justifyContent: "end" }}
+				>
           <Button
             leftIcon={<IconDeviceFloppy size="1rem" />}
             variant="outline"
