@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
-import EditorText from '@/components/textAreaEditor';
+import EditorText from '@/components/textAreaEditorEdit';
 import { Button } from '@mantine/core';
 import MainCard from '@/components/MainCard';
 import TextInput from '@/components/uiComponents/inputComponents/textInput';
@@ -14,7 +14,6 @@ const EditFormJurnalKegiatan = () => {
   const [judul, setJudul] = useState('');
   const [statusJurnal, setStatusJurnal] = useState('');
   const [isi, setIsi] = useState('');
-  const [isiBaru, setIsiBaru] = useState('');
   const [gambar, setGambar] = useState('');
   const [createdBy, setCreatedBy] = useState('');
   const [loading, setLoading] = useState(false);
@@ -37,7 +36,7 @@ const EditFormJurnalKegiatan = () => {
     const data = {
       NIK,
       judul,
-      uraian: isiBaru || isi,
+      uraian: isi,
       gambar,
       createdBy,
       tanggalDibuat,
@@ -56,6 +55,7 @@ const EditFormJurnalKegiatan = () => {
         // console.log(data.newData.uraian)
         setNIK(data.newData.dataPenyuluh.nik);
         setJudul(data.newData.judul);
+        // setIsi(data.newData.uraian);
         setIsi(data.newData.uraian);
         setGambar(data.newData.gambar);
         setCreatedBy(data.newData.dataPenyuluh.nama);
@@ -63,7 +63,7 @@ const EditFormJurnalKegiatan = () => {
       });
     }
   }, [id]);
-  console.log(isi);
+
   return (
     <MainCard transparent row center style={{ paddingTop: '50px' }}>
       {loading && <LoadingAnimation />}
@@ -75,7 +75,7 @@ const EditFormJurnalKegiatan = () => {
               <span id="tanggal" name="tanggal">
                 Tanggal Dibuat: {tanggalFormatted}
               </span>
-              <span>Di Buat Oleh: {createdBy}</span>
+              <span>Dibuat Oleh: {createdBy}</span>
             </MainCard>
             <TextInput
               id="judul"
@@ -86,7 +86,7 @@ const EditFormJurnalKegiatan = () => {
             />
             <div className="relative z-0 w-full mb-6 group">
               <label htmlFor="underline_select" className="text-sm dark:text-gray-400 pt-5 md:pt-0">
-                <strong>Satuan</strong>
+                <strong>Status</strong>
               </label>
               <select
                 id="statusJurnal"
@@ -103,7 +103,7 @@ const EditFormJurnalKegiatan = () => {
             <InputImage imageActive={gambar} onChange={(e) => setGambar(e)} title="Foto kegiatan" />
           </MainCard>
         </MainCard>
-        <EditorText setValue={setIsiBaru} isi={isi} />
+        <EditorText setValue={setIsi} isi={isi} />
         <MainCard transparent id="isi" name="isi" row style={{ justifyContent: 'end' }}>
           <Button
             leftIcon={<IconDeviceFloppy size="1rem" />}

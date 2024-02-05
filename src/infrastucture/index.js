@@ -19,7 +19,7 @@ export const Register = async (data) => {
 export const Login = async (data) => {
   try {
     const response = await Api.post('/auth/login', data);
-    console.log(response);
+    // console.log(response);
     localStorage.setItem('token', response.data.token);
     localStorage.setItem('nama', response?.data?.user?.nama);
     localStorage.setItem('user_id', response?.data?.user?.id);
@@ -471,7 +471,7 @@ export const DeleteJurnalKegiatan = async (id) => {
 export const UpdateJurnalKegiatan = async (id, data) => {
   try {
     const response = await Api.put(`/jurnal-kegiatan/${id}`, data, headers);
-    SweatAlert(String(response.data.message), 'success', '/jurnal-kegiatan');
+    SweatAlert(String(response.data.message), 'success', '/data-penyuluh/jurnal-kegiatan');
   } catch (error) {
     SweatAlert(String(error.response.data.message), 'error');
   }

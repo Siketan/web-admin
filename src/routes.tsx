@@ -527,7 +527,6 @@ const RoutesPath = () => {
           <Route path="/toko-tani/produk-penyuluh" element={<ProdukPenyuluh />} />
           {/* Data Penyuluh */}
           <Route path="/data-penyuluh/tambah" element={<TambahPenyuluhanTani />} />
-          <Route path="/data-penyuluh/:id" element={<EditPenyuluhan />} />
           <Route path="/data-penyuluh/presensi-kehadiran" element={<PresensiKehadiran />} />
           <Route path="/data-penyuluh/jurnal-kegiatan" element={<JurnalKegiatan />} />
           <Route path="/data-penyuluh/jurnal-kegiatan/form" element={<FormJurnalKegiatan />} />
@@ -540,6 +539,7 @@ const RoutesPath = () => {
             element={<EditFormJurnalKegiatan />}
           />
           <Route path="/data-penyuluh/riwayat-chat" element={<DataRiwayatChat />} />
+          <Route path="/data-penyuluh/:id" element={<EditPenyuluhan />} />
           {/*All about Operator*/}
           <Route path="/list-operator/tambah" element={<TambahOperator />} />
           <Route path="/list-operator" element={<IndexOperator />} />

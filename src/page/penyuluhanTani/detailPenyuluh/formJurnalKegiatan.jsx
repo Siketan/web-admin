@@ -67,13 +67,13 @@ const FormJurnalKegiatan = () => {
             <TextInput
               id="createdBy"
               name="createdBy"
-              label="Di Buat Oleh"
+              label="Dibuat Oleh"
               value={createdBy}
               onChange={(e) => setCreatedBy(e.target.value)}
             />
             <div className="relative z-0 w-full mb-6 group">
               <label htmlFor="underline_select" className="text-sm dark:text-gray-400 pt-5 md:pt-0">
-                <strong>Satuan</strong>
+                <strong>Status</strong>
               </label>
               <select
                 id="statusJurnal"
