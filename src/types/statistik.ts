@@ -1,13 +1,13 @@
 export enum EKomoditas {
-  "PADI KONVENSIONAL",
-  "PADI RAMAH LINGKUNGAN",
-  "PADI ORGANIK",
-  "JAGUNG",
-  "KEDELAI",
-  "UBI JALAR",
-  "UBI KAYU",
-  "KACANG TANAH",
-  "KACANG HIJAU",
+  'PADI KONVENSIONAL',
+  'PADI RAMAH LINGKUNGAN',
+  'PADI ORGANIK',
+  'JAGUNG',
+  'KEDELAI',
+  'UBI JALAR',
+  'UBI KAYU',
+  'KACANG TANAH',
+  'KACANG HIJAU'
 }
 export type TKomoditasResponse = {
   date: string;
@@ -21,5 +21,5 @@ export type TKategoriResponse = {
   count: number;
 };
 
-export type TSummaryKomoditasResponse = Omit<TKomoditasResponse, "date">;
-export type TSummaryKategoriResponse = Omit<TKategoriResponse, "date">;
+export type TSummaryKomoditasResponse = Omit<TKomoditasResponse, 'date'>;
+export type TSummaryKategoriResponse = Omit<TKategoriResponse, 'date'>;

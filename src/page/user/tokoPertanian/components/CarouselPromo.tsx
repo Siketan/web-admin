@@ -1,5 +1,6 @@
-import React from "react";
-import { Carousel } from "@mantine/carousel";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React from 'react';
+import { Carousel } from '@mantine/carousel';
 
 export default function CarouselPromo() {
   return (
@@ -7,12 +8,7 @@ export default function CarouselPromo() {
       <Carousel.Slide>
         <div className="flex px-3 gap-5">
           <div className="cursor-pointer hover:py-2 hover:px-2 hover:bg-green-primary hover:rounded-md">
-            <img
-              src="/image/icon-merujaya.png"
-              width="160"
-              height="180"
-              alt="Icon Merujaya"
-            />
+            <img src="/image/icon-merujaya.png" width="160" height="180" alt="Icon Merujaya" />
           </div>
           <div className="cursor-pointer hover:py-2 hover:px-2 hover:bg-green-primary hover:rounded-md">
             <img
@@ -27,12 +23,7 @@ export default function CarouselPromo() {
       <Carousel.Slide>
         <div className="flex px-3 gap-5">
           <div className="cursor-pointer hover:py-2 hover:px-2 hover:bg-green-primary hover:rounded-md">
-            <img
-              src="/image/icon-sida.png"
-              width="160"
-              height="180"
-              alt="Icon Sida"
-            />
+            <img src="/image/icon-sida.png" width="160" height="180" alt="Icon Sida" />
           </div>
           <div className="cursor-pointer hover:py-2 hover:px-2 hover:bg-green-primary hover:rounded-md">
             <img
@@ -47,20 +38,10 @@ export default function CarouselPromo() {
       <Carousel.Slide>
         <div className="flex px-3 gap-5">
           <div className="cursor-pointer hover:py-2 hover:px-2 hover:bg-green-primary hover:rounded-md">
-            <img
-              src="/image/icon-mulyatani.png"
-              width="160"
-              height="180"
-              alt="Icon Mulya Tani"
-            />
+            <img src="/image/icon-mulyatani.png" width="160" height="180" alt="Icon Mulya Tani" />
           </div>
           <div className="cursor-pointer hover:py-2 hover:px-2 hover:bg-green-primary hover:rounded-md">
-            <img
-              src="/image/icon-jagoantani.png"
-              width="160"
-              height="180"
-              alt="Icon Jagoan Tani"
-            />
+            <img src="/image/icon-jagoantani.png" width="160" height="180" alt="Icon Jagoan Tani" />
           </div>
         </div>
       </Carousel.Slide>

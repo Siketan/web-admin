@@ -1,5 +1,5 @@
-import API from "./base"
+import API from './base';
 
 export const getTokoTani = () => {
-    return API.get("/product-petani-no-auth")
-}
+  return API.get('/product-petani-no-auth');
+};

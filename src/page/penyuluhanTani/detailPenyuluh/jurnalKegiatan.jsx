@@ -249,4 +249,3 @@ function JurnalKegiatan() {
 }
 
 export default JurnalKegiatan;
-

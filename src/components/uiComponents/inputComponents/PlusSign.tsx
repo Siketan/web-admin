@@ -1,5 +1,6 @@
-import React from "react";
-import { FaPlus } from "react-icons/fa";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React from 'react';
+import { FaPlus } from 'react-icons/fa';
 
 export default function SearchInput(props: { placeholder: string }) {
   return (

@@ -1,4 +1,4 @@
-import { TKelompokTani } from "./kelompokTani";
+import { TKelompokTani } from './kelompokTani';
 
 export type TDataTanaman = {
   id: number;
@@ -19,23 +19,20 @@ export type TDataTanaman = {
   updatedAt: string;
 };
 
-export type TDataTanamanInput = Omit<
-  TDataTanaman,
-  "id" | "createdAt" | "updatedAt"
->;
+export type TDataTanamanInput = Omit<TDataTanaman, 'id' | 'createdAt' | 'updatedAt'>;
 
 export const dataTanamanDefault: TDataTanamanInput = {
-  kategori: "",
-  komoditas: "",
-  periodeTanam: "",
+  kategori: '',
+  komoditas: '',
+  periodeTanam: '',
   luasLahan: 0,
   prakiraanLuasPanen: 0,
   prakiraanHasilPanen: 0,
-  prakiraanBulanPanen: "",
+  prakiraanBulanPanen: '',
   realisasiLuasPanen: 0,
   realisasiHasilPanen: 0,
-  realisasiBulanPanen: "",
-  fk_kelompokId: 0,
+  realisasiBulanPanen: '',
+  fk_kelompokId: 0
 };
 
 export type TTableDataTanaman = {

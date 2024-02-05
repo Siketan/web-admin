@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {
   TambahDataTani,
   RekapDataPetani,
@@ -32,7 +32,7 @@ import {
   EditRekapPetani,
   TambahTanamanPetani,
   EditTanamanPetani,
-  DetailTanamanPetani,
+  // DetailTanamanPetani,
   TambahOperator,
   // DetailDataTanamanPetani,
   EditLaporanTanam,
@@ -40,9 +40,9 @@ import {
   TambahLaporanAhir,
   EditPenyuluhan,
   VerifikasiUser,
-  DataSampah,
-} from "./page";
-import { clsx } from "clsx";
+  DataSampah
+} from './page';
+import { clsx } from 'clsx';
 
 import Footer from "./components/footer";
 import ProtectedRoute from "./page/protectedRoute";
@@ -84,103 +84,103 @@ import EditFormJurnalKegiatan from "./page/penyuluhanTani/detailPenyuluh/editJur
 
 const menu = [
   {
-    id: "dashboard",
-    name: "Dashboard",
-    icon: "/icons/dashboard.svg",
-    path: "/dashboard",
+    id: 'dashboard',
+    name: 'Dashboard',
+    icon: '/icons/dashboard.svg',
+    path: '/dashboard'
   },
   {
-    id: "statistik",
-    name: "Statistik",
-    icon: "/icons/statistik.svg",
+    id: 'statistik',
+    name: 'Statistik',
+    icon: '/icons/statistik.svg',
     sub: [
       {
-        name: "Tambah Data Statistik",
-        icon: "/icons/tambah.svg",
-        path: "/statistik/tambah",
+        name: 'Tambah Data Statistik',
+        icon: '/icons/tambah.svg',
+        path: '/statistik/tambah'
       },
       {
-        name: "Lihat Tabel Statistik",
-        icon: "/icons/users.svg",
-        path: "/statistik",
-      },
-    ],
+        name: 'Lihat Tabel Statistik',
+        icon: '/icons/users.svg',
+        path: '/statistik'
+      }
+    ]
   },
   {
-    id: "data-petani",
-    name: "Data Pertanian",
-    icon: "/icons/data-tani.svg",
+    id: 'data-petani',
+    name: 'Data Pertanian',
+    icon: '/icons/data-tani.svg',
     sub: [
       {
-        name: "Tambah Data Tanam",
-        icon: "/icons/users.svg",
-        path: "/tanaman-petani/add",
+        name: 'Tambah Data Tanam',
+        icon: '/icons/users.svg',
+        path: '/tanaman-petani/add'
       },
       {
-        name: "Lihat Tabel Tanam",
-        icon: "/icons/users.svg",
-        path: "/tanaman-petani",
+        name: 'Lihat Tabel Tanam',
+        icon: '/icons/users.svg',
+        path: '/tanaman-petani'
       },
       {
-        name: "Daftar User Petani",
-        icon: "/icons/users.svg",
-        path: "/data-tani/rekap-petani",
-      },
-    ],
+        name: 'Daftar User Petani',
+        icon: '/icons/users.svg',
+        path: '/data-tani/rekap-petani'
+      }
+    ]
   },
   {
-    id: "info-tani",
-    name: "Info Pertanian",
-    icon: "/icons/info-tani.svg",
+    id: 'info-tani',
+    name: 'Info Pertanian',
+    icon: '/icons/info-tani.svg',
     sub: [
       {
-        name: "Tambah Berita Tani",
-        icon: "/icons/users.svg",
-        path: "/info-tani/tambah",
+        name: 'Tambah Berita Tani',
+        icon: '/icons/users.svg',
+        path: '/info-tani/tambah'
       },
       {
-        name: "Lihat Berita Tani",
-        icon: "/icons/berita.svg",
-        path: "/info-tani",
+        name: 'Lihat Berita Tani',
+        icon: '/icons/berita.svg',
+        path: '/info-tani'
       },
       {
-        name: "Tambah Acara Tani",
-        icon: "/icons/users.svg",
-        path: "/event-tani/tambah",
+        name: 'Tambah Acara Tani',
+        icon: '/icons/users.svg',
+        path: '/event-tani/tambah'
       },
       {
-        name: "Lihat Acara Tani",
-        icon: "/icons/kalender.svg",
-        path: "/info-tani/event-tani",
-      },
-    ],
+        name: 'Lihat Acara Tani',
+        icon: '/icons/kalender.svg',
+        path: '/info-tani/event-tani'
+      }
+    ]
   },
   {
-    id: "toko-tani",
-    name: "Toko Pertanian",
-    icon: "/icons/toko-tani.svg",
+    id: 'toko-tani',
+    name: 'Toko Pertanian',
+    icon: '/icons/toko-tani.svg',
     sub: [
       {
-        name: "Tambah Toko Tani",
-        icon: "/icons/tambah.svg",
-        path: "/toko-tani/tambah-penjual",
+        name: 'Tambah Toko Tani',
+        icon: '/icons/tambah.svg',
+        path: '/toko-tani/tambah-penjual'
       },
       {
-        name: "Lihat Daftar Toko Tani",
-        icon: "/icons/toko.svg",
-        path: "/toko-tani/produk-petani",
-      },
-    ],
+        name: 'Lihat Daftar Toko Tani',
+        icon: '/icons/toko.svg',
+        path: '/toko-tani/produk-petani'
+      }
+    ]
   },
   {
-    id: "info-penyuluh",
-    name: "Info Penyuluh",
-    icon: "/icons/data-penyuluh.svg",
+    id: 'info-penyuluh',
+    name: 'Info Penyuluh',
+    icon: '/icons/data-penyuluh.svg',
     sub: [
       {
-        name: "Tambah Penyuluh",
-        icon: "/icons/tambah.svg",
-        path: "/data-penyuluh/tambah",
+        name: 'Tambah Penyuluh',
+        icon: '/icons/tambah.svg',
+        path: '/data-penyuluh/tambah'
       },
       {
         name: "Rekap Data Penyuluh",
@@ -200,99 +200,95 @@ const menu = [
     ],
   },
   {
-    id: "hak-akses",
-    name: "Hak Akses",
-    icon: "/icons/hak-akses.svg",
+    id: 'hak-akses',
+    name: 'Hak Akses',
+    icon: '/icons/hak-akses.svg',
     sub: [
       {
-        name: "Verifikasi User",
-        icon: "/icons/globe.svg",
-        path: "/verifikasi",
+        name: 'Verifikasi User',
+        icon: '/icons/globe.svg',
+        path: '/verifikasi'
       },
       {
-        name: "Ubah Akses User",
-        icon: "/icons/edit-menu.svg",
-        path: "/hak-akses/ubah",
-      },
-    ],
+        name: 'Ubah Akses User',
+        icon: '/icons/edit-menu.svg',
+        path: '/hak-akses/ubah'
+      }
+    ]
   },
   {
-    id: "log-aktivitas",
-    name: "Log Aktivitas",
-    icon: "/icons/log-aktivitas.svg",
+    id: 'log-aktivitas',
+    name: 'Log Aktivitas',
+    icon: '/icons/log-aktivitas.svg',
     sub: [
       {
-        name: "Aktivitas User",
-        icon: "/icons/log-aktivitas.svg",
-        path: "/log-aktivitas",
+        name: 'Aktivitas User',
+        icon: '/icons/log-aktivitas.svg',
+        path: '/log-aktivitas'
       },
       {
-        name: "Data Sampah",
-        icon: "/icons/log-aktivitas.svg",
-        path: "/log-aktivitas/data-sampah",
-      },
-    ],
+        name: 'Data Sampah',
+        icon: '/icons/log-aktivitas.svg',
+        path: '/log-aktivitas/data-sampah'
+      }
+    ]
   },
   {
-    id: "list-operator",
-    name: "Info Operator",
-    icon: "/icons/users.svg",
+    id: 'list-operator',
+    name: 'Info Operator',
+    icon: '/icons/users.svg',
     sub: [
       {
-        name: "Tambah Operator",
-        icon: "/icons/tambah.svg",
-        path: "/list-operator/tambah",
+        name: 'Tambah Operator',
+        icon: '/icons/tambah.svg',
+        path: '/list-operator/tambah'
       },
       {
-        name: "Data Operator",
-        icon: "/icons/edit-menu.svg",
-        path: "/list-operator",
-      },
-    ],
-  },
+        name: 'Data Operator',
+        icon: '/icons/edit-menu.svg',
+        path: '/list-operator'
+      }
+    ]
+  }
 ];
 
 const dropdownMenu = [
   {
-    name: "Profil",
-    icon: "/icons/profil.svg",
-    path: "/profil",
+    name: 'Profil',
+    icon: '/icons/profil.svg',
+    path: '/profil'
   },
   {
-    name: "Pengaturan",
-    icon: "/icons/pengaturan.svg",
-    path: "/pengaturan",
-  },
+    name: 'Pengaturan',
+    icon: '/icons/pengaturan.svg',
+    path: '/pengaturan'
+  }
 ];
 const Path = () => {
   const [sidebarOpen, setSidebarOpen] = React.useState(true);
-  const [activeMenu, setActiveMenu] = React.useState("");
-  const activePage = window.location.pathname.split("/")[1];
+  const [activeMenu, setActiveMenu] = React.useState('');
+  const activePage = window.location.pathname.split('/')[1];
 
   const sidebar = React.useRef(null);
   const mainMenuClasses =
-    "flex items-center p-2 w-full bg-white-primary text-green-primary hover:bg-green-sidebar-hover transition-all duration-200 ease-in-out";
-  const activeClasses = "bg-green-primary bg-opacity-50";
+    'flex items-center p-2 w-full bg-white-primary text-green-primary hover:bg-green-sidebar-hover transition-all duration-200 ease-in-out';
+  const activeClasses = 'bg-green-primary bg-opacity-50';
   const textMenuClasses =
-    "ml-3 transition-all duration-200 text-left whitespace-nowrap font-bold text-lg capitalize";
-  const stackedMenuClasses = clsx(
-    "w-full transition duration-75 group",
-    mainMenuClasses
-  );
+    'ml-3 transition-all duration-200 text-left whitespace-nowrap font-bold text-lg capitalize';
+  const stackedMenuClasses = clsx('w-full transition duration-75 group', mainMenuClasses);
   const subMenuClasses = stackedMenuClasses;
 
   const user = useSelector((state: RootState) => state.state.user);
   const dispatch = useDispatch();
 
-  const token = window.localStorage.getItem("token");
+  const token = window.localStorage.getItem('token');
   const isAuthPage =
-    window.location.pathname === "/login" ||
-    window.location.pathname === "/register";
+    window.location.pathname === '/login' || window.location.pathname === '/register';
 
   const isWebVidePage =
-    window.location.pathname === "/" ||
-    window.location.pathname.includes("info-pertanian") ||
-    window.location.pathname === "/toko-pertanian";
+    window.location.pathname === '/' ||
+    window.location.pathname.includes('info-pertanian') ||
+    window.location.pathname === '/toko-pertanian';
 
   useEffect(() => {
     if (token) {
@@ -304,13 +300,13 @@ const Path = () => {
         })
         .catch((err) => {
           console.log({ err });
-          window.localStorage.removeItem("token");
+          window.localStorage.removeItem('token');
           if (!isAuthPage && !isWebVidePage) {
-            window.location.href = "/login";
+            window.location.href = '/login';
           }
         });
     }
-  }, [token, isAuthPage]);
+  }, [token, isAuthPage, dispatch, isWebVidePage]);
 
   if (isAuthPage || isWebVidePage) return <RoutesPath />;
 
@@ -320,21 +316,15 @@ const Path = () => {
         <aside
           ref={sidebar}
           className={clsx(
-            "fixed left-0 top-0 z-20 flex h-screen flex-col justify-between bg-green-primary pb-8 shadow-lg duration-300 lg:translate-x-0 text-white",
-            sidebarOpen ? "w-80" : "w-[6%]"
-          )}
-        >
-          <div
-            className={clsx(
-              "bg-green-secondary bg-opacity-50",
-              !sidebarOpen && "p-4"
-            )}
-          >
+            'fixed left-0 top-0 z-20 flex h-screen flex-col justify-between bg-green-primary pb-8 shadow-lg duration-300 lg:translate-x-0 text-white',
+            sidebarOpen ? 'w-80' : 'w-[6%]'
+          )}>
+          <div className={clsx('bg-green-secondary bg-opacity-50', !sidebarOpen && 'p-4')}>
             <Image
               src="/image/logo-navbar.png"
               height={80}
               alt="Logo Siketan"
-              className={sidebarOpen ? "block" : "hidden"}
+              className={sidebarOpen ? 'block' : 'hidden'}
             />
           </div>
           <div className="h-full px-6 py-2 overflow-y-auto">
@@ -344,39 +334,21 @@ const Path = () => {
                   {item.path ? (
                     <a
                       href={item.path}
-                      className={clsx(
-                        mainMenuClasses,
-                        activePage === item.id && activeClasses
-                      )}
-                    >
+                      className={clsx(mainMenuClasses, activePage === item.id && activeClasses)}>
                       <Image src={item.icon} alt={item.name} w={24} />
-                      <span
-                        className={clsx(
-                          textMenuClasses,
-                          sidebarOpen ? "block" : "hidden"
-                        )}
-                      >
+                      <span className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
                         {item.name}
                       </span>
                     </a>
                   ) : (
                     <button
-                      className={clsx(
-                        mainMenuClasses,
-                        activePage === item.id && activeClasses
-                      )}
+                      className={clsx(mainMenuClasses, activePage === item.id && activeClasses)}
                       onClick={() => {
-                        if (activeMenu === item.id) setActiveMenu("");
+                        if (activeMenu === item.id) setActiveMenu('');
                         else setActiveMenu(item.id);
-                      }}
-                    >
+                      }}>
                       <Image src={item.icon} alt={item.name} w={24} />
-                      <span
-                        className={clsx(
-                          textMenuClasses,
-                          sidebarOpen ? "block" : "hidden"
-                        )}
-                      >
+                      <span className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
                         {item.name}
                       </span>
                     </button>
@@ -390,16 +362,11 @@ const Path = () => {
                             href={sub.path}
                             className={clsx(
                               subMenuClasses,
-                              activePage === "bpup" && activeClasses
-                            )}
-                          >
+                              activePage === 'bpup' && activeClasses
+                            )}>
                             <Image src={sub.icon} alt={sub.name} width={24} />
                             <span
-                              className={clsx(
-                                textMenuClasses,
-                                sidebarOpen ? "block" : "hidden"
-                              )}
-                            >
+                              className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
                               {sub.name}
                             </span>
                           </a>
@@ -414,17 +381,15 @@ const Path = () => {
         </aside>
         <div
           className={clsx(
-            "box-border h-full min-h-screen w-full transition-all duration-300 ease-in-out relative overflow-hidden",
-            sidebarOpen ? "lg:ml-80" : "lg:ml-20"
-          )}
-        >
+            'box-border h-full min-h-screen w-full transition-all duration-300 ease-in-out relative overflow-hidden',
+            sidebarOpen ? 'lg:ml-80' : 'lg:ml-20'
+          )}>
           <nav className="p-5 flex justify-between text-white bg-green-primary">
             <div className="flex gap-4 items-center text-xl">
               <button
                 onClick={() => {
                   setSidebarOpen(!sidebarOpen);
-                }}
-              >
+                }}>
                 <IconMenu2 />
               </button>
               <h2 className="font-bold">All Data</h2>
@@ -435,15 +400,13 @@ const Path = () => {
               <Menu
                 styles={{
                   dropdown: {
-                    background:
-                      "linear-gradient(180deg, #22571C 0%, #194115 100%);",
+                    background: 'linear-gradient(180deg, #22571C 0%, #194115 100%);'
                   },
                   item: {
-                    color: "white",
-                    textTransform: "uppercase",
-                  },
-                }}
-              >
+                    color: 'white',
+                    textTransform: 'uppercase'
+                  }
+                }}>
                 <Menu.Target>
                   <UnstyledButton className="text-white">
                     <Group>
@@ -465,12 +428,11 @@ const Path = () => {
                       key={index}
                       href={item.path}
                       style={{
-                        ":hover": {
+                        ':hover': {
                           background:
-                            "linear-gradient(180deg, #86BA34 0%, rgba(111, 163, 29, 0.50) 100%)",
-                        },
-                      }}
-                    >
+                            'linear-gradient(180deg, #86BA34 0%, rgba(111, 163, 29, 0.50) 100%)'
+                        }
+                      }}>
                       <div className="flex gap-2 items-center text-black hover:text-white">
                         <Image
                           src={item.icon}
@@ -487,8 +449,7 @@ const Path = () => {
                     component="b"
                     onClick={() => {
                       Logout();
-                    }}
-                  >
+                    }}>
                     <div className="flex gap-2 items-center text-black hover:text-white ">
                       <Image
                         src="/icons/keluar.svg"
@@ -537,45 +498,24 @@ const RoutesPath = () => {
           <Route path="/statistik/tambah" element={<TambahStatistik />} />
           <Route path="/statistik/edit/:id" element={<EditStatistik />} />
           <Route path="/statistik/:id" element={<DetailStatistik />} />
-          <Route
-            path="/statistik/:id/realisasi"
-            element={<RealisasiStatistik />}
-          />
+          <Route path="/statistik/:id/realisasi" element={<RealisasiStatistik />} />
           {/* ENd of Statistik */}
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/notification" element={<Notification />} />
           {/* Data Tani */}
-          <Route
-            path="/rekap-data-tani/edit/:id"
-            element={<EditRekapPetani />}
-          />
+          <Route path="/rekap-data-tani/edit/:id" element={<EditRekapPetani />} />
           <Route path="/data-tani/tambah" element={<TambahDataTani />} />
           <Route path="/data-tani/laporan-tanam" element={<LaporanPetani />} />
           <Route path="/data-tani/rekap-petani" element={<RekapDataPetani />} />
-          <Route
-            path="/data-tani/detail/:id"
-            element={<ViewDetailDataPetani />}
-          />
+          <Route path="/data-tani/detail/:id" element={<ViewDetailDataPetani />} />
           <Route path="/tanaman-petani" element={<DetailRekapPetani />} />
-          <Route
-            path="/tanaman-petani/export"
-            element={<ExportTableDataPertanian />}
-          />
+          <Route path="/tanaman-petani/export" element={<ExportTableDataPertanian />} />
           <Route path="/tanaman-petani/add" element={<TambahTanamanPetani />} />
-          <Route
-            path="/tanaman-petani/edit/:id"
-            element={<EditTanamanPetani />}
-          />
-          <Route
-            path="/tanaman-petani/detail/:id"
-            element={<DetailDataTanaman />}
-          />
+          <Route path="/tanaman-petani/edit/:id" element={<EditTanamanPetani />} />
+          <Route path="/tanaman-petani/detail/:id" element={<DetailDataTanaman />} />
           <Route path="/laporan-tanam/add" element={<TambahLaporanTanam />} />
           <Route path="/laporan-akhir/add" element={<TambahLaporanAhir />} />
-          <Route
-            path="/laporan-tanam/edit/:id"
-            element={<EditLaporanTanam />}
-          />
+          <Route path="/laporan-tanam/edit/:id" element={<EditLaporanTanam />} />
           {/* <Route path="/laporan-tanam/:id" element={<DetailTanamanPetani />} /> */}
           {/* <Route path="/data-tanaman" element={<DataTanaman />} /> */}
           {/* event Tani */}
@@ -591,15 +531,9 @@ const RoutesPath = () => {
           {/* Toko Tani */}
           <Route path="/toko-tani/tambah-penjual" element={<TambahPenjual />} />
           <Route path="/toko-tani/produk-petani" element={<ProdukPetani />} />
-          <Route
-            path="/toko-tani/produk-penyuluh"
-            element={<ProdukPenyuluh />}
-          />
+          <Route path="/toko-tani/produk-penyuluh" element={<ProdukPenyuluh />} />
           {/* Data Penyuluh */}
-          <Route
-            path="/data-penyuluh/tambah"
-            element={<TambahPenyuluhanTani />}
-          />
+          <Route path="/data-penyuluh/tambah" element={<TambahPenyuluhanTani />} />
           <Route path="/data-penyuluh/:id" element={<EditPenyuluhan />} />
           <Route
             path="/data-penyuluh/presensi-kehadiran"
@@ -629,14 +563,8 @@ const RoutesPath = () => {
           <Route path="/list-operator/tambah" element={<TambahOperator />} />
           <Route path="/list-operator" element={<IndexOperator />} />
           <Route path="/data-operator/edit/:id" element={<EditOperator />} />
-          <Route
-            path="/data-operator/detail/:id"
-            element={<DetailOperator />}
-          />
-          <Route
-            path="/data-penyuluh/rekap-penyuluh"
-            element={<RekapDataPenyuluh />}
-          />
+          <Route path="/data-operator/detail/:id" element={<DetailOperator />} />
+          <Route path="/data-penyuluh/rekap-penyuluh" element={<RekapDataPenyuluh />} />
           {/* Log Aktivitas */}
           <Route path="/log-aktivitas/" element={<LogActivity />} />
           <Route path="/log-aktivitas/data-sampah" element={<DataSampah />} />

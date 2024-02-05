@@ -1,36 +1,31 @@
-import { Anchor, Breadcrumbs } from "@mantine/core";
-import React, { useEffect } from "react";
-import { FaPlus, FaUserCheck, FaUserXmark, FaUsers } from "react-icons/fa6";
-import { LuNewspaper } from "react-icons/lu";
-import SearchInput from "../components/uiComponents/inputComponents/searchInput";
-import { TKelompokTani } from "../types/kelompokTani";
-import { SearchPoktan } from "../infrastucture/searchApi";
-import { PaginatedRespApiData } from "../types/paginatedRespApi";
-import { TDataTanaman, TTableDataTanaman } from "../types/dataTanaman";
-import {
-  DeleteStatistikTanamanById,
-  GetStatistikTanamanAll,
-} from "../infrastucture/statistic";
-import { Link } from "react-router-dom";
-import { IoEyeOutline } from "react-icons/io5";
-import { ImPencil } from "react-icons/im";
-import { MdDeleteOutline } from "react-icons/md";
-import { ColumnDef } from "@tanstack/react-table";
-import Table from "../components/table/Table";
+import { Anchor, Breadcrumbs } from '@mantine/core';
+import React, { useEffect } from 'react';
+import { FaPlus, FaUserCheck, FaUserXmark, FaUsers } from 'react-icons/fa6';
+import { LuNewspaper } from 'react-icons/lu';
+import SearchInput from '../components/uiComponents/inputComponents/searchInput';
+import { TKelompokTani } from '../types/kelompokTani';
+import { SearchPoktan } from '../infrastucture/searchApi';
+import { PaginatedRespApiData } from '../types/paginatedRespApi';
+import { TDataTanaman, TTableDataTanaman } from '../types/dataTanaman';
+import { DeleteStatistikTanamanById, GetStatistikTanamanAll } from '../infrastucture/statistic';
+import { Link } from 'react-router-dom';
+import { IoEyeOutline } from 'react-icons/io5';
+import { ImPencil } from 'react-icons/im';
+import { MdDeleteOutline } from 'react-icons/md';
+import { ColumnDef } from '@tanstack/react-table';
+import Table from '../components/table/Table';
 
-const breadcrumbItems = [{ title: "Dashboard", href: "/" }].map(
-  (item, index) => (
-    <Anchor href={item.href} key={index} className="text-white opacity-50">
-      {item.title}
-    </Anchor>
-  )
-);
+const breadcrumbItems = [{ title: 'Dashboard', href: '/' }].map((item, index) => (
+  <Anchor href={item.href} key={index} className="text-white opacity-50">
+    {item.title}
+  </Anchor>
+));
 
 const filterDataPoktan = (data: TKelompokTani[]) => {
   return data.map((item) => ({
     ...item,
     value: item.id.toString(),
-    label: `${item.gapoktan} - ${item.namaKelompok}`,
+    label: `${item.gapoktan} - ${item.namaKelompok}`
   }));
 };
 
@@ -51,62 +46,58 @@ const loadOptions = (
 
 const columns: ColumnDef<TTableDataTanaman>[] = [
   {
-    accessorKey: "no",
-    header: "No",
-    cell: (props) => <span>{`${props.getValue()}`}</span>,
+    accessorKey: 'no',
+    header: 'No',
+    cell: (props) => <span>{`${props.getValue()}`}</span>
   },
   {
-    accessorKey: "fk_kelompokId",
-    header: "No. Poktan",
-    cell: (props) => <span>{`${props.getValue()}`}</span>,
+    accessorKey: 'fk_kelompokId',
+    header: 'No. Poktan',
+    cell: (props) => <span>{`${props.getValue()}`}</span>
   },
   {
-    accessorKey: "kategori",
-    header: "Kategori Tanaman",
-    cell: (props) => <span>{`${props.getValue()}`}</span>,
+    accessorKey: 'kategori',
+    header: 'Kategori Tanaman',
+    cell: (props) => <span>{`${props.getValue()}`}</span>
   },
   {
-    accessorKey: "komoditas",
-    header: "Komoditas",
-    cell: (props) => <span>{`${props.getValue()}`}</span>,
+    accessorKey: 'komoditas',
+    header: 'Komoditas',
+    cell: (props) => <span>{`${props.getValue()}`}</span>
   },
   {
-    accessorKey: "createdAt",
-    header: "Tanggal Dibuat",
+    accessorKey: 'createdAt',
+    header: 'Tanggal Dibuat',
     cell: (props) => (
-      <span>{`${new Date(props.getValue() as string).toLocaleDateString(
-        "id-ID"
-      )}`}</span>
-    ),
+      <span>{`${new Date(props.getValue() as string).toLocaleDateString('id-ID')}`}</span>
+    )
   },
   {
-    accessorKey: "prakiraanBulanPanen",
-    header: "Prakiraan Bulan Panen",
-    cell: (props) => <span>{`${props.getValue()}`}</span>,
+    accessorKey: 'prakiraanBulanPanen',
+    header: 'Prakiraan Bulan Panen',
+    cell: (props) => <span>{`${props.getValue()}`}</span>
   },
   {
-    accessorKey: "actions",
-    header: "Aksi",
-    cell: (props) => props.row.original.actions,
-  },
+    accessorKey: 'actions',
+    header: 'Aksi',
+    cell: (props) => props.row.original.actions
+  }
 ];
 
 export default function Dashboard() {
   const [dataTable, setDataTable] = React.useState<
     PaginatedRespApiData<TTableDataTanaman> | undefined
   >();
-  const [resp, setResp] = React.useState<
-    PaginatedRespApiData<TDataTanaman> | undefined
-  >();
+  const [resp, setResp] = React.useState<PaginatedRespApiData<TDataTanaman> | undefined>();
   const [poktan, setPoktan] = React.useState<TKelompokTani>();
 
   useEffect(() => {
     GetStatistikTanamanAll(poktan?.id, {
       page: 1,
       limit: 10,
-      search: "",
-      sortType: "ASC",
-      sortBy: "",
+      search: '',
+      sortType: 'ASC',
+      sortBy: ''
     }).then((res) => {
       setResp(res?.data);
     });
@@ -138,15 +129,14 @@ export default function Dashboard() {
                       setResp(res?.data);
                     });
                   });
-                }}
-              >
+                }}>
                 <div className="flex h-7 w-7 items-center justify-center bg-red-500">
                   <MdDeleteOutline className="h-6 w-6 text-white" />
                 </div>
               </button>
             </div>
-          ),
-        })),
+          )
+        }))
       });
     }
   }, [resp]);
@@ -160,8 +150,7 @@ export default function Dashboard() {
           <div className="rounded-lg bg-[#E3EAE2] mt-4 grid grid-cols-2">
             <Link
               className="w-full h-full py-4 px-8 hover:bg-[#C6D4C4] hover:text-white transition-all rounded-l-lg flex cursor-pointer text-[#3B5D38] justify-between items-center"
-              to="#"
-            >
+              to="#">
               <div className="flex items-center flex-col justify-center text-lg">
                 <h5 className="font-bold">User Aktif</h5>
                 <p className="font-semibold">20</p>
@@ -170,8 +159,7 @@ export default function Dashboard() {
             </Link>
             <Link
               className="w-full h-full py-4 px-8 hover:bg-[#C6D4C4] hover:text-white transition-all rounded-r-lg flex cursor-pointer text-[#3B5D38] justify-between items-center"
-              to="#"
-            >
+              to="#">
               <div className="flex items-center flex-col justify-center text-lg">
                 <h5 className="font-bold">Publish Artikel</h5>
                 <p className="font-semibold">20</p>
@@ -186,9 +174,7 @@ export default function Dashboard() {
             <div className="w-full h-full py-4 px-8 bg-[#3B5D38] hover:bg-[#598C54] transition-all rounded-lg flex cursor-pointer text-white justify-center items-center relative">
               <div className="flex items-center flex-col justify-center">
                 <FaUserCheck size={40} />
-                <h5 className="font-semibold text-center">
-                  User sudah verifikasi
-                </h5>
+                <h5 className="font-semibold text-center">User sudah verifikasi</h5>
               </div>
               <div className="absolute border-4 border-[#E3EAE2] bg-[#3B5D38] h-10 w-10 -top-4 -right-4 flex items-center justify-center rounded-full">
                 2
@@ -197,9 +183,7 @@ export default function Dashboard() {
             <div className="w-full h-full py-4 px-8 bg-[#3B5D38] hover:bg-[#598C54] transition-all rounded-lg flex cursor-pointer text-white justify-center items-center relative">
               <div className="flex items-center flex-col justify-center">
                 <FaUserXmark size={40} />
-                <h5 className="font-semibold text-center">
-                  User belum verifikasi
-                </h5>
+                <h5 className="font-semibold text-center">User belum verifikasi</h5>
               </div>
               <div className="absolute border-4 border-[#E3EAE2] bg-[#3B5D38] h-10 w-10 -top-4 -right-4 flex items-center justify-center rounded-full">
                 2
@@ -220,13 +204,8 @@ export default function Dashboard() {
         className="mt-8"
       />
       <div className="relative bg-white bg-opacity-20 mt-6 p-4 flex items-center w-full">
-        <h3 className="text-white text-2xl font-bold mx-auto">
-          TABEL DATA STATISTIK PERTANIAN
-        </h3>
-        <Link
-          to="/statistik/tambah"
-          className="absolute right-4 text-[#0FA958] text-xl"
-        >
+        <h3 className="text-white text-2xl font-bold mx-auto">TABEL DATA STATISTIK PERTANIAN</h3>
+        <Link to="/statistik/tambah" className="absolute right-4 text-[#0FA958] text-xl">
           <FaPlus />
         </Link>
       </div>

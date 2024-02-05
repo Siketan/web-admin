@@ -1,31 +1,31 @@
-import { Link, useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import { FaClock } from "react-icons/fa6";
-import { BsPersonCircle } from "react-icons/bs";
-import { IoCaretBackCircle } from "react-icons/io5";
-import { Image } from "@mantine/core";
-import MainCard from "../../../components/MainCard";
-import UserLayout from "../../../components/UserLayout";
-import { GetInfoTaniById } from "../../../infrastucture";
+import { Link, useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { FaClock } from 'react-icons/fa6';
+import { BsPersonCircle } from 'react-icons/bs';
+import { IoCaretBackCircle } from 'react-icons/io5';
+import { Image } from '@mantine/core';
+import MainCard from '../../../components/MainCard';
+import UserLayout from '../../../components/UserLayout';
+import { GetInfoTaniById } from '../../../infrastucture';
 
 export default function Berita() {
-  const [datas, setDatas] = useState({
-    judul: "",
-    fotoBerita:"",
-    createdBy: "",
-    tanggal: "",
-    isi: "",
+  const [datas, setDatas] = React.useState({
+    judul: '',
+    fotoBerita: '',
+    createdBy: '',
+    tanggal: '',
+    isi: ''
   });
   const params = useParams();
   const id = Number(params.id);
 
   useEffect(() => {
-    if(id){
+    if (id) {
       GetInfoTaniById(id).then((data) => {
-        setDatas(data.infotani)
+        setDatas(data.infotani);
       });
     }
-  }, []);
+  }, [id]);
 
   return (
     <UserLayout>
@@ -54,15 +54,15 @@ export default function Berita() {
                 <div className="flex flex-row space-x-2 items-center justify-center">
                   <FaClock size={20} className="fill-gray-primary" />
                   <p className="text-xs sm:text-sm md:text-base text-gray-primary">
-                    {datas?.tanggal?.split("T")[0]}
+                    {datas?.tanggal?.split('T')[0]}
                   </p>
                 </div>
               </div>
               <div className="text-justify">
-                  <div dangerouslySetInnerHTML={{
-                    __html:datas?.isi
-                  }}>
-                  </div>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: datas?.isi
+                  }}></div>
               </div>
             </MainCard>
           </MainCard>

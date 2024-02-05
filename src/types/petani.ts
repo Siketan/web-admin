@@ -1,4 +1,4 @@
-import { TKelompokTani } from "./kelompokTani";
+import { TKelompokTani } from './kelompokTani';
 
 export type TPetani = {
   id: number;

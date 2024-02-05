@@ -1,4 +1,4 @@
-import { TKomoditasResponse } from "../types/statistik";
+import { TKomoditasResponse } from '../types/statistik';
 
 export const ResponseApiToDataChart = (
   data: TKomoditasResponse[],
@@ -12,10 +12,7 @@ export const ResponseApiToDataChart = (
 
   const numberOfDays = new Date(year, month, 0).getDate();
   const result = Array.from({ length: numberOfDays }, (_, i) => {
-    return (
-      filteredData.find((item) => new Date(item.date).getDate() == i + 1)
-        ?.count ?? 0
-    );
+    return filteredData.find((item) => new Date(item.date).getDate() == i + 1)?.count ?? 0;
   });
 
   return result;
