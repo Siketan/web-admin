@@ -16,10 +16,10 @@ const EditFormJurnalKegiatan = () => {
   const [isi, setIsi] = useState("");
   const [isiBaru, setIsiBaru] = useState("");
   const [gambar, setGambar] = useState("");
-  const [modalDeleteData, setModalDeleteData] = useState(false);
   const [createdBy, setCreatedBy] = useState("");
   const [loading, setLoading] = useState(false);
-  const {id} = useParams();
+  const params = useParams();
+	const id = params.id;
   
 //   const id = location.state?.id;
   const currentDate = new Date();
@@ -37,7 +37,7 @@ const EditFormJurnalKegiatan = () => {
     const data = {
       NIK,
       judul,
-      uraian:isiBaru,
+      uraian:isiBaru || isi,
       gambar,
       createdBy,
       tanggalDibuat,
@@ -51,44 +51,38 @@ const EditFormJurnalKegiatan = () => {
   };
 
   useEffect(() => {
-    GetJurnalKegiatanById(id).then((data) => {
-      console.log(data.newData.uraian)
-      setNIK(data.newData.dataPenyuluh.nik);
-      setJudul(data.newData.judul);
-      setIsi(data.newData.uraian);
-      setGambar(data.newData.gambar);
-      setCreatedBy(data.newData.dataPenyuluh.nama);
-      setStatusJurnal(data.newData.statusJurnal);
-    });
+    if (id){
+      GetJurnalKegiatanById(id).then((data) => {
+        // console.log(data.newData.uraian)
+        setNIK(data.newData.dataPenyuluh.nik);
+        setJudul(data.newData.judul);
+        setIsi(data.newData.uraian);
+        setGambar(data.newData.gambar);
+        setCreatedBy(data.newData.dataPenyuluh.nama);
+        setStatusJurnal(data.newData.statusJurnal);
+      });
+    }
   }, []);
-  // console.log(isi)
+  console.log(isi)
   return (
     <MainCard transparent row center style={{ paddingTop: "50px" }}>
           {loading && <LoadingAnimation/>}
       <MainCard width="80%">
-        <h1 className="text-center">Tambahkan Jurnal Kegiatan</h1>
+        <h1 className="text-center">Edit Jurnal Kegiatan</h1>
         <MainCard transparent gap="10%" row>
           <MainCard transparent noPadding width="40%">
-            <TextInput
-              id="NIK"
-              name="NIK"
-              label="NIP"
-              value={NIK}
-              onChange={(e) => setNIK(e.target.value)}
-            />
+            <MainCard transparent noPadding gap="0">
+            <span id="tanggal" name="tanggal">
+              Tanggal Dibuat: {tanggalFormatted}
+            </span>
+							<span>Di Buat Oleh: {createdBy}</span>
+						</MainCard>
             <TextInput
               id="judul"
               name="judul"
               label="Judul"
               value={judul}
               onChange={(e) => setJudul(e.target.value)}
-            />
-            <TextInput
-              id="createdBy"
-              name="createdBy"
-              label="Di Buat Oleh"
-              value={createdBy}
-              onChange={(e) => setCreatedBy(e.target.value)}
             />
             <div className="relative z-0 w-full mb-6 group">
               <label
@@ -108,9 +102,6 @@ const EditFormJurnalKegiatan = () => {
                 <option value="draft">Draft</option>
               </select>
             </div>
-            <span id="tanggal" name="tanggal">
-              Tanggal Dibuat: {tanggalFormatted}
-            </span>
           </MainCard>
           <MainCard transparent noPadding>
             <InputImage
@@ -135,7 +126,12 @@ const EditFormJurnalKegiatan = () => {
           >
             Simpan
           </Button>
-          <Button leftIcon={<IconX size="1rem" />} variant="outline">
+          <Button leftIcon={<IconX size="1rem" />}
+            variant="outline"
+            onClick={()=>
+            window.location = "/data-penyuluh/jurnal-kegiatan"
+            }
+          >
             Batalkan
           </Button>
         </MainCard>

@@ -170,7 +170,7 @@ export default function DetailRekapPetani() {
 		// delay 6 seconds
 		setTimeout(() => {
 			window.location.reload();
-		}, 4000);
+		});
 		// window.location.reload();
 	};
 

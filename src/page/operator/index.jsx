@@ -90,7 +90,7 @@ const IndexOperator = () => {
     setLoading(true)
     GetDaftarOperator(page, limit)
     .then((res) => {
-    //   console.log(res.data)
+      console.log(res)
       setResp(res);
       setDatas(res.data);
       setLoading(false)

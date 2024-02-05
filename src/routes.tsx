@@ -183,19 +183,19 @@ const menu = [
         path: "/data-penyuluh/tambah",
       },
       {
-        name: "Daftar Laporan Harian",
-        icon: "/icons/pensil.svg",
-        path: "/data-penyuluh/jurnal-kegiatan",
-      },
-      {
-        name: "Daftar Jurnal Petugas",
-        icon: "/icons/papan.svg",
-        path: "/data-penyuluh/jurnal-kegiatan/form",
-      },
-      {
         name: "Rekap Data Penyuluh",
         icon: "/icons/penyuluh.svg",
         path: "/data-penyuluh/rekap-penyuluh",
+      },
+      {
+        name: "Tambah Jurnal Petugas",
+        icon: "/icons/tambah.svg",
+        path: "/data-penyuluh/jurnal-kegiatan/form",
+      },
+      {
+        name: "Lihat Jurnal Petugas",
+        icon: "/icons/pensil.svg",
+        path: "/data-penyuluh/jurnal-kegiatan",
       },
     ],
   },
