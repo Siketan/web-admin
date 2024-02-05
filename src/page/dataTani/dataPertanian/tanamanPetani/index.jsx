@@ -133,20 +133,20 @@ export default function DetailRekapPetani() {
   //   setPage((prevPage) => Math.max(prevPage - 1, 1));
   // };
 
-	const handleDeleteTanaman = (ids) => {
-		DeleteTanamanPetani(ids);
-		postLogActivity({
-			user_id: localStorage.getItem("user_id"),
-			activity: "DELETE",
-			type: "TANAMAN",
-			detail_id: ids,
-		});
-		// delay 6 seconds
-		setTimeout(() => {
-			window.location.reload();
-		});
-		// window.location.reload();
-	};
+  const handleDeleteTanaman = (ids) => {
+    DeleteTanamanPetani(ids);
+    postLogActivity({
+      user_id: localStorage.getItem('user_id'),
+      activity: 'DELETE',
+      type: 'TANAMAN',
+      detail_id: ids
+    });
+    // delay 6 seconds
+    setTimeout(() => {
+      window.location.reload();
+    });
+    // window.location.reload();
+  };
 
   useEffect(() => {
     if (resp) {

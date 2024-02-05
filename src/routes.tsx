@@ -44,43 +44,36 @@ import {
 } from './page';
 import { clsx } from 'clsx';
 
-import Footer from "./components/footer";
-import ProtectedRoute from "./page/protectedRoute";
-import {
-  Image,
-  Menu,
-  Group,
-  Avatar,
-  Text,
-  UnstyledButton,
-} from "@mantine/core";
-import { IconMenu2 } from "@tabler/icons-react";
-import { IoMailUnreadOutline, IoCaretDownOutline } from "react-icons/io5";
-import { FaRegBell } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "./infrastucture/redux/state/stateSlice";
-import { RootState } from "./infrastucture/redux/store";
-import { GetProfile, Logout } from "./infrastucture";
-import Statistik from "./page/statistik";
-import TambahStatistik from "./page/statistik/tambah";
-import EditStatistik from "./page/statistik/edit";
-import Dashboard from "./page/dashboard";
-import Homepage from "./page/user/homepage";
-import TokoPertanian from "./page/user/tokoPertanian";
-import InfoPertanian from "./page/user/infoPertanian";
-import Berita from "./page/user/berita";
-import RealisasiStatistik from "./page/statistik/realisasi";
-import DetailStatistik from "./page/statistik/detail";
-import DetailDataTanaman from "./page/dataTani/dataPertanian/tanamanPetani/detail";
-import ExportTable from "./page/statistik/export";
-import ExportTableDataPertanian from "./page/dataTani/dataPertanian/tanamanPetani/export";
-import LogActivity from "./page/logAktivitas";
-import IndexOperator from "./page/operator";
-import EditOperator from "./page/operator/edit";
-import DetailOperator from "./page/operator/detail";
-import Profil from "./page/profil/side";
-import DetailJurnalKegiatan from "./page/penyuluhanTani/detailPenyuluh/detail";
-import EditFormJurnalKegiatan from "./page/penyuluhanTani/detailPenyuluh/editJurnal";
+import Footer from './components/footer';
+import ProtectedRoute from './page/protectedRoute';
+import { Image, Menu, Group, Avatar, Text, UnstyledButton } from '@mantine/core';
+import { IconMenu2 } from '@tabler/icons-react';
+import { IoMailUnreadOutline, IoCaretDownOutline } from 'react-icons/io5';
+import { FaRegBell } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from './infrastucture/redux/state/stateSlice';
+import { RootState } from './infrastucture/redux/store';
+import { GetProfile, Logout } from './infrastucture';
+import Statistik from './page/statistik';
+import TambahStatistik from './page/statistik/tambah';
+import EditStatistik from './page/statistik/edit';
+import Dashboard from './page/dashboard';
+import Homepage from './page/user/homepage';
+import TokoPertanian from './page/user/tokoPertanian';
+import InfoPertanian from './page/user/infoPertanian';
+import Berita from './page/user/berita';
+import RealisasiStatistik from './page/statistik/realisasi';
+import DetailStatistik from './page/statistik/detail';
+import DetailDataTanaman from './page/dataTani/dataPertanian/tanamanPetani/detail';
+import ExportTable from './page/statistik/export';
+import ExportTableDataPertanian from './page/dataTani/dataPertanian/tanamanPetani/export';
+import LogActivity from './page/logAktivitas';
+import IndexOperator from './page/operator';
+import EditOperator from './page/operator/edit';
+import DetailOperator from './page/operator/detail';
+import Profil from './page/profil/side';
+import DetailJurnalKegiatan from './page/penyuluhanTani/detailPenyuluh/detail';
+import EditFormJurnalKegiatan from './page/penyuluhanTani/detailPenyuluh/editJurnal';
 
 const menu = [
   {
@@ -183,21 +176,21 @@ const menu = [
         path: '/data-penyuluh/tambah'
       },
       {
-        name: "Rekap Data Penyuluh",
-        icon: "/icons/penyuluh.svg",
-        path: "/data-penyuluh/rekap-penyuluh",
+        name: 'Rekap Data Penyuluh',
+        icon: '/icons/penyuluh.svg',
+        path: '/data-penyuluh/rekap-penyuluh'
       },
       {
-        name: "Tambah Jurnal Petugas",
-        icon: "/icons/tambah.svg",
-        path: "/data-penyuluh/jurnal-kegiatan/form",
+        name: 'Tambah Jurnal Petugas',
+        icon: '/icons/tambah.svg',
+        path: '/data-penyuluh/jurnal-kegiatan/form'
       },
       {
-        name: "Lihat Jurnal Petugas",
-        icon: "/icons/pensil.svg",
-        path: "/data-penyuluh/jurnal-kegiatan",
-      },
-    ],
+        name: 'Lihat Jurnal Petugas',
+        icon: '/icons/pensil.svg',
+        path: '/data-penyuluh/jurnal-kegiatan'
+      }
+    ]
   },
   {
     id: 'hak-akses',
@@ -535,30 +528,18 @@ const RoutesPath = () => {
           {/* Data Penyuluh */}
           <Route path="/data-penyuluh/tambah" element={<TambahPenyuluhanTani />} />
           <Route path="/data-penyuluh/:id" element={<EditPenyuluhan />} />
+          <Route path="/data-penyuluh/presensi-kehadiran" element={<PresensiKehadiran />} />
+          <Route path="/data-penyuluh/jurnal-kegiatan" element={<JurnalKegiatan />} />
+          <Route path="/data-penyuluh/jurnal-kegiatan/form" element={<FormJurnalKegiatan />} />
           <Route
-            path="/data-penyuluh/presensi-kehadiran"
-            element={<PresensiKehadiran />}
+            path="/data-penyuluh/jurnal-kegiatan/detail/:id"
+            element={<DetailJurnalKegiatan />}
           />
           <Route
-            path="/data-penyuluh/jurnal-kegiatan"
-            element={<JurnalKegiatan />}
+            path="/data-penyuluh/jurnal-kegiatan/edit/:id"
+            element={<EditFormJurnalKegiatan />}
           />
-          <Route
-            path="/data-penyuluh/jurnal-kegiatan/form"
-            element={<FormJurnalKegiatan />}
-          />
-					<Route
-						path="/data-penyuluh/jurnal-kegiatan/detail/:id"
-						element={<DetailJurnalKegiatan />}
-					/>
-					<Route
-						path="/data-penyuluh/jurnal-kegiatan/edit/:id"
-						element={<EditFormJurnalKegiatan />}
-					/>
-          <Route
-            path="/data-penyuluh/riwayat-chat"
-            element={<DataRiwayatChat />}
-          />
+          <Route path="/data-penyuluh/riwayat-chat" element={<DataRiwayatChat />} />
           {/*All about Operator*/}
           <Route path="/list-operator/tambah" element={<TambahOperator />} />
           <Route path="/list-operator" element={<IndexOperator />} />

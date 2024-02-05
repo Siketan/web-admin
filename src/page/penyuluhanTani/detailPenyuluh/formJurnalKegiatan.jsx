@@ -9,13 +9,13 @@ import { AddJurnalKegiatan } from '@/infrastruture';
 import InputImage from '@/components/inputImage';
 import LoadingAnimation from '../../../components/loading';
 const FormJurnalKegiatan = () => {
-  const [NIK, setNIK] = useState("");
-  const [judul, setJudul] = useState("");
-  const [statusJurnal, setStatusJurnal] = useState("");
-  const [isi, setIsi] = useState("");
-  const [gambar, setGambar] = useState("");
-  const [createdBy, setCreatedBy] = useState("");
-  const [loading, setLoading] = useState(false)
+  const [NIK, setNIK] = useState('');
+  const [judul, setJudul] = useState('');
+  const [statusJurnal, setStatusJurnal] = useState('');
+  const [isi, setIsi] = useState('');
+  const [gambar, setGambar] = useState('');
+  const [createdBy, setCreatedBy] = useState('');
+  const [loading, setLoading] = useState(false);
   const currentDate = new Date();
   const tanggalDibuat = currentDate.toISOString().split('T')[0];
   const tanggalFormatted =
@@ -94,13 +94,7 @@ const FormJurnalKegiatan = () => {
           </MainCard>
         </MainCard>
         <EditorText setValue={setIsi} />
-				<MainCard
-					transparent
-					id="isi"
-					name="isi"
-					row
-					style={{ justifyContent: "end" }}
-				>
+        <MainCard transparent id="isi" name="isi" row style={{ justifyContent: 'end' }}>
           <Button
             leftIcon={<IconDeviceFloppy size="1rem" />}
             variant="outline"
