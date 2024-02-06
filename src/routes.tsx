@@ -71,7 +71,8 @@ import LogActivity from './page/logAktivitas';
 import IndexOperator from './page/operator';
 import EditOperator from './page/operator/edit';
 import DetailOperator from './page/operator/detail';
-import Profil from './page/profil/side';
+import Profil from './page/profil/profil';
+import Pengaturan from './page/pengaturan/Pengaturan';
 import DetailJurnalKegiatan from './page/penyuluhanTani/detailPenyuluh/detail';
 import EditFormJurnalKegiatan from './page/penyuluhanTani/detailPenyuluh/editJurnal';
 
@@ -554,6 +555,8 @@ const RoutesPath = () => {
           <Route path="/live-chat/rating-petugas" element={<RatingPetugas />} />
           {/* Profil */}
           <Route path="profil" element={<Profil />} />
+          {/* Pengaturan */}
+          <Route path='pengaturan' element={<Pengaturan/>} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
