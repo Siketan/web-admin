@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import MainCard from '@/components/MainCard';
 import InputCrud from '@/components/page/infoTani/IconCrud';
-import { IconTrash, IconPlus } from '@tabler/icons-react';
+import { IconEdit, IconEye, IconTrash, IconPlus } from '@tabler/icons-react';
 import { GatJurnalKegiatan, DeleteJurnalKegiatan } from '@/infrastruture';
 import { BsPersonCircle } from 'react-icons/bs';
 import { Text, Button, Modal, Card } from '@mantine/core';
@@ -61,12 +61,6 @@ function JurnalKegiatan() {
               onClick={() => (window.location.href = '/data-penyuluh/jurnal-kegiatan/form')}>
               <IconPlus className="m-auto rounded-full h-[20px] w-[20px] border border-black me-1" />
               <span className="text-base md:text-xl">Tambah Baru</span>
-            </div>
-            <div className="flex justify-center gap-2 cursor-pointer bg-yellow-500 hover:bg-green-primary hover:text-white hover:fill-white rounded-md p-3">
-              <div className="self-center h-[20px] w-[20px] me-1 flex justify-center">
-                <input type="checkbox" onChange={(e) => handleCheckd(e.target.checked)} />
-              </div>
-              <span className="text-base md:text-xl ">Pilih Semua</span>
             </div>
           </div>
         </div>
@@ -163,12 +157,12 @@ function JurnalKegiatan() {
                   <div className="flex flex-col space-y-1 max-h-fit">
                     <Link to={`/data-penyuluh/jurnal-kegiatan/detail/${item.id}`}>
                       <div className="flex h-7 w-7 items-center justify-center bg-green-500">
-                        <IoEyeOutline className="h-6 w-6 text-white" />
+                        <IconEye className="h-6 w-6 text-white" />
                       </div>
                     </Link>
                     <Link to={`/data-penyuluh/jurnal-kegiatan/edit/${item.id}`}>
-                      <div className="flex h-7 w-7 items-center justify-center bg-green-500">
-                        <IoPencilOutline className="h-6 w-6 text-white" />
+                      <div className="flex h-7 w-7 items-center justify-center bg-white">
+                        <IconEdit className="h-6 w-6 text-black" />
                       </div>
                     </Link>
                     {item?.statusJurnal === 'publish' && (
