@@ -556,7 +556,7 @@ const RoutesPath = () => {
           {/* Profil */}
           <Route path="profil" element={<Profil />} />
           {/* Pengaturan */}
-          <Route path='pengaturan' element={<Pengaturan/>} />
+          <Route path="pengaturan" element={<Pengaturan />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

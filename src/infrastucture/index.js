@@ -236,9 +236,10 @@ export const GetOpsiPenyuluh = async () => {
   }
 };
 
-export const GetDaftarTani = async (page, limit) => {
+export const GetDaftarTani = async (page, limit, verified) => {
+  console.log(verified);
   try {
-    const response = await Api.get(`/daftar-tani?page=${page}&limit=${limit}`);
+    const response = await Api.get(`/daftar-tani?page=${page}&limit=${limit}&verified=${verified}`);
     return response.data;
   } catch (error) {
     SweatAlert(String(error.response.data.message), 'error');
@@ -296,9 +297,9 @@ export const AddInfoTani = async (data) => {
     SweatAlert(String(error.response.data.message), 'error');
   }
 };
-export const GetInfoTani = async () => {
+export const GetInfoTani = async (search) => {
   try {
-    const response = await Api.get('/info-tani');
+    const response = await Api.get(`/info-tani${search}`);
     return response.data;
   } catch (error) {
     SweatAlert(String(error.response.data.message), 'error');

@@ -83,17 +83,18 @@ const RekapPetani = () => {
 
   const page = searchParams.get('page') ?? 1;
   const limit = searchParams.get('limit') ?? 10;
+  const verified = searchParams.get('verified') ?? '';
 
   // const searchQuery = searchParams.get('search_query') ?? '';
   // const sortKey = searchParams.get('sort_key') ?? '';
   // const sortType = searchParams.get('sort_type') ?? '';
 
   useEffect(() => {
-    GetDaftarTani(page, limit).then((data) => {
+    GetDaftarTani(page, limit, verified).then((data) => {
       setResp(data);
       // setLoading(false);
     });
-  }, [limit, page]);
+  }, [limit, page, verified]);
   // const handleFilterChange = (e, column) => {
   //   setFilters((prevFilters) => ({
   //     ...prevFilters,
