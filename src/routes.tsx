@@ -335,7 +335,7 @@ const Path = () => {
           <div className="h-full px-6 py-2 overflow-y-auto">
             <ul className="space-y-1.5 font-medium">
               {menu.map((item, index) => (
-                (item.list_roles.includes(user?.peran) || item.list_roles.includes('all')) && (
+                (item.list_roles.includes(users?.peran) || item.list_roles.includes('all')) && (
                   <li key={index} className="divide-y divide-gray-500">
                     {item.path ? (
                       <a
