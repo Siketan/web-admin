@@ -159,7 +159,7 @@ export default function ExportTable() {
                 <tr key={item.id}>
                   <td className="border p-2">{item.fk_kelompokId}</td>
                   {/* TODO: Kecamatan  */}
-                  <td className="border p-2">??</td>
+                  <td className="border p-2">{item.kelompok?.kecamatan}</td>
                   <td className="border p-2">{item.kelompok?.desa}</td>
                   {/* TODO: Lahan baku itu apa? */}
                   <td className="border p-2">{item.luasLahan}</td>
