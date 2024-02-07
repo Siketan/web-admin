@@ -82,7 +82,7 @@ const menu = [
     name: 'Dashboard',
     icon: '/icons/dashboard.svg',
     path: '/dashboard',
-    list_roles: ['super admin']
+    list_roles: ['super admin', 'admin', 'penyuluh']
   },
   {
     id: 'statistik',
@@ -100,7 +100,7 @@ const menu = [
         path: '/statistik'
       }
     ],
-    list_roles: ['super admin']
+    list_roles: ['super admin', 'admin', 'penyuluh']
   },
   {
     id: 'data-petani',
@@ -123,7 +123,7 @@ const menu = [
         path: '/data-tani/rekap-petani'
       }
     ],
-    list_roles: ['super admin']
+    list_roles: ['super admin', 'admin', 'penyuluh']
   },
   {
     id: 'info-tani',
@@ -151,7 +151,7 @@ const menu = [
         path: '/info-tani/event-tani'
       }
     ],
-    list_roles: ['super admin']
+    list_roles: ['super admin', 'admin', 'penyuluh']
   },
   {
     id: 'toko-tani',
@@ -194,7 +194,8 @@ const menu = [
       {
         name: 'Lihat Jurnal Petugas',
         icon: '/icons/pensil.svg',
-        path: '/data-penyuluh/jurnal-kegiatan'
+        path: '/data-penyuluh/jurnal-kegiatan',
+        // list_roles: ['super admin']
       }
     ],
     list_roles: ['super admin']
@@ -207,7 +208,8 @@ const menu = [
       {
         name: 'Verifikasi User',
         icon: '/icons/globe.svg',
-        path: '/verifikasi'
+        path: '/verifikasi',
+        list_roles: ['operator admin']
       },
       {
         name: 'Ubah Akses User',
@@ -282,6 +284,7 @@ const Path = () => {
   const subMenuClasses = stackedMenuClasses;
 
   const user = useSelector((state: RootState) => state.state.user);
+  const perans = user?.peran;
   const dispatch = useDispatch();
   const [users, setUsers] = React.useState([]);
 
@@ -312,7 +315,6 @@ const Path = () => {
         });
     }
   }, [token, isAuthPage, dispatch, isWebVidePage]);
-
   if (isAuthPage || isWebVidePage) return <RoutesPath />;
 
   return (
@@ -335,7 +337,7 @@ const Path = () => {
           <div className="h-full px-6 py-2 overflow-y-auto">
             <ul className="space-y-1.5 font-medium">
               {menu.map((item, index) => (
-                (item.list_roles.includes(users?.peran) || item.list_roles.includes('all')) && (
+                (item.list_roles.includes(perans ?? '')) && (
                   <li key={index} className="divide-y divide-gray-500">
                     {item.path ? (
                       <a

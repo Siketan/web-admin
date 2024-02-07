@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { ListUser } from '@/infrastruture';
-// import ExcelComponent from "../../../components/exelComponent";
-// import ExcelComponent from '../../components/exelComponent';
 import { Text, Button, Modal, Tooltip, Anchor, Breadcrumbs } from '@mantine/core';
 import LoadingAnimation from '../../components/loadingSession';
 import { VerifyingUser, DeleteUser } from '../../infrastucture';
+import { setUser } from '../../infrastucture/redux/state/stateSlice';
+// import { RootState } from './infrastucture/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -17,7 +18,10 @@ const breadcrumbItems = [
     {item.title}
   </Anchor>
 ));
+
 const VerifikasiUser = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.state.user);
   const [datas, setDatas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalDeleteData, setModalDeleteData] = useState(false);
@@ -28,6 +32,7 @@ const VerifikasiUser = () => {
       setLoading(false);
     });
   }, []);
+  console.log(user)
 
   const handleDeleteUser = (ids) => {
     DeleteUser(ids);
@@ -156,7 +161,9 @@ const VerifikasiUser = () => {
                     {/* <th className="sticky top-0 px-4 py-2 truncate ">
                       PEMBINA
                     </th> */}
-                    <th className="sticky top-0 px-4 py-2 truncate">Action</th>
+                    {user?.peran === 'super admin' && (
+                      <th className="sticky top-0 px-4 py-2 truncate">Action</th>
+                    )}
                   </tr>
                 </thead>
                 <tbody>
