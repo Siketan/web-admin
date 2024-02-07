@@ -68,7 +68,7 @@ import IndexOperator from './page/operator';
 import EditOperator from './page/operator/edit';
 import DetailOperator from './page/operator/detail';
 import Profil from './page/profil/profil';
-import Pengaturan from './page/pengaturan/Pengaturan';
+import Pengaturan from './page/pengaturan/pengaturan';
 import DetailJurnalKegiatan from './page/penyuluhanTani/detailPenyuluh/detail';
 import EditFormJurnalKegiatan from './page/penyuluhanTani/detailPenyuluh/editJurnal';
 import TokoTani from './page/tokoTani';

@@ -2,7 +2,7 @@ import React from 'react';
 import UserLayout from '../../../components/UserLayout';
 import MainCard from '../../../components/MainCard';
 // import CarouselPromo from './components/CarouselPromo';
-import CarouselUnggulan from './components/carouselUnggulan';
+import CarouselUnggulan from './components/CarouselUnggulan';
 import { getTokoTani } from '../../../infrastucture/toko';
 import Card from './components/Card';
 import { TokoTani } from '../../../@types/toko';

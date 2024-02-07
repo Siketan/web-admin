@@ -11,7 +11,7 @@ import {
 } from '@mantine/core';
 import clsx from 'clsx';
 import React, { useEffect } from 'react';
-import SearchInput from '../../components/uiComponents/inputComponents/searchInput';
+import SearchInput from '../../components/uiComponents/inputComponents/SearchInput';
 import { FaRegRectangleList } from 'react-icons/fa6';
 import { IoEyeOutline } from 'react-icons/io5';
 // import { useSelector } from 'react-redux';

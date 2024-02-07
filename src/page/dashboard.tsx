@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { FaPlus, FaUserCheck, FaUserXmark } from 'react-icons/fa6';
 import { RiArticleLine } from 'react-icons/ri';
 import { LuNewspaper } from 'react-icons/lu';
-import SearchInput from '../components/uiComponents/inputComponents/searchInput';
+import SearchInput from '../components/uiComponents/inputComponents/SearchInput';
 import { TKelompokTani } from '../types/kelompokTani';
 import { SearchPoktan } from '../infrastucture/searchApi';
 import { PaginatedRespApiData } from '../types/paginatedRespApi';

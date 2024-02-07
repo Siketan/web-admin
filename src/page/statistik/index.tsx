@@ -1,6 +1,6 @@
 import { Anchor, Breadcrumbs, Button, Modal } from '@mantine/core';
 import React, { useEffect } from 'react';
-import SearchInput from '../../components/uiComponents/inputComponents/searchInput';
+import SearchInput from '../../components/uiComponents/inputComponents/SearchInput';
 import { FaPlus, FaUpload } from 'react-icons/fa';
 import {
   DeleteStatistikTanamanById,
