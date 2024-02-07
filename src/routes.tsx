@@ -81,7 +81,8 @@ const menu = [
     id: 'dashboard',
     name: 'Dashboard',
     icon: '/icons/dashboard.svg',
-    path: '/dashboard'
+    path: '/dashboard',
+    list_roles: ['super admin']
   },
   {
     id: 'statistik',
@@ -98,7 +99,8 @@ const menu = [
         icon: '/icons/users.svg',
         path: '/statistik'
       }
-    ]
+    ],
+    list_roles: ['super admin']
   },
   {
     id: 'data-petani',
@@ -120,7 +122,8 @@ const menu = [
         icon: '/icons/users.svg',
         path: '/data-tani/rekap-petani'
       }
-    ]
+    ],
+    list_roles: ['super admin']
   },
   {
     id: 'info-tani',
@@ -147,7 +150,8 @@ const menu = [
         icon: '/icons/kalender.svg',
         path: '/info-tani/event-tani'
       }
-    ]
+    ],
+    list_roles: ['super admin']
   },
   {
     id: 'toko-tani',
@@ -164,7 +168,8 @@ const menu = [
         icon: '/icons/toko.svg',
         path: '/toko-tani'
       }
-    ]
+    ],
+    list_roles: ['super admin']
   },
   {
     id: 'info-penyuluh',
@@ -191,7 +196,8 @@ const menu = [
         icon: '/icons/pensil.svg',
         path: '/data-penyuluh/jurnal-kegiatan'
       }
-    ]
+    ],
+    list_roles: ['super admin']
   },
   {
     id: 'hak-akses',
@@ -208,7 +214,8 @@ const menu = [
         icon: '/icons/edit-menu.svg',
         path: '/hak-akses/ubah'
       }
-    ]
+    ],
+    list_roles: ['super admin']
   },
   {
     id: 'log-aktivitas',
@@ -225,7 +232,8 @@ const menu = [
         icon: '/icons/log-aktivitas.svg',
         path: '/log-aktivitas/data-sampah'
       }
-    ]
+    ],
+    list_roles: ['super admin']
   },
   {
     id: 'list-operator',
@@ -242,7 +250,8 @@ const menu = [
         icon: '/icons/edit-menu.svg',
         path: '/list-operator'
       }
-    ]
+    ],
+    list_roles: ['super admin']
   }
 ];
 
@@ -274,6 +283,7 @@ const Path = () => {
 
   const user = useSelector((state: RootState) => state.state.user);
   const dispatch = useDispatch();
+  const [users, setUsers] = React.useState([]);
 
   const token = window.localStorage.getItem('token');
   const isAuthPage =
@@ -290,6 +300,7 @@ const Path = () => {
         .then((res) => {
           if (res.status === 200) {
             dispatch(setUser(res.data.user));
+            setUsers(res.data.user);
           }
         })
         .catch((err) => {
@@ -324,51 +335,53 @@ const Path = () => {
           <div className="h-full px-6 py-2 overflow-y-auto">
             <ul className="space-y-1.5 font-medium">
               {menu.map((item, index) => (
-                <li key={index} className="divide-y divide-gray-500">
-                  {item.path ? (
-                    <a
-                      href={item.path}
-                      className={clsx(mainMenuClasses, activePage === item.id && activeClasses)}>
-                      <Image src={item.icon} alt={item.name} w={24} />
-                      <span className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
-                        {item.name}
-                      </span>
-                    </a>
-                  ) : (
-                    <button
-                      className={clsx(mainMenuClasses, activePage === item.id && activeClasses)}
-                      onClick={() => {
-                        if (activeMenu === item.id) setActiveMenu('');
-                        else setActiveMenu(item.id);
-                      }}>
-                      <Image src={item.icon} alt={item.name} w={24} />
-                      <span className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
-                        {item.name}
-                      </span>
-                    </button>
-                  )}
-
-                  {activeMenu === item.id && (
-                    <ul className="divide-y divide-gray-500">
-                      {item.sub?.map((sub, index) => (
-                        <li key={index}>
-                          <a
-                            href={sub.path}
-                            className={clsx(
-                              subMenuClasses,
-                              activePage === 'bpup' && activeClasses
-                            )}>
-                            <Image src={sub.icon} alt={sub.name} width={24} />
-                            <span
-                              className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
-                              {sub.name}
-                            </span>
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
+                (item.list_roles.includes(user?.peran) || item.list_roles.includes('all')) && (
+                  <li key={index} className="divide-y divide-gray-500">
+                    {item.path ? (
+                      <a
+                        href={item.path}
+                        className={clsx(mainMenuClasses, activePage === item.id && activeClasses)}>
+                        <Image src={item.icon} alt={item.name} w={24} />
+                        <span className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
+                          {item.name}
+                        </span>
+                      </a>
+                    ) : (
+                      <button
+                        className={clsx(mainMenuClasses, activePage === item.id && activeClasses)}
+                        onClick={() => {
+                          if (activeMenu === item.id) setActiveMenu('');
+                          else setActiveMenu(item.id);
+                        }}>
+                        <Image src={item.icon} alt={item.name} w={24} />
+                        <span className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
+                          {item.name}
+                        </span>
+                      </button>
+                    )}
+          
+                    {activeMenu === item.id && (
+                      <ul className="divide-y divide-gray-500">
+                        {item.sub?.map((sub, index) => (
+                          <li key={index}>
+                            <a
+                              href={sub.path}
+                              className={clsx(
+                                subMenuClasses,
+                                activePage === 'bpup' && activeClasses
+                              )}>
+                              <Image src={sub.icon} alt={sub.name} width={24} />
+                              <span
+                                className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
+                                {sub.name}
+                              </span>
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                )
               ))}
             </ul>
           </div>
