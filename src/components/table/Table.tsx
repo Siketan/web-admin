@@ -123,13 +123,13 @@ export default function Table<T extends object>({
         </div>
       </div>
       {withButton && (
-        <div>
-          <a href={buttonHref} className="bg-color-3 rounded-[10px] px-6 py-2.5">
-            <div className="flex items-center justify-center gap-1 text-white">
+        <div className="w-fit mt-2">
+          <Link to={buttonHref}>
+            <div className="flex items-center justify-center gap-1 text-white rounded-[10px] bg-[#F29D0E] px-4 py-2.5">
               <IoMdAdd className="h-6 w-6" />
               <p className="text-sm">{buttonText}</p>
             </div>
-          </a>
+          </Link>
         </div>
       )}
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">

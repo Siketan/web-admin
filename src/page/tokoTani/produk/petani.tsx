@@ -1,9 +1,14 @@
 import React, { useEffect } from 'react';
-import { getTokoTani } from '../../../infrastucture/toko';
+import { deleteTokoTani, getTokoTani } from '../../../infrastucture/toko';
 import { TableTokoTani, TokoTani } from '../../../@types/toko';
 import Table from '../../../components/table/Table';
 import { PaginatedRespApiData } from '../../../types/paginatedRespApi';
 import { ColumnDef } from '@tanstack/react-table';
+import { Modal, Text, Button } from '@mantine/core';
+// import { Link } from 'react-router-dom';
+// import { IoEyeOutline } from 'react-icons/io5';
+// import { ImPencil } from 'react-icons/im';
+import { MdDeleteOutline } from 'react-icons/md';
 
 const columns: ColumnDef<TableTokoTani>[] = [
   {
@@ -50,15 +55,17 @@ const columns: ColumnDef<TableTokoTani>[] = [
     accessorKey: 'status',
     header: 'Status Produk',
     cell: (props) => <span>{`${props.getValue()}`}</span>
+  },
+  {
+    accessorKey: 'actions',
+    header: 'Aksi',
+    cell: (props) => props.row.original.actions
   }
-  // {
-  //   accessorKey: "actions",
-  //   header: "Aksi",
-  //   cell: (props) => props.row.original.actions,
-  // },
 ];
 
 function ProdukPetani() {
+  const [selectedId, setSelectedId] = React.useState<number | undefined>(undefined);
+  const [modalDeleteData, setModalDeleteData] = React.useState(false);
   const [dataTable, setDataTable] = React.useState<
     PaginatedRespApiData<TableTokoTani> | undefined
   >();
@@ -79,15 +86,78 @@ function ProdukPetani() {
         data: resp.data.map((item, index) => ({
           ...item,
           no: resp.from + index,
-          actions: <div className="flex gap-4"></div>
+          actions: (
+            <div className="flex gap-4">
+              {/* <Link to={`/statistik/${item.id}`}>
+                <div className="flex h-7 w-7 items-center justify-center bg-green-500">
+                  <IoEyeOutline className="h-6 w-6 text-white" />
+                </div>
+              </Link> */}
+              {/* <Link to={`/info-tani/edit/${item.id}`}>
+                <div className="flex h-7 w-7 items-center justify-center bg-yellow-500">
+                  <ImPencil className="h-[18px] w-[18px] text-white" />
+                </div>
+              </Link> */}
+              <button
+                onClick={() => {
+                  setModalDeleteData(true);
+                  setSelectedId(item.id);
+                }}>
+                <div className="flex h-7 w-7 items-center justify-center bg-red-500">
+                  <MdDeleteOutline className="h-6 w-6 text-white" />
+                </div>
+              </button>
+            </div>
+          )
         }))
       });
     }
   }, [resp]);
 
+  const handleDelete = () => {
+    if (selectedId) deleteTokoTani(selectedId);
+  };
+
   return (
     <div>
-      <Table data={dataTable} columns={columns} withPaginationCount withPaginationControl />
+      <Modal
+        opened={modalDeleteData}
+        onClose={() => setModalDeleteData(false)}
+        withCloseButton={false}
+        centered>
+        <Text>Apakah Kamu Yakin Akan Menghapus Data Ini ?</Text>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}>
+          <Button
+            color="cyan"
+            style={{
+              color: 'white',
+              backgroundColor: '#303A47',
+              marginRight: 8
+            }}
+            onClick={() => setModalDeleteData(false)}>
+            Cancel
+          </Button>
+          <Button
+            color="cyan"
+            style={{ color: 'white', backgroundColor: 'red' }}
+            type="submit"
+            onClick={() => {
+              handleDelete();
+              setModalDeleteData(false);
+            }}>
+            Delete
+          </Button>
+        </div>
+      </Modal>
+      <Table
+        withButton
+        buttonHref="/toko-tani/tambah-penjual"
+        buttonText="Tambah Produk"
+        data={dataTable}
+        columns={columns}
+        withPaginationCount
+        withPaginationControl
+      />
     </div>
   );
 }
