@@ -190,8 +190,8 @@ export default function DataTanamanForm({
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     if (type === 'add')
-      AddNewDataTanaman({ ...newData, fk_kelompokId: poktan?.id ?? 1 }).then((e) => {
-        navigate(`/statistik/edit/${e.data.id}`);
+      AddNewDataTanaman({ ...newData, fk_kelompokId: poktan?.id ?? 1 }).then(() => {
+        navigate(`/statistik/`);
       });
     else {
       UpdateStatistikTanamanById(id, newData);
