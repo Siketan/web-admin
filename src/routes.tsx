@@ -489,6 +489,8 @@ const Path = () => {
 };
 
 const RoutesPath = () => {
+  const userRole = useSelector((state: RootState) => state.state.user?.peran);
+
   return (
     <Router>
       <Routes>
@@ -499,7 +501,13 @@ const RoutesPath = () => {
         <Route path="/info-pertanian" element={<InfoPertanian />} />
         <Route path="/info-pertanian/:id" element={<Berita />} />
         <Route element={<ProtectedRoute />}>
-          <Route path="/verifikasi" element={<VerifikasiUser />} />
+          {/*if  user is operator, show this route else hide it*/}
+          {userRole === 'operators super admin' || userRole === 'super admin' ? (
+            // <Route path="/live-chat" element={<LiveChat />} />
+            <Route path="/verifikasi" element={<VerifikasiUser />} />
+          ) : (
+            ''
+          )}
           {/* <Route index element={<Dashboard />}></Route> */}
           {/* Statistik */}
           <Route path="/statistik" element={<Statistik />} />

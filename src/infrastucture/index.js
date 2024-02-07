@@ -449,7 +449,7 @@ export const AddPresesiKehadiran = async (data) => {
 export const AddJurnalKegiatan = async (data) => {
   try {
     const response = await Api.post('/jurnal-kegiatan/add', data, headers);
-    SweatAlert(String(response.data.message), 'success');
+    SweatAlert(String(response.data.message), 'success', '/data-penyuluh/jurnal-kegiatan');
   } catch (error) {
     SweatAlert(String(error.response.data.message), 'error');
   }
