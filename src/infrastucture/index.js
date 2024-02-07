@@ -376,15 +376,15 @@ export const updateInfoTani = async (id, data) => {
 export const AddPenjual = async (data) => {
   try {
     const response = await Api.post('/daftar-penjual/add', data, headers);
-    SweatAlert(String(response.data.message), 'success', '/toko-tani/produk-petani');
-    // if (log == "petani") {
-    // } else if (log == "penyuluh") {
-    //   SweatAlert(
-    //     String(response.data.message),
-    //     "success",
-    //     "/toko-tani/produk-penyuluh"
-    //   );
-    // }
+    SweatAlert(String(response.data.message), 'success', '/toko-tani');
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), 'error', 'reload');
+  }
+};
+export const EditPenjual = async (id, data) => {
+  try {
+    const response = await Api.post('/daftar-penjual/' + id, data, headers);
+    SweatAlert(String(response.data.message), 'success', '/toko-tani');
   } catch (error) {
     SweatAlert(String(error.response.data.message), 'error', 'reload');
   }
@@ -400,6 +400,15 @@ export const ProductsPenyuluh = async () => {
 export const ProductsPetani = async () => {
   try {
     const response = await Api.get('/product-petani');
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), 'error');
+  }
+};
+
+export const DetailProductsPetani = async (id) => {
+  try {
+    const response = await Api.get('/product-petani/' + id);
     return response.data;
   } catch (error) {
     SweatAlert(String(error.response.data.message), 'error');

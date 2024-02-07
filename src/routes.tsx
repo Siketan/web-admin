@@ -11,14 +11,10 @@ import {
   TambahEventTani,
   LiveChat,
   RatingPetugas,
-  TambahPenyuluhanTani,
   DataRiwayatChat,
   JurnalKegiatan,
   PresensiKehadiran,
-  TambahPenjual,
   FormJurnalKegiatan,
-  ProdukPenyuluh,
-  ProdukPetani,
   Login,
   Register,
   NotFoundPage,
@@ -75,6 +71,10 @@ import Profil from './page/profil/profil';
 import Pengaturan from './page/pengaturan/Pengaturan';
 import DetailJurnalKegiatan from './page/penyuluhanTani/detailPenyuluh/detail';
 import EditFormJurnalKegiatan from './page/penyuluhanTani/detailPenyuluh/editJurnal';
+import TokoTani from './page/tokoTani';
+import TambahTokoTani from './page/tokoTani/tambah';
+import DetailTokoTani from './page/tokoTani/detail';
+import EditTokoTani from './page/tokoTani/edit';
 
 const menu = [
   {
@@ -157,12 +157,12 @@ const menu = [
       {
         name: 'Tambah Toko Tani',
         icon: '/icons/tambah.svg',
-        path: '/toko-tani/tambah-penjual'
+        path: '/toko-tani/tambah'
       },
       {
         name: 'Lihat Daftar Toko Tani',
         icon: '/icons/toko.svg',
-        path: '/toko-tani/produk-petani'
+        path: '/toko-tani'
       }
     ]
   },
@@ -523,11 +523,12 @@ const RoutesPath = () => {
           <Route path="/info-tani/detail" element={<DetailInfoTani />} />
           <Route path="/info-tani/edit/:id" element={<EditInfoTani />} />
           {/* Toko Tani */}
-          <Route path="/toko-tani/tambah-penjual" element={<TambahPenjual />} />
-          <Route path="/toko-tani/produk-petani" element={<ProdukPetani />} />
-          <Route path="/toko-tani/produk-penyuluh" element={<ProdukPenyuluh />} />
+          <Route path="/toko-tani" element={<TokoTani />} />
+          <Route path="/toko-tani/tambah" element={<TambahTokoTani />} />
+          <Route path="/toko-tani/:id" element={<DetailTokoTani />} />
+          <Route path="/toko-tani/edit/:id" element={<EditTokoTani />} />
           {/* Data Penyuluh */}
-          <Route path="/data-penyuluh/tambah" element={<TambahPenyuluhanTani />} />
+          <Route path="/data-penyuluh/tambah" element={<TambahTokoTani />} />
           <Route path="/data-penyuluh/presensi-kehadiran" element={<PresensiKehadiran />} />
           <Route path="/data-penyuluh/jurnal-kegiatan" element={<JurnalKegiatan />} />
           <Route path="/data-penyuluh/jurnal-kegiatan/form" element={<FormJurnalKegiatan />} />

@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
-import { deleteTokoTani, getTokoTani } from '../../../infrastucture/toko';
-import { TableTokoTani, TokoTani } from '../../../@types/toko';
-import Table from '../../../components/table/Table';
-import { PaginatedRespApiData } from '../../../types/paginatedRespApi';
 import { ColumnDef } from '@tanstack/react-table';
 import { Modal, Text, Button } from '@mantine/core';
-// import { Link } from 'react-router-dom';
-// import { IoEyeOutline } from 'react-icons/io5';
-// import { ImPencil } from 'react-icons/im';
+import { Link } from 'react-router-dom';
+import { IoEyeOutline } from 'react-icons/io5';
+import { ImPencil } from 'react-icons/im';
 import { MdDeleteOutline } from 'react-icons/md';
+import { TableTokoTani, TokoTani } from '../../@types/toko';
+import { PaginatedRespApiData } from '../../types/paginatedRespApi';
+import { deleteTokoTani, getTokoTani } from '../../infrastucture/toko';
+import Table from '../../components/table/Table';
 
 const columns: ColumnDef<TableTokoTani>[] = [
   {
@@ -63,7 +63,7 @@ const columns: ColumnDef<TableTokoTani>[] = [
   }
 ];
 
-function ProdukPetani() {
+function TokoPetani() {
   const [selectedId, setSelectedId] = React.useState<number | undefined>(undefined);
   const [modalDeleteData, setModalDeleteData] = React.useState(false);
   const [dataTable, setDataTable] = React.useState<
@@ -88,16 +88,16 @@ function ProdukPetani() {
           no: resp.from + index,
           actions: (
             <div className="flex gap-4">
-              {/* <Link to={`/statistik/${item.id}`}>
+              <Link to={`/toko-tani/${item.id}`}>
                 <div className="flex h-7 w-7 items-center justify-center bg-green-500">
                   <IoEyeOutline className="h-6 w-6 text-white" />
                 </div>
-              </Link> */}
-              {/* <Link to={`/info-tani/edit/${item.id}`}>
+              </Link>
+              <Link to={`/toko-tani/edit/${item.id}`}>
                 <div className="flex h-7 w-7 items-center justify-center bg-yellow-500">
                   <ImPencil className="h-[18px] w-[18px] text-white" />
                 </div>
-              </Link> */}
+              </Link>
               <button
                 onClick={() => {
                   setModalDeleteData(true);
@@ -151,7 +151,7 @@ function ProdukPetani() {
       </Modal>
       <Table
         withButton
-        buttonHref="/toko-tani/tambah-penjual"
+        buttonHref="/toko-tani/tambah"
         buttonText="Tambah Produk"
         data={dataTable}
         columns={columns}
@@ -162,4 +162,4 @@ function ProdukPetani() {
   );
 }
 
-export default ProdukPetani;
+export default TokoPetani;
