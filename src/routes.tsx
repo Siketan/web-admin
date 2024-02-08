@@ -75,6 +75,7 @@ import Profil from './page/profil/profil';
 import Pengaturan from './page/pengaturan/Pengaturan';
 import DetailJurnalKegiatan from './page/penyuluhanTani/detailPenyuluh/detail';
 import EditFormJurnalKegiatan from './page/penyuluhanTani/detailPenyuluh/editJurnal';
+import UbahAkses from './page/kelolaUser/ubahAkses';
 
 const menu = [
   {
@@ -485,6 +486,7 @@ const RoutesPath = () => {
         <Route path="/info-pertanian/:id" element={<Berita />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/verifikasi" element={<VerifikasiUser />} />
+          <Route path='/hak-akses/ubah' element={<UbahAkses/>} />
           {/* <Route index element={<Dashboard />}></Route> */}
           {/* Statistik */}
           <Route path="/statistik" element={<Statistik />} />
