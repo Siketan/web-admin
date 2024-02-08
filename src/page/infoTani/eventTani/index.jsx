@@ -12,8 +12,13 @@ import { IoMdListBox } from 'react-icons/io';
 import { FaBuilding } from 'react-icons/fa';
 import { IoMdPerson } from 'react-icons/io';
 import { postLogActivity } from '../../../infrastucture/logActivity';
+import { setUser } from '../../../infrastucture/redux/state/stateSlice';
+// import { RootState } from './infrastucture/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 
 function EventTani() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.state.user);
   const [datas, setDatas] = useState([]);
   const [modalDeleteData, setModalDeleteData] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -136,9 +141,11 @@ function EventTani() {
                   <InputCrud onClick={() => navigateToEdit(d.id)} icon={<IconEdit />}>
                     Edit
                   </InputCrud>
-                  <InputCrud onClick={() => setModalDeleteData(d.id)} icon={<IconTrash />}>
-                    Hapus
-                  </InputCrud>
+                  {user?.peran === 'operator super admin' && (
+                    <InputCrud onClick={() => setModalDeleteData(item.id)} icon={<IconTrash />}>
+                      Hapus
+                    </InputCrud>
+                  )}
                 </div>
               </div>
             </MainCard>
