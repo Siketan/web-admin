@@ -12,8 +12,14 @@ import LoadingAnimation from '../../../components/loadingSession';
 import { IoMdListBox } from 'react-icons/io';
 import { BiCategoryAlt } from 'react-icons/bi';
 import { IoEyeOutline, IoPencilOutline } from 'react-icons/io5';
+import { setUser } from '../../../infrastucture/redux/state/stateSlice';
+// import { RootState } from './infrastucture/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 
 function JurnalKegiatan() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.state.user);
+  // console.log(user?.peran)
   const [datas, setDatas] = useState([]);
   const [checekd, setChecekd] = useState([false]);
   const [id, setId] = useState();
@@ -156,18 +162,18 @@ function JurnalKegiatan() {
                   />
                   <div className="flex flex-col space-y-1 max-h-fit">
                     <Link to={`/data-penyuluh/jurnal-kegiatan/detail/${item.id}`}>
-                      <div className="flex h-7 w-7 items-center justify-center bg-green-500">
-                        <IconEye className="h-6 w-6 text-white" />
+                      <div className="flex h-7 w-7 items-center justify-center bg-white-500">
+                        <IconEye />
                       </div>
                     </Link>
                     <Link to={`/data-penyuluh/jurnal-kegiatan/edit/${item.id}`}>
-                      <div className="flex h-7 w-7 items-center justify-center bg-white">
-                        <IconEdit className="h-6 w-6 text-black" />
+                      <div className="flex h-7 w-7 items-center justify-center">
+                        <IconEdit />
                       </div>
                     </Link>
-                    {item?.statusJurnal === 'publish' && (
+                    {(user?.peran === 'operator poktan' || user?.peran === 'penyuluh') && (
                       <InputCrud onClick={() => setModalDeleteData(item.id)} icon={<IconTrash />}>
-                        Hapus
+                        {/* Hapus */}
                       </InputCrud>
                     )}
                   </div>

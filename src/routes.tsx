@@ -82,7 +82,7 @@ const menu = [
     name: 'Dashboard',
     icon: '/icons/dashboard.svg',
     path: '/dashboard',
-    list_roles: ['super admin', 'admin', 'penyuluh']
+    list_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
   },
   {
     id: 'statistik',
@@ -92,15 +92,17 @@ const menu = [
       {
         name: 'Tambah Data Statistik',
         icon: '/icons/tambah.svg',
-        path: '/statistik/tambah'
+        path: '/statistik/tambah',
+        list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       },
       {
         name: 'Lihat Tabel Statistik',
         icon: '/icons/users.svg',
-        path: '/statistik'
+        path: '/statistik',
+        list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       }
     ],
-    list_roles: ['super admin', 'admin', 'penyuluh']
+    list_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
   },
   {
     id: 'data-petani',
@@ -110,20 +112,23 @@ const menu = [
       {
         name: 'Tambah Data Tanam',
         icon: '/icons/users.svg',
-        path: '/tanaman-petani/add'
+        path: '/tanaman-petani/add',
+        list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       },
       {
         name: 'Lihat Tabel Tanam',
         icon: '/icons/users.svg',
-        path: '/tanaman-petani'
+        path: '/tanaman-petani',
+        list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       },
       {
         name: 'Daftar User Petani',
         icon: '/icons/users.svg',
-        path: '/data-tani/rekap-petani'
+        path: '/data-tani/rekap-petani',
+        list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       }
     ],
-    list_roles: ['super admin', 'admin', 'penyuluh']
+    list_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
   },
   {
     id: 'info-tani',
@@ -133,25 +138,29 @@ const menu = [
       {
         name: 'Tambah Berita Tani',
         icon: '/icons/users.svg',
-        path: '/info-tani/tambah'
+        path: '/info-tani/tambah',
+        list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       },
       {
         name: 'Lihat Berita Tani',
         icon: '/icons/berita.svg',
-        path: '/info-tani'
+        path: '/info-tani',
+        list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       },
       {
         name: 'Tambah Acara Tani',
         icon: '/icons/users.svg',
-        path: '/event-tani/tambah'
+        path: '/event-tani/tambah',
+        list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       },
       {
         name: 'Lihat Acara Tani',
         icon: '/icons/kalender.svg',
-        path: '/info-tani/event-tani'
+        path: '/info-tani/event-tani',
+        list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       }
     ],
-    list_roles: ['super admin', 'admin', 'penyuluh']
+    list_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
   },
   {
     id: 'toko-tani',
@@ -161,15 +170,17 @@ const menu = [
       {
         name: 'Tambah Toko Tani',
         icon: '/icons/tambah.svg',
-        path: '/toko-tani/tambah'
+        path: '/toko-tani/tambah',
+        list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       },
       {
         name: 'Lihat Daftar Toko Tani',
         icon: '/icons/toko.svg',
-        path: '/toko-tani'
+        path: '/toko-tani',
+        list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       }
     ],
-    list_roles: ['super admin']
+    list_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
   },
   {
     id: 'info-penyuluh',
@@ -179,26 +190,30 @@ const menu = [
       {
         name: 'Tambah Penyuluh',
         icon: '/icons/tambah.svg',
-        path: '/data-penyuluh/tambah'
+        path: '/data-penyuluh/tambah',
+        list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan']
       },
       {
         name: 'Rekap Data Penyuluh',
         icon: '/icons/penyuluh.svg',
-        path: '/data-penyuluh/rekap-penyuluh'
+        path: '/data-penyuluh/rekap-penyuluh',
+        list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan']
       },
       {
         name: 'Tambah Jurnal Petugas',
         icon: '/icons/tambah.svg',
-        path: '/data-penyuluh/jurnal-kegiatan/form'
+        path: '/data-penyuluh/jurnal-kegiatan/form',
+        list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       },
       {
         name: 'Lihat Jurnal Petugas',
         icon: '/icons/pensil.svg',
         path: '/data-penyuluh/jurnal-kegiatan',
+        list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
         // list_roles: ['super admin']
       }
     ],
-    list_roles: ['super admin']
+    list_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
   },
   {
     id: 'hak-akses',
@@ -209,15 +224,16 @@ const menu = [
         name: 'Verifikasi User',
         icon: '/icons/globe.svg',
         path: '/verifikasi',
-        list_roles: ['operator admin']
+        list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       },
       {
         name: 'Ubah Akses User',
         icon: '/icons/edit-menu.svg',
-        path: '/hak-akses/ubah'
+        path: '/hak-akses/ubah',
+        list_sub_roles: ['operator super admin']
       }
     ],
-    list_roles: ['super admin']
+    list_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
   },
   {
     id: 'log-aktivitas',
@@ -227,15 +243,17 @@ const menu = [
       {
         name: 'Aktivitas User',
         icon: '/icons/log-aktivitas.svg',
-        path: '/log-aktivitas'
+        path: '/log-aktivitas',
+        list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan']
       },
       {
         name: 'Data Sampah',
         icon: '/icons/log-aktivitas.svg',
-        path: '/log-aktivitas/data-sampah'
+        path: '/log-aktivitas/data-sampah',
+        list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan']
       }
     ],
-    list_roles: ['super admin']
+    list_roles: ['operator super admin', 'operator admin', 'operator poktan']
   },
   {
     id: 'list-operator',
@@ -245,15 +263,17 @@ const menu = [
       {
         name: 'Tambah Operator',
         icon: '/icons/tambah.svg',
-        path: '/list-operator/tambah'
+        path: '/list-operator/tambah',
+        list_sub_roles: ['operator super admin', 'operator admin']
       },
       {
         name: 'Data Operator',
         icon: '/icons/edit-menu.svg',
-        path: '/list-operator'
+        path: '/list-operator',
+        list_sub_roles: ['operator super admin', 'operator admin']
       }
     ],
-    list_roles: ['super admin']
+    list_roles: ['operator super admin', 'operator admin']
   }
 ];
 
@@ -365,6 +385,7 @@ const Path = () => {
                     {activeMenu === item.id && (
                       <ul className="divide-y divide-gray-500">
                         {item.sub?.map((sub, index) => (
+                        (sub.list_sub_roles?.includes(perans ?? '')) && (
                           <li key={index}>
                             <a
                               href={sub.path}
@@ -379,6 +400,7 @@ const Path = () => {
                               </span>
                             </a>
                           </li>
+                      )
                         ))}
                       </ul>
                     )}
@@ -502,12 +524,9 @@ const RoutesPath = () => {
         <Route path="/info-pertanian/:id" element={<Berita />} />
         <Route element={<ProtectedRoute />}>
           {/*if  user is operator, show this route else hide it*/}
-          {userRole === 'operators super admin' || userRole === 'super admin' ? (
-            // <Route path="/live-chat" element={<LiveChat />} />
-            <Route path="/verifikasi" element={<VerifikasiUser />} />
-          ) : (
-            ''
-          )}
+          
+            {/* // <Route path="/live-chat" element={<LiveChat />} /> */}
+          <Route path="/verifikasi" element={<VerifikasiUser />} />
           {/* <Route index element={<Dashboard />}></Route> */}
           {/* Statistik */}
           <Route path="/statistik" element={<Statistik />} />
