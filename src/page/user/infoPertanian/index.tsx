@@ -3,8 +3,8 @@ import React from 'react';
 import UserLayout from '../../../components/UserLayout';
 import MainCard from '../../../components/MainCard';
 import Slider from './components/Slider';
-import KegiatanTani from './components/kegiatanTani';
-import BeritaTani from './components/beritaTani';
+import KegiatanTani from './components/KegiatanTani';
+import BeritaTani from './components/BeritaTani';
 
 export default function index() {
   return (

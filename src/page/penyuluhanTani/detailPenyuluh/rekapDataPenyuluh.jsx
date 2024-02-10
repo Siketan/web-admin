@@ -7,10 +7,13 @@ import { getDaftarPenyuluh, DeleteDaftarPenyuluh, UploadDataPenyuluh } from '@/i
 import { Text, Button, Modal, Anchor, Breadcrumbs } from '@mantine/core';
 // import LoadingAnimation from '../../../components/loadingSession';
 import { Link, useLocation } from 'react-router-dom';
-import SearchInput from '../../../components/uiComponents/inputComponents/searchInput';
+import SearchInput from '../../../components/uiComponents/inputComponents/SearchInput';
 import { ImPencil } from 'react-icons/im';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md';
+import { setUser } from '../../../infrastucture/redux/state/stateSlice';
+// import { RootState } from './infrastucture/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -70,6 +73,8 @@ const RekapDataPenyuluh = () => {
   // const [page, setPage] = useState(1);
   // const [limit, setLimit] = useState(10);
   const location = useLocation();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.state.user);
   // const history = useHistory();
 
   // useEffect(() => {
@@ -132,14 +137,14 @@ const RekapDataPenyuluh = () => {
                   <ImPencil className="h-[18px] w-[18px] text-white" />
                 </div>
               </Link>
-              <button
+              {user?.peran === 'operator poktan' && (<button
                 onClick={() => {
                   setModalDeleteData(item?.id);
                 }}>
                 <div className="flex h-7 w-7 items-center justify-center bg-red-500">
                   <MdDeleteOutline className="h-6 w-6 text-white" />
                 </div>
-              </button>
+              </button>)}
             </div>
           )
         }))

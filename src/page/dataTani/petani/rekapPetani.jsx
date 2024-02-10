@@ -7,11 +7,15 @@ import { GetDaftarTani, DeleteDaftarTani, UploadDataPetani } from '@/infrastrutu
 import { Text, Button, Modal, Anchor, Breadcrumbs } from '@mantine/core';
 import { Link, useLocation } from 'react-router-dom';
 // import LoadingAnimation from '../../../components/loadingSession';
-import SearchInput from '../../../components/uiComponents/inputComponents/searchInput';
+import SearchInput from '../../../components/uiComponents/inputComponents/SearchInput';
 import { ImPencil } from 'react-icons/im';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md';
 import { postLogActivity } from '../../../infrastucture/logActivity';
+
+import { setUser } from '../../../infrastucture/redux/state/stateSlice';
+// import { RootState } from './infrastucture/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -69,6 +73,8 @@ const columns = [
 const RekapPetani = () => {
   // const [datas, setDatas] = useState([]);
   // const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.state.user);
   const [modalDeleteData, setModalDeleteData] = useState(false);
   const [resp, setResp] = useState();
   const [dataTable, setDataTable] = useState();
@@ -83,17 +89,18 @@ const RekapPetani = () => {
 
   const page = searchParams.get('page') ?? 1;
   const limit = searchParams.get('limit') ?? 10;
+  const verified = searchParams.get('verified') ?? '';
 
   // const searchQuery = searchParams.get('search_query') ?? '';
   // const sortKey = searchParams.get('sort_key') ?? '';
   // const sortType = searchParams.get('sort_type') ?? '';
 
   useEffect(() => {
-    GetDaftarTani(page, limit).then((data) => {
+    GetDaftarTani(page, limit, verified).then((data) => {
       setResp(data);
       // setLoading(false);
     });
-  }, [limit, page]);
+  }, [limit, page, verified]);
   // const handleFilterChange = (e, column) => {
   //   setFilters((prevFilters) => ({
   //     ...prevFilters,
@@ -167,14 +174,16 @@ const RekapPetani = () => {
                   <ImPencil className="h-[18px] w-[18px] text-white" />
                 </div>
               </Link>
-              <button
-                onClick={() => {
-                  setModalDeleteData(item?.id);
-                }}>
-                <div className="flex h-7 w-7 items-center justify-center bg-red-500">
-                  <MdDeleteOutline className="h-6 w-6 text-white" />
-                </div>
-              </button>
+              {user?.peran === 'operator super admin' && (
+                <button
+                  onClick={() => {
+                    setModalDeleteData(item?.id);
+                  }}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-red-500">
+                    <MdDeleteOutline className="h-6 w-6 text-white" />
+                  </div>
+                </button>
+              )}
             </div>
           )
         }))
