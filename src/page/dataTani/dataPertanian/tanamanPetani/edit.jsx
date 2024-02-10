@@ -1,390 +1,562 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState, useEffect } from "react";
-import { faClose, faSave } from "@fortawesome/free-solid-svg-icons";
-import MainCard from "@/components/MainCard";
-import { GetDetailTanmanTani, editTanmanPetani} from "@/infrastruture";
-import {useParams, useNavigate } from "react-router-dom"
-import { Array } from "core-js";
-import Loading from "../../../../components/loading"
-const TambahDataTani = () => {
-  const [statusLahan, setStatusLahan] = useState("");
-  const [luasLahan, setLuasLahan] = useState("");
-  const [kategori, setKategori] = useState("");
-  const [jenis, setJenis] = useState("");
-  const [komoditas, setKomoditas] = useState("");
-  const [musimTanam, setMusimTanam] = useState("");
-  const [tanggalTanam, setTanggalTanam] = useState("");
-  const [perkiraanHasilPanen, setPerkiraanHasilPanen] = useState("");
-  const [perkiraanPanen, setPerkiraanPanen] = useState("");
-  const [daftarKomoditas, setDaftarKomoditas] = useState([]);
-  const [jenisPanen, setjenisPanen] = useState(false)
-  const [loading, setLoading] = useState(true)
-  const {id} = useParams()
-  const history = useNavigate()
+import { useState, useEffect } from 'react';
+import {
+  Anchor,
+  Breadcrumbs,
+  Button,
+  Image,
+  Modal,
+  NumberInput,
+  Radio,
+  Select,
+  Tabs,
+  Text,
+  TextInput
+} from '@mantine/core';
+import Table from '@/components/table/Table';
+import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
+// import React, { useEffect } from "react";
+// import SearchInput from "../../../../components/uiComponents/inputComponents/SearchInput";
+import SearchInput from '../../../../components/uiComponents/inputComponents/SearchInput';
+import { FaRegRectangleList } from 'react-icons/fa6';
+// import { GetStatistikTanamanAll } from "../../infrastucture";
+import { IoImageOutline } from 'react-icons/io5';
+import { SearchPetani } from '../../../../infrastucture/searchApi';
+import {
+  GetListTanaman,
+  GetTanamanPetaniById,
+  UpdateTanamanPetani,
+  DeleteTanamanPetani
+} from '../../../../infrastucture/index';
+import { ImPencil } from 'react-icons/im';
+import { IoEyeOutline } from 'react-icons/io5';
+import { MdDeleteOutline } from 'react-icons/md';
+import Loading from '../../../../components/loading';
+import LoadingAnimation from '../../../../components/loading';
+import {
+  komoditasSemusim,
+  komoditasTahunan,
+  tanamanPangan,
+  tanamanPerkebunan
+} from '../../../../types/const';
+import { postLogActivity } from '../../../../infrastucture/logActivity';
+import { setUser } from '../../../../infrastucture/redux/state/stateSlice';
+// import { RootState } from './infrastucture/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+
+const breadcrumbItems = [
+  { title: 'Dashboard', href: '/' },
+  { title: 'Data Tanaman Petani' },
+  { title: 'Edit' }
+].map((item, index) => (
+  <Anchor href={item.href} key={index} className="text-white opacity-50">
+    {item.title}
+  </Anchor>
+));
+
+const filterDataPetani = (data) => {
+  return data.map((item) => ({
+    ...item,
+    value: item.id.toString(),
+    label: `${item.nik} - ${item.nama}`
+  }));
+};
+
+const loadOptions = (inputValue, callback) => {
+  setTimeout(async () => {
+    const data = await SearchPetani(inputValue);
+    callback(filterDataPetani(data || []));
+  }, 1000);
+};
+
+const columns = [
+  {
+    accessorKey: 'no',
+    header: 'No',
+    cell: (props) => <span>{`${props.getValue()}`}</span>
+  },
+  {
+    accessorKey: 'kategori',
+    header: 'Kategori Tanaman',
+    cell: (props) => <span>{`${props.getValue()}`}</span>
+  },
+  {
+    accessorKey: 'komoditas',
+    header: 'Jenis Komoditas',
+    cell: (props) => <span>{`${props.getValue()}`}</span>
+  },
+  {
+    accessorKey: 'statusKepemilikanLahan',
+    header: 'Status Lahan',
+    cell: (props) => <span>{`${props.getValue()}`}</span>
+  },
+  {
+    accessorKey: 'prakiraanBulanPanen',
+    header: 'Prakiraan Panen',
+    cell: (props) => <span>{`${props.getValue()}`}</span>
+  },
+  {
+    accessorKey: 'actions',
+    header: 'Aksi',
+    cell: (props) => props.row.original.actions
+  }
+];
+
+export default function EditTanamanPetani() {
+  const [statusKepemilikanLahan, setStatusKepemilikanLahan] = useState('');
+  const [luasLahan, setLuasLahan] = useState();
+  const [kategori, setKategori] = useState('');
+  const [jenis, setJenis] = useState('');
+  const [komoditas, setKomoditas] = useState('');
+  const [periodeMusimTanam, setPeriodeMusimTanam] = useState('');
+  const [periodeBulanTanam, setPeriodeBulanTanam] = useState('');
+  const [prakiraanLuasPanen, setPrakiraanLuasPanen] = useState();
+  const [prakiraanProduksiPanen, setPrakiraanProduksiPanen] = useState(0);
+  const [prakiraanBulanPanen, setPrakiraanBulanPanen] = useState('');
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.state.user);
+  const [modalDeleteData, setModalDeleteData] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [dataTable, setDataTable] = useState();
+  const [resp, setResp] = useState();
+  const [tanaman, setTanaman] = useState({});
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  // const [page, setPage] = useState(1);
+  // const [limit, setLimit] = useState(10);
+  const location = useLocation();
+  // const history = useHistory();
+
+  // useEffect(() => {
+  const searchParams = new URLSearchParams(location.search);
+
+  const page = searchParams.get('page') ?? 1;
+  const limit = searchParams.get('limit') ?? 10;
+
   useEffect(() => {
-    GetDetailTanmanTani(id).then((data) => {
-      setLoading(false)
-      setKategori(data?.tani?.kategori || '')
-      setjenisPanen(data?.tani?.jenisPanen || '')
-      setPerkiraanHasilPanen(data?.tani?.perkiraanHasilPanen || '')
-      setPerkiraanPanen(data?.tani?.perkiraanPanen || '')
-      setTanggalTanam(data?.tani?.tanggalTanam || '')
-      setMusimTanam(data?.tani?.musimTanam || '')
-      setKomoditas(data?.tani?.komoditas || '')
-      setJenis(data?.tani?.jenis || '')
-      setLuasLahan(data?.tani?.luasLahan || '')
-      setStatusLahan(data?.tani?.statusLahan || '')
+    GetTanamanPetaniById(id).then((data) => {
+      setTanaman(data.data);
     });
   }, [id]);
-  useEffect(() => {
-    if (kategori == "Tanaman Pangan") {
-      setDaftarKomoditas([
-        "Padi Konvensional",
-        "Padi Ramah Lingkungan",
-        "Padi Organik",
-        "Jagung",
-        "Kedelai",
-        "Ubi Jalar",
-        "Ubi Kayu",
-        "Kacang Tanah",
-        "Kacang Hijau",
-      ]);
-    } else if (kategori == "Tanaman Perkebunan") {
-      if(jenisPanen == "Musiman"){
-        setDaftarKomoditas(["Tembakau", "Tebu"])
-      }else if(jenisPanen == "Tahunan"){
-        setDaftarKomoditas(["Kopi", "Kakao", "Cengkeh", "Teh", "Karet", "Kelapa"])
-      }else{
-        setDaftarKomoditas([""])
-      }
-    } else if (kategori == "Tanaman Holtikultura") {
-      if(jenis == "Buah"){
-        if(jenisPanen == "Musiman"){
-          setDaftarKomoditas(["Melon", "Semangka", "Pisang", "Blewah"])
-        }else if(jenisPanen == "Tahunan"){
-          setDaftarKomoditas(["Mangga", "Durian", "Manggis", "Alpukat", "Rambutan", "Jeruk Lemon", "Jeruk nipis", "Jeruk Keprok", "Jeruk Besar", "Nangka", "Jambu Biji", "Jambu air", "Sukun", "Sirsat", "Sawo", "Duku"])
-        }else{
-          setDaftarKomoditas([""])
-        }
-      }else if(jenis == "Sayur"){
-        setDaftarKomoditas(["Cabe Kecil", "Cabe Besar", "Bawang Merah", "Tomat", "Terong", "Pare", "Gambas", "Bayam", "Kangkung", "Sawi", "Kacang Panjang"] );
-      }else{
-        setDaftarKomoditas[""]
-      }
-    } else {
-      setDaftarKomoditas([""]);
-    }
-  }, [kategori, jenis, jenisPanen]);
 
+  useEffect(() => {
+    setStatusKepemilikanLahan(tanaman?.statusKepemilikanLahan);
+    setLuasLahan(tanaman?.luasLahan);
+    setKategori(tanaman?.kategori);
+    setJenis(tanaman?.jenis);
+    setKomoditas(tanaman?.komoditas);
+    setPeriodeMusimTanam(tanaman?.periodeMusimTanam);
+    setPeriodeBulanTanam(tanaman?.periodeBulanTanam);
+    setPrakiraanLuasPanen(tanaman?.prakiraanLuasPanen);
+    setPrakiraanProduksiPanen(tanaman?.prakiraanProduksiPanen);
+    setPrakiraanBulanPanen(tanaman?.prakiraanBulanPanen);
+  }, [tanaman]);
+
+  console.log(jenis);
+
+  useEffect(() => {
+    GetListTanaman(
+      page,
+      limit,
+      tanaman?.fk_petaniId
+      // search,
+      // sortKey,
+      // sortType
+    ).then((data) => {
+      setResp(data);
+      setLoading(false);
+    });
+  }, [page, limit, tanaman]);
+
+  useEffect(() => {
+    // console.log(dataTable)
+  }, [dataTable]);
+  useEffect(() => {
+    if (resp) {
+      setDataTable({
+        ...resp,
+
+        data: resp.data.map((item, index) => ({
+          ...item,
+          no: resp.from + index,
+          actions: (
+            <div className="flex gap-4">
+              <Link to={`/tanaman-petani/edit/${item.id}`}>
+                <div className="flex h-7 w-7 items-center justify-center bg-green-500">
+                  <IoEyeOutline className="h-6 w-6 text-white" />
+                </div>
+              </Link>
+              <Link to={`/tanaman-petani/edit/${item.id}`}>
+                <div className="flex h-7 w-7 items-center justify-center bg-yellow-500">
+                  <ImPencil className="h-[18px] w-[18px] text-white" />
+                </div>
+              </Link>
+              {user?.peran === 'operator super admin' && (
+                <button
+                  onClick={() => {
+                    setModalDeleteData(item?.id);
+                  }}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-red-500">
+                    <MdDeleteOutline className="h-6 w-6 text-white" />
+                  </div>
+                </button>
+              )}
+            </div>
+          )
+        }))
+      });
+    }
+  }, [resp]);
+  const handleDeleteTanaman = (ids) => {
+    DeleteTanamanPetani(ids);
+    postLogActivity({
+      user_id: localStorage.getItem('user_id'),
+      activity: 'DELETE',
+      type: 'TANAMAN',
+      detail_id: ids
+    });
+    // delay 6 seconds
+    setTimeout(() => {
+      window.location.reload();
+    }, 4000);
+  };
   const handleSubmit = (e) => {
-    setLoading(true)
+    setLoading(true);
     e.preventDefault();
     const data = {
-      statusLahan,
+      statusKepemilikanLahan,
       luasLahan,
       kategori,
       jenis,
-      jenisPanen,
       komoditas,
-      musimTanam,
-      tanggalTanam,
-      perkiraanPanen,
-      perkiraanHasilPanen,
-      dataPersonId:id,
+      periodeMusimTanam,
+      periodeBulanTanam,
+      prakiraanLuasPanen,
+      prakiraanProduksiPanen,
+      prakiraanBulanPanen,
+      fk_petaniId: tanaman?.fk_petaniId
     };
-    editTanmanPetani(id,data).then(()=>setLoading(false))
+    // console.log(data)
+    const formData = new FormData();
+    for (const key in data) {
+      formData.append(key, data[key]);
+    }
+    // console.log({formData})
+    // console.log(data);
+    UpdateTanamanPetani(id, data).then(() => {
+      setLoading(false);
+      postLogActivity({
+        user_id: localStorage.getItem('user_id'),
+        activity: 'EDIT',
+        type: 'TANAMAN',
+        detail_id: id
+      });
+    });
+    // window.reload()
+    // add window reload
+    // window.history.push(`/tanaman-petani/edit/$id`);
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   };
 
   return (
-    <div className="px-10 md:px-40 py-10 z-1">
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <MainCard>
-            <div>
-            {loading &&
-            <Loading/>}
-              <div className="grid md:grid-cols-2 mt-2 md:gap-6">
-                <div className="relative z-0 w-full mb-6 group">
-                  <label
-                    htmlFor="underline_select"
-                    className="text-sm text-gray-500  pt-5 md:pt-0"
-                  >
-                    <strong>Pilih Status Lahan</strong>
-                  </label>
-                  <select
-                    id="statusLahan"
-                    value={statusLahan}
-                    onChange={(e) => setStatusLahan(e.target.value)}
-                    className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
-                  >
-                    <option value="">--pilih status lahan--</option>
-                    <option value="Sewa">Sewa</option>
-                    <option value="Milik Sendiri">Milik Sendiri</option>
-                  </select>
-                </div>
-                <div className="relative z-0 w-full mb-6 grou pt-6">
-                  <input
-                    type="text"
-                    name="luasLahan"
-                    id="luasLahan"
-                    value={luasLahan}
-                    onChange={(e) => setLuasLahan(e.target.value)}
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" "
-                    required
-                  />
-                  <label
-                    htmlFor="luasLahan"
-                    className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                  >
-                    <strong>Luas Lahan Tanam per M2 </strong>(Contoh: 100)
-                  </label>
-                </div>
-              </div>
-              <div className="grid md:grid-cols-2 md:gap-6">
-                <div className="relative z-0 w-full mb-6 group">
-                  <label htmlFor="kategori" className="text-sm text-gray-500">
-                    <strong>Kategori:</strong>
-                  </label>
-                  <div className="flex items-center pt-2">
-                    <input
-                      id="tanaman-pangan"
-                      value="Tanaman Pangan"
-                      onChange={(e) => setKategori(e.target.value)}
-                      type="radio"
-                      name="kategori"
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      checked={kategori === 'Tanaman Pangan'}
-                    />
-                    <label
-                      htmlFor="tanaman-pangan"
-                      className="ml-2 text-sm font-medium text-gray-900"
-                    >
-                      Tanaman Pangan
-                    </label>
-                  </div>
-                  <div className="flex items-center py-2">
-                    <input
-                      id="tanaman-perkebunan"
-                      value="Tanaman Perkebunan"
-                      onChange={(e) => setKategori(e.target.value)}
-                      type="radio"
-                      name="kategori"
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-900 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      checked={kategori === 'Tanaman Perkebunan'}
-                    />
-                    <label
-                      htmlFor="tanaman-perkebunan"
-                      className="ml-2 text-sm font-medium text-gray-900"
-                    >
-                      Tanaman Perkebunan
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input
-                      id="tanaman-holtikultura"
-                      value="Tanaman Holtikultura"
-                      onChange={(e) => setKategori(e.target.value)}
-                      type="radio"
-                      name="kategori"
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-900 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      checked={kategori === 'Tanaman Holtikultura'}
-                    />
-                    <label
-                      htmlFor="tanaman-holtikultura"
-                      className="ml-2 text-sm font-medium text-gray-900"
-                    >
-                      Tanaman Holtikultura
-                    </label>
-                  </div>
-                </div>
-
-                {kategori == "Tanaman Holtikultura" && (
-                  <div className="relative z-0 w-full mb-6 group">
-                    <label
-                      htmlFor="underline_select"
-                      className="text-sm text-gray-500 "
-                    >
-                      <strong>Pilih Jenis Tanaman</strong>
-                    </label>
-                    <select
-                      id="jenis"
-                      value={jenis}
-                      onChange={(e) => setJenis(e.target.value)}
-                      className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
-                    >
-                      <option value="">--Pilih Jenis Tanaman--</option>
-                      <option value="Buah">Buah</option>
-                      <option value="Sayur">Sayur</option>
-                    </select>
-                  </div>
-                )}
-              </div>
-              <div className="grid md:grid-cols-2 md:gap-6">
-                {((kategori == "Tanaman Holtikultura" && jenis == "Buah") || (kategori == "Tanaman Perkebunan")) && (
-                  <div className="relative z-0 w-full mb-6 group">
-                    <label
-                      htmlFor="underline_select"
-                      className="text-sm text-gray-500 "
-                    >
-                      <strong>Pilih Jenis Panen</strong>
-                    </label>
-                    <select
-                      id="jenis"
-                      value={jenisPanen}
-                      onChange={(e) => setjenisPanen(e.target.value)}
-                      className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
-                    >
-                      <option value="">-- pilih jenis panen --</option>
-                      <option value="Musiman">Musiman</option>
-                      <option value="Tahunan">Tahunan</option>
-                    </select>
-                  </div>
-                )}
-                {kategori == "Tanaman Perkebunan" ?  
-                <div className="relative z-0 w-full mb-6 group">
-                  <label
-                    htmlFor="underline_select"
-                    className="text-sm text-gray-500  pt-5 md:pt-0"
-                  >
-                    <strong>Tahun Tanam </strong>
-                  </label>
-                  <select
-                    id="musimTanam"
-                    value={tanggalTanam}
-                    onChange={(e) => setTanggalTanam(e.target.value)}
-                    className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
-                  >
-                    <option value="">-- Pilih Tahun --</option>
-                    {[...Array(16)].map((_,i)=>(
-                      <option value={`20${i + 15}`} key={i}>{`20${i + 15}`}</option>
-                    ))}
-                  </select>
-                </div>
-                :(
-                  <div className="relative z-0 w-full mb-6 grou pt-6">
-                    <input
-                      type="month"
-                      name="tanggalTanam"
-                      id="tanggalTanam"
-                      value={tanggalTanam}
-                      onChange={(e) => setTanggalTanam(e.target.value)}
-                      className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                      placeholder=" "
-                      required
-                    />
-                    <label
-                      htmlFor="tanggalTanam"
-                      className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                    >
-                      <strong>Bulan Tanam </strong>
-                    </label>
-                  </div>
-                )
+    <div>
+      <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
+      <h3 className="text-white text-2xl font-bold mt-4">TABEL DATA TANAMAN PERTANIAN</h3>
+      <SearchInput
+        cacheOptions
+        loadOptions={loadOptions}
+        defaultOptions
+        isDisabled
+        value={tanaman?.dataPetani?.nama}
+        // isClearable
+        placeholder={`${tanaman?.dataPetani?.nik} - ${tanaman?.dataPetani?.nama}`}
+      />
+      <Modal
+        opened={modalDeleteData}
+        onClose={() => setModalDeleteData(false)}
+        withCloseButton={false}
+        centered>
+        <Text>Apakah Kamu Yakin Akan Menghapus Data Ini ?</Text>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            marginTop: 20
+          }}>
+          <Button
+            color="cyan"
+            style={{
+              color: 'white',
+              backgroundColor: '#303A47',
+              marginRight: 8
+            }}
+            onClick={() => setModalDeleteData(false)}>
+            Cancel
+          </Button>
+          <Button
+            color="cyan"
+            style={{ color: 'white', backgroundColor: 'red' }}
+            type="submit"
+            onClick={() => {
+              handleDeleteTanaman(modalDeleteData);
+              setModalDeleteData(false);
+            }}>
+            Delete
+          </Button>
+        </div>
+      </Modal>
+      <div className="bg-[#D9D9D9] rounded-lg">
+        <div className="relative bg-[#136B09] mt-6 p-4 flex w-full justify-between rounded-t-lg shadow-lg">
+          <h3 className="text-white text-2xl font-bold">MENAMPILKAN DATA PETANI</h3>
+        </div>
+        <div className="grid grid-cols-5 gap-8 p-6">
+          <div className="col-span-2">
+            <span className="flex items-center gap-2">
+              <IoImageOutline /> Menampilkan Gambar
+            </span>
+            <Image
+              radius="md"
+              rounded="md"
+              width={300} // Set the width of the image
+              height={200} // Set the height of the image
+              src={
+                'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-7.png'
               }
+            />
+          </div>
+          <div className="col-span-3 grid grid-cols-2 gap-4">
+            <TextInput label="NIK" disabled value={tanaman?.dataPetani?.nik} />
+            <TextInput label="Nama Petani" disabled value={tanaman?.dataPetani?.nama} />
+            <TextInput label="Desa Domisili" disabled value={tanaman?.dataPetani?.desa} />
+            <TextInput
+              label="Nama Gapoktan"
+              disabled
+              value={tanaman?.dataPetani?.kelompok?.gapoktan}
+            />
+            <TextInput
+              label="Nama Kelompok"
+              disabled
+              value={tanaman?.dataPetani?.kelompok?.namaKelompok}
+            />
+            <TextInput
+              label="Nama Penyuluh"
+              disabled
+              value={tanaman?.dataPetani?.dataPenyuluh?.nama}
+            />
+          </div>
+        </div>
+      </div>
+      {tanaman?.fk_petaniId ? (
+        <form className="bg-[#D9D9D9] rounded-lg" onSubmit={(e) => handleSubmit(e)} method="PUT">
+          {loading && <Loading />}
+          {/* <div className="bg-[#D9D9D9] rounded-lg"> */}
+          <div className="relative bg-[#136B09] mt-6 p-4 flex w-full justify-between rounded-t-lg shadow-lg items-center">
+            <h3 className="text-white text-2xl font-bold">MASUKKAN DATA TANAMAN</h3>
+            {/* <button className="flex px-4 py-2 gap-4 bg-[#F29D0E] rounded-lg items-center justify-center text-xl text-white active:bg-[#F29D0E] active:shadow-md active:translate-y-1">
+                <FaUpload />
+                <span>UPLOAD FILE </span>
+              </button> */}
+          </div>
+          <div className="grid grid-cols-2 gap-8 p-6">
+            <div className="flex flex-col gap-4 justify-between flex-1">
+              <div className="bg-white rounded-lg p-4">
+                <p>STATUS KEPEMILIKAN LAHAN</p>
+                <Select
+                  className="mt-2"
+                  placeholder="Status Tanah"
+                  value={statusKepemilikanLahan}
+                  data={['MILIK SENDIRI', 'TANAH SEWA']}
+                  onChange={(value) => setStatusKepemilikanLahan(value)}
+                />
               </div>
-              <div className="grid md:grid-cols-2 mt-2 md:gap-6">
-                <div className="relative z-0 w-full mb-6 group">
-                  <label
-                    htmlFor="underline_select"
-                    className="text-sm text-gray-500  pt-5 md:pt-0"
-                  >
-                    <strong>Pilih komoditas: </strong>
-                  </label>
-                  <select
-                    id="komoditas"
-                    value={komoditas}
-                    onChange={(e) => setKomoditas(e.target.value)}
-                    className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
-                  >
-                    <option value="">-- Pilih Komoditas --</option>
-                    {daftarKomoditas?.map((item, i) => (
-                      <option value={item} key={i}>
-                        {item}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="relative z-0 w-full mb-6 group">
-                  <label
-                    htmlFor="underline_select"
-                    className="text-sm text-gray-500  pt-5 md:pt-0"
-                  >
-                    <strong>Musim Tanam Ke: </strong>
-                  </label>
-                  <select
-                    id="musimTanam"
-                    value={musimTanam}
-                    onChange={(e) => setMusimTanam(e.target.value)}
-                    className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
-                  >
-                    <option value="">--pilih musim tanam--</option>
-                    {[...Array(15).fill(0)].map((_,i)=>(
-                      <option value={`${i + 1}`}>{`${i + 1}`}</option>
-                    ))}
-                  </select>
-                </div>
+              <div className="bg-white rounded-lg p-4">
+                <p>
+                  Luas Lahan Tanam (M<sup>2</sup>)
+                </p>
+                <NumberInput
+                  placeholder="Luas Lahan Tanaman"
+                  min={0}
+                  value={Number(luasLahan)}
+                  onChange={(value) => setLuasLahan(value)}
+                />
               </div>
-              <div className="grid md:grid-cols-2 mt-2 md:gap-6">
-                <div className="relative z-0 w-full mb-6 grou pt-6">
-                  <input
-                    type="month"
-                    name="perkiraanPanen"
-                    id="perkiraanPanen"
-                    value={perkiraanPanen}
-                    onChange={(e) => setPerkiraanPanen(e.target.value)}
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" "
-                    required
-                  />
-                  <label
-                    htmlFor="perkiraanPanen"
-                    className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                  >
-                    <strong>Prakiraan Bulan Panen</strong>(Contoh: 3 Bulan)
-                  </label>
+              <div className="bg-white rounded-lg p-4">
+                <p>Kategori Tanaman</p>
+                <div className="rounded-lg shadow-lg p-4">
+                  <Radio.Group
+                    className="[&>*]:mt-1 first:mt-0"
+                    value={kategori}
+                    onChange={(value) => setKategori(value)}>
+                    <Radio label="Tanaman Pangan" value="TANAMAN PANGAN" />
+                    <Radio label="Tanaman Perkebunan" value="TANAMAN PERKEBUNAN" />
+                    <Radio label="Tanaman Holtikultura" value="TANAMAN HOLTIKULTURA" />
+                    {kategori && kategori.toLowerCase() === 'tanaman holtikultura' && (
+                      <Radio.Group
+                        className="ml-8 [&>*]:mt-1"
+                        value={jenis}
+                        onChange={(value) => setJenis(value)}>
+                        <Radio label="Jenis Buah" value="BUAH" />
+                        <Radio label="Jenis Sayur" value="SAYUR" />
+                      </Radio.Group>
+                    )}
+                  </Radio.Group>
                 </div>
-                <div className="relative z-0 w-full mb-6 grou pt-6">
-                  <input
-                    type="text"
-                    name="realisasipanen"
-                    id="realisasipanen"
-                    value={perkiraanHasilPanen}
-                    onChange={(e) => setPerkiraanHasilPanen(e.target.value)}
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" "
-                    required
+                <p className="mt-4">Komoditas Tanaman</p>
+                <Tabs defaultValue="semusim">
+                  <Tabs.List>
+                    <Tabs.Tab value="semusim">Semusim</Tabs.Tab>
+                    <Tabs.Tab value="tahunan">Tahunan</Tabs.Tab>
+                  </Tabs.List>
+
+                  {/* {periodeMusimTanam?.toLowerCase === 'tanaman semusim' ? ( */}
+                  <Tabs.Panel value="semusim">
+                    <Select
+                      className="mt-2"
+                      placeholder="Jenis Hasil Panen"
+                      data={
+                        kategori?.toUpperCase() === 'TANAMAN PANGAN'
+                          ? tanamanPangan
+                          : kategori?.toUpperCase() === 'TANAMAN PERKEBUNAN'
+                            ? tanamanPerkebunan
+                            : komoditasSemusim
+                      }
+                      value={komoditas}
+                      onChange={(value) => setKomoditas(value)}
+                    />
+                  </Tabs.Panel>
+                  {/* ) : ( */}
+                  <Tabs.Panel value="tahunan">
+                    <Select
+                      className="mt-2"
+                      placeholder="Jenis Hasil Panen"
+                      data={
+                        kategori?.toUpperCase() === 'TANAMAN PANGAN'
+                          ? tanamanPangan
+                          : kategori?.toUpperCase() === 'TANAMAN PERKEBUNAN'
+                            ? ['Perkebunan Tembakau', 'Perkebunan Tebu'].map((buah) => `${buah}`)
+                            : komoditasTahunan.map((buah) => `${buah}`)
+                      }
+                      value={komoditas}
+                      onChange={(value) => setKomoditas(value)}
+                    />
+                  </Tabs.Panel>
+                  {/* )} */}
+                </Tabs>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 justify-between flex-1">
+              <div className="relative">
+                <div className="relative">
+                  {/* <div className="absolute w-full h-full bg-[#545454] z-50 rounded-lg bg-opacity-75 flex items-center justify-center text-[#888888] font-bold text-4xl cursor-default">
+                      DISABLED
+                    </div> */}
+                  <div className="bg-[#136B09] text-xl text-white font-bold py-2 px-6 flex w-fit justify-between rounded-t-lg shadow-lg items-center">
+                    DATA TANAMAN
+                  </div>
+                  <div className="bg-white rounded-lg p-4 rounded-tl-none flex gap-1 flex-col">
+                    <p>PERIODE MUSIM TANAM</p>
+                    <Select
+                      value={periodeMusimTanam}
+                      placeholder="-Periode Musim Tanam-"
+                      data={['Tanaman Semusim', 'Tanaman Tahunan']}
+                      onChange={(value) => setPeriodeMusimTanam(value)}
+                    />
+                    <p>PERIODE BULAN TANAM</p>
+                    <Select
+                      placeholder="-Periode Bulan Tanam-"
+                      data={[
+                        'Januari',
+                        'Februari',
+                        'Maret',
+                        'April',
+                        'Mei',
+                        'Juni',
+                        'Juli',
+                        'Agustus',
+                        'September',
+                        'Oktober',
+                        'November',
+                        'Desember'
+                      ]}
+                      value={periodeBulanTanam}
+                      onChange={(value) => setPeriodeBulanTanam(value)}
+                    />
+                  </div>
+                </div>
+                <div className="bg-[#136B09] mt-4 text-xl text-white font-bold py-2 px-6 flex w-fit justify-between rounded-t-lg shadow-lg items-center">
+                  Prakiraan Panen
+                </div>
+                <div className="bg-white rounded-lg p-4 rounded-tl-none flex gap-1 flex-col ">
+                  <p>PRAKIRAAN LUAS PANEN (HA)</p>
+                  <NumberInput
+                    placeholder="Prakiraan Luas Panen"
+                    // min={0}
+                    value={Number(prakiraanLuasPanen)}
+                    onChange={(value) => setPrakiraanLuasPanen(value)}
                   />
-                  <label
-                    htmlFor="realisasipanen"
-                    className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                  >
-                    <strong>Prakiraan Produksi Panen </strong>(Contoh: 10 kw)
-                  </label>
+                  <p>PRAKIRAAN HASIL PANEN (TON)</p>
+                  <NumberInput
+                    placeholder="Prakiraan Hasil Panen"
+                    min={0}
+                    value={Number(prakiraanProduksiPanen)}
+                    onChange={(value) => setPrakiraanProduksiPanen(value)}
+                  />
+                  <p>PRAKIRAAN BULAN PANEN</p>
+                  <Select
+                    placeholder="-Periode Bulan Panen-"
+                    data={[
+                      'Januari',
+                      'Februari',
+                      'Maret',
+                      'April',
+                      'Mei',
+                      'Juni',
+                      'Juli',
+                      'Agustus',
+                      'September',
+                      'Oktober',
+                      'November',
+                      'Desember'
+                    ]}
+                    value={prakiraanBulanPanen}
+                    onChange={(value) => setPrakiraanBulanPanen(value)}
+                  />
                 </div>
               </div>
             </div>
-          <div className="flex space-x-4 justify-end">
-            <button
-              type="submit"
-              className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-orange-800"
-            >
-              <FontAwesomeIcon icon={faSave} className="mr-2" />
-              Simpan
-            </button>
-            <button
-              onClick={()=>history(-1)}
-              className="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-orange-800"
-            >
-              <FontAwesomeIcon icon={faClose} className="mr-2" />
-              Batalkan
-            </button>
           </div>
-        </MainCard>
-      </form>
+          {/* </div> */}
+          <div className="flex px-6 pb-6 justify-end gap-4">
+            <Button
+              type="button"
+              className="bg-blue-500"
+              onClick={() => {
+                navigate('/tanaman-petani');
+              }}>
+              Kembali
+            </Button>
+            <Button type="submit" className="bg-[#307B28]">
+              Simpan Data
+            </Button>
+          </div>
+          {loading && <LoadingAnimation />}
+        </form>
+      ) : (
+        <div className="relative bg-yellow-500 mt-6 p-4 flex w-full justify-center rounded-lg shadow-lg items-center">
+          <h3 className="text-white text-2xl font-bold text-center">CARI PETANI TERLEBIH DAHULU</h3>
+        </div>
+      )}
+      <div className="relative bg-white bg-opacity-20 mt-6 p-4 flex items-center w-full">
+        <h3 className="text-white text-2xl font-bold mx-auto">TABEL DATA TANAMAN PERTANIAN</h3>
+        <button className="absolute right-4 text-[#0FA958] text-xl">
+          <FaRegRectangleList />
+        </button>
+      </div>
+      <Table data={dataTable} columns={columns} withPaginationCount withPaginationControl />
     </div>
   );
-};
+}
 
-export default TambahDataTani;
-
-
+// export default TambahDataTani;
