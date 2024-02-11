@@ -6,7 +6,7 @@ import Table from '@/components/table/Table';
 import { Text, Button, Modal, Anchor, Breadcrumbs } from '@mantine/core';
 // import LoadingAnimation from '../../../components/loadingSession';
 import { Link, useLocation } from 'react-router-dom';
-import SearchInput from '../../components/uiComponents/inputComponents/searchInput';
+import SearchInput from '../../components/uiComponents/inputComponents/SearchInput';
 import TextInput from '../../components/uiComponents/inputComponents/textInput';
 import { ImPencil } from 'react-icons/im';
 import { IoEyeOutline } from 'react-icons/io5';
@@ -238,13 +238,18 @@ useEffect(() => {
                         value={data.data.nama}
                         disabled
                     />
-                    <TextInput
+                    <select
                         id="akses"
                         name="akses"
                         label="Akses"
                         value={data.data.akses}
-                        onChange={setAkses}
-                    />
+                        onChange={setAkses}>
+                        <option value="publish">Petani</option>
+                        <option value="draft">Penyuluh</option>
+                        <option value="publish">Operator Poktan</option>
+                        <option value="draft">Operator Admin</option>
+                        <option value="draft">Operator Super Admin</option>
+                    </select>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}>
                     <Button

@@ -1,6 +1,6 @@
 
 import { useState } from "react"
-import SearchInput from "../../../components/uiComponents/inputComponents/searchInput"
+import SearchInput from "../../../components/uiComponents/inputComponents/SearchInput"
 import TableAkses from "./tableAkses"
 
 export default function HakAkses(){
